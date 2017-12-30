@@ -1,0 +1,75 @@
+@import "var";
+
+.container{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: space-around;
+
+}
+
+@include clearfix;
+
+.block{
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+#b1{
+  background-color: blue;
+}
+
+#b2{
+  background-color: red;
+}
+
+#b3{
+  background-color: green;
+}
+#b4{
+  background-color: yellow;
+}
+#b5{
+  background-color: orange;
+}
+#b6{
+  background-color: gold;
+}
+#b7{
+  background-color: silver;
+}
+#b8{
+  background-color: violet;
+}
+#b9{
+  background-color: darkgoldenrod;
+}
+#b10{
+  background-color: darkgreen;
+}
+
+#b11{
+  background-color: blue;
+}
+
+#b12{
+  background-color: red;
+}
+
+#b13{
+  background-color: green;
+}
+#b14{
+  background-color: yellow;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+@include cols;
+
