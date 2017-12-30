@@ -49,3 +49,14 @@
   .col12 {
     width: 100%; }
 }
+
+@mixin container{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+
+}

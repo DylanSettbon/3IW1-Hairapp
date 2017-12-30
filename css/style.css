@@ -1,11 +1,3 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  align-content: space-around; }
-
 .clearfix::before {
   content: '';
   display: table; }
@@ -100,3 +92,43 @@
 
 .col12 {
   width: 100%; }
+
+@media screen and (min-width: 576px) {
+  .conteneur {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+    max-width: 540px; } }
+
+@media screen and (min-width: 768px) {
+  .conteneur {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+    max-width: 720px; } }
+
+@media screen and (min-width: 992px) {
+  .conteneur {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+    max-width: 960px; } }
+
+@media screen and (min-width: 1200px) {
+  .conteneur {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+    max-width: 1140px; } }

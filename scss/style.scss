@@ -1,15 +1,5 @@
 @import "var";
 
-.container{
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  align-content: space-around;
-
-}
 
 @include clearfix;
 
@@ -73,3 +63,31 @@
 
 @include cols;
 
+
+@media screen and (min-width : 576px){
+  .conteneur{
+    @include container;
+    max-width : 540px;
+  }
+}
+
+@media screen and (min-width : 768px){
+  .conteneur{
+     @include container;
+    max-width : 720px;
+  }
+}
+
+@media screen and (min-width : 992px){
+  .conteneur{
+    @include container;
+    max-width : 960px;
+  }
+}
+
+@media screen and (min-width : 1200px){
+  .conteneur{
+    @include container;
+    max-width : 1140px;
+  }
+}
