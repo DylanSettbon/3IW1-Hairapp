@@ -132,3 +132,11 @@
     align-items: flex-start;
     align-content: space-around;
     max-width: 1140px; } }
+
+.row{
+  display:flex;
+  flex-direction:row;
+  flex-wrap: nowrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
