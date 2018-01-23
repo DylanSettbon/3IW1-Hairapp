@@ -1,93 +1,48 @@
 @import "var";
 
+@include boxs;
 
-@include clearfix;
+.row{
+  margin:0 $gutter * -0.5;
+  @include clearfix;
 
-.block{
-  width: 200px;
-  height: 200px;
-  margin: 10px;
 }
+%col{
+float:left;
+position:relative;
+min-height:1px;
+padding:0 $gutter * 0.5;
 
-#b1{
-  background-color: blue;
-}
+border:1px solid black ;
 
-#b2{
-  background-color: red;
-}
-
-#b3{
-  background-color: green;
-}
-#b4{
-  background-color: yellow;
-}
-#b5{
-  background-color: orange;
-}
-#b6{
-  background-color: gold;
-}
-#b7{
-  background-color: silver;
-}
-#b8{
-  background-color: violet;
-}
-#b9{
-  background-color: darkgoldenrod;
-}
-#b10{
-  background-color: darkgreen;
 }
 
-#b11{
-  background-color: blue;
+@include fonts;
+
+//Grid //
+
+@for $i from 1 through $columns{
+    .col-s-#{$i}{
+    width:$i / $columns * 100%;}
+    .col-s-#{$i}, .col-m-#{$i} , .col-l-#{$i}{@extend %col;}
+}
+//Medium Screen //
+
+@media only screen and (min-width : $medium){
+  .col-m-center{margin:0 auto ; float:none ;}
+  @for $i from 1 through $columns{
+  .col-m-#{$i}{ 
+    width:$i / $columns * 100%;}
+
+}
 }
 
-#b12{
-  background-color: red;
+//Large Screen //
+@media only screen and (min-width : $large){
+  .col-l-center{margin:0 auto ; float:none ;}
+  @for $i from 1 through $columns{
+  .col-l-#{$i}{ 
+     width:$i / $columns * 100%;}
+}
 }
 
-#b13{
-  background-color: green;
-}
-#b14{
-  background-color: yellow;
-}
-
-*{
-  box-sizing: border-box;
-}
-
-@include cols;
-
-
-@media screen and (min-width : 576px){
-  .conteneur{
-    @include container;
-    max-width : 540px;
-  }
-}
-
-@media screen and (min-width : 768px){
-  .conteneur{
-     @include container;
-    max-width : 720px;
-  }
-}
-
-@media screen and (min-width : 992px){
-  .conteneur{
-    @include container;
-    max-width : 960px;
-  }
-}
-
-@media screen and (min-width : 1200px){
-  .conteneur{
-    @include container;
-    max-width : 1140px;
-  }
-}
