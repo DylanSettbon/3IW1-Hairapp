@@ -26,10 +26,8 @@ $large: 1024px ;
 @mixin flex{
   display: flex;
   flex-direction: row;
-  //justify-content: space-around;
   flex-wrap: wrap;
   align-items: flex-start;
-  //align-content: space-around;
 }
 
 @mixin container{

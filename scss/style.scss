@@ -5,8 +5,8 @@
 .row{
   margin:0 $gutter ;
   @include clearfix;
-  @include flex;
-  overflow: hidden;
+  @include flex; // ajout du Flex
+  overflow: hidden; // retire le padding sur les bords de la grille
 
 }
 %col{
@@ -18,7 +18,7 @@ padding:0 $gutter * 0.5;
 //border:1px solid black ;
 
 }
-
+// Toutes les divs qui ont la classe contient 'col-' 
 div [class *= "col-"] {
   padding: 0 15px;
 }
@@ -47,7 +47,7 @@ div [class *= "col-"] {
 
   }
   .container{
-    width: auto;
+    width: 600px;
   }
 }
 
