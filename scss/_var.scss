@@ -1,6 +1,6 @@
 //Variable//
 $columns: 12 ;
-$gutter:20px ;
+$gutter: -15px ;
 $medium: 640px ;
 $large: 1024px ;
 
@@ -23,8 +23,21 @@ $large: 1024px ;
   }
 }
 
+@mixin flex{
+  display: flex;
+  flex-direction: row;
+  //justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  //align-content: space-around;
+}
+
+@mixin container{
+    width: 100%;
+    margin: auto;
+
+}
 
 @mixin fonts{
   body{margin:0; padding: 0; font-family: sans-serif;}
 }
-

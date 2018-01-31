@@ -3,8 +3,10 @@
 @include boxs;
 
 .row{
-  margin:0 $gutter * -0.5;
+  margin:0 $gutter ;
   @include clearfix;
+  @include flex;
+  overflow: hidden;
 
 }
 %col{
@@ -13,11 +15,20 @@ position:relative;
 min-height:1px;
 padding:0 $gutter * 0.5;
 
-border:1px solid black ;
+//border:1px solid black ;
 
 }
 
+div [class *= "col-"] {
+  padding: 0 15px;
+}
+
 @include fonts;
+
+.container{
+  @include container;
+}
+
 
 //Grid //
 
@@ -34,7 +45,10 @@ border:1px solid black ;
   .col-m-#{$i}{ 
     width:$i / $columns * 100%;}
 
-}
+  }
+  .container{
+    width: auto;
+  }
 }
 
 //Large Screen //
@@ -43,6 +57,10 @@ border:1px solid black ;
   @for $i from 1 through $columns{
   .col-l-#{$i}{ 
      width:$i / $columns * 100%;}
-}
+  }
+
+  .container{
+    width: 800px;
+  }
 }
 
