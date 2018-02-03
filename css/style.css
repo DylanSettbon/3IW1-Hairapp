@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 * {
   box-sizing: border-box; }
 
@@ -26,13 +27,126 @@ div [class*="col-"] {
   padding: 0 15px; }
 
 body {
+  font-family: "Roboto", sans-serif;
   margin: 0;
-  padding: 0;
-  font-family: sans-serif; }
+  font-size: 16px; }
 
 .container {
   width: 100%;
   margin: auto; }
+
+.header {
+  background: #637484;
+  padding: 0px 16px; }
+
+.header:after {
+  clear: both;
+  content: '';
+  display: block;
+  height: 0;
+  visibility: hidden; }
+
+.header .logo {
+  float: left;
+  line-height: 1.9;
+  padding: 10px 0px; }
+
+.header .logo a {
+  color: #FFF;
+  font-size: 1.2rem;
+  text-decoration: none; }
+
+#burger {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px 0px; }
+
+#burger .bar {
+  background: #EEE;
+  display: block;
+  height: 3px;
+  margin-bottom: 4px;
+  width: 20px; }
+
+.nav {
+  float: right;
+  margin: 0;
+  padding: 0; }
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: right; }
+
+.nav ul:after {
+  clear: both;
+  content: '';
+  display: block;
+  height: 0;
+  visibility: hidden; }
+
+.nav li {
+  float: left;
+  display: inline-block;
+  padding: 10px 0px; }
+
+.nav a {
+  color: #FFF;
+  display: inline-block;
+  font-weight: 400;
+  padding: 10px;
+  text-decoration: none; }
+
+.nav li:hover {
+  background: #b3c2d1;
+  border-radius: 5px; }
+
+.open {
+  display: block !important; }
+
+.active {
+  background-color: #009CDF;
+  border-radius: 5px; }
+
+.logo {
+  float: left; }
+
+li {
+  display: inline-block; }
+
+ul {
+  float: right;
+  margin: 0; }
+
+.container2 {
+  float: right;
+  background-color: #637484;
+  width: 100%; }
+
+.icon {
+  display: none; }
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 640px) {
+  .header {
+    padding: 0; }
+  .header .logo {
+    float: none;
+    text-align: center; }
+  #burger {
+    display: block; }
+  .nav {
+    float: left;
+    display: none; }
+  .nav li {
+    display: block;
+    width: 100%;
+    /*border-bottom: 1px solid #000;*/
+    /*background-color:#313942;*/ } }
 
 .col-s-1 {
   width: 8.33333%; }

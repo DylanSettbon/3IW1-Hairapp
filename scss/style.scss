@@ -2,6 +2,7 @@
 
 @include boxs;
 
+
 .row{
   margin:0 $gutter ;
   @include clearfix;
@@ -18,7 +19,7 @@ padding:0 $gutter * 0.5;
 //border:1px solid black ;
 
 }
-// Toutes les divs qui ont la classe contient 'col-' 
+// Toutes les divs qui ont la classe contient 'col-'
 div [class *= "col-"] {
   padding: 0 15px;
 }
@@ -29,6 +30,8 @@ div [class *= "col-"] {
   @include container;
 }
 
+//  Debut navbar
+@include navbar;
 
 //Grid //
 
@@ -49,6 +52,7 @@ div [class *= "col-"] {
   .container{
     width: 600px;
   }
+
 }
 
 //Large Screen //
@@ -63,4 +67,10 @@ div [class *= "col-"] {
     width: 800px;
   }
 }
+
+
+
+
+
+
 
