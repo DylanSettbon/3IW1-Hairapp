@@ -1,0 +1,23 @@
+{
+  "name": "3iw1-coiffeur",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "node-sass": "^4.7.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeromebueno/3IW1-coiffeur.git"
+  },
+  "author": "",
+  "scripts": {
+    "watch": "node-sass --watch public/scss -o public/css"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeromebueno/3IW1-coiffeur/issues"
+  },
+  "homepage": "https://github.com/jeromebueno/3IW1-coiffeur#readme"
+}

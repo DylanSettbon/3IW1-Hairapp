@@ -10,6 +10,9 @@
   overflow: hidden; // retire le padding sur les bords de la grille
 
 }
+
+@include sidebar;
+
 %col{
 float:left;
 position:relative;
@@ -26,12 +29,18 @@ div [class *= "col-"] {
 
 @include fonts;
 
+@include footer;
+
 .container{
   @include container;
 }
 
 //  Debut navbar
 @include navbar;
+.column-direction{
+  display: flex;
+  flex-direction: row;
+}
 
 //Grid //
 
@@ -50,7 +59,19 @@ div [class *= "col-"] {
 
   }
   .container{
-    width: 600px;
+    width: 100%;
+  }
+  .column-direction{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #planning td, #planning th{
+    border-left: 2px solid #009CDF;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-top: 6px;
   }
 
 }
@@ -64,10 +85,47 @@ div [class *= "col-"] {
   }
 
   .container{
-    width: 800px;
+    width: 100%;
+  }
+
+  .column-direction{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #planning td, #planning th{
+    border-left: 2px solid #009CDF;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-top: 6px;
   }
 }
 
+@include container-fluid;
+
+
+.center{
+  margin: auto;
+  text-align: center;
+}
+
+.title{
+  border-bottom: 1px solid #009CDF;
+  //width: 200px;
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  //font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+}
+
+
+
+
+@include planing;
 
 
 

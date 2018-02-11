@@ -5,6 +5,10 @@ $medium: 640px ;
 $large: 1024px ;
 
 
+$main_color: #637484;
+$border_color: #333333;
+
+
 @mixin clearfix {
   .clearfix::before{
     content: '';
@@ -33,23 +37,85 @@ $large: 1024px ;
 @mixin container{
     width: 100%;
     margin: auto;
+  height: 100%;
+}
 
+@mixin container-fluid{
+  .container-fluid{
+    width: 100%;
+  }
 }
 
 @mixin fonts{
-  @import url('https://fonts.googleapis.com/css?family=Roboto');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300i,400');
   body{
     font-family: "Roboto", sans-serif;
     margin:0;
     font-size:16px;
+    //position: relative;
+    padding-bottom: 6rem;
+    height: 119vh;
+  }
+  html {
+    //height: 1vh;
+  }
+}
 
+@mixin sidebar{
+  .sidebar{
+    float:left;
+    background-color: $main_color;
+    border-top: 2px solid $border_color;
+    border-bottom: 2px solid $border_color;
+    height: 100%;
+    bottom: 0;
+    position: relative;
+    display: table-cell;
+    margin-right: 50px;
+  }
+  .sidebar_buttons{
+    //color: #333333;
+    text-align: center;
+    margin-top: 50%;
+  }
+  .sidebar a:active {
+    background-color: #EEEEEE;
+  }
+
+  .sidebar ul {
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar ul:after{
+    clear: both;
+    content: '';
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
+  .sidebar li {
+    display: block;
+    padding: 10px 0px;
+  }
+
+  li:hover{
+    background-color: #b3c2d1;
+    border-radius:5px;
+  }
+
+  .sidebar a{
+    color: #FFF;
+    display: inline-block;
+    font-weight: 400;
+    padding: 10px;
+    text-decoration: none;
   }
 }
 
 @mixin navbar{
 
   .header {
-    background: #637484;
+    background: $main_color;
     padding: 0px 16px;
   }
   .header:after {
@@ -136,17 +202,10 @@ $large: 1024px ;
     float:left;
   }
 
-  li{
-    display:inline-block;
-  }
 
-  ul{
-    float:right;
-    margin:0;
-  }
   .container2{
     float:right;
-    background-color:#637484;
+    background-color: $main_color;
     width:100%;
   }
 
@@ -169,18 +228,114 @@ $large: 1024px ;
       display: block;
     }
 
+    #sidebar{
+      display: block;
+    }
+
     .nav {
       float: left;
       display: none;
     }
     .nav li {
       display: block;
-      width: 100%;
+      width: 50%;
       /*border-bottom: 1px solid #000;*/
       //text-align:center;
       /*background-color:#313942;*/
     }
+
+    .sidebar_buttons{
+      text-align: center;
+      //margin-top: 50%;
+    }
+
+    .sidebar{
+      float:left;
+      background-color: $main_color;
+      border-top: 2px solid $border_color;
+      border-bottom: 2px solid $border_color;
+      height: 70px;
+      bottom: 0;
+      position: relative;
+      display: table-cell;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .sidebar li {
+      display: inline-block;
+      padding: 10px 0px;
+    }
+
   }
+}
+
+@mixin footer{
+  .footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    clear: left;
+    left: 0;
+    padding: 1rem;
+    background-color: #637484;
+    //text-align: center;
+    color:white;
+  }
+}
+
+
+
+
+
+@mixin planing {
+  #planning{
+    border-collapse: collapse;
+  }
+  #planning td, #planning th{
+    border-left: 2px solid #009CDF;
+  }
+
+  #planning tr{
+    padding: 5px;
+  }
+
+
+  .planning{
+    border-right: 2px solid #009CDF;
+  }
+
+  #planning th{
+    border: none;
+  }
+
+  .hairdresser1{
+    background-color: #F2994A;
+  }
+
+  .hairdresser2{
+    background-color: #2D9CDB;
+  }
+
+  .hairdresser3{
+    background-color: #27AE60;
+  }
+
+  .all {
+    background-color: #333333;
+    color: white;
+
+  }
+
+  .button{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    height: 30px;
+  }
+
 }
 
 
