@@ -98,7 +98,7 @@ $border_color: #333333;
     padding: 10px 0px;
   }
 
-  li:hover{
+  .header li:hover{
     background-color: #b3c2d1;
     border-radius:5px;
   }
@@ -289,6 +289,7 @@ $border_color: #333333;
 
 
 @mixin planing {
+  //Planning
   #planning{
     border-collapse: collapse;
   }
@@ -335,8 +336,200 @@ $border_color: #333333;
     border-radius: 5px;
     height: 30px;
   }
-
 }
 
 
+@mixin rendezvous {
+  /* RENDEZ VOUS*/
+  #body-rdv {
+    background-color: #E5E5E5;
+  }
 
+  #main-rdv {
+    background-color: white;
+    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2);
+    margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
+  }
+
+  #title-rdv, li {
+    text-align: center;
+  }
+
+  .title-section-rdv {
+    font-size: 20px;
+    padding: 0;
+    margin: 0 0 15px 0;
+    width:100%;
+  }
+
+  input[type="checkbox"][id^="coiffeur"] {
+    display: none;
+  }
+
+  input[type="checkbox"][id^="coiffeur"] + label::before {
+    content: "";
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-image: url("../img/hommecoiffure.jpg");
+    background-size: cover;
+    border-radius: 12px;
+  }
+
+  input[type="checkbox"][id^="coiffeur"] + label::before {
+    opacity: 0.5;
+  }
+
+  input[type="checkbox"][id^="coiffeur"]:checked + label::before {
+    border: solid black 2px;
+    font-size: 10px;
+    opacity: 1;
+  }
+
+  label[for^="coiffeur"] {
+    position: relative;
+  }
+
+  section {
+    display: inline;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  .liste_deroulante {
+    border-style: none none solid none;
+    border-width: 2px;
+    border-color: black;
+    font-size: 125%;
+    color: #B8B8B8;
+    height: 35px;
+    margin: 0 auto;
+  }
+
+  .btn-Valider {
+    background: black;
+    color: white;
+    height: 35px;
+    margin-top: 15px;
+  }
+
+  .nom-coiffeur {
+    position: absolute;
+    left: 0%;
+    top: -10px;
+    background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
+    color:white;
+    width:97%;
+    height:137%;
+    border-radius: 0 0 12px 12px;
+  }
+
+  #choix-coiffeur li, #selection-date li {
+    margin: 0 8px 5px 8px;
+  }
+
+  #mois, #annee {
+    margin-left: 50px;
+  }
+
+  #jour, #heure {
+    margin: 0px;
+  }
+
+  #heure {
+    margin-top: 20px;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  #choix-coiffeur,#choix-forfait  {
+    margin-top: 35px;
+  }
+
+  #selection-date {
+    margin-top: 25px
+  }
+
+  .container.checkbox-heure-rdv {
+    display: none;
+  }
+}
+
+@mixin responsive-rdv{ 
+  @media only screen and (min-width: 1024px) {
+    #title-rdv {
+    font-size: 28px;
+    }
+
+    .title-section-rdv {
+    font-size: 24px;
+    margin-bottom: 15px;
+    }
+
+    #main-rdv {
+    margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
+    }
+
+    #heure {
+    display: none;
+    }
+    
+    .container.checkbox-heure-rdv {
+    display: block;
+    width:30%;
+    }
+
+    input[type="checkbox"][id^="coiffeur"] + label::before {
+    width: 120px;
+    height: 120px;
+    }
+    
+    .nom-coiffeur {
+    font-weight: bold;
+    }
+    
+    .liste-heure-rdv{
+      display:none;
+    }
+    
+    input[type="checkbox"][id^="heure"] {
+      display: none;
+    }
+
+    input[type="checkbox"][id^="heure"] + label::before {
+      content: "";
+      display: inline-block;
+      width: 70px;
+      height: 35px;
+      background-color: #009CDF;
+      border-radius: 16px;
+      opacity: 0.5;
+
+    }
+
+    input[type="checkbox"][id^="heure"]:checked + label::before {
+      font-size: 10px;
+      opacity: 1;
+    }
+    
+    label[for^="heure"] {
+      position: relative;
+    }
+    
+    .heure{
+      position: absolute;
+      left: -5%;
+      top: -60%;
+      color:white;
+      width:100%;
+      font-weight: bold;
+    }
+    
+    .container.date {
+    width: 52%;
+    }
+  }
+}

@@ -122,10 +122,10 @@ div [class *= "col-"] {
   color: #000000;
 }
 
-
-
-
 @include planing;
+
+@include rendezvous;
+@include responsive-rdv;
 
 
 
