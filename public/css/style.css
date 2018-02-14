@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto:300i,400");
 * {
   box-sizing: border-box; }
@@ -394,7 +395,7 @@ body {
 
 #main-rdv {
   background-color: white;
-  padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2);
+  padding: 0 20px 100% 20px;
   margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2); }
 
 #title-rdv, li {
@@ -417,6 +418,16 @@ input[type="checkbox"][id^="coiffeur"] + label::before {
   background-image: url("../img/hommecoiffure.jpg");
   background-size: cover;
   border-radius: 12px; }
+
+#coiffeurTous + label::before {
+  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0)); }
+
+label[for="coiffeurTous"] {
+  white-space: nowrap;
+  /* interdiction de passer à la ligne */ }
+
+label[for="coiffeurTous"] span {
+  font-size: 20px; }
 
 input[type="checkbox"][id^="coiffeur"] + label::before {
   opacity: 0.5; }
@@ -448,7 +459,8 @@ section {
   background: black;
   color: white;
   height: 35px;
-  margin-top: 15px; }
+  margin-top: 15px;
+  border-radius: 7px; }
 
 .nom-coiffeur {
   position: absolute;
@@ -464,7 +476,7 @@ section {
   margin: 0 8px 5px 8px; }
 
 #mois, #annee {
-  margin-left: 50px; }
+  margin-left: 40px; }
 
 #jour, #heure {
   margin: 0px; }
@@ -472,14 +484,21 @@ section {
 #heure {
   margin-top: 20px; }
 
-li {
+.liste-coiffeur li, .checkbox-heure-rdv li {
   display: inline-block; }
+
+#choix-forfait a {
+  margin-top: 10px;
+  text-decoration: none; }
 
 #choix-coiffeur, #choix-forfait {
   margin-top: 35px; }
 
 #selection-date {
   margin-top: 25px; }
+
+.date {
+  margin-left: 0px; }
 
 .container.checkbox-heure-rdv {
   display: none; }
@@ -491,7 +510,8 @@ li {
     font-size: 24px;
     margin-bottom: 15px; }
   #main-rdv {
-    margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2); }
+    margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
+    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2); }
   #heure {
     display: none; }
   .container.checkbox-heure-rdv {

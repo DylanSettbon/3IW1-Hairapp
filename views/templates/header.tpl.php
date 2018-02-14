@@ -7,8 +7,6 @@
   <title>Hair'App : Le site à votre image.</title>
 </head>
 
-<body>
-
   <header class='header'>
       <div class='container2'>
         <div class='logo'>

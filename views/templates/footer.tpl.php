@@ -7,8 +7,8 @@
  */
 ?>
     <footer class="footer"></footer>
-    <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-    <script src="../public/js/index.js"></script>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+    <script type="text/javascript" src="../public/js/index.js"></script>
     </body>
 
 </html>

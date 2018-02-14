@@ -341,13 +341,16 @@ $border_color: #333333;
 
 @mixin rendezvous {
   /* RENDEZ VOUS*/
+  $imgCoiffeur1 : "../img/hommecoiffure.jpg";
+
+  
   #body-rdv {
     background-color: #E5E5E5;
   }
 
   #main-rdv {
     background-color: white;
-    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2);
+    padding: 0 20px 100% 20px;
     margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
   }
 
@@ -369,12 +372,25 @@ $border_color: #333333;
   input[type="checkbox"][id^="coiffeur"] + label::before {
     content: "";
     display: inline-block;
-    width: 80px;
+    width: 80px;  
     height: 80px;
-    background-image: url("../img/hommecoiffure.jpg");
+    background-image: url($imgCoiffeur1);
     background-size: cover;
     border-radius: 12px;
   }
+
+  #coiffeurTous + label::before {
+    background-image:linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
+  }
+
+  label[for="coiffeurTous"]{
+    white-space: nowrap; /* interdiction de passer à la ligne */
+  }
+
+  label[for="coiffeurTous"] span{
+    font-size:20px;
+  }
+
 
   input[type="checkbox"][id^="coiffeur"] + label::before {
     opacity: 0.5;
@@ -412,6 +428,7 @@ $border_color: #333333;
     color: white;
     height: 35px;
     margin-top: 15px;
+    border-radius:7px;
   }
 
   .nom-coiffeur {
@@ -430,7 +447,7 @@ $border_color: #333333;
   }
 
   #mois, #annee {
-    margin-left: 50px;
+    margin-left: 40px;
   }
 
   #jour, #heure {
@@ -441,9 +458,14 @@ $border_color: #333333;
     margin-top: 20px;
   }
 
-  li {
+  .liste-coiffeur li,.checkbox-heure-rdv li {
     display: inline-block;
   }
+
+  #choix-forfait a{
+    margin-top:10px;
+    text-decoration:none; 
+  } 
 
   #choix-coiffeur,#choix-forfait  {
     margin-top: 35px;
@@ -451,6 +473,10 @@ $border_color: #333333;
 
   #selection-date {
     margin-top: 25px
+  }
+
+  .date{
+    margin-left:0px;
   }
 
   .container.checkbox-heure-rdv {
@@ -471,6 +497,7 @@ $border_color: #333333;
 
     #main-rdv {
     margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
+    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2);
     }
 
     #heure {
@@ -531,5 +558,5 @@ $border_color: #333333;
     .container.date {
     width: 52%;
     }
-  }
+  } 
 }
