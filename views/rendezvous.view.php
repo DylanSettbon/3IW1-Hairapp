@@ -22,19 +22,19 @@
 					<li>
 					<input id="coiffeur3" type="checkbox">
 						<label for="coiffeur3">
-							<span class="nom-coiffeur">Jerome</span>
+							<span class="nom-coiffeur">Jerome1</span>
 						</label>
 					</li>
 					<li>
 					<input id="coiffeur4" type="checkbox">
 						<label for="coiffeur4">
-							<span class="nom-coiffeur">Jerome</span>
+							<span class="nom-coiffeur">Jerome2</span>
 						</label>
 					</li>
 					<li>
 					<input id="coiffeur5" type="checkbox">
 						<label for="coiffeur5">
-							<span class="nom-coiffeur">Jerome</span>
+							<span class="nom-coiffeur">Jerome3</span>
 						</label>
 					</li>
 				</div>
@@ -115,11 +115,13 @@
 				<a href="Carte.html">Voir la carte du salon</a>
 			</section>
 			
-			<button type="button" name="btn-Valider" class="btn-Valider col-s-12">Valider</button>
+			<button type="button" name="btn-Valider" class="btn-Valider col-s-12 col-l-12">Valider</button>
 		</form>
 	</main>
 </body>
-<script src="../public/js/rendezvous.js"></script>
+<?php include "templates/footer.tpl.php"; ?>
+<script type="text/javascript" src="../public/js/rendezvous.js"></script>
 </html>
 
-<?php include "templates/footer.tpl.php"; ?>
+
+

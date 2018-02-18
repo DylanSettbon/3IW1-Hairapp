@@ -4,6 +4,8 @@
 
 
 .row{
+  //margin:0 $gutter ;
+  margin:0 0px ;
   @include clearfix;
   @include flex; // ajout du Flex
   overflow: hidden; // retire le padding sur les bords de la grille
@@ -205,7 +207,12 @@ div [class *= "col-"] {
   }
 }
 
+@include userManager;
+@include login;
+@include signin;
 
+@include forfaits;
+@include responsive-forfaits;
 
 
 

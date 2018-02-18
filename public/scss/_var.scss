@@ -22,6 +22,7 @@ $button_color: #009CDF;
     clear: both;
   }
 }
+
 @mixin boxs{
   *{
   box-sizing: border-box;
@@ -435,8 +436,8 @@ $button_color: #009CDF;
 
   .nom-coiffeur {
     position: absolute;
-    left: 0%;
-    top: -10px;
+    left: -1%;
+    top: -12px;
     background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
     color:white;
     width:97%;
@@ -484,6 +485,7 @@ $button_color: #009CDF;
   .container.checkbox-heure-rdv {
     display: none;
   }
+
 }
 
 @mixin responsive-rdv{ 
@@ -561,6 +563,55 @@ $button_color: #009CDF;
     width: 52%;
     }
   } 
+}
+
+@mixin forfaits{
+  /*Forfait*/
+  #main-forfait {
+    margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
+    position:absolute;
+  }
+
+  #title-forfait{
+    text-align: center;
+  }
+
+  .description,.prix{
+  width:50  %;
+  margin:0 0 20px 0;
+  font-size:16px;
+  font-weight: normal;
+  }
+
+  .description{
+   text-align:left;
+  }
+
+  .prix{
+  text-align: right;
+  }
+
+  .title-categorie{
+    margin: 10px 0 10% 0;
+  }
+
+  .partie-gauche div[class^="categorie"]:last-child hr{
+    display:none;
+  }
+
+}
+
+@mixin responsive-forfaits{
+  @media only screen and (min-width: 1024px) {
+    #main-forfait {
+      margin-left: calc(8.33333% * 2);
+    }
+
+    .partie-droite div[class^="categorie"]:last-child hr{
+      display:none;
+    }
+
+  }
 }
 
 @mixin userManager{
