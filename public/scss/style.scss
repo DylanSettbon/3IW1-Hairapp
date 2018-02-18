@@ -4,7 +4,6 @@
 
 
 .row{
-  margin:0 $gutter ;
   @include clearfix;
   @include flex; // ajout du Flex
   overflow: hidden; // retire le padding sur les bords de la grille
@@ -34,6 +33,50 @@ div [class *= "col-"] {
 .container{
   @include container;
 }
+
+
+
+// CSS POUR USER MANAGER
+@include userManager;
+
+
+// login .php
+@include login;
+
+// sign In
+
+@include signin;
+
+
+
+@include container-fluid;
+
+
+.center{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.title{
+  border-bottom: 1px solid $button_color;
+  //width: 200px;
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  //font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+}
+
+@include planing;
+
+@include rendezvous;
+@include responsive-rdv;
+
+
+
 
 //  Debut navbar
 @include navbar;
@@ -67,11 +110,37 @@ div [class *= "col-"] {
   }
 
   #planning td, #planning th{
-    border-left: 2px solid #009CDF;
+    border-left: 2px solid $button_color;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px;
+  }
+
+  .background_login{
+    background-color:#E5E5E5;
+    height: 100%;
+  }
+
+  #valider{
+    background-color:#2F80ED;
+    color:white;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 35%;
+  }
+
+  .form_register{
+    background-color:white;
+    margin-top: 45px;
+    padding: 40px 100px;
+    color:rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar_buttons{
+    //color: #333333;
+    text-align: center;
+    margin-top: 50%;
   }
 
 }
@@ -94,38 +163,49 @@ div [class *= "col-"] {
   }
 
   #planning td, #planning th{
-    border-left: 2px solid #009CDF;
+    border-left: 2px solid $button_color;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px;
   }
+
+  .background_login{
+    background-color:#E5E5E5;
+    height: 100%;
+  }
+  #connecter{
+    background-color: $button_color;
+    color:white;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    width: 35%;
+  }
+
+  #valider{
+    background-color:#2F80ED;
+    color:white;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 35%;
+  }
+
+  .form_register{
+    background-color:white;
+    margin-top: 45px;
+    padding: 40px 100px;
+    color:rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar_buttons{
+    //color: #333333;
+    text-align: center;
+    margin-top: 50%;
+  }
 }
 
-@include container-fluid;
 
-
-.center{
-  margin: auto;
-  text-align: center;
-}
-
-.title{
-  border-bottom: 1px solid #009CDF;
-  //width: 200px;
-  font-family: "Roboto";
-  font-style: italic;
-  line-height: normal;
-  //font-size: 36px;
-  text-align: center;
-  margin-bottom: 25px;
-  color: #000000;
-}
-
-@include planing;
-
-@include rendezvous;
-@include responsive-rdv;
 
 
 

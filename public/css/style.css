@@ -4,7 +4,6 @@
   box-sizing: border-box; }
 
 .row {
-  margin: 0 -15px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -30,8 +29,7 @@
   margin-right: 50px; }
 
 .sidebar_buttons {
-  text-align: center;
-  margin-top: 50%; }
+  text-align: center; }
 
 .sidebar a:active {
   background-color: #EEEEEE; }
@@ -78,6 +76,9 @@ body {
   padding-bottom: 6rem;
   height: 119vh; }
 
+html {
+  height: 1vh; }
+
 .footer {
   position: fixed;
   right: 0;
@@ -92,6 +93,343 @@ body {
   width: 100%;
   margin: auto;
   height: 100%; }
+
+.form_register_admin {
+  background-color: white;
+  margin-top: 45px;
+  color: rgba(0, 0, 0, 0.3); }
+
+.userManagerTab {
+  border-collapse: collapse;
+  width: 100%; }
+
+.page {
+  color: #637484; }
+
+tr:nth-child(even) {
+  background-color: rgba(189, 189, 189, 0.2); }
+
+th {
+  color: #637484; }
+
+.previous a, .next a {
+  text-decoration: none;
+  color: #637484; }
+
+#civilite {
+  width: 15%;
+  padding: 10px; }
+
+#nom {
+  width: 25%;
+  padding: 10px; }
+
+#email {
+  width: 25%;
+  padding: 10px; }
+
+#tel {
+  width: 20%;
+  padding: 10px; }
+
+#status {
+  width: 15%;
+  padding: 10px; }
+
+td {
+  text-align: center;
+  padding: 10px; }
+
+hr {
+  background: rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  margin-top: 30px; }
+
+.span {
+  color: #637484; }
+
+input {
+  border-radius: 5px;
+  padding: 10px;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: black;
+  display: block;
+  width: 100%;
+  font-size: 16px; }
+
+#connecter {
+  background-color: #009CDF;
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 70%; }
+
+.mdp {
+  margin-bottom: 20px;
+  text-decoration: none; }
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #637484; }
+
+.form_register {
+  background-color: white;
+  margin-top: 45px;
+  padding: 40px;
+  color: rgba(0, 0, 0, 0.3); }
+
+.mail {
+  margin-bottom: 20px; }
+
+#checkBox {
+  display: inline-block;
+  width: auto; }
+
+#valider {
+  background-color: #2F80ED;
+  color: white;
+  margin-top: 30px;
+  font-size: 16px;
+  width: 70%; }
+
+.select-sign-in {
+  border-radius: 5px;
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: black;
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  -webkit-appearance: textfield; }
+
+.default_civilite {
+  color: rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px; }
+
+.input_sign-in {
+  margin-bottom: 20px; }
+
+.offre_promo {
+  margin-bottom: 30px; }
+
+.justify {
+  text-align: justify; }
+
+.container-fluid {
+  width: 100%; }
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; }
+
+.title {
+  border-bottom: 1px solid #009CDF;
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000; }
+
+#planning {
+  border-collapse: collapse;
+  margin-bottom: 30px; }
+
+#planning td, #planning th {
+  border-left: 2px solid #009CDF; }
+
+#planning tr {
+  padding: 5px; }
+
+.planning {
+  border-right: 2px solid #009CDF; }
+
+#planning th {
+  border: none; }
+
+.hairdresser1 {
+  background-color: #F2994A; }
+
+.hairdresser2 {
+  background-color: #2D9CDB; }
+
+.hairdresser3 {
+  background-color: #27AE60; }
+
+.all {
+  background-color: #333333;
+  color: white; }
+
+.button {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  height: 30px; }
+
+/* RENDEZ VOUS*/
+#body-rdv {
+  background-color: #E5E5E5; }
+
+#main-rdv {
+  background-color: white;
+  padding: 0 20px 100% 20px;
+  margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2); }
+
+#title-rdv, li {
+  text-align: center; }
+
+.title-section-rdv {
+  font-size: 20px;
+  padding: 0;
+  margin: 0 0 15px 0;
+  width: 100%; }
+
+input[type="checkbox"][id^="coiffeur"] {
+  display: none; }
+
+input[type="checkbox"][id^="coiffeur"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background-image: url("../img/hommecoiffure.jpg");
+  background-size: cover;
+  border-radius: 12px; }
+
+#coiffeurTous + label::before {
+  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0)); }
+
+label[for="coiffeurTous"] {
+  white-space: nowrap;
+  /* interdiction de passer à la ligne */ }
+
+label[for="coiffeurTous"] span {
+  font-size: 20px; }
+
+input[type="checkbox"][id^="coiffeur"] + label::before {
+  opacity: 0.5; }
+
+input[type="checkbox"][id^="coiffeur"]:checked + label::before {
+  border: solid black 2px;
+  font-size: 10px;
+  opacity: 1; }
+
+label[for^="coiffeur"] {
+  position: relative; }
+
+section {
+  display: inline;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 0; }
+
+.liste_deroulante {
+  border-style: none none solid none;
+  border-width: 2px;
+  border-color: black;
+  font-size: 125%;
+  color: #B8B8B8;
+  height: 35px;
+  margin: 0 auto; }
+
+.btn-Valider {
+  background: black;
+  color: white;
+  height: 35px;
+  margin-top: 15px;
+  border-radius: 7px; }
+
+.nom-coiffeur {
+  position: absolute;
+  left: 0%;
+  top: -10px;
+  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
+  color: white;
+  width: 97%;
+  height: 137%;
+  border-radius: 0 0 12px 12px; }
+
+#choix-coiffeur li, #selection-date li {
+  margin: 0 8px 5px 8px; }
+
+#mois, #annee {
+  margin-left: 40px; }
+
+#jour, #heure {
+  margin: 0px; }
+
+#heure {
+  margin-top: 20px; }
+
+.liste-coiffeur li, .checkbox-heure-rdv li {
+  display: inline-block; }
+
+#choix-forfait a {
+  margin-top: 10px;
+  text-decoration: none; }
+
+#choix-coiffeur, #choix-forfait {
+  margin-top: 35px; }
+
+#selection-date {
+  margin-top: 25px; }
+
+.date {
+  margin-left: 0px; }
+
+.container.checkbox-heure-rdv {
+  display: none; }
+
+@media only screen and (min-width: 1024px) {
+  #title-rdv {
+    font-size: 28px; }
+  .title-section-rdv {
+    font-size: 24px;
+    margin-bottom: 15px; }
+  #main-rdv {
+    margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
+    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2); }
+  #heure {
+    display: none; }
+  .container.checkbox-heure-rdv {
+    display: block;
+    width: 30%; }
+  input[type="checkbox"][id^="coiffeur"] + label::before {
+    width: 120px;
+    height: 120px; }
+  .nom-coiffeur {
+    font-weight: bold; }
+  .liste-heure-rdv {
+    display: none; }
+  input[type="checkbox"][id^="heure"] {
+    display: none; }
+  input[type="checkbox"][id^="heure"] + label::before {
+    content: "";
+    display: inline-block;
+    width: 70px;
+    height: 35px;
+    background-color: #009CDF;
+    border-radius: 16px;
+    opacity: 0.5; }
+  input[type="checkbox"][id^="heure"]:checked + label::before {
+    font-size: 10px;
+    opacity: 1; }
+  label[for^="heure"] {
+    position: relative; }
+  .heure {
+    position: absolute;
+    left: -5%;
+    top: -60%;
+    color: white;
+    width: 100%;
+    font-weight: bold; }
+  .container.date {
+    width: 52%; } }
 
 .header {
   background: #637484;
@@ -295,7 +633,24 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
-    padding-top: 6px; } }
+    padding-top: 6px; }
+  .background_login {
+    background-color: #E5E5E5;
+    height: 100%; }
+  #valider {
+    background-color: #2F80ED;
+    color: white;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 35%; }
+  .form_register {
+    background-color: white;
+    margin-top: 45px;
+    padding: 40px 100px;
+    color: rgba(0, 0, 0, 0.3); }
+  .sidebar_buttons {
+    text-align: center;
+    margin-top: 50%; } }
 
 @media only screen and (min-width: 1024px) {
   .col-l-center {
@@ -335,216 +690,28 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
-    padding-top: 6px; } }
-
-.container-fluid {
-  width: 100%; }
-
-.center {
-  margin: auto;
-  text-align: center; }
-
-.title {
-  border-bottom: 1px solid #009CDF;
-  font-family: "Roboto";
-  font-style: italic;
-  line-height: normal;
-  text-align: center;
-  margin-bottom: 25px;
-  color: #000000; }
-
-#planning {
-  border-collapse: collapse; }
-
-#planning td, #planning th {
-  border-left: 2px solid #009CDF; }
-
-#planning tr {
-  padding: 5px; }
-
-.planning {
-  border-right: 2px solid #009CDF; }
-
-#planning th {
-  border: none; }
-
-.hairdresser1 {
-  background-color: #F2994A; }
-
-.hairdresser2 {
-  background-color: #2D9CDB; }
-
-.hairdresser3 {
-  background-color: #27AE60; }
-
-.all {
-  background-color: #333333;
-  color: white; }
-
-.button {
-  padding-bottom: 5px;
-  padding-top: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 5px;
-  height: 30px; }
-
-/* RENDEZ VOUS*/
-#body-rdv {
-  background-color: #E5E5E5; }
-
-#main-rdv {
-  background-color: white;
-  padding: 0 20px 100% 20px;
-  margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2); }
-
-#title-rdv, li {
-  text-align: center; }
-
-.title-section-rdv {
-  font-size: 20px;
-  padding: 0;
-  margin: 0 0 15px 0;
-  width: 100%; }
-
-input[type="checkbox"][id^="coiffeur"] {
-  display: none; }
-
-input[type="checkbox"][id^="coiffeur"] + label::before {
-  content: "";
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  background-image: url("../img/hommecoiffure.jpg");
-  background-size: cover;
-  border-radius: 12px; }
-
-#coiffeurTous + label::before {
-  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0)); }
-
-label[for="coiffeurTous"] {
-  white-space: nowrap;
-  /* interdiction de passer à la ligne */ }
-
-label[for="coiffeurTous"] span {
-  font-size: 20px; }
-
-input[type="checkbox"][id^="coiffeur"] + label::before {
-  opacity: 0.5; }
-
-input[type="checkbox"][id^="coiffeur"]:checked + label::before {
-  border: solid black 2px;
-  font-size: 10px;
-  opacity: 1; }
-
-label[for^="coiffeur"] {
-  position: relative; }
-
-section {
-  display: inline;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  margin-bottom: 0; }
-
-.liste_deroulante {
-  border-style: none none solid none;
-  border-width: 2px;
-  border-color: black;
-  font-size: 125%;
-  color: #B8B8B8;
-  height: 35px;
-  margin: 0 auto; }
-
-.btn-Valider {
-  background: black;
-  color: white;
-  height: 35px;
-  margin-top: 15px;
-  border-radius: 7px; }
-
-.nom-coiffeur {
-  position: absolute;
-  left: 0%;
-  top: -10px;
-  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
-  color: white;
-  width: 97%;
-  height: 137%;
-  border-radius: 0 0 12px 12px; }
-
-#choix-coiffeur li, #selection-date li {
-  margin: 0 8px 5px 8px; }
-
-#mois, #annee {
-  margin-left: 40px; }
-
-#jour, #heure {
-  margin: 0px; }
-
-#heure {
-  margin-top: 20px; }
-
-.liste-coiffeur li, .checkbox-heure-rdv li {
-  display: inline-block; }
-
-#choix-forfait a {
-  margin-top: 10px;
-  text-decoration: none; }
-
-#choix-coiffeur, #choix-forfait {
-  margin-top: 35px; }
-
-#selection-date {
-  margin-top: 25px; }
-
-.date {
-  margin-left: 0px; }
-
-.container.checkbox-heure-rdv {
-  display: none; }
-
-@media only screen and (min-width: 1024px) {
-  #title-rdv {
-    font-size: 28px; }
-  .title-section-rdv {
-    font-size: 24px;
-    margin-bottom: 15px; }
-  #main-rdv {
-    margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
-    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2); }
-  #heure {
-    display: none; }
-  .container.checkbox-heure-rdv {
-    display: block;
-    width: 30%; }
-  input[type="checkbox"][id^="coiffeur"] + label::before {
-    width: 120px;
-    height: 120px; }
-  .nom-coiffeur {
-    font-weight: bold; }
-  .liste-heure-rdv {
-    display: none; }
-  input[type="checkbox"][id^="heure"] {
-    display: none; }
-  input[type="checkbox"][id^="heure"] + label::before {
-    content: "";
-    display: inline-block;
-    width: 70px;
-    height: 35px;
+    padding-top: 6px; }
+  .background_login {
+    background-color: #E5E5E5;
+    height: 100%; }
+  #connecter {
     background-color: #009CDF;
-    border-radius: 16px;
-    opacity: 0.5; }
-  input[type="checkbox"][id^="heure"]:checked + label::before {
-    font-size: 10px;
-    opacity: 1; }
-  label[for^="heure"] {
-    position: relative; }
-  .heure {
-    position: absolute;
-    left: -5%;
-    top: -60%;
     color: white;
-    width: 100%;
-    font-weight: bold; }
-  .container.date {
-    width: 52%; } }
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    width: 35%; }
+  #valider {
+    background-color: #2F80ED;
+    color: white;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 35%; }
+  .form_register {
+    background-color: white;
+    margin-top: 45px;
+    padding: 40px 100px;
+    color: rgba(0, 0, 0, 0.3); }
+  .sidebar_buttons {
+    text-align: center;
+    margin-top: 50%; } }
