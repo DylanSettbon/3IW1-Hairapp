@@ -9,11 +9,11 @@
       </div>
 
       <div class="mySlides fade">
-        <img class="contain-img" src="img/barber2.jpeg" style="width:100%">
+        <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%">
       </div>
 
       <div class="mySlides fade">
-        <img class="contain-img" src="img/barber3.jpeg" style="width:100%">
+        <img class="contain-img" src="../public/img/barber3.jpg" style="width:100%">
       </div>
 
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
