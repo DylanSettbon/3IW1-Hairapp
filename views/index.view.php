@@ -30,8 +30,8 @@
 
   </section>
   <main class="container">
-    <section id="acc-articles" class="col-s-3 col-m-12 col-l-8">
-      <article class="col-s-3 col-m-12 col-l-8">
+    <section id="acc-articles" class="col-s-3 col-m-12 col-l-9">
+      <article class="col-s-3 col-m-12 col-l-10">
         <h1 class="title col-s-8 col-m-8 col-l-4" style="font-size:26px">Article</h1>
       </article>
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
@@ -64,7 +64,7 @@
           <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
         </div>
 
-        <div class="row article-accueil">
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
           <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
