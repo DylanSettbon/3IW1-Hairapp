@@ -71,7 +71,7 @@
         </div>
     </section>
      <section id="" class="col-s-12 col-m-12 col-l-3">
-          <center><h2 class="side-title">Flux RSS</h2></center>
+          <center><h2 class="title">Flux RSS</h2></center>
         <div class="col-s-3 col-m-6 col-l-6 row side-accueil" style="overflow:scroll;">
           <a class="twitter-timeline" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Flux RSS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
