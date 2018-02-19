@@ -2,9 +2,8 @@
 
 include "../../conf.inc.php";
 
+?>
 
-
-echo"
 
 <!DOCTYPE html>
 <html lang='fr' >
@@ -33,7 +32,7 @@ echo"
           <ul>
             <li class='active'><a href='admin'>Back-Office</a></li>
             <li><a href='index'>Vers le site</a></li>
-            <li><a href='#'>Mon Compte</a></li>
+            <li><a href='signin'>Mon Compte</a></li>
           </ul>
         </nav>
       </div>
@@ -46,10 +45,8 @@ echo"
     <aside class='sidebar col-s-12 col-m-2 col-l-1'>  <!-- col-s-3 col-m-2 col-l-2  sidebar col-s-3 col-m-2 col-l-2-->
         <ul id='sidebar_ul'>
             <li class='active sidebar_buttons'><a href='admin'>Dashboard</a></li>
-            <li class='sidebar_buttons'><a href='userManager'>User Manager</a></li>
+            <li class='sidebar_buttons'><a href='userAdmin'>User Manager</a></li>
             <li class='sidebar_buttons'><a href='siteManager'>Website Manager</a> </li>
         </ul>
    </aside>
-";
-
 

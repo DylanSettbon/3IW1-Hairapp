@@ -16,7 +16,7 @@ include "templates/admin_header.tpl.php";
             </h1>
         </article>
         &nbsp;
-        <img src="../public/img/activity.png" class="col-l-12 col-s-12 center">
+        <img src="public/img/activity.png" class="col-l-12 col-s-12 center">
 
     </section>
     &nbsp;

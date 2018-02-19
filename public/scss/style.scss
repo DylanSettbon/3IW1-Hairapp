@@ -85,6 +85,7 @@ div [class *= "col-"] {
 .column-direction{
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 //Grid //
@@ -316,12 +317,6 @@ text-align:center;}
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
 }
-
-
-
-@include userManager;
-@include login;
-@include signin;
 
 @include forfaits;
 @include responsive-forfaits;
