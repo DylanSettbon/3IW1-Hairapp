@@ -37,37 +37,37 @@
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
 
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
 
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
 
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
 
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
 
         <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
           <img class="img-art" src="../public/img/quote.svg"></img>
           <h2 class="titre-article">Article</h2>
-          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.</p>
         </div>
     </section>
      <section id="" class="col-s-12 col-m-12 col-l-3">
