@@ -87,10 +87,10 @@ include "templates/admin_header.tpl.php";
                       <td>0</td>
                     </tr>
                     <nav aria-label="navigation">
-                  <tr class="pager">
+                  <tr class="page">
                   <td class="previous"><a href="#" title="Précédent">Précédent</a></td>
                   <td class="page center" colspan="3">1/104</td>
-                  <td class="next"><a href="#" title="Suivant">Suivant</a></td>
+                  <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                   </tr>
                 </nav>
                </table>
