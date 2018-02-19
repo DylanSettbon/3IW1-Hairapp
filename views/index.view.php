@@ -1,55 +1,83 @@
+<?php include "templates/header.tpl.php";?>
 
-<!--
- * Created by PhpStorm.
- * User: antoine
- * Date: 03/02/2018
- * Time: 15:04
--->
-<?php
-    include "templates/header.tpl.php";
-?>
-<main>
-      <section>
-          <h1>Grille CSS responsive</h1>
-      </section>
-      <article>
-          <div class="container">
-              <div class="row">
-                  <div class="col-s-12 col-m-4 col-l-4">
-                      <h2> Argument </h2>
-                      <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                      </p>
-                  </div>
-                  <div class="col-s-12 col-m-4 col-l-4">
-                      <h2> Argument </h2>
-                      <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                      </p>
-                  </div>
-                  <div class="col-s-12 col-m-4 col-l-4">
-                      <h2> Argument </h2>
-                      <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                      </p>
-                  </div>
-              </div>
-          </div>
+<body>
+  <section>
+    <div class="row slideshow-container">
+
+      <div class="mySlides fade">
+        <img class="contain-img" src="../public/img/barber1.jpg" style="width:100%">
+      </div>
+
+      <div class="mySlides fade">
+        <img class="contain-img" src="img/barber2.jpeg" style="width:100%">
+      </div>
+
+      <div class="mySlides fade">
+        <img class="contain-img" src="img/barber3.jpeg" style="width:100%">
+      </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    </div>
+      <br>
+
+    <div class="acc-dot">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+
+  </section>
+  <main class="container">
+    <section id="acc-articles" class="col-s-3 col-m-12 col-l-8">
+      <article class="col-s-3 col-m-12 col-l-8">
+        <h1 class="title col-s-8 col-m-8 col-l-4" style="font-size:26px">Article</h1>
       </article>
-  </main>
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
 
-<?php
-    include "templates/footer.tpl.php";
-    ?>
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
+
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
+
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
+
+        <div class="col-s-3 col-m-6 col-l-6 row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
+
+        <div class="row article-accueil">
+          <img class="img-art" src="../public/img/quote.svg"></img>
+          <h2 class="titre-article">Article</h2>
+          <p class="content-art">Bienvenue sur l'espace étudiants de myGES. Cet espace vous permet d'accèder aux services réservés à nos étudiants.N'hésitez pas à consulter notre guide de présentation</p>
+        </div>
+    </section>
+     <section id="" class="col-s-12 col-m-12 col-l-3">
+          <center><h2 class="side-title">Flux RSS</h2></center>
+        <div class="col-s-3 col-m-6 col-l-6 row side-accueil" style="overflow:scroll;">
+          <a class="twitter-timeline" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Flux RSS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+      </section>
+  </main>
+</body>
+
+<script src="../public/js/home.js"></script>
+<?php include "templates/footer.tpl.php"; ?>
