@@ -1,8 +1,11 @@
 ﻿<?php include "templates/header.tpl.php";?>
 
 <body id="body-rdv">
-	<h1 id="title-rdv">Prendre rendez-vous</h1>
+
 	<main id="main-rdv" class="col-s-11 col-l-8">
+        <div class="row">
+            <h1 id="title-rdv" class="title col-l-10">Prendre rendez-vous</h1>
+        </div>
 		<form>
 			<section id="choix-coiffeur" class="row">
 				<h2 class="title-section-rdv">Designez votre coiffeur</h2>
@@ -112,7 +115,7 @@
 					<option value="shampoing">Shampoing</option>
 					<option value="couleur">Couleur</option>
 				</select>
-				<a href="Carte.html">Voir la carte du salon</a>
+				<a href="forfait">Voir la carte du salon</a>
 			</section>
 			
 			<button type="button" name="btn-Valider" class="btn-Valider col-s-12 col-l-12">Valider</button>
@@ -120,7 +123,7 @@
 	</main>
 </body>
 <?php include "templates/footer.tpl.php"; ?>
-<script type="text/javascript" src="../public/js/rendezvous.js"></script>
+<script type="text/javascript" src="public/js/rendezvous.js"></script>
 </html>
 
 

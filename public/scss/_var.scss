@@ -64,48 +64,43 @@ $button_color: #009CDF;
 }
 
 @mixin sidebar{
-  .sidebar{
-    float:left;
+  .sidenav{
+    //float:left;
     background-color: $main_color;
-    border-top: 2px solid $border_color;
-    border-bottom: 2px solid $border_color;
-    height: 100%;
-    bottom: 0;
-    position: relative;
-    display: table-cell;
-    margin-right: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 20px;
   }
   .sidebar_buttons{
-    //color: #333333;
     text-align: center;
-    //margin-top: 50%;
   }
-  .sidebar a:active {
+  .sidenav a:active {
     background-color: #EEEEEE;
   }
 
-  .sidebar ul {
+  .sidenav ul {
     margin: 0;
     padding: 0;
   }
-  .sidebar ul:after{
+  .sidenav ul:after{
     clear: both;
     content: '';
     display: block;
     height: 0;
     visibility: hidden;
   }
-  .sidebar li {
-    display: block;
+  .sidenav li {
+    display: inline;
     padding: 10px 0px;
   }
 
-  .header li:hover{
+  .sidenav li:hover{
     background-color: #b3c2d1;
     border-radius:5px;
   }
 
-  .sidebar a{
+  .sidenav a{
     color: #FFF;
     display: inline-block;
     font-weight: 400;
@@ -146,7 +141,7 @@ $button_color: #009CDF;
     position: absolute;
     top: 10px;
     left: 10px;
-    padding: 10px 0px;
+    //padding: 10px 0px;
   }
   #burger .bar {
     background: #EEE;
@@ -174,10 +169,11 @@ $button_color: #009CDF;
     height: 0;
     visibility: hidden;
   }
-  .nav li {
+  .li-navbar {
     float: left;
     display: inline-block;
     padding: 10px 0px;
+    cursor: pointer;
   }
   .nav a {
     color: #FFF;
@@ -186,7 +182,7 @@ $button_color: #009CDF;
     padding: 10px;
     text-decoration: none;
   }
-  .nav li:hover {
+  .li-navbar:hover {
     background: #b3c2d1;
     border-radius:5px;
   }
@@ -348,13 +344,23 @@ $button_color: #009CDF;
 
   
   #body-rdv {
-    background-color: #E5E5E5;
+    //background-color: #FFFFFF;
+    background-image: url("../img/salon coiffure.jpeg");
+    //object-fit: cover;
+    //background-repeat: no-repeat;
   }
 
   #main-rdv {
     background-color: white;
+    //border-radius: 5px;
+    //border: 2px solid #009CDF;
     padding: 0 20px 100% 20px;
     margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
+    //margin-left: auto;
+    //margin-right: auto;
+    //margin-top: 15px;
+    //text-align: center;
+    //padding: 10px;
   }
 
   #title-rdv, li {
@@ -427,7 +433,7 @@ $button_color: #009CDF;
   }
 
   .btn-Valider {
-    background: black;
+    background: $button_color;
     color: white;
     height: 35px;
     margin-top: 15px;
@@ -491,7 +497,9 @@ $button_color: #009CDF;
 @mixin responsive-rdv{ 
   @media only screen and (min-width: 1024px) {
     #title-rdv {
-    font-size: 28px;
+    //font-size: 28px;
+      margin-right: auto;
+      margin-left: auto;
     }
 
     .title-section-rdv {
@@ -501,7 +509,12 @@ $button_color: #009CDF;
 
     #main-rdv {
     margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
-    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2);
+      text-align: center;
+      margin-top: 45px;
+      //padding: 50px;
+      //margin-left: 25%;
+      //margin-right: 25%;
+    padding: 0 calc(8.5% / 2) calc(8.5% / 2);
     }
 
     #heure {
@@ -570,6 +583,10 @@ $button_color: #009CDF;
   #main-forfait {
     margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
     position:absolute;
+    background: white;
+    margin-top: 50px;
+    border-radius: 5px;
+    padding: 50px;
   }
 
   #title-forfait{
@@ -625,6 +642,10 @@ $button_color: #009CDF;
   .userManagerTab {
     border-collapse: collapse;
     width: 100%;
+  }
+
+  .tab-admin{
+    overflow-x: auto;
   }
 
   .page{
@@ -719,6 +740,7 @@ $button_color: #009CDF;
     background-color:white;
     margin-top: 45px;
     padding: 40px;
+    border-radius: 5px;
     color:rgba(0, 0, 0, 0.3);
   }
 

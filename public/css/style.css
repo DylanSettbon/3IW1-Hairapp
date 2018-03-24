@@ -18,43 +18,39 @@
     display: table;
     clear: both; }
 
-.sidebar {
-  float: left;
+.sidenav {
   background-color: #637484;
-  border-top: 2px solid #333333;
-  border-bottom: 2px solid #333333;
-  height: 100%;
-  bottom: 0;
-  position: relative;
-  display: table-cell;
-  margin-right: 50px; }
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  margin-top: 20px; }
 
 .sidebar_buttons {
   text-align: center; }
 
-.sidebar a:active {
+.sidenav a:active {
   background-color: #EEEEEE; }
 
-.sidebar ul {
+.sidenav ul {
   margin: 0;
   padding: 0; }
 
-.sidebar ul:after {
+.sidenav ul:after {
   clear: both;
   content: '';
   display: block;
   height: 0;
   visibility: hidden; }
 
-.sidebar li {
-  display: block;
+.sidenav li {
+  display: inline;
   padding: 10px 0px; }
 
-.header li:hover {
+.sidenav li:hover {
   background-color: #b3c2d1;
   border-radius: 5px; }
 
-.sidebar a {
+.sidenav a {
   color: #FFF;
   display: inline-block;
   font-weight: 400;
@@ -103,6 +99,9 @@ html {
 .userManagerTab {
   border-collapse: collapse;
   width: 100%; }
+
+.tab-admin {
+  overflow-x: auto; }
 
 .page {
   color: #637484; }
@@ -179,6 +178,7 @@ h2 {
   background-color: white;
   margin-top: 45px;
   padding: 40px;
+  border-radius: 5px;
   color: rgba(0, 0, 0, 0.3); }
 
 .mail {
@@ -231,6 +231,7 @@ h2 {
   font-family: "Roboto";
   font-style: italic;
   line-height: normal;
+  font-size: 36px;
   text-align: center;
   margin-bottom: 25px;
   color: #000000; }
@@ -274,7 +275,7 @@ h2 {
 
 /* RENDEZ VOUS*/
 #body-rdv {
-  background-color: #E5E5E5; }
+  background-image: url("../img/salon coiffure.jpeg"); }
 
 #main-rdv {
   background-color: white;
@@ -339,7 +340,7 @@ section {
   margin: 0 auto; }
 
 .btn-Valider {
-  background: black;
+  background: #009CDF;
   color: white;
   height: 35px;
   margin-top: 15px;
@@ -388,13 +389,16 @@ section {
 
 @media only screen and (min-width: 1024px) {
   #title-rdv {
-    font-size: 28px; }
+    margin-right: auto;
+    margin-left: auto; }
   .title-section-rdv {
     font-size: 24px;
     margin-bottom: 15px; }
   #main-rdv {
     margin: 0 calc(8.33333% * 2) 0 calc(8.33333% * 2);
-    padding: 0 calc(8.5% / 2) 100% calc(8.5% / 2); }
+    text-align: center;
+    margin-top: 45px;
+    padding: 0 calc(8.5% / 2) calc(8.5% / 2); }
   #heure {
     display: none; }
   .container.checkbox-heure-rdv {
@@ -458,8 +462,7 @@ section {
   display: none;
   position: absolute;
   top: 10px;
-  left: 10px;
-  padding: 10px 0px; }
+  left: 10px; }
 
 #burger .bar {
   background: #EEE;
@@ -486,10 +489,11 @@ section {
   height: 0;
   visibility: hidden; }
 
-.nav li {
+.li-navbar {
   float: left;
   display: inline-block;
-  padding: 10px 0px; }
+  padding: 10px 0px;
+  cursor: pointer; }
 
 .nav a {
   color: #FFF;
@@ -498,7 +502,7 @@ section {
   padding: 10px;
   text-decoration: none; }
 
-.nav li:hover {
+.li-navbar:hover {
   background: #b3c2d1;
   border-radius: 5px; }
 
@@ -630,6 +634,8 @@ section {
   .column-direction {
     display: flex;
     flex-direction: column; }
+  .tab-planning {
+    margin-top: 60px; }
   #planning td, #planning th {
     border-left: 2px solid #009CDF;
     padding-left: 10px;
@@ -652,7 +658,23 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; } }
+    margin-top: 50%; }
+  .sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    background-color: #637484;
+    margin-top: 0; }
+  .sidenav li {
+    display: block;
+    padding: 10px 0px; }
+  .content {
+    margin-left: 160px; } }
 
 @media only screen and (min-width: 1024px) {
   .col-l-center {
@@ -716,16 +738,33 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; } }
+    margin-top: 50%; }
+  .sidenav li {
+    display: block;
+    padding: 10px 0px; }
+  .sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    background-color: #637484; }
+  .content {
+    margin-left: 160px; } }
 
 /* ----------------- HOME ----------------*/
 .article-accueil {
   height: 200px;
-  width: 250px;
-  border-style: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 1px solid rgba(0, 156, 223, 0.2);
+  border-radius: 5px;
   display: inline-block;
-  margin: 25px; }
+  margin-left: auto;
+  margin-bottom: 10px;
+  margin-right: auto; }
 
 .img-art {
   display: inline;
@@ -744,18 +783,16 @@ section {
 .side-accueil {
   height: 500px;
   width: 300px;
-  border-style: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  display: inline;
-  margin: 25px; }
+  border: 1px solid rgba(0, 156, 223, 0.2);
+  display: inline; }
 
 img {
   vertical-align: middle; }
 
 .slideshow-container {
-  width:100%;
+  width: 100%;
   max-height: 500px;
-  position:relative;}
+  position: relative; }
 
 .prev, .next {
   cursor: pointer;
@@ -811,6 +848,7 @@ img {
   to {
     opacity: 1; } }
 
+/* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .prev, .next {
     font-size: 11px; } }
@@ -818,7 +856,11 @@ img {
 /*Forfait*/
 #main-forfait {
   margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
-  position: absolute; }
+  position: absolute;
+  background: white;
+  margin-top: 50px;
+  border-radius: 5px;
+  padding: 50px; }
 
 #title-forfait {
   text-align: center; }
@@ -846,3 +888,45 @@ img {
     margin-left: calc(8.33333% * 2); }
   .partie-droite div[class^="categorie"]:last-child hr {
     display: none; } }
+
+.toggleAnimated {
+  display: inline-block;
+  cursor: pointer; }
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #EEE;
+  margin: 6px 0;
+  transition: 0.4s; }
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px); }
+
+.change .bar2 {
+  opacity: 0; }
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px); }
+
+.text-image {
+  text-align: center;
+  position: absolute;
+  top: 90%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  color: white; }
+
+.text-image a {
+  border: none;
+  outline: 0;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px 25px;
+  color: white;
+  background-color: rgba(0, 156, 223, 0.7);
+  text-align: center;
+  cursor: pointer; }

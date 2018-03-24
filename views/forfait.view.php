@@ -1,11 +1,10 @@
 ﻿<?php include "templates/header.tpl.php";?>
 
-<body>
+<body id="body-rdv">
 	<main id="main-forfait" class="col-s-11 col-l-8">
-		<h1 id="title-forfait" style="text-align: center;font-size: 28px;">Notre carte</h1>
-		<div class="row">
-			<hr class="col-s-4">
-		</div>
+        <div class="row">
+            <h1 id="title-rdv" class="title col-l-4">Notre Carte</h1>
+        </div>
 		<div class="col-s-12 col-l-5 partie-droite">
 			<div class="categorie1 container">
 				<h2 class="title-categorie">Categorie 1<h1>	

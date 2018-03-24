@@ -1,31 +1,34 @@
 <?php
     include "templates/header.tpl.php";
 ?>
+<body id="body-rdv">
+    <main>
 
-  <main class="background_login">
-      
-      <article>
-          <div class="container">
-              <div class="row">
-                  <!-- <div class="col-s-12 col-m-6 col-l-8 center" id="background_connexion"> -->
-                      <div class="col-s-12 col-m-6 col-l-6 center">
-                          <div class="form_register">
-                              <h2 class="center"> Me connecter </h2>
-                              <form method="post" action="">
-                                  <input type="email" name="email" class="mail" placeholder="Adresse e-mail"   />
-                                  <input type="password" name="pwd" id="pwd" placeholder="Mot de passe"   />
-                                  <input type="submit" id="connecter" class="center" value="Me connecter" />
-                                  <a class="mdp" href="#">Mot de passe oublié?</a>
-                                  <hr>
-                                  <p class="center"><span class="span"> Vous n'avez pas de compte ? </span><a  class="mdp" href="signin">Inscription</a><p>
-                              </form>
-                          </div>
+        <article>
+            <div class="container">
+                <div class="row">
+                    <!-- <div class="col-s-12 col-m-6 col-l-8 center" id="background_connexion"> -->
+                    <div class="col-s-12 col-m-6 col-l-6 center">
+                        <div class="form_register">
+                            <div class="row">
+                                <h1 id="title-rdv" class="title col-l-6">Se Connecter</h1>
+                            </div>
+                            <form method="post" action="">
+                                <input type="email" name="email" class="mail" placeholder="Adresse e-mail"   />
+                                <input type="password" name="pwd" id="pwd" placeholder="Mot de passe"   />
+                                <input type="submit" id="connecter" class="center" value="Me connecter" />
+                                <a class="mdp" href="#">Mot de passe oublié?</a>
+                                <hr>
+                                <p class="center"><span class="span"> Vous n'avez pas de compte ? </span><a  class="mdp" href="signin">Inscription</a><p>
+                            </form>
+                        </div>
 
-                  <!-- </div> -->
-              </div>
-          </div>
-      </article>
-  </main>
+                        <!-- </div> -->
+                    </div>
+                </div>
+        </article>
+    </main>
+</body>
 
 
 
