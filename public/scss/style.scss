@@ -285,6 +285,7 @@ div [class *= "col-"] {
   margin-bottom: 10px ;
   //margin-right: auto;
 }
+
 .img-art{
 display:inline;
 padding:5px;
@@ -296,11 +297,22 @@ height:3em;
 display:inline;
 text-decoration:underline;
 }
+.carte{
+text-decoration:underline;
+margin-left:40%;
+}
 
 .content-art{
 padding-left:10px;
 padding-right:10px;
 }
+
+.content-carte{
+padding-left:10px;
+padding-right:10px;
+text-align:center;
+}
+
 .side-accueil{
   height:500px;
   width:300px;
@@ -308,9 +320,11 @@ padding-right:10px;
   //border-style:none;
   //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: inline;
+  margin-left:30px;
   //margin:25px;
 }
 img {vertical-align: middle;}
+
 
 .slideshow-container {
   width:100%;
@@ -465,5 +479,18 @@ text-align:center;}
   background-color: #009cdf;
   text-align: center;
   cursor: pointer;
-  padding:10px;
+  margin:25px;
+}
+.title-carte{
+
+  //width: 200px;
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+  text-align:center;
+  margin-left:35px;
 }
