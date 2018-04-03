@@ -61,7 +61,7 @@ div [class *= "col-"] {
 }
 
 .title{
-  border-bottom: 1px solid $button_color;
+
   //width: 200px;
   font-family: "Roboto";
   font-style: italic;
@@ -70,6 +70,7 @@ div [class *= "col-"] {
   text-align: center;
   margin-bottom: 25px;
   color: #000000;
+  text-align:center;
 }
 
 @include planing;
@@ -273,16 +274,16 @@ div [class *= "col-"] {
 /* ----------------- HOME ----------------*/
 
 .article-accueil{
-  height:200px;
+  //height:200px;
   //width:250px;
   border: 1px solid rgba(0, 156, 223, 0.2);
   border-radius: 5px;
   //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: inline-block;
   //margin:5px;
-  margin-left: auto;
+  //margin-left: auto;
   margin-bottom: 10px ;
-  margin-right: auto;
+  //margin-right: auto;
 }
 .img-art{
 display:inline;
@@ -290,10 +291,12 @@ padding:5px;
 width:3em;
 height:3em;
 }
+
 .titre-article{
 display:inline;
 text-decoration:underline;
 }
+
 .content-art{
 padding-left:10px;
 padding-right:10px;
@@ -356,6 +359,10 @@ text-align:center;}
   background-color: #717171;
 }
 
+#acc-articles{
+  padding-left:60px;
+}
+
 .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
@@ -409,13 +416,28 @@ text-align:center;}
 
 
 
-.text-image {
+.text-image{
   text-align: center;
   position: absolute;
-  top: 90%;
-  left: 10%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  font-family: "Roboto";
+  line-height: normal;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+
+.text-image h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.text-image h2 {
+  color: white;
+  font-size: 18px;
 }
 
 .text-image a {
@@ -426,13 +448,22 @@ text-align:center;}
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: rgba(0, 156, 223, 0.7);
+  background-color: rgba(0, 156, 223,1);
   text-align: center;
   cursor: pointer;
 }
 
-
-
-
-
-
+.btnForfait
+{
+  border: none;
+  outline: 0;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px 25px;
+  color: white;
+  background-color: #009cdf;
+  text-align: center;
+  cursor: pointer;
+  padding:10px;
+}
