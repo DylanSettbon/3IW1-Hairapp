@@ -6,6 +6,7 @@
  * Time: 14:33
  */
 
-class Signin{
+class Signin extends BaseSql {
+
 
 }

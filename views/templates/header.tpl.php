@@ -25,7 +25,7 @@
         <nav class='nav'>
           <ul id="sidebar_ul">
             <li class='li-navbar'><a href='header.tpl.php'>Accueil</a></li>
-            <li class="li-navbar"><a href='rendezvous'>Rendez-vous</a></li>
+            <li class="li-navbar"><a href='appointment'>Rendez-vous</a></li>
             <li class="li-navbar"><a href='forfait'>Forfait</a></li>
             <li class="li-navbar"><a href='#'>Vitrine</a></li>
             <li class="li-navbar"><a href='#'>Salon</a></li>

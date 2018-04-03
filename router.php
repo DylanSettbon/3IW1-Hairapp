@@ -29,9 +29,59 @@ if( file_exists( "views/".$uri.".view.php") ){
     include "views/".$uri.".view.php";
 }
 else {
-    include "views/index.view.php";
+    //include "views/index.view.php";
     //echo "file views/" . $uri . ".view.php doesn't exist";
 }
+
+// DEBUT Ajout
+
+echo $uri;
+
+$uri = explode("?", $uri);
+// user/add
+$uriExploded = explode("/", $uri[0]);
+
+$c = (empty($uriExploded[0]))?"index":$uriExploded[0];
+$a = (empty($uriExploded[1]))?"index":$uriExploded[1];
+
+//Controller : NomController
+$c = ucfirst(strtolower($c))."Controller";
+//Action : nomAction
+$a = strtolower($a);
+
+unset($uriExploded[0]);
+unset($uriExploded[1]);
+
+$uriExploded = array_values($uriExploded);
+
+
+$params = array(
+    "POST"=>$_POST,
+    "GET"=>$_GET,
+    "URL"=>$uriExploded
+);
+
+
+if(file_exists("controllers/".$c.".class.php")){
+    include "controllers/".$c.".class.php";
+    if( class_exists($c) ){
+
+        $objC = new $c();
+
+        if( method_exists($objC, $a) ){
+            $objC->$a($params);
+        }else{
+            //die("L'action ".$a." n'existe pas");
+        }
+    }else{
+        die("Le controller ".$c." n'existe pas");
+    }
+}else{
+    die("Le fichier ".$c." n'existe pas");
+}
+
+// FIN Ajout
+
 
  // =============== cette partie redirige vers la bonne vue si l'url est bonne ================
 

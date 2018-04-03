@@ -7,10 +7,10 @@
  */
 
 
-define("DBUSER","");
-define("DBHOST","");
-define("DBNAME","");
-define("DBPWD","");
+define("DBUSER","root");
+define("DBHOST","120.0.0.1");
+define("DBNAME","projet_annuel");
+define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
 

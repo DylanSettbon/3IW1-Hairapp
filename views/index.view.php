@@ -7,7 +7,7 @@
         <img class="contain-img" src="public/img/barber1.jpg" style="width:100%">
           <div class="text-image">
               <h1">Prendre rendez-vous</h1>
-              <a href="rendezvous">cliquez ici</a>
+              <a href="appointment">cliquez ici</a>
           </div>
 
       </div>
