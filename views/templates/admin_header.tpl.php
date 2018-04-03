@@ -10,7 +10,7 @@ include "../../conf.inc.php";
 
 <head>
   <meta charset='UTF-8'>
-  <link rel='stylesheet' type='text/css' href= 'public/css/style.css'>
+  <link rel='stylesheet' type='text/css' href= '../public/css/style.css'>
   <title>Hair'App : Le site à votre image.</title>
 </head>
 

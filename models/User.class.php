@@ -25,21 +25,6 @@ class User extends BaseSql {
         parent::__construct();
     }
 
-    /**
-     * @return null
-     */
-    public function getId()
-    {
-        return $this->id_;
-    }
-
-    /**
-     * @param null $id_
-     */
-    public function setId($id_)
-    {
-        $this->id_ = $id_;
-    }
 
     /**
      * @return mixed
