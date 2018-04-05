@@ -1,6 +1,4 @@
-﻿<?php include "templates/header.tpl.php";?>
-
-<body id="body-rdv">
+﻿<body id="body-rdv">
 	<main id="main-forfait" class="col-s-11 col-l-8">
         <div class="row">
             <h1 id="title-rdv" class="title col-l-4">Notre Carte</h1>

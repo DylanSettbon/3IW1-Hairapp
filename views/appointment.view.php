@@ -1,6 +1,4 @@
-﻿<?php include "templates/header.tpl.php";?>
-
-<body id="body-rdv">
+﻿<body id="body-rdv">
 
 	<main id="main-rdv" class="col-s-11 col-l-8">
         <div class="row">
@@ -123,7 +121,7 @@
 	</main>
 </body>
 <?php include "templates/footer.tpl.php"; ?>
-<script type="text/javascript" src="public/js/rendezvous.js"></script>
+<script type="text/javascript" src="../public/js/rendezvous.js"></script>
 </html>
 
 

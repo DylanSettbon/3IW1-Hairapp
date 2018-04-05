@@ -9,4 +9,9 @@
 
 class AppointmentController{
 
+
+    public function getAppointment(){
+
+        $v = new Views( "appointment", "header" );
+    }
 }

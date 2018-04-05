@@ -12,32 +12,17 @@ class LoginController{
     private $login_;
     private $mdp_;
 
-    /**
-     * LoginController constructor.
-     * @param $login_
-     * @param $mdp_
-     */
-    public function __construct($login_, $mdp_)
-    {
-        $this->login_ = $login_;
-        $this->mdp_ = $mdp_;
-    }
+
 
     /**
      * @return mixed
      */
     public function getLogin()
     {
-        return $this->login_;
+        $v = new Views( "login", "header" );
     }
 
-    /**
-     * @param mixed $login_
-     */
-    public function setLogin($login_)
-    {
-        $this->login_ = $login_;
-    }
+
 
     /**
      * @return mixed

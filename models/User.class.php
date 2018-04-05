@@ -8,21 +8,37 @@
 
 class User extends BaseSql {
 
-    private $id_ = null;
-    private $firstname_;
-    private $lastname_;
-    private $email_;
-    private $pwd_;
-    private $token_;
-    private $number_;
-    private $kind_;
-    private $receivePromOffer_ = 0;
+    protected $id = null;
+    protected $firstname;
+    protected $lastname;
+    protected $email;
+    protected $pwd;
+    protected $token;
+    protected $number;
+    protected $kind;
+    protected $receivePromOffer = 0;
+    protected $status=0;
 
-    private $status=0;
 
-
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
+    }
+
+    /**
+     * @return null
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param null $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
 
@@ -31,15 +47,15 @@ class User extends BaseSql {
      */
     public function getFirstname()
     {
-        return $this->firstname_;
+        return $this->firstname;
     }
 
     /**
-     * @param mixed $firstname_
+     * @param mixed $firstname
      */
-    public function setFirstname($firstname_)
+    public function setFirstname($firstname)
     {
-        $this->firstname_ = ucfirst(strtolower(trim($firstname_)));
+        $this->firstname = ucfirst(strtolower(trim($firstname)));
     }
 
     /**
@@ -47,15 +63,15 @@ class User extends BaseSql {
      */
     public function getLastname()
     {
-        return $this->lastname_;
+        return $this->lastname;
     }
 
     /**
      * @param mixed $lastname_
      */
-    public function setLastname($lastname_)
+    public function setLastname($lastname)
     {
-        $this->lastname_ = strtoupper(trim($lastname_));
+        $this->lastname = strtoupper(trim($lastname));
     }
 
     /**
@@ -63,15 +79,15 @@ class User extends BaseSql {
      */
     public function getEmail()
     {
-        return $this->email_;
+        return $this->email;
     }
 
     /**
      * @param mixed $email_
      */
-    public function setEmail($email_)
+    public function setEmail($email)
     {
-        $this->email_ = strtolower(trim($email_));
+        $this->email = strtolower(trim($email));
     }
 
     /**
@@ -79,15 +95,15 @@ class User extends BaseSql {
      */
     public function getPwd()
     {
-        return $this->pwd_;
+        return $this->pwd;
     }
 
     /**
      * @param mixed $pwd_
      */
-    public function setPwd($pwd_)
+    public function setPwd($pwd)
     {
-        $this->pwd_ = password_hash($pwd_, PASSWORD_DEFAULT);
+        $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
 
     /**
@@ -95,17 +111,18 @@ class User extends BaseSql {
      */
     public function getToken()
     {
-        return $this->token_;
+        return $this->token;
     }
 
     /**
-     * @param mixed $token_
+     * @param null $token
+     * @internal param mixed $token_
      */
     public function setToken($token = null){
         if( $token ){
-            $this->token_ = $token;
+            $this->token = $token;
         }else if(!empty($this->email)){
-            $this->token_ = substr(sha1("GDQgfds4354".$this->email_.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
+            $this->token = substr(sha1("GDQgfds4354".$this->email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
         }else{
             die("Veuillez préciser un email");
         }
@@ -116,15 +133,15 @@ class User extends BaseSql {
      */
     public function getNumber()
     {
-        return $this->number_;
+        return $this->number;
     }
 
     /**
      * @param mixed $number_
      */
-    public function setNumber($number_)
+    public function setNumber($number)
     {
-        $this->number_ = $number_;
+        $this->number = $number;
     }
 
     /**
@@ -132,15 +149,15 @@ class User extends BaseSql {
      */
     public function getKind()
     {
-        return $this->kind_;
+        return $this->kind;
     }
 
     /**
      * @param mixed $kind_
      */
-    public function setKind($kind_)
+    public function setKind($kind)
     {
-        $this->kind_ = $kind_;
+        $this->kind = $kind;
     }
 
     /**
@@ -148,15 +165,15 @@ class User extends BaseSql {
      */
     public function getReceivePromOffer()
     {
-        return $this->receivePromOffer_;
+        return $this->receivePromOffer;
     }
 
     /**
      * @param int $receivePromOffer_
      */
-    public function setReceivePromOffer($receivePromOffer_)
+    public function setReceivePromOffer($receivePromOffer)
     {
-        $this->receivePromOffer_ = $receivePromOffer_;
+        $this->receivePromOffer = $receivePromOffer;
     }
 
     /**
@@ -175,6 +192,13 @@ class User extends BaseSql {
         $this->status = $status;
     }
 
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getKind(). " ". $this->getLastname() . " " . $this->getFirstname() . " ".$this->getEmail() . " " .
+            $this->getNumber() . " " . $this->getToken() . " " . $this->getReceivePromOffer() . " " . $this->getStatus() .
+            " " . $this->getPwd();
+    }
 
 
 }

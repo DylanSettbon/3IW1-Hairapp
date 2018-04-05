@@ -1,7 +1,3 @@
-<?php
-    include "templates/header.tpl.php";
-?>
-
 <body id="body-rdv">
     <main>
 
@@ -14,7 +10,7 @@
                             <div class="row">
                                 <h1 id="title-rdv" class="title col-l-4">S'inscrire</h1>
                             </div>
-                            <form method="post" action="signin/validate">
+                            <form method="post" action="<?php echo DIRNAME;?>signin/validate">
                                 <select name="civilite" class="default_civilite select-sign-in">
                                     <option value="" selected disabled>Civilité</option>
                                     <option value="Mr">Monsieur</option>

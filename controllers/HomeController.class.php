@@ -9,14 +9,8 @@
 class HomeController{
 
 
-    /**
-     * HomeController constructor.
-     */
-    public function __construct()
-    {
-    }
-
     public function getHome(){
 
+        $v = new Views( );
     }
 }

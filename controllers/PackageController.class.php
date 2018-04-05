@@ -8,4 +8,8 @@
 
 class PackageController{
 
+    public function getPackage(){
+
+        $v = new Views( "forfait", "header" );
+    }
 }

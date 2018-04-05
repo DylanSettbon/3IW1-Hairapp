@@ -8,7 +8,7 @@
 
 
 define("DBUSER","root");
-define("DBHOST","120.0.0.1");
+define("DBHOST","127.0.0.1");
 define("DBNAME","projet_annuel");
 define("DBPWD","root");
 define("DBPORT","3306");

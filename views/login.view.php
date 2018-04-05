@@ -1,6 +1,3 @@
-<?php
-    include "templates/header.tpl.php";
-?>
 <body id="body-rdv">
     <main>
 
@@ -19,7 +16,7 @@
                                 <input type="submit" id="connecter" class="center" value="Me connecter" />
                                 <a class="mdp" href="#">Mot de passe oublié?</a>
                                 <hr>
-                                <p class="center"><span class="span"> Vous n'avez pas de compte ? </span><a  class="mdp" href="signin">Inscription</a><p>
+                                <p class="center"><span class="span"> Vous n'avez pas de compte ? </span><a  class="mdp" href="<?php echo DIRNAME;?>signin/getSignin">Inscription</a><p>
                             </form>
                         </div>
 

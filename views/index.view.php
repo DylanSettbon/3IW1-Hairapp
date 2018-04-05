@@ -1,10 +1,8 @@
-<?php include "templates/header.tpl.php"; ?>
-
 <section>
     <div class="row slideshow-container">
 
         <div class="mySlides fade">
-            <img class="contain-img" src="public/img/barber1.jpg" style="width:100%">
+            <img class="contain-img" src="../public/img/barber1.jpg" style="width:100%">
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -13,7 +11,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" src="public/img/barber2.jpg" style="width:100%">
+            <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%">
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -22,7 +20,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" src="public/img/barber3.jpg" style="width:100%">
+            <img class="contain-img" src="../public/img/barber3.jpg" style="width:100%">
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -53,7 +51,7 @@
 
 
             <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="public/img/quote.svg"/>
+                <img class="img-art" src="../public/img/quote.svg"/>
                 <span>
                     <h3 class="titre-article">Nouvelle Promotion pour 2018 !!</h3>
                     <p class="content-art">-15% sur différentes coupes</p>
@@ -62,7 +60,7 @@
 
 
             <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="public/img/quote.svg"/>
+                <img class="img-art" src="../public/img/quote.svg"/>
                 <span>
                     <h3 class="titre-article">Changement de numéro de téléphone</h3>
                     <p class="content-art">Notre nouveau numero de téléphone est le 0101010101</p>
@@ -71,7 +69,7 @@
 
 
             <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="public/img/quote.svg"/>
+                <img class="img-art" src="../public/img/quote.svg"/>
                 <span>
                     <h3 class="titre-article">Nouveau produit en stock</h3>
                     <p class="content-art">C’est un soin restructurant élaboré par L’OREAL PROFESSIONNEL qui agit directement dans le cheveu pour étirer sa texture. Des polymères pénètrent au cœur des fibres pour les galber progressivement, donnant ainsi un aspect subtilement épaissi à votre chevelure. </p>
@@ -97,5 +95,5 @@
 </main>
 </body>
 
-<script src="public/js/home.js"></script>
+<script src="../public/js/home.js"></script>
 <?php include "templates/footer.tpl.php"; ?>
