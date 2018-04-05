@@ -78,9 +78,20 @@
     </section>
 
     <section class="col-s-12 col-m-12 col-l-4 forfait-accueil">
-        <h1 class="title center" style="margin-right: 30px;">Découvrez notre carte</h1>
+        <h1 class="title-carte" style="margin-right: 35px;">Découvrez notre carte</h1>
+         
+                
+                <span>
+                    <h3 class="carte">Notre carte</h3>
+                    <p class="content-carte">Decouvrez nos forfaits Homme Femme sur notre carte</p>
+                    <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
+                </span>
+           
         <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>
     </section>
+
+    
+
 
     </section>
     <section id="" class="col-s-12 col-m-12 col-l-4">
