@@ -974,5 +974,16 @@ img {
   text-align: center;
   margin-bottom: 25px;
   color: #000000;
-  text-align: center;
   margin-left: 35px; }
+
+.buttonUser {
+  background-color: #009cdf;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  padding: 10px;
+  cursor: pointer; }

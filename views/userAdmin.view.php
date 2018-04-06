@@ -18,6 +18,9 @@
                         <th id="email">Email</th>
                         <th id="tel">Téléphone</th>
                         <th id="status">Status</th>
+                        <th id="status">Modifier</th>
+                        <th id="status">Supprimer</th>
+
                     </tr>
                     <tr>
                         <td>M</td>
@@ -25,6 +28,8 @@
                         <td>bla@gmail.com</td>
                         <td>1234567</td>
                         <td>0</td>
+                        <td><a href="#" class="buttonUser">Modifier</a></td>
+                        <td><a href="#" class="buttonUser">Supprimer</a></td>
                     </tr>
                     <tr>
                         <td>M</td>
@@ -32,6 +37,8 @@
                         <td>bla@gmail.com</td>
                         <td>1234567</td>
                         <td>0</td>
+                        <td><a href="#" class="buttonUser">Modifier</a></td>
+                        <td><a href="#" class="buttonUser">Supprimer</a></td>
                     </tr>
                     <tr>
                         <td>M</td>
@@ -39,6 +46,8 @@
                         <td>bla@gmail.com</td>
                         <td>1234567</td>
                         <td>0</td>
+                        <td><a href="#" class="buttonUser">Modifier</a></td>
+                        <td><a href="#" class="buttonUser">Supprimer</a></td>
                     </tr>
                     <tr>
                         <td>M</td>
@@ -46,11 +55,13 @@
                         <td>bla@gmail.com</td>
                         <td>1234567</td>
                         <td>0</td>
+                        <td><a href="#" class="buttonUser">Modifier</a></td>
+                        <td><a href="#" class="buttonUser">Supprimer</a></td>
                     </tr>
                     <nav aria-label="navigation">
                         <tr class="page">
                             <td class="previous"><a href="#" title="Précédent">Précédent</a></td>
-                            <td class="page center" colspan="3">1/104</td>
+                            <td class="page center" colspan="5">1/104</td>
                             <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                         </tr>
                     </nav>
