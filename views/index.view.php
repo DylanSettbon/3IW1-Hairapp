@@ -6,7 +6,7 @@
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
-                <a href="rendezvous">Cliquez ici</a>
+                <a href="<?php echo DIRNAME;?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>
 
@@ -15,7 +15,7 @@
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
-                <a href="rendezvous">Cliquez ici</a>
+                <a href="<?php echo DIRNAME;?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
             <diV class="text-image">
                 <h1>Prendre rendez-vous</h1>
                 <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
-                <a href="rendezvous">Cliquez ici</a>
+                <a href="<?php echo DIRNAME;?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
                     <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
                 </span>
            
-        <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>
+        <a href="<?php echo DIRNAME;?>Package/getPackage" class="btnForfait col-l-10">Cliquez ici</a>
     </section>
 
     

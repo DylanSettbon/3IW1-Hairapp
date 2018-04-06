@@ -25,6 +25,10 @@ $uri = substr(urldecode($_SERVER["REQUEST_URI"]), strlen(dirname($_SERVER["SCRIP
 
 $uri = ltrim($uri, "/"); // on retire le /
 
+if( $uri === 'admin'){
+    $uri = 'admin/getAdmin';
+}
+
 
  // =============== cette partie redirige vers la bonne vue si l'url est bonne ================
 

@@ -1,8 +1,3 @@
-<?php
-
-include "templates/admin_header.tpl.php";
-
-?>
 
     <div class="content">
         <article class="arriere_plan">

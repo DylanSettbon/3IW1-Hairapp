@@ -6,7 +6,9 @@
  * Time: 14:22
  */
 ?>
-    <footer class="footer"></footer>
+    <footer class="footer">
+        ©Hair'App
+    </footer>
 <script>
     function toggleAnimated(x) {
         x.classList.toggle("change");

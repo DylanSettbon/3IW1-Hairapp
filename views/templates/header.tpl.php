@@ -35,4 +35,6 @@
       </div>
   </header>
 
-<?php include "views/".$this->v;?>
+<?php
+    include "views/".$this->v;
+?>

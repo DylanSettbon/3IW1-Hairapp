@@ -10,11 +10,11 @@ class AdminController{
 
 
     public function getAdmin(){
-
+        $v = new Views( "admin", "admin_header" );
     }
 
-    public function getUsers(){
-
+    public function getUserAdmin(){
+        $v = new Views( "userAdmin", "admin_header" );
     }
 
     public function modifyUser(){
