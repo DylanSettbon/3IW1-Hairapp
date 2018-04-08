@@ -6,11 +6,7 @@
  * Time: 14:09
  */
 
-class LoginController{
-
-
-    private $login_;
-    private $mdp_;
+class LoginController extends BaseSql {
 
 
 
@@ -23,29 +19,23 @@ class LoginController{
     }
 
 
-
     /**
-     * @return mixed
+     * @internal param $login_
+     * @internal param $mdp_
      */
-    public function getMdp()
-    {
-        return $this->mdp_;
-    }
+    public function getVerify(){
 
-    /**
-     * @param mixed $mdp_
-     */
-    public function setMdp($mdp_)
-    {
-        $this->mdp_ = $mdp_;
-    }
+        $user = $this->getUser( $_POST['email'] );
+
+        // verification du mdp
+        if (password_verify( $_POST['pwd'], $user[0]['pwd'] ) == false ){
+            echo "faux !";
+        }
+        else{
+            echo "ok bien joué.";
+        }
 
 
-    /**
-     * @param $login_
-     * @param $mdp_
-     */
-    public function getVerify($login_, $mdp_ ){
 
     }
 
@@ -55,5 +45,4 @@ class LoginController{
     public function getNewPwd($email ){
 
     }
-
 }

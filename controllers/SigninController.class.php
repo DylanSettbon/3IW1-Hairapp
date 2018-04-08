@@ -19,7 +19,6 @@ class SigninController{
         $user = new User();
         $user->setFirstname($_POST['prenom']);
         $user->setEmail($_POST['email']);
-        $user->setKind($_POST['civilite']);
         $user->setLastname($_POST['nom']);
         $user->setNumber($_POST['tel']);
         $user->setPwd($_POST['pwd']);

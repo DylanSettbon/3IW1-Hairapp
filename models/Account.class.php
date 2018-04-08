@@ -6,6 +6,13 @@
  * Time: 14:19
  */
 
-class Account{
+class Account extends BaseSql {
+
+    private $user_id;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 }

@@ -6,6 +6,13 @@
  * Time: 14:20
  */
 
-class Login{
+class Login extends BaseSql {
 
+    private $is_verified;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

@@ -15,7 +15,6 @@ class User extends BaseSql {
     protected $pwd;
     protected $token;
     protected $number;
-    protected $kind;
     protected $receivePromOffer = 0;
     protected $status=0;
 
@@ -145,22 +144,6 @@ class User extends BaseSql {
     }
 
     /**
-     * @return mixed
-     */
-    public function getKind()
-    {
-        return $this->kind;
-    }
-
-    /**
-     * @param mixed $kind_
-     */
-    public function setKind($kind)
-    {
-        $this->kind = $kind;
-    }
-
-    /**
      * @return int
      */
     public function getReceivePromOffer()
@@ -190,6 +173,10 @@ class User extends BaseSql {
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function sendConfirmEmail(){
+
     }
 
     public function __toString()

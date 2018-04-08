@@ -300,6 +300,9 @@ $button_color: #009CDF;
     padding: 5px;
   }
 
+  #planning td:nth-child(even) {
+    background-color: rgba(189, 189, 189, 0.2);
+  }
 
   .planning{
     border-right: 2px solid #009CDF;
@@ -652,7 +655,7 @@ $button_color: #009CDF;
     color: $main_color;
   }
 
-  tr:nth-child(even) {
+  .userManagerTab tr:nth-child(even) {
     background-color: rgba(189, 189, 189, 0.2);
   }
 

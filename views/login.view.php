@@ -10,7 +10,7 @@
                             <div class="row">
                                 <h1 id="title-rdv" class="title col-l-6">Se Connecter</h1>
                             </div>
-                            <form method="post" action="">
+                            <form method="post" action="<?php echo DIRNAME;?>login/getVerify">
                                 <input type="email" name="email" class="mail" placeholder="Adresse e-mail"   />
                                 <input type="password" name="pwd" id="pwd" placeholder="Mot de passe"   />
                                 <input type="submit" id="connecter" class="center" value="Me connecter" />

@@ -51,8 +51,18 @@
 
             <article class="col-l-9 col-s-12 col-m-7 center">
                 <div style="overflow-x: auto">
+                    <!--
+
+                    - sortir les heures du tableau
+                    - pour le planning par coiffeur on affiche le nom du client
+                    - lorsque "tous" est coché, on split la colone du jour en 3 ( ou nombre de coiffeur )
+                        et on colorie seulement la case en fonction de si le coiffeur a un rdv ou pas
+                        opt "draggable = true" permet de drag les elements ailleurs
+
+                    -->
                     <table class="col-l-12 col-s-12 center" id="planning">
                         <tr>
+
                             <th>Mardi</th>
 
                             <th>Mercredi</th>

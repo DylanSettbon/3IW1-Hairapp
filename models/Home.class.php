@@ -6,6 +6,14 @@
  * Time: 14:19
  */
 
-class Home{
+class Home extends BaseSql {
+
+    private $is_connected = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
 
 }

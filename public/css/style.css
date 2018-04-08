@@ -106,7 +106,7 @@ html {
 .page {
   color: #637484; }
 
-tr:nth-child(even) {
+.userManagerTab tr:nth-child(even) {
   background-color: rgba(189, 189, 189, 0.2); }
 
 th {
@@ -245,6 +245,9 @@ h3 {
 
 #planning tr {
   padding: 5px; }
+
+#planning td:nth-child(even) {
+  background-color: rgba(189, 189, 189, 0.2); }
 
 .planning {
   border-right: 2px solid #009CDF; }
@@ -974,6 +977,7 @@ img {
   text-align: center;
   margin-bottom: 25px;
   color: #000000;
+  text-align: center;
   margin-left: 35px; }
 
 .buttonUser {

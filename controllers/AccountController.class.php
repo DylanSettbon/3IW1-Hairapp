@@ -8,4 +8,7 @@
 
 class AccountController{
 
+    public function getAccount(){
+
+    }
 }
