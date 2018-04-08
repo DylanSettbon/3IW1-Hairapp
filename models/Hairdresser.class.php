@@ -13,6 +13,7 @@ class Hairdresser extends BaseSql {
     protected $speciality;
     protected $email;
     protected $pwd;
+    protected $token;
 
     /**
      * @return null
@@ -41,9 +42,9 @@ class Hairdresser extends BaseSql {
     /**
      * @param mixed $firstname
      */
-    public function setFirstname($firstname): void
+    public function setFirstname($firstname)
     {
-        $this->firstname = $firstname;
+        $this->firstname = ucfirst(strtolower(trim($firstname)));
     }
 
     /**
@@ -57,9 +58,9 @@ class Hairdresser extends BaseSql {
     /**
      * @param mixed $lastname
      */
-    public function setLastname($lastname): void
+    public function setLastname($lastname)
     {
-        $this->lastname = $lastname;
+        $this->lastname = strtoupper(trim($lastname));
     }
 
     /**
@@ -89,9 +90,9 @@ class Hairdresser extends BaseSql {
     /**
      * @param mixed $email
      */
-    public function setEmail($email): void
+    public function setEmail($email)
     {
-        $this->email = $email;
+        $this->email = strtolower(trim($email));
     }
 
     /**
@@ -105,9 +106,31 @@ class Hairdresser extends BaseSql {
     /**
      * @param mixed $pwd
      */
-    public function setPwd($pwd): void
+    public function setPwd($pwd)
     {
-        $this->pwd = $pwd;
+        $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param null $token
+     * @internal param mixed $token_
+     */
+    public function setToken($token = null){
+        if( $token ){
+            $this->token = $token;
+        }else if(!empty($this->email)){
+            $this->token = substr(sha1("GDQgfds4354".$this->email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
+        }else{
+            die("Veuillez préciser un email");
+        }
     }
 
 }
