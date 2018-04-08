@@ -1,15 +1,17 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: antoine
- * Date: 25/03/2018
- * Time: 14:19
+ * User: Sylvain
+ * Date: 08/04/2018
+ * Time: 20:46
  */
 
-class Article extends BaseSql {
+class Product extends BaseSql
+{
     protected $id=null;
     protected $name;
     protected $description;
+    protected $price;
     protected $category;
 
     /**
@@ -19,7 +21,6 @@ class Article extends BaseSql {
     {
         return $this->id;
     }
-
     /**
      * @param null $id
      */
@@ -63,6 +64,22 @@ class Article extends BaseSql {
     /**
      * @return mixed
      */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getCategory()
     {
         return $this->category;
@@ -75,5 +92,8 @@ class Article extends BaseSql {
     {
         $this->category = $category;
     }
+
+
+
 
 }
