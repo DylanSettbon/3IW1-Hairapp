@@ -10,10 +10,32 @@ class Hairdresser extends BaseSql {
     protected $id=null;
     protected $firstname;
     protected $lastname;
-    protected $speciality;
+    protected $profilPicture;
     protected $email;
     protected $pwd;
     protected $token;
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param null $token
+     * @internal param mixed $token_
+     */
+    public function setToken($token = null){
+        if( $token ){
+            $this->token = $token;
+        }else if(!empty($this->email)){
+            $this->token = substr(sha1("GDQgfds4354".$this->email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
+        }else{
+            die("Veuillez préciser un email");
+        }
+    }
 
     /**
      * @return null
@@ -114,23 +136,18 @@ class Hairdresser extends BaseSql {
     /**
      * @return mixed
      */
-    public function getToken()
+    public function getProfilPicture()
     {
-        return $this->token;
+        return $this->profilPicture;
     }
 
     /**
-     * @param null $token
-     * @internal param mixed $token_
+     * @param mixed $profilPicture
      */
-    public function setToken($token = null){
-        if( $token ){
-            $this->token = $token;
-        }else if(!empty($this->email)){
-            $this->token = substr(sha1("GDQgfds4354".$this->email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
-        }else{
-            die("Veuillez préciser un email");
-        }
+    public function setProfilPicture($profilPicture): void
+    {
+        $this->profilPicture = $profilPicture;
     }
+
 
 }
