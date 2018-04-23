@@ -12,7 +12,7 @@ class Views
     private $t;
     private $data = [];
 
-    public function __construct( $v = "index",$t = "header" ){
+    public function __construct($v = "index",$t = "header"){
         $this->v = $v.".view.php";
         $this->t = $t.".tpl.php";
 
@@ -22,10 +22,18 @@ class Views
         if( !file_exists("views/".$this->v)){
             die("La vue ".$this->v." n'existe pas");
         }
+
+
     }
 
-    public function assign( $key , $value, $errors = []){
+    public function assign( $key , $value){
         $this->data[$key] = $value;
+    }
+
+    public function addModal($modal, $config, $errors=[]){
+
+        include "views/modals/".$modal.".mdl.php";
+
     }
 
     public function __destruct(){
@@ -35,4 +43,5 @@ class Views
 
         include "views/templates/".$this->t;
     }
+
 }
