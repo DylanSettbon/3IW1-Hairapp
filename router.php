@@ -32,13 +32,10 @@ if( $uri === 'admin'){
 
  // =============== cette partie redirige vers la bonne vue si l'url est bonne ================
 
-    //TODO
-    // Faire la partie action dans l'url
-
+    //TODO Faire la partie action dans l'url
 
     $uri = explode("?", $uri);
 
-    // user/add
     $uriExploded = explode("/", $uri[0]);
 
     //Utiliser des conditions ternaires pour mettre la chaine
@@ -51,21 +48,10 @@ if( $uri === 'admin'){
     //Action : nomAction
     $a = strtolower($a);
 
-    // user/modify/12/name/skrzypczyk
-    // $uriExploded[0]=>user
-    // $uriExploded[1]=>modify
-    // $uriExploded[2]=>12
-    // ...
     unset($uriExploded[0]);
     unset($uriExploded[1]);
-    // user/modify/12/name/skrzypczyk
-    // $uriExploded[2]=>12
-    // ...
 
     $uriExploded = array_values($uriExploded);
-    // user/modify/12/name/skrzypczyk
-    // $uriExploded[0]=>12
-    // ...
 
     $params = array(
         "POST"=>$_POST,

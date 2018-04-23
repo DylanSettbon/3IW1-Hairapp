@@ -6,10 +6,11 @@
  * Time: 14:09
  */
 
-class HomeController{
+class HomeController {
 
 
     public function getHome(){
+
 
         $v = new Views( );
     }

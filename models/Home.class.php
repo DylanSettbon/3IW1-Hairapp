@@ -50,5 +50,5 @@ class Home extends BaseSql {
         $this->number_of_articles = $number_of_articles;
     }
 
-    
+
 }

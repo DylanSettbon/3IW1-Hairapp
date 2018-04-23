@@ -6,7 +6,7 @@
  * Time: 14:09
  */
 
-class LoginController extends BaseSql {
+class LoginController {
 
 
 
@@ -25,16 +25,29 @@ class LoginController extends BaseSql {
      */
     public function getVerify(){
 
-        $user = $this->getUser( $_POST['email'] );
+        //Ca doit etre un objet
+        $user = new User();
 
-        // verification du mdp
-        if (password_verify( $_POST['pwd'], $user[0]['pwd'] ) == false ){
+        $userInformations = $user->populate(
+            array( "email" => $_POST['email'] )
+        );
+
+        if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ){
+            $userInformations->setToken();
+            $params = array(
+              "token" => $userInformations->getToken(),
+
+            );
+
+            $user->updateTable( 'user', $params, ["id" => $userInformations->getId() ] );
+
+            Security::setSession( $userInformations );
+
+            header("Location: ".DIRNAME."home/getHome");
+
+        }else{
             echo "faux !";
         }
-        else{
-            echo "ok bien joué.";
-        }
-
 
 
     }

@@ -29,7 +29,19 @@
             <li class="li-navbar"><a href='<?php echo DIRNAME;?>package/getPackage'>Forfait</a></li>
             <li class="li-navbar"><a href='#'>Vitrine</a></li>
             <li class="li-navbar"><a href='#'>Salon</a></li>
-            <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Mon Compte</a></li>
+              <?php
+                if( 1 ){
+                    ?>
+                    <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Mon Compte</a></li>
+              <?php
+                }
+                else{
+                    ?>
+                    <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Se Connecter</a></li>
+                    <?php
+                }
+              ?>
+
           </ul>
         </nav>
       </div>

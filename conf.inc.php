@@ -14,6 +14,8 @@ define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
 
+$initialisation = true;
+
 
 define("DS", "/");
 $scriptName = (dirname($_SERVER["SCRIPT_NAME"]) == "/")?"":dirname($_SERVER["SCRIPT_NAME"]);

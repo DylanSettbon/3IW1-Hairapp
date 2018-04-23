@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: antoine
- * Date: 25/03/2018
- * Time: 14:20
+ * Date: 09/04/2018
+ * Time: 19:05
  */
 
-class Store{
-
+class Install{
     protected $id=null;
-    protected $product;
-    protected $description;
+    protected $admin;
+    protected $logo;
     protected $image;
+    protected $color;
 
     /**
      * @return null
@@ -32,33 +32,33 @@ class Store{
     /**
      * @return mixed
      */
-    public function getProduct()
+    public function getAdmin()
     {
-        return $this->product;
+        return $this->admin;
     }
 
     /**
-     * @param mixed $product
+     * @param mixed $admin
      */
-    public function setProduct($product)
+    public function setAdmin($admin)
     {
-        $this->product = $product;
+        $this->admin = $admin;
     }
 
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getLogo()
     {
-        return $this->description;
+        return $this->logo;
     }
 
     /**
-     * @param mixed $description
+     * @param mixed $logo
      */
-    public function setDescription($description)
+    public function setLogo($logo)
     {
-        $this->description = $description;
+        $this->logo = $logo;
     }
 
     /**
@@ -75,6 +75,22 @@ class Store{
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param mixed $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
     }
 
 
