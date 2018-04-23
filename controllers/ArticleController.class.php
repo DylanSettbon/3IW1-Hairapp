@@ -8,4 +8,8 @@
 
 class ArticleController{
 
+    public function getArticle(){
+
+        $v = new Views( "article", "header" );
+    }
 }
