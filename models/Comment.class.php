@@ -22,7 +22,7 @@ class Comment extends BaseSql
     /**
      * @param null $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -38,7 +38,7 @@ class Comment extends BaseSql
     /**
      * @param mixed $content
      */
-    public function setContent($content): void
+    public function setContent($content)
     {
         $this->content = $content;
     }
