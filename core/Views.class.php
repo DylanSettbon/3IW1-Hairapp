@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -6,16 +7,13 @@
  * Time: 14:17
  */
 
-class Views extends BaseSql
+class Views
 {
     private $v;
     private $t;
     private $data = [];
 
-    public function __construct( $v = "index",$t = "header" ){
-
-        parent::__construct();
-
+    public function __construct($v = "index",$t = "header"){
         $this->v = $v.".view.php";
         $this->t = $t.".tpl.php";
 
@@ -26,10 +24,16 @@ class Views extends BaseSql
             die("La vue ".$this->v." n'existe pas");
         }
 
+
     }
 
-    public function assign( $key , $value, $errors = []){
+    public function assign( $key , $value){
         $this->data[$key] = $value;
+    }
+
+    public function addModal($modal, $config, $errors=[]){
+
+        include "views/modals/".$modal.".mdl.php";
 
     }
 
@@ -40,4 +44,5 @@ class Views extends BaseSql
 
         include "views/templates/".$this->t;
     }
+
 }

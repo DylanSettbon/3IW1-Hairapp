@@ -32,21 +32,22 @@ class LoginController {
             array( "email" => $_POST['email'] )
         );
 
-        if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ){
+        if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ) {
             $userInformations->setToken();
             $params = array(
-              "token" => $userInformations->getToken(),
+                "token" => $userInformations->getToken(),
 
             );
 
-            $user->updateTable( 'user', $params, ["id" => $userInformations->getId() ] );
+            $user->updateTable('user', $params, ["id" => $userInformations->getId()]);
 
-            Security::setSession( $userInformations );
+            Security::setSession($userInformations);
 
-            header("Location: ".DIRNAME."home/getHome");
+            header("Location: " . DIRNAME . "home/getHome");
 
-        }else{
-            echo "faux !";
+        }
+        else{
+            echo "faux";
         }
 
 
