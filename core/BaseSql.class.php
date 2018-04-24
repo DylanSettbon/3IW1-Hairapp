@@ -21,7 +21,7 @@ class BaseSql{
 
 
     public function __construct(){
-        try{
+        try{;
             $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
         }catch(Exception $e){
             die("Erreur SQL :".$e->getMessage());

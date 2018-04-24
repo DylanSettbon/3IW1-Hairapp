@@ -991,3 +991,26 @@ img {
   margin: 4px 2px;
   padding: 10px;
   cursor: pointer; }
+
+.contentManagerTab {
+  width: 50%; }
+
+.tab-admin {
+  overflow-x: auto; }
+
+.page {
+  color: #637484; }
+
+.contentManagerTab tr:nth-child(even) {
+  background-color: rgba(189, 189, 189, 0.2); }
+
+th {
+  color: #637484; }
+
+.previous a, .next-admin a {
+  text-decoration: none;
+  color: #637484; }
+
+td {
+  text-align: center;
+  padding: 10px; }

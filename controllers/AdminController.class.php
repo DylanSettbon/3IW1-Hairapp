@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antoine
- * Date: 25/03/2018
- * Time: 14:10
- */
-
 class AdminController{
 
 
@@ -16,6 +9,20 @@ class AdminController{
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
     }
+
+    public function getContentAdmin(){
+        $v = new Views( "contentAdmin", "admin_header" );
+    }
+
+    public function saveCategoryPackage(){
+
+        $category = new Category();
+        $category->setDescription($_POST['categorie']);
+        $category->setIdUser(1);
+        $category->setIdCategoryType(3);
+        $category->updateTable();
+    }
+
 
     public function modifyUser(){
 
