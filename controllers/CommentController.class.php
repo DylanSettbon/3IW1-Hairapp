@@ -10,6 +10,9 @@ class CommentController{
         $comment =new Comment();
         $form = $comment ->configFormAdd();
 
+        $errors = [];
+
+
         if(!empty($params["POST"])){
             //Verification des saisies
 
@@ -20,7 +23,7 @@ class CommentController{
             }
         }
 
-        $v = new View("addComment", "front");
+        $v = new Views("addComment", "header");
         $v->assign("config",$form);
         $v->assign("errors",$errors);
 

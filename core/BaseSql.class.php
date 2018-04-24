@@ -18,8 +18,6 @@ class BaseSql{
      */
     private $tab_st;
 
-
-
     public function __construct(){
         try{;
             $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
@@ -47,44 +45,11 @@ class BaseSql{
         );
     }
 
-   public function update( $statement, $params ){
+    public function update( $statement, $params ){
 
         $query = $this->db->prepare( $statement );
         //print_r( $params ); die;
         $query->execute( $params );
-    }
-
-
-    public function save(){
-
-        $this->setColumns();
-
-        if( $this->id ){
-            //UPDATE
-            foreach ($this->columns as $key => $value) {
-                $sqlSet[] = $key."=:".$key;
-            }
-
-            $query = $this->db->prepare(" UPDATE ".$this->table." SET ".implode(",", $sqlSet)." WHERE id=:id ");
-
-            $query->execute($this->columns);
-
-
-        }else{
-            //INSERT
-            unset($this->columns['id']);
-
-            $query = $this->db->prepare("
-					INSERT INTO ".$this->table." 
-					(". implode(",", array_keys($this->columns)) .")
-					VALUES
-					(:". implode(",:", array_keys($this->columns)) .")
-				");
-            print_r ( $this->columns );
-            $query->execute($this->columns);
-
-        }
-
     }
 
     public function select( $sql, $params ){
@@ -200,16 +165,10 @@ class BaseSql{
 
 
     /**
-     * Common function to insert or update row
-     *
-     * @param string $table The table name
-     * @param array $fields Associative array with fields to update
-     * @param array $fields_primary_key Associative array with fields primary key
-     * @param array $options Associative array for options
-     * - max_updates = Max updates : Default 1. To prevent accident when composite primary key and field omitted ;-)
-     * - insert_only = no update
-     * @return array
-     * @throws Exception on Error
+     * @param $table
+     * @param $fields
+     * @param $fields_primary_key
+     * @param array $options
      */
     public function updateTable($table, $fields, $fields_primary_key, $options=array()) {
         $res = null;
@@ -220,15 +179,26 @@ class BaseSql{
         $bind = $this->bindParams($fields);
 
         $found = $this->countTable($table, $fields_primary_key);
+
         $sql_params = array_merge($fields, $fields_primary_key);
 
+        if( $found == 0 ){
 
-        $sql_upd = 'UPDATE '.$table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
+            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].', '.$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].', '.$bind['bind_insert'].')';
+        }
+        else{
+            $sql_upd = 'UPDATE '.$table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
+        }
         $this->update($sql_upd, $sql_params);
-
     }
 
+
+    /**
+     * @param $table
+     * @param $fields_primary_key
+     * @return array|bool|mixed
+     */
     public function countTable($table, $fields_primary_key) {
 
         $table = basename($table);
@@ -240,7 +210,10 @@ class BaseSql{
     }
 
 
-
+    /**
+     * @param array $where
+     * @return Object
+     */
     public function populate($where = []){
 
         $sql = $this->db->prepare( "SELECT * FROM user WHERE email = :email" );
@@ -251,8 +224,6 @@ class BaseSql{
 
         //return objet
         return $result;
-
-
 
     }
 

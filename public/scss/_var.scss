@@ -151,18 +151,24 @@ $button_color: #009CDF;
     width: 20px;
   }
 
+  .nav-left {
+    float: left;
+    margin-left: 100px;
+    padding: 0;
+  }
+
   .nav {
     float: right;
     margin: 0;
     padding: 0;
   }
-  .nav ul {
+  .nav ul , .nav-left ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
     float: right;
   }
-  .nav ul:after {
+  .nav ul:after , .nav-left ul:after{
     clear: both;
     content: '';
     display: block;
@@ -175,7 +181,7 @@ $button_color: #009CDF;
     padding: 10px 0px;
     cursor: pointer;
   }
-  .nav a {
+  .nav a , .nav-left a{
     color: #FFF;
     display: inline-block;
     font-weight: 400;

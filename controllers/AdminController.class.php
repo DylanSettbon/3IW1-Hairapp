@@ -1,7 +1,6 @@
 <?php
 class AdminController{
 
-
     public function getAdmin(){
         $v = new Views( "admin", "admin_header" );
     }
@@ -21,8 +20,8 @@ class AdminController{
         $category->setIdUser(1);
         $category->setIdCategoryType(3);
         $category->updateTable();
+        $v = new Views( 'contentAdmin', "admin_header" );
     }
-
 
     public function modifyUser(){
 

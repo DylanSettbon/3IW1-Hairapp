@@ -2,6 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: antoine
+<<<<<<< HEAD
  * Date: 04/02/2018
  * Time: 11:27
  */
@@ -63,6 +64,15 @@
 </script>
     <?php
     include 'templates/footer.tpl.php';
+    echo "
+    <div class='sidenav'>
+      <ul>
+          <a href= '" . DIRNAME ."admin/getAdmin'>LOGO</a>
+          <li class='active sidebar_buttons'><a href='" . DIRNAME ." '>Categories</a></li>
+          <li class='sidebar_buttons'><a href='" . DIRNAME . "admin/getUserAdmin'>Pages</a></li>
+          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getContentAdmin'>articles</a></li>
+      </ul>
+    </div> ";
     ?>
 </main>
 

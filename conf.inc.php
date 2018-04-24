@@ -8,10 +8,10 @@
 
 
 define("DBUSER","root");
-define("DBHOST","localhost");
-define("DBNAME","HairApp");
+define("DBHOST","127.0.0.1");
+define("DBNAME","projet_annuel");
 define("DBPWD","root");
-define("DBPORT",8889);
+define("DBPORT","3306");
 define("DBDRIVER","mysql");
 
 $initialisation = true;
