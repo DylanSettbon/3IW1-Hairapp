@@ -21,6 +21,10 @@ class AdminController{
         $v = new Views( 'contentAdmin', "admin_header" );
     }
 
+    public function getPagesAdmin(){
+        $v = new Views( 'contentAdmin', "admin_header" );
+    }
+
     public function modifyUser(){
 
     }

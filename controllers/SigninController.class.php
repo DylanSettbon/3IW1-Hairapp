@@ -17,11 +17,14 @@ class SigninController{
     public function Validate(){
 
         $user = new User();
-        $user->setFirstname($_POST['prenom']);
-        $user->setEmail($_POST['email']);
-        $user->setLastname($_POST['nom']);
-        $user->setNumber($_POST['tel']);
-        $user->setPwd($_POST['pwd']);
+        $params = array(
+            "firstname" => $user->setFirstname($_POST['prenom']),
+            "firstname" =>$user->setEmail($_POST['email']),
+            "firstname" =>$user->setLastname($_POST['nom']),
+            "firstname" =>$user->setNumber($_POST['tel']),
+            $user->setPwd($_POST['pwd']),
+        );
+
         if( $_POST['offers'] == 'on' ){
             $user->setReceivePromOffer(true);
         }
@@ -31,7 +34,7 @@ class SigninController{
 
         $user->setToken();
 
-        $user->save();
+        $user->updateTable( 'user', $params );
 
         header("Location: ".DIRNAME."home/getHome");
     }
