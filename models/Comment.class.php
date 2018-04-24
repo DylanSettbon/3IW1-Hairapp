@@ -42,4 +42,22 @@ class Comment extends BaseSql
     {
         $this->content = $content;
     }
+    public function configFormAdd(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"", "submit"=>"Commenter"],
+            "input"=>[
+
+                "content"=>[
+                    "type"=>"text",
+                    "placeholder"=>"Votre commentaire",
+                    "required"=>true,
+                    "minString"=>2,
+                    "maxString"=>400
+                ]
+
+            ]
+        ];
+    }
+
 }
