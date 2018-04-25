@@ -19,7 +19,7 @@ class BaseSql{
     private $tab_st;
 
     public function __construct(){
-        try{
+        try{;
             $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
         }catch(Exception $e){
             die("Erreur SQL :".$e->getMessage());
@@ -91,6 +91,8 @@ class BaseSql{
         $result['bind_update'] = implode(',', $tmp2);
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
+        //$result['not_in'] = ...
+        // id <> -1
         return $result;
     }
 
@@ -170,21 +172,30 @@ class BaseSql{
      * @param $fields_primary_key
      * @param array $options
      */
-    public function updateTable($table, $fields, $fields_primary_key, $options=array()) {
+    public function updateTable($fields, $fields_primary_key = null , $options=array()) {
         $res = null;
-        $table = basename($table);
+        $found = 0;
+        $table = $this->table;
         $options = array_change_key_case((array)$options, CASE_LOWER);
 
-        $bind_pk = $this->bindParams($fields_primary_key);
+        if( $fields_primary_key != null ){
+            $bind_pk = $this->bindParams($fields_primary_key);
+            $found = $this->countTable($table, $fields_primary_key);
+        }
         $bind = $this->bindParams($fields);
 
-        $found = $this->countTable($table, $fields_primary_key);
-
-        $sql_params = array_merge($fields, $fields_primary_key);
+        if( isset( $fields_primary_key ) ){
+            $sql_params = array_merge($fields, $fields_primary_key);
+        }
+        else{
+            $sql_params = $fields;
+        }
 
         if( $found == 0 ){
+            $bind['fields'] = ltrim( $bind['fields'], ',' );
+            $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
 
-            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].', '.$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].', '.$bind['bind_insert'].')';
+            //print_r( $sql_params ); die;
         }
         else{
             $sql_upd = 'UPDATE '.$table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];

@@ -805,3 +805,36 @@ $button_color: #009CDF;
     text-align: justify;
   }
 }
+
+@mixin contentAdmin{
+
+  .contentManagerTab {
+    width: 50%;
+  }
+
+  .tab-admin{
+    overflow-x: auto;
+  }
+
+  .page{
+    color: $main_color;
+  }
+
+  .contentManagerTab tr:nth-child(even) {
+    background-color: rgba(189, 189, 189, 0.2);
+  }
+
+  th{
+       color: $main_color;
+     }
+
+  .previous a, .next-admin a{
+    text-decoration: none;
+    color: $main_color;
+  }
+
+  td{
+    text-align: center;
+    padding:10px;
+  }
+}
