@@ -80,9 +80,12 @@ class BaseSql{
         $tmp1 = array();
         $tmp2 = array();
         $tmp3 = array();
+        $tmp4 = array();
+
         foreach($params as $key => $value) {
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
+            $tmp4[] = $key.'<>:'.$key;
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
@@ -91,8 +94,7 @@ class BaseSql{
         $result['bind_update'] = implode(',', $tmp2);
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
-        //$result['not_in'] = ...
-        // id <> -1
+        $result['not_in'] = implode(' AND ', $tmp4);
         return $result;
     }
 
@@ -218,6 +220,32 @@ class BaseSql{
         $sql_count = 'SELECT COUNT(*) FROM '.$table.' WHERE '.$bind_pk['bind_primary_key'];
         $found = $this->fetchOne($sql_count, $fields_primary_key);
         return $found;
+    }
+
+    public function getAllBy($where = [], $columns = null){
+        // $where = ["diff_status"=>-1, "id"=>3 ]
+        // SELECT * FROM table WHERE status != -1 AND id = 3
+
+     if(is_null($columns)){
+         $select="*";
+     }else{
+        $select = implode(",", $columns);
+     }
+
+     $bind= $this->bindParams($where);
+     $sql_params= $where;
+
+     $sql = $this->db->prepare('SELECT ' .$select. 
+        ' FROM '.$this->table.' where ' 
+        .$bind['not_in']);
+     
+     $sql->execute($sql_params);
+
+     $result = $sql->fetchAll(PDO::FETCH_CLASS,'User');
+
+        //return objet
+        return $result;
+
     }
 
 
