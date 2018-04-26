@@ -997,6 +997,55 @@ img {
   padding: 10px;
   cursor: pointer; }
 
+.buttonUserDeleteBd {
+  background-color: #ff3300;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  padding: 10px;
+  cursor: pointer; }
+
+.buttonUserDelete {
+  background-color: #ff8566;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  padding: 10px;
+  cursor: pointer; }
+
+.buttonUserModify {
+  background-color: #009cdf;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  padding: 10px;
+  cursor: pointer; }
+
+.buttonUserAdd {
+  background-color: #85e085;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  padding: 10px;
+  cursor: pointer;
+  float: right; }
+
 .contentManagerTab {
   width: 50%; }
 
