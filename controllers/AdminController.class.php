@@ -7,6 +7,13 @@ class AdminController{
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
+        $user = new User();
+
+        $u= $user->getAllBy(["status" => "-1"] , ["firstname , lastname , email , status , tel"]);
+        
+        $v->assign( "u", $u );
+       
+        
     }
 
     public function getContentAdmin(){

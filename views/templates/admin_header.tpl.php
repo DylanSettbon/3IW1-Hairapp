@@ -1,10 +1,3 @@
-<?php
-
-include "../../conf.inc.php";
-
-?>
-
-
 <!DOCTYPE html>
 <html lang='fr' >
 
@@ -29,14 +22,6 @@ include "../../conf.inc.php";
               <div class="bar3"></div>
           </div>
 
-        <nav class="nav-left">
-            <ul>
-                <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a></li>
-                <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a></li>
-                <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getContentAdmin">Gestion du contenu</a></li>
-            </ul>
-        </nav>
-
         <nav class='nav'>
           <ul>
             <li class='li-navbar'><a href='<?php echo DIRNAME;?>admin/getAdmin'>Back-Office</a></li>
@@ -46,6 +31,16 @@ include "../../conf.inc.php";
         </nav>
       </div>
   </header>
+
+  <div class="sidenav">
+      <ul>
+          <a href="<?php echo DIRNAME;?>admin/getAdmin">LOGO</a>
+          <li class='active sidebar_buttons'><a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a></li>
+          <li class='sidebar_buttons'><a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a></li>
+          <li class='sidebar_buttons'><a href="#about">Gestion du contenu</a></li>
+      </ul>
+  </div>
+
 
 
   <?php

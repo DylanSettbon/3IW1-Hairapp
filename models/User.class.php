@@ -14,7 +14,7 @@ class User extends BaseSql {
     protected $email;
     protected $pwd;
     protected $token;
-    protected $number;
+    protected $tel;
     protected $receivePromOffer = 0;
     protected $status=0;
 
@@ -130,17 +130,17 @@ class User extends BaseSql {
     /**
      * @return mixed
      */
-    public function getNumber()
+    public function getTel()
     {
-        return $this->number;
+        return $this->tel;
     }
 
     /**
      * @param mixed $number_
      */
-    public function setNumber($number)
+    public function setTel($number)
     {
-        $this->number = $number;
+        $this->tel = $tel;
     }
 
     /**

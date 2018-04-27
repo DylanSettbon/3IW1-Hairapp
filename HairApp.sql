@@ -75,7 +75,7 @@ CREATE TABLE User(
         email            Varchar (25) NOT NULL ,
         pwd              Varchar (25) NOT NULL ,
         token            Varchar (25) NOT NULL ,
-        number           Integer NOT NULL ,
+        tel              Varchar (25) NOT NULL ,
         receivePromOffer Integer NOT NULL ,
         status           Integer NOT NULL ,
         dateInserted     Date NOT NULL ,
