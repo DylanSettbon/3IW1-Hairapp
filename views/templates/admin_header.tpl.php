@@ -22,6 +22,14 @@
               <div class="bar3"></div>
           </div>
 
+          <div class="nav-left">
+              <ul>
+                  <li class='active li-navbar'><a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a></li>
+                  <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a></li>
+                  <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getPagesAdmin">Gestion du contenu</a></li>
+              </ul>
+          </div>
+
         <nav class='nav'>
           <ul>
             <li class='li-navbar'><a href='<?php echo DIRNAME;?>admin/getAdmin'>Back-Office</a></li>
@@ -32,14 +40,7 @@
       </div>
   </header>
 
-  <div class="sidenav">
-      <ul>
-          <a href="<?php echo DIRNAME;?>admin/getAdmin">LOGO</a>
-          <li class='active sidebar_buttons'><a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a></li>
-          <li class='sidebar_buttons'><a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a></li>
-          <li class='sidebar_buttons'><a href="#about">Gestion du contenu</a></li>
-      </ul>
-  </div>
+
 
 
 
