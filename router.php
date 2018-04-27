@@ -47,7 +47,6 @@ if( $uri === 'admin'){
     $urlCreated = [];
 
     foreach ( $createdPages as $pages ){
-
     $urlCreated[] = $pages->getUrl();
 
     }
@@ -61,6 +60,8 @@ if( $uri === 'admin'){
 
     //Controller : NomController
     $urlBase = $c;
+
+
     $c = ucfirst(strtolower($c))."Controller";
     //Action : nomAction
     $a = strtolower($a);
@@ -95,7 +96,6 @@ if( $uri === 'admin'){
         include "controllers/PageController.class.php";
 
         $params['URL'] = $urlBase;
-
         $objC = new Page();
         $objC->getPage( $params );
 

@@ -23,25 +23,40 @@
           </div>
 
         <nav class='nav'>
-          <ul id="sidebar_ul">
 
+          <ul id="sidebar_ul">
+              <li <?php if ( $this->data['current'] == 'home') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                  <a href='<?php echo DIRNAME;?>home/getHome'>Accueil</a>
+              </li>
               <?php
 
               foreach ( $this->data['navbar'] as $nav ){
 
                   //var_dump( $nav->getTitle() );
 
-                  echo "<li class='li-navbar'> <a href=' ".DIRNAME . $nav->getUrl() . "'>". $nav->getTitle()."</a></li>";
+                  echo "<li ";
+                  if ( $this->data['current'] == $nav->getUrl() ) {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';
+
+                  echo "> 
+                            <a href=' ".DIRNAME . $nav->getUrl() . "'>". $nav->getTitle()."</a>
+                        </li>";
               }
 
 
-
               ?>
-            <li class='li-navbar'><a href='<?php echo DIRNAME;?>home/getHome'>Accueil</a></li>
-            <li class="li-navbar"><a href='<?php echo DIRNAME;?>appointment/getAppointment'>Rendez-vous</a></li>
-            <li class="li-navbar"><a href='<?php echo DIRNAME;?>package/getPackage'>Forfait</a></li>
-            <li class="li-navbar"><a href='#'>Vitrine</a></li>
-            <li class="li-navbar"><a href='#'>Salon</a></li>
+
+            <li <?php if ( $this->data['current'] == 'appointment') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='<?php echo DIRNAME;?>appointment/getAppointment'>Rendez-vous</a>
+            </li>
+            <li <?php if ( $this->data['current'] == 'packages') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='<?php echo DIRNAME;?>package/getPackage'>Forfait</a>
+            </li>
+            <li <?php if ( $this->data['current'] == 'products') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='#'>Vitrine</a>
+            </li>
+            <li <?php if ( $this->data['current'] == 'store') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='#'>Salon</a>
+            </li>
               <?php
                 if( Security::isConnected() ){
                     ?>

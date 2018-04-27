@@ -117,23 +117,18 @@ th {
   color: #637484; }
 
 #civilite {
-  width: 15%;
   padding: 10px; }
 
 #nom {
-  width: 25%;
   padding: 10px; }
 
 #email {
-  width: 25%;
   padding: 10px; }
 
 #tel {
-  width: 20%;
   padding: 10px; }
 
 #status {
-  width: 15%;
   padding: 10px; }
 
 td {

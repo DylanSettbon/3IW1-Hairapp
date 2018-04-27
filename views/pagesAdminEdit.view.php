@@ -6,25 +6,10 @@
  * Time: 16:29
  */
 
-echo "
-    <div class='sidenav'>
-      <ul>
-          <a href= '" . DIRNAME ."admin/getAdmin'>LOGO</a>
-          <li class='active sidebar_buttons'><a href='" . DIRNAME ."admin/getPackageAdmin '>Forfaits</a></li>
-      
-          <li class='sidebar_buttons dropdown'>
-            <a>Pages &nbsp;
-                <i class='fa fa-caret-down'></i>
-            </a>
-          </li>
-          <div class='dropdown-container'>
-            <a href='" . DIRNAME ."admin/getPageEdit '>Ajouter</a>
-            
-          </div>
-          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getContentAdmin'>articles</a></li>
-      </ul>
-  </div> ";
+include "templates/sidebar.view.php";
+
 ?>
+
 
 
 <main class='container'>
@@ -32,6 +17,10 @@ echo "
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
 
             <h1>Gestion de contenus : Pages</h1>
+
+            <?php
+            echo "okokokokokok";
+            ?>
 
 
             <div class="col-l-8 center" id="addPagesForm">
@@ -93,5 +82,4 @@ include "templates/footer.tpl.php";
             }
         });
     }
-    console.log( dropdown );
 </script>

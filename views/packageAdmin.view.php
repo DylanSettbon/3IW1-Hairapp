@@ -6,16 +6,10 @@
  * Time: 11:27
  */
 
-echo "
-    <div class='sidenav'>
-      <ul>
-          <a href= '" . DIRNAME ."admin/getAdmin'>LOGO</a>
-          <li class='active sidebar_buttons'><a href='" . DIRNAME ."admin/getPackageAdmin '>Forfaits</a></li>
-          <li class='sidebar_buttons'><a href='" . DIRNAME . "admin/getPagesAdmin'>Pages</a></li>
-          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getContentAdmin'>articles</a></li>
-      </ul>
-  </div> ";
+include "templates/sidebar.view.php";
 ?>
+
+
 <main class='container'>
         <div class="content">
             <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
@@ -73,4 +67,9 @@ echo "
 </script>
 
 </main>
+
+<?php
+
+include "templates/footer.tpl.php";
+?>
 

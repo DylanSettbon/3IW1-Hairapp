@@ -13,5 +13,6 @@ class HomeController {
 
 
         $v = new Views( );
+        $v->assign("current", 'home');
     }
 }

@@ -3,14 +3,16 @@ class AdminController{
 
     public function getAdmin(){
         $v = new Views( "admin", "admin_header" );
+        $v->assign("current", 'dashboard');
     }
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
+        $v->assign("current", 'users');
         $user = new User();
 
-        $u= $user->getAllBy(["status" => "-1"] , ["firstname , lastname , email , status , tel"]);
-        
+        $u= $user->getAllBy(["status" => "-1"] , ["firstname , lastname , email , status , tel"], 4);
+
         $v->assign( "u", $u );
        
         
@@ -18,10 +20,13 @@ class AdminController{
 
     public function getContentAdmin(){
         $v = new Views( "packageAdmin", "admin_header" );
+        $v->assign("current", 'content');
     }
 
     public function getPackageAdmin(){
         $v = new Views( 'packageAdmin', "admin_header" );
+        $v->assign("current", 'content');
+        $v->assign("current_sidebar", 'packages');
     }
 
     public function saveCategoryPackage(){
@@ -36,8 +41,8 @@ class AdminController{
 
     public function getPagesAdmin(){
         $v = new Views( 'pageAdmin', "admin_header" );
-
-
+        $v->assign("current_sidebar", 'pages');
+        $v->assign("current", 'content');
     }
 
     public function getPageEdit(){

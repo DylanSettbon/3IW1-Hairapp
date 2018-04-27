@@ -17,6 +17,9 @@ class User extends BaseSql {
     protected $tel;
     protected $receivePromOffer = 0;
     protected $status=0;
+    protected $dateInserted;
+    protected $dateUpdated;
+    protected $lastConnection;
 
 
     public function __construct()
@@ -140,7 +143,7 @@ class User extends BaseSql {
      */
     public function setTel($number)
     {
-        $this->tel = $tel;
+        $this->tel = $number ;
     }
 
     /**
@@ -179,11 +182,61 @@ class User extends BaseSql {
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDateInserted()
+    {
+        return $this->dateInserted;
+    }
+
+    /**
+     * @param mixed $dateInserted
+     */
+    public function setDateInserted($dateInserted)
+    {
+        $this->dateInserted = $dateInserted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
+    }
+
+    /**
+     * @param mixed $dateUpdated
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastConnection()
+    {
+        return $this->lastConnection;
+    }
+
+    /**
+     * @param mixed $lastConnection
+     */
+    public function setLastConnection($lastConnection)
+    {
+        $this->lastConnection = $lastConnection;
+    }
+
+
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getKind(). " ". $this->getLastname() . " " . $this->getFirstname() . " ".$this->getEmail() . " " .
-            $this->getNumber() . " " . $this->getToken() . " " . $this->getReceivePromOffer() . " " . $this->getStatus() .
+        return $this->getLastname() . " " . $this->getFirstname() . " ".$this->getEmail() . " " .
+            $this->getTel() . " " . $this->getToken() . " " . $this->getReceivePromOffer() . " " . $this->getStatus() .
             " " . $this->getPwd();
     }
 

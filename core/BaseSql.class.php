@@ -85,7 +85,7 @@ class BaseSql{
         foreach($params as $key => $value) {
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
-            $tmp4[] = $key.'<>:'.$key;
+            $tmp4[] = $key.' <> :'.$key;
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
@@ -203,6 +203,7 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
+        //var_dump( $fields ); die;
         $this->update($sql_upd, $sql_params);
     }
 
@@ -247,10 +248,11 @@ class BaseSql{
          }
 
          $sql = $this->db->prepare('SELECT ' .$select.
-             ' FROM '.$this->table.' where '
+             ' FROM '.$this->table.' WHERE '
              .$where_type);
 
          $sql->execute($sql_params);
+
 
      }
      else{
@@ -258,11 +260,11 @@ class BaseSql{
              ' FROM '.$this->table
          );
          $sql->execute();
+
      }
 
-     $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
+        $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
 
-        //return objet
         return $result;
 
     }

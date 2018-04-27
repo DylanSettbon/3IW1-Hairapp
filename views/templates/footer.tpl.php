@@ -9,28 +9,36 @@
     <footer class="footer">
         ©Hair'App
     </footer>
-<script>
-    function toggleAnimated(x) {
-        x.classList.toggle("change");
-    }
-</script>
-
-<script>
-    // Add active class to the current button (highlight it)
-    //var header = document.getElementById("sidebar_ul");
-    var btns = document.getElementsByClassName("li-navbar");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-            var current = document.getElementsByClassName("active");
-            console.log( current );
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
-        });
-    }
-</script>
 
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
     <script type="text/javascript" src="../public/js/index.js"></script>
+
+    <script>
+        function toggleAnimated(x) {
+            x.classList.toggle("change");
+        }
+    </script>
+
+    <script>
+
+        var dropdown = document.getElementsByClassName("dropdown");
+
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active", true);
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+        console.log( dropdown );
+    </script>
+
     </body>
 
 </html>

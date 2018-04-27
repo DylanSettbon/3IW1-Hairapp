@@ -54,6 +54,7 @@ class Views
 
         $this->data['navbar'] = $vues ;
 
+
         include "views/templates/".$this->t;
     }
 

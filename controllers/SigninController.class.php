@@ -25,7 +25,9 @@ class SigninController{
         $user->setEmail($_POST['email']);
         $user->setPwd($_POST['pwd']);
         $user->setToken();
-        $user->setNumber( $_POST['tel'] );
+        $user->setTel( $_POST['tel'] );
+        $user->setDateInserted( date( "Y-m-d") );
+        $user->setDateUpdated( date( "Y-m-d") );
 
 
         if( $_POST['offers'] == 'on' ){
@@ -41,10 +43,14 @@ class SigninController{
             "email" => $user->getEmail(),
             "pwd" => $user->getPwd(),
             "token" => $user->getToken() ,
-            "number" => $user->getNumber(),
+            "tel" => $user->getTel(),
             "receivePromOffer" => $user->getReceivePromOffer(),
-            "status" => $user->getStatus()
+            "status" => $user->getStatus(),
+            "dateInserted" => date( "Y-m-d"),
+            "dateUpdated" => date( "Y-m-d" ),
+            "lastConnection" => null
         );
+
 
         $user->updateTable( $params );
 

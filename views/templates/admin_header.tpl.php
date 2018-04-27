@@ -22,19 +22,31 @@
               <div class="bar3"></div>
           </div>
 
-          <div class="nav-left">
+          <div class="nav-left" id="nav-left">
               <ul>
-                  <li class='active li-navbar'><a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a></li>
-                  <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a></li>
-                  <li class='li-navbar'><a href="<?php echo DIRNAME;?>admin/getPagesAdmin">Gestion du contenu</a></li>
+                  <li <?php if ( $this->data['current'] == 'dashboard') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                    <a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a>
+                  </li>
+                  <li <?php if ( $this->data['current'] == 'users') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                      <a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a>
+                  </li>
+                  <li <?php if ( $this->data['current'] == 'content') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                      <a href="<?php echo DIRNAME;?>admin/getContentAdmin">Gestion du contenu</a>
+                  </li>
               </ul>
           </div>
 
-        <nav class='nav'>
+        <nav class='nav' id="nav">
           <ul>
-            <li class='li-navbar'><a href='<?php echo DIRNAME;?>admin/getAdmin'>Back-Office</a></li>
-            <li class="li-navbar"><a href='<?php echo DIRNAME;?>home/getHome'>Vers le site</a></li>
-            <li class="li-navbar"><a href='<?php echo DIRNAME;?>account/myaccount'>Mon Compte</a></li>
+            <li class='li-navbar'>
+                <a href='<?php echo DIRNAME;?>admin/getAdmin'>Back-Office</a>
+            </li>
+            <li class="li-navbar">
+                <a href='<?php echo DIRNAME;?>home/getHome'>Vers le site</a>
+            </li>
+            <li class="li-navbar">
+                <a href='<?php echo DIRNAME;?>account/myaccount'>Mon Compte</a>
+            </li>
           </ul>
         </nav>
       </div>

@@ -7,6 +7,7 @@
  */
 
 
+
 foreach ( $this->data['navbar'] as $content ){
 
     if( $content->getUrl() == $this->data['data']['URL'] ){

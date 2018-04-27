@@ -1,5 +1,5 @@
 
-    <div class="content">
+    <div>
         <article class="arriere_plan">
 
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
