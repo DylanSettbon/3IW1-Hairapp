@@ -222,7 +222,7 @@ class BaseSql{
         return $found;
     }
 
-    public function getAllBy($where = [], $columns = null){
+    public function getAllBy($where = [], $columns = null, $tab = null){
         // $where = ["diff_status"=>-1, "id"=>3 ]
         // SELECT * FROM table WHERE status != -1 AND id = 3
 
@@ -232,16 +232,35 @@ class BaseSql{
         $select = implode(",", $columns);
      }
 
-     $bind= $this->bindParams($where);
-     $sql_params= $where;
+     if( $where != null ){
+         $bind= $this->bindParams($where);
+         $sql_params= $where;
 
-     $sql = $this->db->prepare('SELECT ' .$select. 
-        ' FROM '.$this->table.' where ' 
-        .$bind['not_in']);
-     
-     $sql->execute($sql_params);
+         if( $tab == 1 ){
+             $where_type = $bind['bind_insert'];
+         }elseif ( $tab == 2 ){
+             $where_type = $bind['bind_update'];
+         }elseif ( $tab == 3 ){
+             $where_type = $bind['bind_primary_key'];
+         }elseif ( $tab == 4 ){
+             $where_type = $bind['not_in'];
+         }
 
-     $result = $sql->fetchAll(PDO::FETCH_CLASS,'User');
+         $sql = $this->db->prepare('SELECT ' .$select.
+             ' FROM '.$this->table.' where '
+             .$where_type);
+
+         $sql->execute($sql_params);
+
+     }
+     else{
+         $sql = $this->db->prepare('SELECT ' .$select.
+             ' FROM '.$this->table
+         );
+         $sql->execute();
+     }
+
+     $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
 
         //return objet
         return $result;

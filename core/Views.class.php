@@ -24,7 +24,6 @@ class Views
             die("La vue ".$this->v." n'existe pas");
         }
 
-
     }
 
     public function assign( $key , $value){
@@ -40,7 +39,20 @@ class Views
     public function __destruct(){
         global $a, $c;
 
+
+
+        $navbar = new Pages();
+        $vues = $navbar->getAllBy(
+            [
+                "isNavbar" => 1
+            ], null, 3
+        );
+
+        //$this->assign( 'navbar', $vues);
+
         extract($this->data);
+
+        $this->data['navbar'] = $vues ;
 
         include "views/templates/".$this->t;
     }

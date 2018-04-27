@@ -17,8 +17,8 @@
 
 <script>
     // Add active class to the current button (highlight it)
-    var header = document.getElementById("sidebar_ul");
-    var btns = header.getElementsByClassName("li-navbar");
+    //var header = document.getElementById("sidebar_ul");
+    var btns = document.getElementsByClassName("li-navbar");
     for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {
             var current = document.getElementsByClassName("active");

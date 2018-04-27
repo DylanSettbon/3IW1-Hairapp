@@ -14,16 +14,19 @@ class SigninController{
         $v = new Views( "signin", "header" );
     }
 
+    /**
+     *
+     */
     public function Validate(){
 
         $user = new User();
-        $params = array(
-            "firstname" => $user->setFirstname($_POST['prenom']),
-            "firstname" =>$user->setEmail($_POST['email']),
-            "firstname" =>$user->setLastname($_POST['nom']),
-            "firstname" =>$user->setNumber($_POST['tel']),
-            $user->setPwd($_POST['pwd']),
-        );
+        $user->setFirstname($_POST['prenom']);
+        $user->setLastname($_POST['nom']);
+        $user->setEmail($_POST['email']);
+        $user->setPwd($_POST['pwd']);
+        $user->setToken();
+        $user->setNumber( $_POST['tel'] );
+
 
         if( $_POST['offers'] == 'on' ){
             $user->setReceivePromOffer(true);
@@ -32,9 +35,18 @@ class SigninController{
             $user->setReceivePromOffer(false);
         }
 
-        $user->setToken();
+        $params = array(
+            "firstname" => $user->getFirstname(),
+            "lastname" => $user->getLastname(),
+            "email" => $user->getEmail(),
+            "pwd" => $user->getPwd(),
+            "token" => $user->getToken() ,
+            "number" => $user->getNumber(),
+            "receivePromOffer" => $user->getReceivePromOffer(),
+            "status" => $user->getStatus()
+        );
 
-        $user->updateTable( 'user', $params );
+        $user->updateTable( $params );
 
         header("Location: ".DIRNAME."home/getHome");
     }

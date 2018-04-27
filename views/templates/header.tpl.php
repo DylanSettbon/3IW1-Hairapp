@@ -3,7 +3,7 @@
 
 <head>
   <meta charset='UTF-8'>
-  <link rel='stylesheet' type='text/css' href="../public/css/style.css">
+  <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
   <title>Hair'App : Le site à votre image.</title>
 </head>
 
@@ -24,13 +24,26 @@
 
         <nav class='nav'>
           <ul id="sidebar_ul">
+
+              <?php
+
+              foreach ( $this->data['navbar'] as $nav ){
+
+                  //var_dump( $nav->getTitle() );
+
+                  echo "<li class='li-navbar'> <a href=' ".DIRNAME . $nav->getUrl() . "'>". $nav->getTitle()."</a></li>";
+              }
+
+
+
+              ?>
             <li class='li-navbar'><a href='<?php echo DIRNAME;?>home/getHome'>Accueil</a></li>
             <li class="li-navbar"><a href='<?php echo DIRNAME;?>appointment/getAppointment'>Rendez-vous</a></li>
             <li class="li-navbar"><a href='<?php echo DIRNAME;?>package/getPackage'>Forfait</a></li>
             <li class="li-navbar"><a href='#'>Vitrine</a></li>
             <li class="li-navbar"><a href='#'>Salon</a></li>
               <?php
-                if( 1 ){
+                if( Security::isConnected() ){
                     ?>
                     <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Mon Compte</a></li>
               <?php
@@ -40,6 +53,9 @@
                     <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Se Connecter</a></li>
                     <?php
                 }
+
+
+
               ?>
 
           </ul>

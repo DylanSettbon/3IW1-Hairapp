@@ -10,7 +10,7 @@ RewriteRule ^(.*)$ router.php [L]
 #ErrorDocument 401 /views/errors/401.view.php
 #ErrorDocument 402 /views/errors/402.view.php
 #ErrorDocument 403 /views/errors/403.view.php
-#ErrorDocument 404 /views/errors/404.view.php
+ErrorDocument 404 /views/errors/404.view.php
 #ErrorDocument 405 /views/errors/405.view.php
 #ErrorDocument 500 /views/errors/500.view.php
 #ErrorDocument 501 /views/errors/501.view.php

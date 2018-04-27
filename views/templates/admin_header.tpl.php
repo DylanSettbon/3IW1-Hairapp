@@ -12,6 +12,7 @@ include "../../conf.inc.php";
   <meta charset='UTF-8'>
   <link rel='stylesheet' type='text/css' href= '../public/css/style.css'>
   <title>Hair'App : Le site à votre image.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -47,7 +48,9 @@ include "../../conf.inc.php";
   </header>
 
 
-  <?php include "views/".$this->v;?>
+  <?php
+
+  include "views/".$this->v;?>
 
 
 

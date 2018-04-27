@@ -39,7 +39,7 @@ class LoginController {
 
             );
 
-            $user->updateTable('user', $params, ["id" => $userInformations->getId()]);
+            $user->updateTable( $params, ["id" => $userInformations->getId()] );
 
             Security::setSession($userInformations);
 
