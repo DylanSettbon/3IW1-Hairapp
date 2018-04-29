@@ -16,7 +16,6 @@ class BaseSql{
     /**
      * Tab for prepare statement
      */
-    private $tab_st;
 
     public function __construct(){
         try{;
@@ -52,24 +51,28 @@ class BaseSql{
         $query->execute( $params );
     }
 
-    public function select( $sql, $params ){
+    public function selectAll( $table){
+        $sql = 'SELECT * FROM '.$table.';';
         $query = $this->db->prepare( $sql );
-        $query->execute( $params );
-        $res = $query->fetch( PDO::FETCH_ASSOC );
+        $query->execute();
+        $res = $query->fetchAll( PDO::FETCH_ASSOC );
         return $res;
     }
 
+    public function selectAllWhere( $table,$id){
+        $sql = 'SELECT * FROM '.$table.' WHERE id_Category = '.$id.';';
+        $query = $this->db->prepare( $sql );
+
+        $query->execute();
+        $res = $query->fetchAll( PDO::FETCH_ASSOC );
+        return $res;
+    }
 
     public function generateToken( $email ){
        $token = substr(sha1("GDQgfds4354".$email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
 
        return $token;
     }
-
-
-    /*
-     * Function bindParams
-     */
 
     public static function bindParams($params, $params_remove=array()) {
         $result = array();
@@ -195,12 +198,10 @@ class BaseSql{
 
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
-            $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
-
-            //print_r( $sql_params ); die;
+            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].', '.$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].', '.$bind['bind_insert'].')';
         }
         else{
-            $sql_upd = 'UPDATE '.$table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
+            $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
         //var_dump( $fields ); die;

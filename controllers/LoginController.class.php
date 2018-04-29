@@ -36,7 +36,6 @@ class LoginController {
             $userInformations->setToken();
             $params = array(
                 "token" => $userInformations->getToken(),
-
             );
 
             $user->updateTable( $params, ["id" => $userInformations->getId()] );

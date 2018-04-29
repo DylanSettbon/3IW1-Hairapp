@@ -801,10 +801,12 @@ $button_color: #009CDF;
   }
 }
 
-@mixin contentAdmin{
+@mixin contentPackageAdmin{
 
-  .contentManagerTab {
+  .PackageManagerTab {
     width: 50%;
+
+    margin-top:40px;
   }
 
   .tab-admin{
@@ -815,7 +817,7 @@ $button_color: #009CDF;
     color: $main_color;
   }
 
-  .contentManagerTab tr:nth-child(even) {
+  .PackageManagerTab tr:nth-child(even) {
     background-color: rgba(189, 189, 189, 0.2);
   }
 
@@ -830,6 +832,37 @@ $button_color: #009CDF;
 
   td{
     text-align: center;
-    padding:10px;
   }
+
+  .packageCategory-title
+  {
+    font-size: 22px;
+    color: #637484;
+    padding-bottom:10px;
+  }
+
+  [class^="createPackage"]
+  {
+    background-color: #009CDF;
+    color:white;
+  }
+
+  .createCategoryPackage{
+    width: 50%;
+  }
+
+  .btnCreatePackage
+  {
+    background-color: #009CDF;
+    color:white;
+    height: 45px;
+    width: 185px;
+  }
+
+  .buttonUpdatePackage
+  {
+    width:40%;
+    background-color: #B8B8B8;
+  }
+
 }

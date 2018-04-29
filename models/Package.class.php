@@ -11,7 +11,7 @@ class Package extends BaseSql {
         return $this->id;
     }
 
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -21,7 +21,7 @@ class Package extends BaseSql {
         return $this->description;
     }
 
-    public function setDescription($description): void
+    public function setDescription($description)
     {
         $this->description = $description;
     }
@@ -31,7 +31,7 @@ class Package extends BaseSql {
         return $this->price;
     }
 
-    public function setPrice($price): void
+    public function setPrice($price)
     {
         $this->price = $price;
     }
@@ -41,7 +41,7 @@ class Package extends BaseSql {
         return $this->category;
     }
 
-    public function setCategory($category): void
+    public function setCategory($category)
     {
         $this->category = $category;
     }

@@ -2,74 +2,71 @@
 /**
  * Created by PhpStorm.
  * User: antoine
+<<<<<<< HEAD
  * Date: 04/02/2018
  * Time: 11:27
  */
-
-include "templates/sidebar.view.php";
 ?>
-
-
-<main class='container'>
+    <main class='container'>
         <div class="content">
             <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
 
-                <h1>Gestion de contenus</h1>
+                <h1>Personnaliser la carte du salon</h1>
                 <div class="row">
-                    <input method="post" class="btnCreatePackage col-l-3" type="button" onclick ="testForm('package_content','3','div','contentManagerTest')" value="Ajouter une nouvelle catégorie">
+                    <input method="post" class="btnCreatePackage col-l-3" type="button" onclick ="testForm('package_content','3','div','contentManagerTest')" value="Ajouter une catégorie">
                 </div>
-                    <p></p>
-                <div id="package_content">
 
+                <div id="package_content">
+                    <?php
+
+                    $category = new Category();
+                    $categories = $category->getAllBy();
+
+                    foreach($categories as $category){
+                        echo '<table id="packageCategory'.$category->getId().'" class="PackageManagerTab col-l-6">
+                                  <caption class="packageCategory-title" id="'.$category->getId().'">' . $category->getDescription(). '</caption>
+                                    <tr>
+                                        <th id="desc">Description</th>
+                                        <th id="price">Prix</th>
+                                        <th id="modify">Modifier</th>
+                                        <th id="delete">Supprimer</a></th>';
+
+                        $package = new Package();
+                        $packages = $package->getAllBy(['id_Category' => $category->getId()],null,2);
+
+                        foreach ($packages as $package) {
+                            echo '<tr>
+                                                  <td style="width:50%">' . $package->getDescription() . '</td> 
+                                                  <td>' . $package->getPrice() . '</td>
+                                                  <td><input type="button" class="buttonUpdatePackage" id = "' . $package->getId() . '"></td> 
+                                                  <td style="width:5%"><input id="checkBox" type="checkbox"></td>
+                                              </tr>
+                                              ';
+                        }
+
+                        echo'
+                                   <tr>
+                                   <td colspan="4"><input class="createPackage" id ="'.$category->getId().'" type="button" action="savePackage" onclick ="addRow(document.getElementById(\'packageCategory'.$category->getId().'\'))" value="Creer un forfait"></td>
+                                   </tr>
+                                  </table>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
 
-<script>
+        <script type="text/javascript" src="../public/js/packageAdmin.js"></script>
 
-    function testForm(parentId,childId, elementTag, elementId){
-        var html = '<form action="saveCategoryPackage" method="post">'+
-                    'Catégorie:<br>'+
-                    '<input type="text" name="categorie">'+
-                    '<br><br>'+
-                    '<input type="submit" value="Submit">'+
-                    '</form> ';
-
-        addElement(parentId,elementTag,elementId,html)
-    }
-
-    function addNewPackageCategory(parentId,childId, elementTag, elementId) {
-        var html = '<table id="contentManager'+ childId +'" class="contentManagerTab col-l-6">'+
-                '<caption class="category-title">Coiffure homme</caption>'+
-                '<tr>'+
-                    '<th id="desc'+ childId +'">Description</th>'+
-                    '<th id="price'+ childId +'">Prix</th>'+
-                    '<th id="modify'+childId+'">Modifier</th>'+
-                    '<th id="delete'+childId+'">Supprimer</a></th>'+
-                '<tr>'+
-                '<td>Coupe homme</td>' +
-                '<td>10</td>'+
-                '<td><input type="button" class="buttonUpdatePackage" value="Modifier"></td>' +
-                '<td><input id="checkBox" type="checkbox"></td>'+
-                '</tr>'+
-            '</table>'
-
-        addElement(parentId,elementTag,elementId,html)
-    }
-
-    function addElement(parentId, elementTag, elementId, html) {
-        var p = document.getElementById(parentId);
-        var newElement = document.createElement(elementTag);
-        newElement.setAttribute('id', elementId);
-        newElement.innerHTML = html;
-        p.appendChild(newElement);
-    }
-</script>
-
-</main>
-
+    </main>
 <?php
-
-include "templates/footer.tpl.php";
+echo "
+    <div class='sidenav'>
+      <ul>
+          <a href= '" . DIRNAME ."admin/getAdmin'>LOGO</a>
+          <li class='active sidebar_buttons'><a href='" . DIRNAME ."admin/getPackageAdmin' '>Forfaits</a></li>
+          <li class='sidebar_buttons'><a href='" . DIRNAME . "admin/getPageAdmin'>Pages</a></li>
+          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getArticleAdmin'>Articles</a></li>
+          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getProductAdmin'>Produits</a></li>
+      </ul>
+    </div> ";
 ?>
-

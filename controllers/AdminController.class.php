@@ -1,6 +1,8 @@
 <?php
 class AdminController{
 
+
+    //Partie d'administration globale
     public function getAdmin(){
         $v = new Views( "admin", "admin_header" );
         $v->assign("current", 'dashboard');
@@ -14,8 +16,6 @@ class AdminController{
         $u= $user->getAllBy(["status" => "-1"] , ["firstname , lastname , email , status , tel"], 4);
 
         $v->assign( "u", $u );
-       
-        
     }
 
     public function getContentAdmin(){
@@ -23,6 +23,7 @@ class AdminController{
         $v->assign("current", 'content');
     }
 
+    //Partie de gestion des forfaits
     public function getPackageAdmin(){
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
@@ -30,15 +31,24 @@ class AdminController{
     }
 
     public function saveCategoryPackage(){
-
         $category = new Category();
         $category->setDescription($_POST['categorie']);
         $category->setIdUser(1);
         $category->setIdCategoryType(3);
-        $category->updateTable();
-        $v = new Views( 'packageAdmin', "admin_header" );
+        $category->updateTable(
+            [
+                "description" => $category->getDescription(),
+                "id_User" => $category->getIdUser() ,
+                "id_CategoryType" => $category->getIdCategoryType()
+            ]
+        );
     }
 
+    public function savePackage(){
+
+    }
+
+    //Partie de gestion des nouvelles pages créés
     public function getPagesAdmin(){
         $v = new Views( 'pageAdmin', "admin_header" );
         $v->assign("current_sidebar", 'pages');
@@ -69,6 +79,7 @@ class AdminController{
         //header("Location: ")
     }
 
+    //Partie de gestion des users
     public function modifyUser(){
 
     }

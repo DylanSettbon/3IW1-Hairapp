@@ -992,6 +992,10 @@ img {
   padding: 10px;
   cursor: pointer; }
 
+.PackageManagerTab {
+  width: 50%;
+  margin-top: 40px; }
+
 .buttonUserDeleteBd {
   background-color: #ff3300;
   border-radius: 30px;
@@ -1077,7 +1081,7 @@ img {
 .page {
   color: #637484; }
 
-.contentManagerTab tr:nth-child(even) {
+.PackageManagerTab tr:nth-child(even) {
   background-color: rgba(189, 189, 189, 0.2); }
 
 th {
@@ -1088,5 +1092,26 @@ th {
   color: #637484; }
 
 td {
-  text-align: center;
-  padding: 10px; }
+  text-align: center; }
+
+.packageCategory-title {
+  font-size: 22px;
+  color: #637484;
+  padding-bottom: 10px; }
+
+[class^="createPackage"] {
+  background-color: #009CDF;
+  color: white; }
+
+.createCategoryPackage {
+  width: 50%; }
+
+.btnCreatePackage {
+  background-color: #009CDF;
+  color: white;
+  height: 45px;
+  width: 185px; }
+
+.buttonUpdatePackage {
+  width: 40%;
+  background-color: #B8B8B8; }
