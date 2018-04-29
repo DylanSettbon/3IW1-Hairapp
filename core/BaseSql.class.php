@@ -51,23 +51,6 @@ class BaseSql{
         $query->execute( $params );
     }
 
-    public function selectAll( $table){
-        $sql = 'SELECT * FROM '.$table.';';
-        $query = $this->db->prepare( $sql );
-        $query->execute();
-        $res = $query->fetchAll( PDO::FETCH_ASSOC );
-        return $res;
-    }
-
-    public function selectAllWhere( $table,$id){
-        $sql = 'SELECT * FROM '.$table.' WHERE id_Category = '.$id.';';
-        $query = $this->db->prepare( $sql );
-
-        $query->execute();
-        $res = $query->fetchAll( PDO::FETCH_ASSOC );
-        return $res;
-    }
-
     public function generateToken( $email ){
        $token = substr(sha1("GDQgfds4354".$email.substr(time(), 5).uniqid()."gdsfd"), 2, 10);
 
@@ -198,7 +181,7 @@ class BaseSql{
 
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
-            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].', '.$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].', '.$bind['bind_insert'].')';
+            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].(is_null($bind_pk['fields'])?'':',').$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].(is_null($bind_pk['bind_insert'])?'':',').$bind['bind_insert'].')';
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
@@ -226,49 +209,41 @@ class BaseSql{
 
     public function getAllBy($where = [], $columns = null, $tab = null){
         // $where = ["diff_status"=>-1, "id"=>3 ]
-        // SELECT * FROM table WHERE status != -1 AND id = 3
-
-     if(is_null($columns)){
-         $select="*";
-     }else{
-        $select = implode(",", $columns);
-     }
-
-     if( $where != null ){
-         $bind= $this->bindParams($where);
-         $sql_params= $where;
-
-         if( $tab == 1 ){
-             $where_type = $bind['bind_insert'];
-         }elseif ( $tab == 2 ){
-             $where_type = $bind['bind_update'];
-         }elseif ( $tab == 3 ){
-             $where_type = $bind['bind_primary_key'];
-         }elseif ( $tab == 4 ){
-             $where_type = $bind['not_in'];
+         if(is_null($columns)){
+             $select="*";
+         }else {
+             $select = implode(",", $columns);
          }
 
-         $sql = $this->db->prepare('SELECT ' .$select.
-             ' FROM '.$this->table.' WHERE '
-             .$where_type);
+         if( $where != null ){
+             $bind= $this->bindParams($where);
+             $sql_params= $where;
+             if( $tab == 1 ){
+                 $where_type = $bind['bind_insert'];
+             }elseif ( $tab == 2 ){
+                 $where_type = $bind['bind_update'];
+             }elseif ( $tab == 3 ){
+                 $where_type = $bind['bind_primary_key'];
+             }elseif ( $tab == 4 ){
+                 $where_type = $bind['not_in'];
+             }
+             $sql = $this->db->prepare('SELECT ' .$select.
+                 ' FROM '.$this->table.' WHERE '
+                 .$where_type);
+             $sql->execute($sql_params);
 
-         $sql->execute($sql_params);
+         }
+         else{
+             $sql = $this->db->prepare('SELECT ' .$select.
+                 ' FROM '.$this->table
+             );
+             $sql->execute();
+         }
 
+            $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
+            return $result;
 
-     }
-     else{
-         $sql = $this->db->prepare('SELECT ' .$select.
-             ' FROM '.$this->table
-         );
-         $sql->execute();
-
-     }
-
-        $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
-
-        return $result;
-
-    }
+        }
 
 
     /**
