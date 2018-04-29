@@ -49,11 +49,12 @@
                             <td class="page center" colspan="5">1/104</td>
                             <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                         </tr>
+                        <tr>
+                            <td colspan="7"><a href="#"  class="buttonUserAdd">Ajouter un utilisateur</a></td>
+                        </tr>
                     </nav>
                 </table>
-                <tr>
-                 <td colspan="7"><a href="#"  class="buttonUserAdd">Ajouter un utilisateur</a></td>
-                </tr>
+                
             </div>
         </article>
     </div>
