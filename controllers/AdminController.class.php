@@ -13,7 +13,7 @@ class AdminController{
         $v->assign("current", 'users');
         $user = new User();
 
-        $u= $user->getAllBy(["status" => "-1"] , ["firstname , lastname , email , status , tel"], 4);
+        $u= $user->getAllBy(["status" => "-1"] , ["id, firstname , lastname , email , status , tel"], 4);
 
         $v->assign( "u", $u );
     }
@@ -81,14 +81,65 @@ class AdminController{
 
     //Partie de gestion des users
     public function modifyUser(){
-
+        
+        $user = new User();
+        $a = $_GET['id'];
+        $u = $user->getUpdate("id = ".$a."", 2, "id, firstname , lastname , email , status , tel");
+        $v = new Views( "modifyAdmin", "admin_header" );
+        $v->assign("current", 'users');
+        $v->assign( "u", $u);
     }
 
-    public function deleteUser(){
+    public function modify(){
+        $user = new User();
+        $user->setId($_POST['id']);
+        $user->setFirstname($_POST['prenom']);
+        $user->setLastname($_POST['lastname']);
+        $user->setEmail($_POST['email']);
+        $user->setTel( $_POST['tel'] );
+        $user->setStatus( $_POST['status']);
 
+        $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
+        $this->getUserAdmin();
+
+    } 
+
+    public function deleteUser(){
+        $user = new User();
+        $a = $_GET['id'];
+        $user->getUpdate("id = ".$a."", 1, "status = '-1'");
+        $this->getUserAdmin();
+    }
+
+    public function delete(){
+        $user = new User();
+        $a = $_GET['id'];
+        $user->getUpdate("id = ".$a."", 3, " ");
+        $this->getUserAdmin();
     }
 
     public function addUser(){
+        $v = new Views( "signin", "header" );
+        $v->assign("current", 'user');
+    }
 
+    public function add(){
+        $user = new User();
+        $user->setFirstname($_POST['prenom']);
+        $user->setLastname($_POST['nom']);
+        $user->setEmail($_POST['email']);
+        $user->setPwd($_POST['pwd']);
+        $user->setToken();
+        $user->setTel( $_POST['tel'] );
+        $user->setDateInserted( date( "Y-m-d") );
+        $user->setDateUpdated( date( "Y-m-d") );
+        if( $_POST['offers'] == 'on' ){
+            $user->setReceivePromOffer(true);
+        }
+        else{
+            $user->setReceivePromOffer(false);
+        }
+        $user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, receivePromOffer, status, dateInserted, dateUpdated) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$user->getPwd()."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getReceivePromOffer()."', '0', '".$user->getDateInserted()."', '".$user->getDateUpdated()."')");
+        $this->getUserAdmin();
     }
 }
