@@ -207,6 +207,27 @@ class BaseSql{
         return $found;
     }
 
+    public function getUpdate($where,$choix, $column ){
+        // $where = ["diff_status"=>-1, "id"=>3 ]
+            if($choix == 1){
+             $sql = $this->db->prepare('Update ' .$this->table.' set ' .$column.' WHERE '
+                 .$where); 
+            }
+            if ($choix == 2){
+                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE ' 
+                .$where);   
+            }
+            if ($choix == 3){
+                $sql = $this->db->prepare('Delete from ' .$this->table. ' WHERE ' .$where);
+            }
+            if ($choix ==4){
+                $sql = $this->db->prepare('Insert into ' .$this->table. ' ' .$column. '');
+            }print_r($sql);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
+            return $result;
+        }
+
     public function getAllBy($where = [], $columns = null, $tab = null){
         // $where = ["diff_status"=>-1, "id"=>3 ]
          if(is_null($columns)){
