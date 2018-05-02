@@ -27,6 +27,7 @@
                     
                             foreach ($u as $user) {
 
+                                
                                 echo "
                                  <tr>
                                     <td> ".  $user->getFirstname() . " " . $user->getLastname() ."
@@ -34,9 +35,9 @@
                                     <td>". $user->getEmail() . "</td>
                                     <td>". $user->getTel() . "</td>
                                     <td> ". $user->getStatus() ."</td>
-                                    <td><a href='#' class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href='setStatut' class='buttonUserDelete'>Supprimer</a></td>
-                                    <td><a href='AdminController/deleteUser' class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
+                                    <td><a href='modifyUser?id=" . $user->getId() ."' class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href='deleteUser?id=" . $user->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
+                                    <td><a href='delete?id=" . $user->getId() ."' class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
                                 </tr>
                                 ";
                             }
@@ -50,7 +51,7 @@
                             <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                         </tr>
                         <tr>
-                            <td colspan="7"><a href="#"  class="buttonUserAdd">Ajouter un utilisateur</a></td>
+                            <td colspan="7"><a href=" <?php echo DIRNAME;?>admin/addUser"  class="buttonUserAdd">Ajouter un utilisateur</a></td>
                         </tr>
                     </nav>
                 </table>
