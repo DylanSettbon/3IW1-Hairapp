@@ -6,6 +6,7 @@
  * Date: 04/02/2018
  * Time: 11:27
  */
+include "templates/sidebar.view.php";
 ?>
     <main class='container'>
         <div class="content">
@@ -59,14 +60,6 @@
 
     </main>
 <?php
-echo "
-    <div class='sidenav'>
-      <ul>
-          <a href= '" . DIRNAME ."admin/getAdmin'>LOGO</a>
-          <li class='active sidebar_buttons'><a href='" . DIRNAME ."admin/getPackageAdmin' '>Forfaits</a></li>
-          <li class='sidebar_buttons'><a href='" . DIRNAME . "admin/getPageAdmin'>Pages</a></li>
-          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getArticleAdmin'>Articles</a></li>
-          <li class='sidebar_buttons'><a href='". DIRNAME . "admin/getProductAdmin'>Produits</a></li>
-      </ul>
-    </div> ";
+
+include "templates/footer.tpl.php";
 ?>

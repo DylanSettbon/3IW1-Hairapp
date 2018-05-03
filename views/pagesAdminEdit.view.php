@@ -8,9 +8,8 @@
 
 include "templates/sidebar.view.php";
 
+
 ?>
-
-
 
 <main class='container'>
     <div class="content">
@@ -19,31 +18,62 @@ include "templates/sidebar.view.php";
             <h1>Gestion de contenus : Pages</h1>
 
             <?php
-            echo "okokokokokok";
-            ?>
+            echo"
+            <div class='col-l-8 center' id='addPagesForm'>
+                <form action='" . DIRNAME . "Admin/addPages' method='post'>
+                    <input class='input' id='title' type='text' name='title' value ='" . $this->data['page_title'] ."' placeholder='Titre de la page' style='margin-bottom: 10px; '>
 
-
-            <div class="col-l-8 center" id="addPagesForm">
-                <form action="<?php echo DIRNAME;?>Admin/addPages" method="post" >
-                    <input class="input" id="title" type="text" name="title" placeholder="Titre de la page" style="margin-bottom: 10px; ">
-
-                    <textarea name="content" placeholder="content" style="width: 100%; height: 600px;"></textarea>
+                    <textarea id='content' name='content' placeholder='content' style='width: 100%; height: 600px;'> "
+                        . $this->data['page_content'] . "
+                    </textarea>
 
                     <label>
-                        <input class="addPageRadio" type="radio" name="isNavbar" value="1">
-                        Afficher dans la barre de navigation
+                        <input class='addPageRadio' type='radio' name='isNavbar' ";
+
+                            if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 1 ){
+                                echo "value ='" . $this->data['page_content']."' checked >Afficher dans la barre de navigation";
+                            }
+                            else{
+                                echo "value='1' >Afficher dans la barre de navigation";
+                            }
+
+                    echo "
                     </label>
                     <label>
-                        <input class="addPageRadio" type="radio" name="isNavbar" value="0" checked>
-                        Ne pas afficher dans la barre de navigation
+                        <input class='addPageRadio' type='radio' name='isNavbar' ";
+
+                            if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 0 ){
+                                echo "value ='" . $this->data['page_content']."' checked >Ne pas afficher dans la barre de navigation";
+                            }
+                            else{
+                                echo "value='0' >Ne pas afficher dans la barre de navigation";
+                            }
+
+                    echo "
                     </label>
 
                     <br>
 
-                    <input class="input" id="url" name="url" placeholder="url de la page" value="" type="text">
+                    <input class='input' id='url' name='url' placeholder='url de la page' type='text' ";
 
-                    <br>
-                    <input type="submit" id="sendPages" class="buttonUser" value="Créer la page" />
+                            if( isset( $this->data['page_url'] ) ){
+                                echo "value ='" . $this->data['page_url']."' >";
+                            }
+                            else{
+                                echo "value='' >";
+                            }
+                    echo "<br>";
+
+                        if( $this->data['modify'] ){
+                            echo "<input type='text' name='isModify' hidden value=1> ";
+                            echo "<input type='text' name='pageId' hidden value= " . $this->data['page_id'] ."> ";
+                            echo "<input type='submit' id='sendPages' class='buttonUser' value='Engeristrer les modifications' >";
+
+                        }
+                        else{
+                            echo " <input type='submit' id='sendPages' class='buttonUser' value='Créer la page' />";
+                        }
+                    ?>
                 </form>
             </div>
 
@@ -55,10 +85,6 @@ include "templates/sidebar.view.php";
 <?php
 include "templates/footer.tpl.php";
 ?>
-
-
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'textarea', theme: 'modern', skin: 'lightgray'});</script>
 
 
 <script>
@@ -75,11 +101,15 @@ include "templates/footer.tpl.php";
         dropdown[i].addEventListener("click", function() {
             this.classList.toggle("active", true);
             var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+            dropdownContent.style.display = "block";
         });
     }
 </script>
+
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>tinymce.init({
+        selector:'textarea',
+        theme: 'modern',
+        skin: 'lightgray',
+        content_css: 'public.css/style.css'
+    });</script>

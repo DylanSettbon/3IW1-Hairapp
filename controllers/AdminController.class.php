@@ -51,8 +51,14 @@ class AdminController{
     //Partie de gestion des nouvelles pages créés
     public function getPagesAdmin(){
         $v = new Views( 'pageAdmin', "admin_header" );
+
+        $page = new Pages();
+        $pages = $page->getAllBy( null, null, 3 );
+        $v->assign("pages", $pages );
         $v->assign("current_sidebar", 'pages');
         $v->assign("current", 'content');
+
+
     }
 
     public function getPageEdit(){
@@ -66,17 +72,38 @@ class AdminController{
         $page->setTitle( $_POST['title'] );
         $page->setIsNavbar( $_POST['isNavbar'] );
         $page->setUrl( $_POST['url'] );
+        $page->setActive( 1 );
 
-        $page->updateTable(
-            [
-                "title" => $page->getTitle(),
-                "content" => $page->getContent() ,
-                "isNavbar" => $page->getisNavbar(),
-                "url" => $page->getUrl()
-            ]
-        );
+        if( $_POST['isModify']  ){
+            $page->setId( $_POST['pageId'] );
+            $page->updateTable(
+                [
+                    "title" => $page->getTitle(),
+                    "content" => $page->getContent() ,
+                    "isNavbar" => $page->getisNavbar(),
+                    "url" => $page->getUrl(),
+                    "active" => $page->getActive()
+                ],
+                [
+                    "id" => $page->getId()
+                ]
+            );
+        }
+        else{
+            $page->updateTable(
+                [
+                    "title" => $page->getTitle(),
+                    "content" => $page->getContent() ,
+                    "isNavbar" => $page->getisNavbar(),
+                    "url" => $page->getUrl(),
+                    "active" => $page->getActive()
+                ]
+            );
+        }
 
-        //header("Location: ")
+
+
+        header("Location: getPagesAdmin");
     }
 
     //Partie de gestion des users
@@ -89,6 +116,22 @@ class AdminController{
     }
 
     public function addUser(){
+
+    }
+
+    public function modifyPages(){
+        // modification des pages
+        $page = new Pages();
+        $pages = $page->getAllBy( ['id' => $_GET['id'] ], null, 3 );
+
+        $v = new Views( 'pagesAdminEdit', "admin_header" );
+        $v->assign("page_id", $pages[0]->getId() );
+        $v->assign("page_title", $pages[0]->getTitle() );
+        $v->assign("page_content", $pages[0]->getContent() );
+        $v->assign("page_url", $pages[0]->getUrl() );
+        $v->assign("page_navbar", $pages[0]->getisNavbar() );
+        $v->assign("modify", true );
+        // render sur la pageAdminEdit
 
     }
 }

@@ -164,7 +164,7 @@ class BaseSql{
         $res = null;
         $found = 0;
         $table = $this->table;
-        $options = array_change_key_case((array)$options, CASE_LOWER);
+        //$options = array_change_key_case((array)$options, CASE_LOWER);
 
         if( $fields_primary_key != null ){
             $bind_pk = $this->bindParams($fields_primary_key);
@@ -187,7 +187,6 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-        //var_dump( $fields ); die;
         $this->update($sql_upd, $sql_params);
     }
 

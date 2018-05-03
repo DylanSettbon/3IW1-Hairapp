@@ -14,6 +14,7 @@ class Pages extends BaseSql
     private $content;
     private $isNavbar;
     private $url;
+    private $active;
 
 
     public function __construct()
@@ -102,6 +103,23 @@ class Pages extends BaseSql
     {
         $this->url = $url;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
 
 
 }
