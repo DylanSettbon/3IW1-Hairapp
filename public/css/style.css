@@ -992,6 +992,10 @@ img {
   padding: 10px;
   cursor: pointer; }
 
+.PackageManagerTab {
+  width: 50%;
+  margin-top: 40px; }
+
 .buttonUserDeleteBd {
   background-color: #ff3300;
   border-radius: 30px;
@@ -1068,9 +1072,8 @@ img {
   float: right;
   padding-right: 8px; }
 
-.PackageManagerTab {
-  width: 50%;
-  margin-top: 40px; }
+.contentManagerTab {
+  width: 50%; }
 
 .tab-admin {
   overflow-x: auto; }

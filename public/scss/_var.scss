@@ -619,6 +619,7 @@ $button_color: #009CDF;
 
   .title-categorie{
     margin: 10px 0 10% 0;
+    text-align: center;
   }
 
   .partie-gauche div[class^="categorie"]:last-child hr{
@@ -801,68 +802,138 @@ $button_color: #009CDF;
   }
 }
 
-@mixin contentPackageAdmin{
-
-  .PackageManagerTab {
-    width: 50%;
-
-    margin-top:40px;
+@mixin contentPackageAdmin {
+  //Administration des forfaits
+  .createCategoryPackage {
+    width: 100%;
   }
 
-  .tab-admin{
-    overflow-x: auto;
-  }
-
-  .page{
-    color: $main_color;
-  }
-
-  .PackageManagerTab tr:nth-child(even) {
-    background-color: rgba(189, 189, 189, 0.2);
-  }
-
-  th{
-       color: $main_color;
-     }
-
-  .previous a, .next-admin a{
-    text-decoration: none;
-    color: $main_color;
-  }
-
-  td{
-    text-align: center;
-  }
-
-  .packageCategory-title
-  {
-    font-size: 22px;
-    color: #637484;
-    padding-bottom:10px;
-  }
-
-  [class^="createPackage"]
-  {
+  .btnCreatePackage {
     background-color: #009CDF;
-    color:white;
-  }
-
-  .createCategoryPackage{
-    width: 50%;
-  }
-
-  .btnCreatePackage
-  {
-    background-color: #009CDF;
-    color:white;
+    color: white;
     height: 45px;
-    width: 185px;
+    width: 100%; }
+
+  .buttonUpdatePackage {
+    width: 40%;
+    background-color: #B8B8B8; }
+
+  .PackageTab {
+    width: 100%;
+    margin-top: 40px;
+    padding:5px;}
+
+  .PackageTab tr:nth-child(even) {
+    background-color: rgba(189, 189, 189, 0.2); }
+
+  .packageCategory-title {
+    font-size: 20px;
+    color: #637484;
+
+    padding-bottom: 10px; }
+
+  .btnCreatePackage {
+    width: 100%; }
+
+  [class^="createPackage"] {
+    background-color: #009CDF;
+    color: white;
+    width: 100%;
+    height: 30px; }
+
+  @media only screen and (min-width: 1024px) {
+    [class^="createPackage"] {
+      background-color: #009CDF;
+      color: white;
+      width: 250px; }
+    .createCategoryPackage {
+      width: 100%; }
+    .btnCreatePackage {
+      width: 185px; }
+    .PackageTab {
+      width: 48%; }
+    .buttonUpdatePackage {
+      width: 20%; } }
+
+  /*  Pop up d'ajout */
+  #packageForm,#categoryPackageForm,#updateCategoryPackageForm,#updatePackageForm  {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto; }
+
+  div#popUpForm {
+    position: absolute;
+    left: 63%;
+    top: 30%;
+    margin-left: -202px; }
+
+  .packageAdmin-title {
+    font-size: 22px ;
   }
 
-  .buttonUpdatePackage
-  {
-    width:40%;
+  .formPackage {
+    max-width: 320px;
+    min-width: 250px;
+    padding: 0px 35px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    background-color: #fff; }
+
+  .formPackage>h2 {
     background-color: #B8B8B8;
-  }
+    padding: 20px 2px;
+    margin: -20px -36px;
+    text-align: center;
+    border-radius: 10px 10px 0 0; }
 
+  .formPackage>hr {
+    margin: 20px -36px;
+    border: 0;
+    border-top: 1px solid #ccc; }
+
+  .formPackage>input[type=text] {
+    padding-left: 5px;
+    width: 100%;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px; }
+
+  #category {
+    background-repeat: no-repeat;
+    background-position: 5px 7px; }
+
+  input[type=submit].btnFormCategory {
+    margin-bottom: 1%;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    background-color: #009CDF;
+    color: #fff;
+    padding: 5px 0;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px; }
+
+  @media only screen and (min-width: 1024px) {
+    .packageAdmin-title {
+      font-size: 28px ;
+    }
+
+    .formPackage {
+      width: 100%; }
+
+    div#popUpForm {
+      position: absolute;
+      left: 55%;
+      top: 30%;
+      margin-left: -202px; }
+  }
 }

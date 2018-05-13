@@ -3,7 +3,8 @@ class Package extends BaseSql {
     protected $id = null;
     protected $description;
     protected $price;
-    protected $category;
+    protected $id_Category;
+    protected $id_User;
 
     //getters and setters
     public function getId()
@@ -36,13 +37,40 @@ class Package extends BaseSql {
         $this->price = $price;
     }
 
-    public function getCategory()
+    /**
+     * @return mixed
+     */
+    public function getIdCategory()
     {
-        return $this->category;
+        return $this->id_Category;
     }
 
-    public function setCategory($category)
+    /**
+     * @param mixed $id_Category
+     */
+    public function setIdCategory($id_Category)
     {
-        $this->category = $category;
+        $this->id_Category = $id_Category;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->id_User;
+    }
+
+    /**
+     * @param mixed $id_User
+     */
+    public function setIdUser($id_User)
+    {
+        $this->id_User = $id_User;
+    }
+
+
+
+
+
 }

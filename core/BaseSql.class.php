@@ -197,9 +197,7 @@ class BaseSql{
      * @return array|bool|mixed
      */
     public function countTable($table, $fields_primary_key) {
-
         $table = basename($table);
-
         $bind_pk = $this->bindParams($fields_primary_key);
         $sql_count = 'SELECT COUNT(*) FROM '.$table.' WHERE '.$bind_pk['bind_primary_key'];
         $found = $this->fetchOne($sql_count, $fields_primary_key);
