@@ -10,8 +10,14 @@
 
 foreach ( $this->data['navbar'] as $content ){
 
-    if( $content->getUrl() == $this->data['data']['URL'] ){
-        echo $content->getContent();
+    if( $content->getUrl() == $this->data['data']['URL']  ){
+        echo "
+        <main class='container'>
+            <div>
+                " . $content->getContent() . "
+            </div>
+        </main>
+        ";
     }
 
 }

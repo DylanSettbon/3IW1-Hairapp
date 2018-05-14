@@ -32,14 +32,16 @@
 
               foreach ( $this->data['navbar'] as $nav ){
 
-                  //var_dump( $nav->getTitle() );
+                  if( $nav->getActive() == 1 ){
+                      echo "<li ";
+                      if ( $this->data['current'] == $nav->getUrl() ) {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';
 
-                  echo "<li ";
-                  if ( $this->data['current'] == $nav->getUrl() ) {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';
-
-                  echo "> 
+                      echo "> 
                             <a href=' ".DIRNAME . $nav->getUrl() . "'>". $nav->getTitle()."</a>
                         </li>";
+                  }
+
+
               }
 
 

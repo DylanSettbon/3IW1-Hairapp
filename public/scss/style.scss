@@ -60,18 +60,7 @@ div [class *= "col-"] {
   text-align: center;
 }
 
-.title{
 
-  //width: 200px;
-  font-family: "Roboto";
-  font-style: italic;
-  line-height: normal;
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 25px;
-  color: #000000;
-  text-align:center;
-}
 
 @include planing;
 
@@ -590,3 +579,13 @@ text-align:center;}
 }
 
 @include contentPackageAdmin;
+
+h1, .mce-content-body h1{
+  @include title;
+}
+
+.mce-content-body{
+  @include fonts;
+}
+
+

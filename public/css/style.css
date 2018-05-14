@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto:300i,400");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300i,400");
 * {
   box-sizing: border-box; }
 
@@ -219,16 +220,6 @@ h3 {
 .center {
   margin-left: auto;
   margin-right: auto;
-  text-align: center; }
-
-.title {
-  font-family: "Roboto";
-  font-style: italic;
-  line-height: normal;
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 25px;
-  color: #000000;
   text-align: center; }
 
 #planning {
@@ -1112,3 +1103,23 @@ td {
 .buttonUpdatePackage {
   width: 40%;
   background-color: #B8B8B8; }
+
+h1, .mce-content-body h1 {
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+  text-align: center; }
+
+.mce-content-body { }
+  .mce-content-body body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    font-size: 16px;
+    padding-bottom: 6rem;
+    height: 119vh; }
+  .mce-content-body html {
+    height: 1vh; }

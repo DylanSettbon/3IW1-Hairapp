@@ -187,6 +187,7 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
+        //var_dump( $sql_upd ); die;
         $this->update($sql_upd, $sql_params);
     }
 
@@ -221,7 +222,7 @@ class BaseSql{
             }
             if ($choix ==4){
                 $sql = $this->db->prepare('Insert into ' .$this->table. ' ' .$column. '');
-            }print_r($sql);
+            }
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
             return $result;

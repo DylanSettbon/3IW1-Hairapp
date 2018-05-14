@@ -35,7 +35,6 @@ class Pages extends BaseSql
      */
     public function setTitle($title)
     {
-        $title = str_replace(' ', '_', $title );
         $this->title = $title;
     }
 
@@ -68,6 +67,15 @@ class Pages extends BaseSql
      */
     public function setContent($content)
     {
+
+        $content_post = $content;
+
+
+
+
+
+
+
         $this->content = $content;
     }
 

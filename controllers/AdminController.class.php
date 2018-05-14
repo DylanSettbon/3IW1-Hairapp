@@ -185,4 +185,33 @@ class AdminController{
         // render sur la pageAdminEdit
 
     }
+
+    public function deletePages(){
+
+        $page = new Pages();
+        $page->updateTable(
+            [
+                "active" => 0
+            ],
+            [
+                'id' => $_GET['id']
+            ]
+        );
+
+        self::getPagesAdmin();
+    }
+
+    public function activatePages(){
+        $page = new Pages();
+        $page->updateTable(
+            [
+                "active" => 1
+            ],
+            [
+                'id' => $_GET['id']
+            ]
+        );
+
+        self::getPagesAdmin();
+    }
 }

@@ -60,5 +60,20 @@
 
   include "views/".$this->v;?>
 
+  <script>
+
+      var dropdown = document.getElementsByClassName("dropdown");
+
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+              this.classList.toggle("active", true);
+              var dropdownContent = this.nextElementSibling;
+              dropdownContent.style.display = "block";
+          });
+      }
+  </script>
+
 
 

@@ -866,3 +866,14 @@ $button_color: #009CDF;
   }
 
 }
+
+@mixin title{
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+  text-align:center;
+}
