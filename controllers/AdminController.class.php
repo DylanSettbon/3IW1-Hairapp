@@ -28,24 +28,85 @@ class AdminController{
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
+
+        $category = new Category();
+        $categories = $category->getAllBy(['id_CategoryType' => '3'],null,2);
+        $v->assign("categories", $categories);
     }
 
     public function saveCategoryPackage(){
-        $category = new Category();
-        $category->setDescription($_POST['categorie']);
-        $category->setIdUser(1);
-        $category->setIdCategoryType(3);
-        $category->updateTable(
-            [
-                "description" => $category->getDescription(),
-                "id_User" => $category->getIdUser() ,
-                "id_CategoryType" => $category->getIdCategoryType()
-            ]
-        );
+        if($_POST['categoryPackageSubmit'] == 'Valider'){
+
+            if(!isset($_POST['categoryId'])){
+                $category = new Category();
+                $category->setDescription($_POST['categoryDesc']);
+                //Recuperer id user
+                $category->setIdUser(1);
+                $category->setIdCategoryType(3);
+                if(!$category->checkIfCategoryDescriptionExists()) {
+                    $category->updateTable(
+                        [
+                            "description" => $category->getDescription(),
+                            "id_User" => $category->getIdUser(),
+                            "id_CategoryType" => $category->getIdCategoryType()
+                        ]
+                    );
+                }
+                else{
+                    echo '<span style="background-color: red;">Catégorie déja existante</span>';
+                }
+
+            } else{
+                $category = new Category();
+                $category->setId($_POST['categoryId']);
+                $category->setDescription($_POST['categoryDesc']);
+                //Recuperer id user
+                $category->setIdUser(1);
+                $category->setIdCategoryType(3);
+                $category->updateTable(
+                    ["description" => $category->getDescription()],
+                    ["id" => $category->getId()]);
+            }
+        }
+        $this->getPackageAdmin();
     }
 
     public function savePackage(){
+        if($_POST['packageSubmit'] == 'Valider') {
+            if(!isset($_POST['packageId'])) {
+                $package = new Package();
+                $package->setDescription($_POST['description']);
+                $package->setPrice($_POST['price']);
+                $package->setIdCategory($_POST['categoryId']);
+                $package->setIdUser(1);
+                $package->updateTable(
+                    [
+                        "description" => $package->getDescription(),
+                        "price" => $package->getPrice(),
+                        "id_User" => $package->getIdUser(),
+                        "id_Category" => $package->getIdCategory()
+                    ]
+                );
+            }
+            else{
+                $package = new Package();
+                $package->setId($_POST['packageId']);
+                $package->setDescription($_POST['description']);
+                $package->setPrice($_POST['price']);
+                $package->setIdCategory($_POST['categoryId']);
+                $package->setIdUser(1);
+                $package->updateTable(
+                    ["description" => $package->getDescription(), "price" => $package->getPrice(),],
+                    ["id" => $package->getId()]
+                );
+            }
+        }
+        $this->getPackageAdmin();
+    }
 
+    public function updatePackage(){
+        var_dump($_POST);
+        $this->getPackageAdmin();
     }
 
     //Partie de gestion des nouvelles pages créés

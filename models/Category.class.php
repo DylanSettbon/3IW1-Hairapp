@@ -54,5 +54,20 @@ class Category extends BaseSql
     {
         $this->id_CategoryType = $id_CategoryType;
     }
+
+    public function checkIfCategoryDescriptionExists(){
+        return $this->countTable('Category',['description' => $this->description]) != 0 ? true : false;
+    }
+
+    public static function getCategoriesWithPackage($categories){
+        foreach($categories as $i=>$category) {
+            $package = new Package();
+            $packages = $package->getAllBy(['id_Category' => $category->getId()], null, 2);
+            if (empty($packages)) {
+                unset($categories[$i]);
+            }
+        }
+        return array_values($categories);
+    }
 }
 
