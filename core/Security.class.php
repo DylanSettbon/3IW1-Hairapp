@@ -42,6 +42,16 @@ class Security{
         $_SESSION['id'] = $user->getId();
     }
 
+    public static function isAdmin(){
+        $user = new User();
+        $user = $user->populate( ["email" => $_SESSION['email'] ] );
+
+        if( $user->getStatus() == 3 ){
+            return true;
+        }
+        return false;
+    }
+
 
 
 }

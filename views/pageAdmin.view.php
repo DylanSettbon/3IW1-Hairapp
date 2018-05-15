@@ -59,10 +59,10 @@ include "templates/sidebar.view.php";
 
                           echo "
 
-                        <td><a href='modifyPages?id=". $page->getId() ."' class='buttonUserModify'>Modifier</a></td>";
+                        <td><a id='modify' href='modifyPages?id=". $page->getId() ."' class='buttonUserModify'>Modifier</a></td>";
 
                         if( $page->getActive() == 1 ){
-                            echo "<td><a href='deletePages?id=". $page->getId() ."' class='buttonUserDelete'>Supprimer</a></td>";
+                            echo "<td><a id='delete' href='deletePages?id=". $page->getId() ."' class='buttonUserDelete'>Supprimer</a></td>";
                         }
                         else{
                             echo "<td><a href='activatePages?id=". $page->getId() ."' class='buttonUserDelete'>Activer</a></td>";
@@ -90,4 +90,3 @@ include "templates/sidebar.view.php";
 
 include "templates/footer.tpl.php";
 ?>
-

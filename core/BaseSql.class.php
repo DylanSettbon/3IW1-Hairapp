@@ -181,7 +181,7 @@ class BaseSql{
 
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
-            $sql_upd = 'INSERT INTO '.$table.' ('.$bind_pk['fields'].(is_null($bind_pk['fields'])?'':',').$bind['fields'].') VALUES ('.$bind_pk['bind_insert'].(is_null($bind_pk['bind_insert'])?'':',').$bind['bind_insert'].')';
+            $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
