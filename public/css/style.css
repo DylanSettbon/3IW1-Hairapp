@@ -85,7 +85,9 @@ html {
   left: 0;
   padding: 1rem;
   background-color: #637484;
-  color: white; }
+  color: white;
+  position: absolute;
+  bottom: 0px; }
 
 .container {
   width: 100%;
@@ -871,7 +873,7 @@ img {
 
 .description, .prix {
   width: 50%;
-  margin: 0 0 20px 0;
+  margin: 0 0 5px 0;
   font-size: 16px;
   font-weight: normal; }
 
@@ -881,17 +883,24 @@ img {
 .prix {
   text-align: right; }
 
+.duree {
+  font-style: italic;
+  text-align: right;
+  margin-bottom: 20px;
+  margin-top: 0;
+  color: grey; }
+
 .title-categorie {
   margin: 10px 0 10% 0;
   text-align: center; }
 
-.partie-gauche div[class^="categorie"]:last-child hr {
+.left-side div[class^="categorie"]:last-child hr {
   display: none; }
 
 @media only screen and (min-width: 1024px) {
   #main-forfait {
     margin-left: calc(8.33333% * 2); }
-  .partie-droite div[class^="categorie"]:last-child hr {
+  .right-side div[class^="categorie"]:last-child hr {
     display: none; } }
 
 .toggleAnimated {
@@ -1090,16 +1099,19 @@ img {
   width: 100%; }
 
 [class^="createPackage"] {
+  border-radius: 5px;
   background-color: #009CDF;
+  text-decoration: none;
   color: white;
   width: 100%;
+  padding: 5px 45px;
   height: 30px; }
 
 @media only screen and (min-width: 1024px) {
   [class^="createPackage"] {
+    padding: 5px 150px;
     background-color: #009CDF;
-    color: white;
-    width: 250px; }
+    color: white; }
   .createCategoryPackage {
     width: 100%; }
   .btnCreatePackage {
@@ -1206,3 +1218,23 @@ h1, .mce-content-body h1 {
     height: 119vh; }
   .mce-content-body html {
     height: 1vh; }
+
+.updateButton {
+  background-color: #009cdf;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer; }
+
+.deleteButton {
+  background-color: #ff8566;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer; }
