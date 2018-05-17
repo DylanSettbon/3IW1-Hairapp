@@ -4,53 +4,45 @@
             <h1 id="title-rdv" class="title col-l-4">Notre Carte</h1>
         </div>
 
-        <div class="col-s-12 col-l-5 partie-droite">
 
-            <?php
-                $categories = Category::getCategoriesWithPackage($categories);
 
-                foreach($categories as $i=>$category) {
-                    $package = new Package();
-                    $packages = $package->getAllBy(['id_Category' => $category->getId()], null, 2);
-                    if ($i % 2 == 0) {
-                        echo '<div class="categorie1 container">
-                                <h2 class="title-categorie">' . $category->getDescription() . ' </h2>';
-                        foreach ($packages as $package) {
-                            echo '<div class="row">
-                                    <p class="description">' . $package->getDescription() . '</p>
-                                    <p class="prix">' . $package->getPrice() . '</p>
-                                  </div>';
-                        }
-                        echo '<div class="row">
-                                     <hr class="col-s-8">
-                                  </div>';
-                        echo '</div>';
-                    }
-                }?>
+        <div class="col-s-12 col-l-5 right-side">
+            <?php foreach($categories as $i=>$category):?>
+                <?php if ($i % 2 == 0):?>
+                        <div class="categorie1 container">
+                                <h2 class="title-categorie"><?php echo $category->getDescription();?></h2>
+                        <?php foreach ($packages[$category->getId()] as $package):?>
+                            <div class="row">
+                                <p class="description"><?php echo $package->getDescription(); ?></p>
+                                <p class="prix"><?php echo $package->getPrice(); ?> €</p>
+                                <p class="duree"><?php echo $package->getTextDuration(); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                            <div class="row">
+                                <hr class="col-s-8">
+                            </div>
+                            </div>
         </div>
 
         <div class="col-l-2"></div>
 
-        <div class="col-s-12 col-l-5 partie-gauche">
-            <?php
-            foreach($categories as $i=>$category) {
-                if ($i % 2 != 0) {
+        <div class="col-s-12 col-l-5 left-side">
 
-                    echo '<div class="categorie1 container">
-                            <h2 class="title-categorie">' . $category->getDescription() . ' </h2>';
-                            foreach ($packages as $package) {
-                                echo '<div class="row">
-                                        <p class="description">' . $package->getDescription() . '</p>
-                                        <p class="prix">' . $package->getPrice() . '</p>
-                                    </div>';
-                            }
-                                echo '<div class="row">
-                                        <hr class="col-s-8">
-                                      </div>';
-                    echo '</div>';
-                    }
-                }
-            ?>
+            <?php else:?>
+                    <div class="categorie1 container">
+                        <h2 class="title-categorie"><?php echo $category->getDescription();?></h2>
+                        <?php foreach ($packages[$category->getId()] as $package):?>
+                            <div class="row">
+                                <p class="description"><?php echo $package->getDescription(); ?></p>
+                                <p class="prix"><?php echo $package->getPrice(); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                        <div class="row">
+                            <hr class="col-s-8">
+                        </div>
+                    </div>
+                <? endif; ?>
+            <?php endforeach; ?>
         </div>
     </main>
 </body>
