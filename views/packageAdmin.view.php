@@ -49,7 +49,7 @@ include "templates/sidebar.view.php";
 													  <td style="width:50%">' . $package->getDescription() . '</td> 
 													  <td>' . $package->getPrice() . '</td>
 													  <td><input class="updatePackage" type="submit" value="Modifier" name="updatePackage" onclick="updatePackageForm_show([\'' .$category->getId().'\',\''.$category->getDescription().'\'],[\'' .$package->getId().'\',\''.$package->getDescription().'\',\''.$package->getPrice().'\'])"></td>
-													  <td style="width:5%"><input id="test" type="submit"></td>
+													  <td style="width:5%"><input class="deletePackage" type="checkbox" value="Supprimer" name="updatePackage"</td>
 												  </tr>
 												  ';
                         }
@@ -58,7 +58,7 @@ include "templates/sidebar.view.php";
                         echo'
 									   <tr>
 									   <td colspan="3"><input class="createPackage" type="button" onclick ="createPackageForm_show([\''.$category->getId().'\',\''.$category->getDescription().'\'])" value="Creer un forfait"></td>
-									   <td><input class="deletePackage" type="button" value="Confirmer"></td>
+									   <td><input class="confirmDeletePackage" type="button" value="Supprimer"></td>
 									   </tr>
 									  </table>';
                     }
