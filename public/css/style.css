@@ -1107,20 +1107,6 @@ img {
   padding: 5px 45px;
   height: 30px; }
 
-@media only screen and (min-width: 1024px) {
-  [class^="createPackage"] {
-    padding: 5px 150px;
-    background-color: #009CDF;
-    color: white; }
-  .createCategoryPackage {
-    width: 100%; }
-  .btnCreatePackage {
-    width: 185px; }
-  .PackageTab {
-    width: 48%; }
-  .buttonUpdatePackage {
-    width: 20%; } }
-
 /*  Pop up d'ajout */
 #packageForm, #categoryPackageForm, #updateCategoryPackageForm, #updatePackageForm {
   width: 100%;
@@ -1187,17 +1173,41 @@ input[type=submit].btnFormCategory {
   cursor: pointer;
   border-radius: 5px; }
 
-@media only screen and (min-width: 1024px) {
-  .packageAdmin-title {
-    font-size: 28px; }
-  .formPackage {
-    width: 100%; } }
-
 #popUpForm {
   position: absolute;
   left: 55%;
   top: 30%;
   margin-left: -202px; }
+
+[id^="tablePackage"] {
+  font-size: 12px; }
+
+.packageCategory-title {
+  background-color: #F2F2F2; }
+
+@media only screen and (min-width: 1024px) {
+  [class^="createPackage"] {
+    padding: 5px 150px;
+    background-color: #009CDF;
+    color: white; }
+  .createCategoryPackage {
+    width: 100%; }
+  .btnCreatePackage {
+    width: 185px; }
+  .PackageTab {
+    width: 48%; }
+  .buttonUpdatePackage {
+    width: 20%; }
+  .categoryTitle {
+    margin: 0; }
+  .packageAdmin-title {
+    font-size: 28px; }
+  .formPackage {
+    width: 100%; }
+  .categoryTitle {
+    margin: 10px 0 0 0; }
+  [id^="tablePackage"] {
+    font-size: 16px; } }
 
 h1, .mce-content-body h1 {
   font-family: "Roboto";
