@@ -11,7 +11,6 @@
 <main class='container'>
     <div class="content">
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
-
             <h1 class="packageAdmin-title">Personnaliser la carte du salon</h1>
             <div class="row">
                 <a href='#' method="post" class="btnCreateCategory col-l-3" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
@@ -20,19 +19,20 @@
             <div id="package_content">
                 <?php
                 foreach($categories as $category):?>
+
                     <table id="packageCategory" class="PackageTab col-l-6">
                         <caption class="packageCategory-title">
-						    <h5><?php echo $category->getDescription(); ?></h5>
+						    <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
                             <a href="deleteCategoryPackage?id=<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
                             <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription()?>'])" style="float:right";>Modifier</a>
 
 								  </caption>
                                     <tr>
-                                        <th id="desc">Description</th>
-                                        <th id="price">Prix</th>
-                                        <th id="duration">Durée</th>
-                                        <th id="modify">Modifier</th>
-                                        <th id="delete">Supprimer</a></th>
+                                        <th id="tablePackageDesc">Description</th>
+                                        <th id="tablePackagePrice">Prix</th>
+                                        <th id="tablePackageDuration">Durée</th>
+                                        <th id="tablePackageModify">Modifier</th>
+                                        <th id="tablePackageDelete">Supprimer</a></th>
 
                     <?php if(empty($packages[$category->getId()])):?>
                             <tr>
@@ -41,18 +41,18 @@
                         </table>
                     <?php else: ?>
                         <?php foreach ($packages[$category->getId()] as $package): ?>
-                            <tr>
+                            <tr class="tdPackage" id="<?php echo $package->getId();?>">
                                 <td style="width:50%"><?php echo $package->getDescription() ?></td>
                                 <td><?php echo $package->getPrice() ?></td>
                                 <td><?php echo $package->getDuration() ?></td>
                                 <td><a href="#" class="buttonUser" type="submit" name="updatePackage" onclick="updatePackageForm_show(['<?php echo $category->getId() .'\',\''. $category->getDescription() ?>'],['<?php echo $package->getId().'\',\''.$package->getDescription().'\',\''.$package->getPrice() .'\',\''. $package->getDuration()?>'])">Modifier</a></td>
-                                <td style="width:5%"><input id="cbDeletePackage" class="deletePackage" type="checkbox" value="Supprimer" name="deletePackage"</td>
+                                <td style="width:5%"><input id="cbDeletePackage" value="<?php echo $package->getId() ?>" class="cbDeletePackage<?php echo $category->getDescription()?>" type="checkbox" value="Supprimer" name="deletePackage"</td>
                             </tr>
                         <?php endforeach; ?>
 
 									   <tr>
 									   <td colspan="4"><a href="#" class="createPackage" type="button" onclick ="createPackageForm_show(['<?php echo $category->getId().'\',\''.$category->getDescription() ?>'])">Creer un forfait</a></td>
-									   <td><a href="#" class="buttonUserDelete" id='deletePackage' type="button" value="Supprimer">Supprimer</a></td>
+									   <td><a href="#" class="buttonUserDelete" id='deletePackage' onclick= "deletePackage('<?php echo $category->getDescription(); ?>')" type="button" value="Supprimer">Supprimer</a></td>
 									   </tr>
 									  </table>
                     <?php endif; ?>
@@ -124,11 +124,9 @@
         </div>
 
     </div>
-
-    <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+    <?php //include 'templates/footer.tpl.php' ?>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <script type="text/javascript" src="../public/js/packageAdmin.js"></script>
 
 
     </main>
-
-<?php include "templates/footer.tpl.php";  ?>

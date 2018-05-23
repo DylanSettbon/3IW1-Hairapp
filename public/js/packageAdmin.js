@@ -30,6 +30,30 @@ function div_hide(){
     document.getElementById(this).style.display = "none";
 }
 
+function deletePackage(description){
+    const allIdToDelete = []
+    const allCheckboxDelete = document.getElementsByClassName("cbDeletePackage" + description);
+    for (var i = 0; i < allCheckboxDelete.length; i++) {
+        if(allCheckboxDelete[i].checked){
+            allIdToDelete.push(allCheckboxDelete[i].value)
+        }
+    }
+    $.ajax({
+        type: 'POST',
+        url: 'ajaxDeletePackage',
+        data: { idPackageDeleted: allIdToDelete },
+        success: function(response) {
+            for(var i=0; i< allIdToDelete.length;i++){
+                $("[class=tdPackage][id="+allIdToDelete[i]+"]").remove()
+            }
+            console.log(response)
+        }});
+}
+
+
+
+
+
 
 
 

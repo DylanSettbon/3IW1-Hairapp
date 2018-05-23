@@ -78,6 +78,7 @@ class BaseSql{
         }
         $result['bind_insert'] = implode(',', $tmp1);
         $result['bind_update'] = implode(',', $tmp2);
+        $result['bind_delete'] = implode(' OR ', $tmp2);
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
         $result['not_in'] = implode(' AND ', $tmp4);
@@ -190,7 +191,13 @@ class BaseSql{
         $this->update($sql_upd, $sql_params);
     }
 
-
+    public function delete($fields){
+        $table = $this->table;
+        $bind_pk = $this->bindParams($fields)['bind_update'];
+        $bind_pk = ltrim( $bind_pk, ' ,' );
+        $sql_upd = 'DELETE FROM  '.$this->table.' WHERE '.$bind_pk.';';
+        $this->update($sql_upd, $fields);
+    }
     /**
      * @param $table
      * @param $fields_primary_key

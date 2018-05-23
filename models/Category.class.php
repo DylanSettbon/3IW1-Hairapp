@@ -55,7 +55,9 @@ class Category extends BaseSql
         $this->id_CategoryType = $id_CategoryType;
     }
 
-    public function checkIfCategoryDescriptionExists($status = null){
+    public function checkIfCategoryDescriptionExistsAndNotNull($status = null){
+        if($this->description == ""){return false;}
+
         if($status == 0){
             return $this->countTable('Category',['description' => $this->description,'status' => '0']) != 0 ? true : false;
         }

@@ -35,6 +35,7 @@
                             <div class="row">
                                 <p class="description"><?php echo $package->getDescription(); ?></p>
                                 <p class="prix"><?php echo $package->getPrice(); ?></p>
+                                <p class="duree"><?php echo $package->getTextDuration(); ?></p>
                             </div>
                         <?php endforeach; ?>
                         <div class="row">

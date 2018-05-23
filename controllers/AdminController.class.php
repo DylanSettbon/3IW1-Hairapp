@@ -62,7 +62,7 @@ class AdminController{
                         ["status" => '1'],
                         ["description" => $category->getDescription()]
                     );
-                } else if($category->checkIfCategoryDescriptionExists(1)){
+                } else if($category->checkIfCategoryDescriptionExistsAndNotNull(1)){
                     echo '<span style="background-color: red;">Catégorie déja existante</span>';
                 }
             }
@@ -129,10 +129,13 @@ class AdminController{
         $this->getPackageAdmin();
     }
 
-    public function deletePackage(){
-        
+    public function ajaxDeletePackage(){
+        foreach($_POST['idPackageDeleted'] as $id){
+            $package = new Package();
+            $package->delete(['id' => $id]);
+            echo 'ok';
+        }
     }
-
 
 
     //Partie de gestion des nouvelles pages créés
