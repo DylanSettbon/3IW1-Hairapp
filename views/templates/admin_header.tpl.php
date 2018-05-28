@@ -58,7 +58,11 @@
 
   <?php
 
-  include "views/".$this->v;?>
+  include "views/".$this->v;
+
+  include $this->f;
+
+  ?>
 
   <script>
 

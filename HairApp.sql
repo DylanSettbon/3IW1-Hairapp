@@ -60,6 +60,7 @@ CREATE TABLE Category(
         description     Varchar (250) NOT NULL ,
         id_User         Int ,
         id_CategoryType Int ,
+        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -73,11 +74,11 @@ CREATE TABLE User(
         firstname        Varchar (25) NOT NULL ,
         lastname         Varchar (25) NOT NULL ,
         email            Varchar (25) NOT NULL ,
-        pwd              Varchar (25) NOT NULL ,
+        pwd              Varchar (60) NOT NULL ,
         token            Varchar (25) NOT NULL ,
         tel              Varchar (25) NOT NULL ,
-        receivePromOffer Integer NOT NULL ,
-        status           Integer NOT NULL ,
+        receivePromOffer TINYINT(1) NOT NULL,
+        status           TINYINT(1) NOT NULL,
         dateInserted     Date NOT NULL ,
         dateUpdated      Date NOT NULL ,
         lastConnection   Date NOT NULL ,
@@ -143,6 +144,7 @@ CREATE TABLE Package(
         id          int (11) Auto_increment  NOT NULL ,
         description Varchar (250) NOT NULL ,
         price       Float NOT NULL ,
+        duration	int (5) DEFAULT 0,
         id_User     Int ,
         id_Category Int ,
         PRIMARY KEY (id )

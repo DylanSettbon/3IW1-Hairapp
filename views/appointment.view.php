@@ -120,9 +120,7 @@
 		</form>
 	</main>
 </body>
-<?php include "templates/footer.tpl.php"; ?>
 <script type="text/javascript" src="../public/js/appointment.js"></script>
-</html>
 
 
 

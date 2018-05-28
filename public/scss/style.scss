@@ -677,4 +677,7 @@ input[type="checkbox"][id="template4"] + label::before{
   list-style: none;
 }
 
+@include genericClass;
+
+
 

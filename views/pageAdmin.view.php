@@ -85,8 +85,3 @@ include "templates/sidebar.view.php";
     </div>
 
   </main>
-
-<?php
-
-include "templates/footer.tpl.php";
-?>

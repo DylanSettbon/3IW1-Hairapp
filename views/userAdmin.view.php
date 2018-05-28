@@ -62,8 +62,3 @@
 
   </main>
 
-<?php
-
-include "templates/footer.tpl.php";
-?>
-

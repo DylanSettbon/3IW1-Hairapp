@@ -14,7 +14,6 @@ class AdminController{
         $user = new User();
 
         $u= $user->getAllBy(["status" => "-1"] , ["id, firstname , lastname , email , status , tel"], 4);
-
         $v->assign( "u", $u );
     }
 
@@ -31,44 +30,56 @@ class AdminController{
         $v->assign("current_sidebar", 'packages');
 
         $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3'],null,2);
+        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
         $v->assign("categories", $categories);
+
+        $package =  new Package();
+        $packages = $package->getAssociativeArrayPackage();
+        $v->assign('packages',$packages);
     }
 
-    public function saveCategoryPackage(){
-        if($_POST['categoryPackageSubmit'] == 'Valider'){
-
-            if(!isset($_POST['categoryId'])){
+    public function saveCategoryPackage()
+    {
+        if ($_POST['categoryPackageSubmit'] == 'Valider') {
+            if (!isset($_POST['categoryId'])) {
+                //Construction de l'objet
                 $category = new Category();
                 $category->setDescription($_POST['categoryDesc']);
                 //Recuperer id user
                 $category->setIdUser(1);
                 $category->setIdCategoryType(3);
-                if(!$category->checkIfCategoryDescriptionExists()) {
+
+                if(!$category->checkIfCategoryDescriptionExists(2)) {
                     $category->updateTable(
                         [
                             "description" => $category->getDescription(),
                             "id_User" => $category->getIdUser(),
                             "id_CategoryType" => $category->getIdCategoryType()
-                        ]
-                    );
-                }
-                else{
-                    echo '<span style="background-color: red;">Catégorie déja existante</span>';
+                        ]);
                 }
 
-            } else{
-                $category = new Category();
-                $category->setId($_POST['categoryId']);
-                $category->setDescription($_POST['categoryDesc']);
-                //Recuperer id user
-                $category->setIdUser(1);
-                $category->setIdCategoryType(3);
-                $category->updateTable(
-                    ["description" => $category->getDescription()],
-                    ["id" => $category->getId()]);
+                if ($category->checkIfCategoryDescriptionExists(0)) {
+                    $category->updateTable(
+                        ["status" => '1'],
+                        ["description" => $category->getDescription()]
+                    );
+                } else if($category->checkIfCategoryDescriptionExistsAndNotNull(1)){
+                    echo '<span style="background-color: red;">Catégorie déja existante</span>';
+                }
             }
-        }
+
+            else {
+            $category = new Category();
+            $category->setId($_POST['categoryId']);
+            $category->setDescription($_POST['categoryDesc']);
+            //Recuperer id user
+            $category->setIdUser(1);
+            $category->setIdCategoryType(3);
+            $category->updateTable(
+                ["description" => $category->getDescription()],
+                ["id" => $category->getId()]);
+        }}
+
         $this->getPackageAdmin();
     }
 
@@ -78,12 +89,14 @@ class AdminController{
                 $package = new Package();
                 $package->setDescription($_POST['description']);
                 $package->setPrice($_POST['price']);
+                $package->setDuration($_POST['duration']);
                 $package->setIdCategory($_POST['categoryId']);
                 $package->setIdUser(1);
                 $package->updateTable(
                     [
                         "description" => $package->getDescription(),
                         "price" => $package->getPrice(),
+                        "duration" => $package->getDuration(),
                         "id_User" => $package->getIdUser(),
                         "id_Category" => $package->getIdCategory()
                     ]
@@ -94,10 +107,13 @@ class AdminController{
                 $package->setId($_POST['packageId']);
                 $package->setDescription($_POST['description']);
                 $package->setPrice($_POST['price']);
+                $package->setDuration($_POST['duration']);
                 $package->setIdCategory($_POST['categoryId']);
                 $package->setIdUser(1);
                 $package->updateTable(
-                    ["description" => $package->getDescription(), "price" => $package->getPrice(),],
+                        ["description" => $package->getDescription(),
+                        "price" => $package->getPrice(),
+                        "duration" => $package->getDuration()],
                     ["id" => $package->getId()]
                 );
             }
@@ -105,10 +121,23 @@ class AdminController{
         $this->getPackageAdmin();
     }
 
-    public function updatePackage(){
-        var_dump($_POST);
+    public function deleteCategoryPackage(){
+        $category = new Category();
+        $category->setId($_GET['id']);
+        $category->updateTable(
+            ["status" => 0],
+            ["id" => $category->getId()]);
         $this->getPackageAdmin();
     }
+
+    public function ajaxDeletePackage(){
+        foreach($_POST['idPackageDeleted'] as $id){
+            $package = new Package();
+            $package->delete(['id' => $id]);
+            echo 'ok';
+        }
+    }
+
 
     //Partie de gestion des nouvelles pages créés
     public function getPagesAdmin(){

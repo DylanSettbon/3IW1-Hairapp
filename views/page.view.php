@@ -21,6 +21,3 @@ foreach ( $this->data['navbar'] as $content ){
     }
 
 }
-
-
-include "templates/footer.tpl.php";

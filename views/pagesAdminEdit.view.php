@@ -133,10 +133,6 @@ include "templates/sidebar.view.php";
     </div>
 </main>
 
-<?php
-include "templates/footer.tpl.php";
-?>
-
 
 <script>
     $(function () { $('#title').keyup( function () { $('#url').val( $("#title").val().replace(/\s/g, "_")); }) } )</script>

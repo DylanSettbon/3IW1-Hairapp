@@ -82,4 +82,7 @@
 
 <?php
     include "views/".$this->v;
+
+
+    include $this->f;
 ?>

@@ -12,8 +12,14 @@ class PackageController{
 
         $v = new Views( "package", "header" );
         $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3'],null,2);
+        $categories = $category->getAllBy(['id_CategoryType' => '3','status' => '1'],null,3);
+        $categories = Category::getCategoriesWithPackage($categories);
+
+        $package =  new Package();
+        $packages = $package->getAssociativeArrayPackage();
+
         $v->assign("categories", $categories);
+        $v->assign("packages",$packages);
         $v->assign("current", 'packages');
     }
 }

@@ -109,4 +109,3 @@
 </body>
 
 <script src="../public/js/home.js"></script>
-<?php include "templates/footer.tpl.php"; ?>
