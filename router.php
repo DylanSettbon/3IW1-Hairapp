@@ -30,7 +30,9 @@ $uri = ltrim($uri, "/"); // on retire le /
 if( $uri === 'admin'){
     $uri = 'admin/getAdmin';
 }
-
+if( $uri === 'home' ){
+    $uri = "home/getHome";
+}
 
  // =============== cette partie redirige vers la bonne vue si l'url est bonne ================
 
@@ -101,7 +103,11 @@ if( $uri === 'admin'){
 
     }else{
         //die("Le fichier ".$c." n'existe pas");
-        header("HTTP/1.0 404 Not Found", true, 404);
+        //header("HTTP/1.0 404 Not Found", true, 404);
+        include "controllers/ErrorsController.class.php";
+
+        $objC = new ErrorsController();
+        $objC->get404();
 
         //$v = new Views( "errors/404", "header");
         //var_dump( $v);

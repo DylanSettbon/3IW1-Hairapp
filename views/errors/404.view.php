@@ -6,4 +6,4 @@
  * Time: 19:21
  */
 
-echo "azertyukrezeg";
+echo "ERROR 404 Page not Found";

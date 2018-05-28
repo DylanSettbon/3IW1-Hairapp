@@ -62,7 +62,7 @@
               <?php
                 if( Security::isConnected() ){
                     ?>
-                    <li class="li-navbar"><a href='<?php echo DIRNAME;?>login/getLogin'>Mon Compte</a></li>
+                    <li class="li-navbar"><a href='<?php echo DIRNAME;?>account/getAccount'>Mon Compte</a></li>
               <?php
                 }
                 else{

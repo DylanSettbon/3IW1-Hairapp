@@ -21,6 +21,7 @@ class AdminController{
     public function getContentAdmin(){
         $v = new Views( "packageAdmin", "admin_header" );
         $v->assign("current", 'content');
+        $v->assign("current_sidebar", 'packages');
     }
 
     //Partie de gestion des forfaits
@@ -275,4 +276,6 @@ class AdminController{
 
         self::getPagesAdmin();
     }
+
+
 }

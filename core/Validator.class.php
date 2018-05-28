@@ -45,4 +45,25 @@ class Validator
 
         return $errorsMsg;
     }
+
+
+    public static function checkEmail($email){
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function isUniqueEmail( $email ){
+
+    }
+
+
+    public static function checkPwd($pwd){
+        return strlen($pwd)>6 &&  strlen($pwd)<12 && preg_match("/[A-Z]/", $pwd)  && preg_match("/[a-z]/", $pwd)  && preg_match("/[0-9]/", $pwd);
+    }
+
+    public static function minLength($value, $length){
+        return strlen(trim($value))>=$length;
+    }
+    public static function maxLength($value, $length){
+        return strlen(trim($value))<=$length;
+    }
 }

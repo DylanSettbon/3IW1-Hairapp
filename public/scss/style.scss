@@ -417,32 +417,6 @@ text-align:center;}
   transform: rotate(45deg) translate(-8px, -8px);
 }
 
-
-
-.text-image{
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-family: "Roboto";
-  line-height: normal;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-
-.text-image h1 {
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.text-image h2 {
-  color: white;
-  font-size: 18px;
-}
-
 .text-image a {
   border: none;
   outline: 0;
@@ -543,6 +517,7 @@ text-align:center;}
     padding:10px;
     cursor: pointer;
     float:right;
+  margin-bottom: 60px;
 }
 
 .addPageRadio{
@@ -580,12 +555,126 @@ text-align:center;}
 
 @include contentPackageAdmin;
 
-h1, .mce-content-body h1{
+h1{
   @include title;
 }
 
-.mce-content-body{
-  @include fonts;
+h2 {
+  font-family: "Roboto";
+  font-style: italic;
+  line-height: normal;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000000;
+  text-align:center;
+}
+
+.text-image{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: "Roboto";
+  line-height: normal;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+
+.text-image-h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+}
+
+.text-image-h2 {
+  color: white;
+  font-size: 18px;
+}
+
+.templates{
+  //width: 150px;
+}
+.container-templates{
+  text-align: center;
+}
+
+input[type="checkbox"][id^="template"] {
+  display: none;
+}
+
+input[type="checkbox"][id^="template"] + label::before {
+  content: "";
+  display: inline-block;
+ // width: 150px;
+  //height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+input[type="checkbox"][id^="template"] + label::before {
+  opacity: 0.5;
+}
+
+input[type="checkbox"][id^="template"]:checked + label::before {
+  border: solid black 2px;
+  font-size: 10px;
+  opacity: 1;
+}
+
+label[for^="template"] {
+  position: relative;
+}
+
+input[type="checkbox"][id="template1"] + label::before{
+  background-image: url("../img/t1.png");
+  width: 200px;
+  height: 200px;
+ background-size: contain;
+}
+input[type="checkbox"][id="template2"] + label::before{
+  background-image: url("../img/t2.png");
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+}
+input[type="checkbox"][id="template3"] + label::before{
+  background-image: url("../img/t3.png");
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+}
+input[type="checkbox"][id="template4"] + label::before{
+  background-image: url("../img/t3.png");
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+}
+
+.liste-templates li{
+  display: inline-block;
+  margin-right: 8%;
+}
+
+.liste-templates{
+  text-align: center;
+}
+
+.danger {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+}
+
+.div-errors {
+  margin-bottom: 15px;
+  padding: 4px 12px;
+}
+
+.errors{
+  list-style: none;
 }
 
 

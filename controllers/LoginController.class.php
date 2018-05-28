@@ -28,26 +28,35 @@ class LoginController {
         //Ca doit etre un objet
         $user = new User();
 
-        $userInformations = $user->populate(
-            array( "email" => $_POST['email'] )
-        );
-
-        if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ) {
-            $userInformations->setToken();
-            $params = array(
-                "token" => $userInformations->getToken(),
+        if( $_POST['email'] != '' ){
+            //var_dump( $_POST ); die;
+            $userInformations = $user->populate(
+                array( "email" => $_POST['email'] )
             );
 
-            $user->updateTable( $params, ["id" => $userInformations->getId()] );
+            if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ) {
+                $userInformations->setToken();
 
-            Security::setSession($userInformations);
+                $params = array(
+                    "token" => $userInformations->getToken(),
+                );
 
-            header("Location: " . DIRNAME . "home/getHome");
+                $user->updateTable( $params, ["id" => $userInformations->getId()] );
+
+                Security::setSession($userInformations);
+
+                header("Location: " . DIRNAME . "home/getHome");
+
+            }
+            else{
+                echo "faux";
+            }
 
         }
         else{
-            echo "faux";
+            echo "veuillez saisir des informations";
         }
+
 
 
     }

@@ -45,7 +45,7 @@
                 <a href='<?php echo DIRNAME;?>home/getHome'>Vers le site</a>
             </li>
             <li class="li-navbar">
-                <a href='<?php echo DIRNAME;?>account/myaccount'>Mon Compte</a>
+                <a href='<?php echo DIRNAME;?>account/getAccount'>Mon Compte</a>
             </li>
           </ul>
         </nav>

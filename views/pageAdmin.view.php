@@ -36,7 +36,7 @@ include "templates/sidebar.view.php";
                     <?php
 
 
-                    foreach ( $this->data['pages'] as $page ) {
+                    foreach ( $this->data['pages'] as $page ):
                         echo "<tr>
                                 
                                 <td> " . $page->getTitle() . " </td>
@@ -61,15 +61,15 @@ include "templates/sidebar.view.php";
 
                         <td><a id='modify' href='modifyPages?id=". $page->getId() ."' class='buttonUserModify'>Modifier</a></td>";
 
-                        if( $page->getActive() == 1 ){
+                        if( $page->getActive() == 1 ):
                             echo "<td><a id='delete' href='deletePages?id=". $page->getId() ."' class='buttonUserDelete'>Supprimer</a></td>";
-                        }
-                        else{
+
+                        else:
                             echo "<td><a href='activatePages?id=". $page->getId() ."' class='buttonUserDelete'>Activer</a></td>";
-                        }
+                        endif;
 
                         echo "</tr>";
-                    }
+                    endforeach;
                     ?>
 
                     <nav aria-label="navigation">

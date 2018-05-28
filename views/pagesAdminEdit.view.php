@@ -13,73 +13,118 @@ include "templates/sidebar.view.php";
 
 <main class='container'>
     <div class="content">
-        <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
+        <div class="packageContent-admin">
 
-            <div class="col-l-6">
-                <h1>Gestion de contenus : Pages</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-l-6">
+                        <h1>Gestion de contenus : Pages</h1>
+                    </div>
+
+                    <div class="col-l-6" style="text-align: right">
+                        <p><a href="getPagesAdmin">Retour</a></p>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-l-6" style="text-align: right">
-                <p><a href="getPagesAdmin">Retour</a></p>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-l-7">
+                        <h2>Sélectionnez le modèle de pages que vous souhaitez :</h2>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0 8px 5px 8px;">
+
+                    <div class="container liste-templates">
+                        <ul id="templates">
+                            <li>
+                                <input id="template1" type="checkbox" checked onclick="chooseTemplate('template1')">
+                                <label for="template1" checked>
+                                    <span class="nom-coiffeur">Template n°1</span>
+                                </label>
+                            </li>
+                            <li>
+                                <input id="template2" type="checkbox" onclick="chooseTemplate('template2')">
+                                <label for="template2">
+                                    <span class="nom-coiffeur">Template n°2</span>
+                                </label>
+                            </li>
+                            <li>
+                                <input id="template3" type="checkbox" onclick="chooseTemplate('template3')">
+                                <label for="template3">
+                                    <span class="nom-coiffeur">Template n°3</span>
+                                </label>
+                            </li>
+                            <li>
+                                <input id="template4" type="checkbox" onclick="chooseTemplate('template4')">
+                                <label for="template4">
+                                    <span class="nom-coiffeur">Template n°4</span>
+                                </label>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
             </div>
 
-            <?php
-            echo"
+
+            <br>
+
             <div class='col-l-8 center' id='addPagesForm'>
-                <form action='" . DIRNAME . "Admin/addPages' method='post'>
-                    <input class='input' id='title' type='text' name='title' value ='" . $this->data['page_title'] ."' placeholder='Titre de la page' style='margin-bottom: 10px; '>
+                <form action='<?php echo DIRNAME . "Admin/addPages"; ?> method='post'>
+                    <input class='input' id='title' type='text' name='title' value ='<?php $this->data['page_title']; ?>' placeholder='Titre de la page' style='margin-bottom: 10px; '>
 
-                    <textarea id='content' name='content' placeholder='content' style='width: 100%; height: 600px;'>" .
-                         $this->data['page_content'] . "
+                    <textarea id='content' name='content' placeholder='content' style='width: 100%; height: 600px;'>
+                         <?php echo $this->data['page_content']; ?>
                     </textarea>
 
+                <input type="text" id="template_choosen" hidden name="id_template" value="" />
+
                     <label>
-                        <input class='addPageRadio' type='radio' name='isNavbar' ";
+                        <input class='addPageRadio' type='radio' name='isNavbar'
 
-                            if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 1 ){
+                            <?php if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 1 ):
                                 echo "value ='" . $this->data['page_navbar']."' checked >Afficher dans la barre de navigation";
-                            }
-                            else{
+                            else:
                                 echo "value='1' >Afficher dans la barre de navigation";
-                            }
+                            endif; ?>
 
-                    echo "
+
                     </label>
                     <label>
                         <input class='addPageRadio' type='radio' name='isNavbar' ";
 
-                            if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 0 ){
+                            <?php if( isset( $this->data['page_navbar'] ) && $this->data['page_navbar'] == 0 ):
                                 echo "value ='" . $this->data['page_navbar']."' checked >Ne pas afficher dans la barre de navigation";
-                            }
-                            else{
+                            else:
                                 echo "value='0' >Ne pas afficher dans la barre de navigation";
-                            }
+                            endif; ?>
 
-                    echo "
+
                     </label>
 
                     <br>
 
-                    <input class='input' id='url' name='url' placeholder='url de la page' type='text' ";
+                    <input class='input' id='url' name='url' placeholder='url de la page' type='text'
 
-                            if( isset( $this->data['page_url'] ) ){
+                            <?php if( isset( $this->data['page_url'] ) ):
                                 echo "value ='" . $this->data['page_url']."' >";
-                            }
-                            else{
+                            else:
                                 echo "value='' >";
-                            }
-                    echo "<br>";
+                            endif; ?>
+                    <br>
 
-                        if( $this->data['modify'] ){
+                        <?php if( $this->data['modify'] ):
                             echo "<input type='text' name='isModify' hidden value=1 > ";
-                            echo "<input type='text' name='pageId' hidden value= " . $this->data['page_id'] ."> ";
+                            echo "<input type='text' name='pageId' hidden value=" . $this->data['page_id'] ."> ";
                             echo "<input type='submit' id='sendPages' class='buttonUser' value='Engeristrer les modifications' >";
 
-                        }
-                        else{
+                        else:
                             echo " <input type='submit' id='sendPages' class='buttonUser' value='Créer la page' />";
-                        }
-                    ?>
+
+                        endif; ?>
                 </form>
             </div>
 
@@ -94,23 +139,21 @@ include "templates/footer.tpl.php";
 
 
 <script>
-    $(function () { $('#title').keyup( function () { $('#url').val( $("#title").val().replace(/\s/g, "_")); }) } )
-</script>
+    $(function () { $('#title').keyup( function () { $('#url').val( $("#title").val().replace(/\s/g, "_")); }) } )</script>
 
-<!--
+
 
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=cv1iaiy59li07wxzo3ruuy3pmivhf4mwwrhr1cljdvgwwf03"></script>
 <script>
     tinymce.init({
         selector: 'textarea',
-        language: "fr_FR",
         height: 500,
         theme: 'modern',
         plugins: 'preview powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
         toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
         image_advtab: true,
         content_css: [
-            'http://localhost/public/css/style.css'
+            'http://localhost/3IW1-coiffeur/public/css/style.css'
 
         ],
         templates: [
@@ -122,14 +165,11 @@ include "templates/footer.tpl.php";
     });
 
 </script>
--->
-<script src='../public/ckeditor/ckeditor.js'></script>
-
-
+<!--<script src='../public/ckeditor/ckeditor.js'></script>-->
 <script>
     // Replace the <textarea id=\"editor1\"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace(
+    /*CKEDITOR.replace(
         'content',{
             language: 'fr',
             contentsCss: '../public/css/style.css',
@@ -152,6 +192,54 @@ include "templates/footer.tpl.php";
         }
 
 
-    );
+    );*/
+</script>
+
+<script>
+    var Allpage = $('#content')[0];
+    Allpage.append( 'okokokokokokokokokokokokokokoo');
+    console.log( Allpage );
+</script>
+
+<script>
+    $("input[id^='template']").click( function(){
+        if( $(this).is(':checked') ) {
+            $( "input[id^='template']" ).prop( "checked", false );
+
+            $( this ).prop( "checked", true );
+        }
+    });
+
+
+</script>
+
+<script>
+    function chooseTemplate( template ) {
+        var template_checked = $("#" + template );
+        var value = $("#template_choosen").val();
+        //var value = input_template.val();
+        //console.log( input_template );
+        var Allpage = $('#content')[0];
+
+       if( value == '' ){
+
+           switch (template){
+               case 'template1':
+                   Allpage.append( "okokoko");
+                   //Allpage.append( '<div class="row"><div class="col-l-4">1ere colonne</div><div class="col-l-4">1ere colonne</div><div class="col-l-4">1ere colonne</div></div><div class="row"><div class="col-l-4"></div><div class="col-l-4"></div><div class="col-l-4"></div></div>');
+                   break;
+               case 'template2':
+                   break;
+               case 'template3':
+                   break;
+               case 'template4':
+                   break;
+               default:
+           }
+
+           //Allpage.append( '<div');
+           console.log( Allpage );
+        }
+    }
 </script>
 

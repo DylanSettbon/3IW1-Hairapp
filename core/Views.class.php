@@ -39,7 +39,7 @@ class Views
     public function __destruct(){
         global $a, $c;
 
-
+        extract($this->data);
 
         $navbar = new Pages();
         $vues = $navbar->getAllBy(
@@ -49,9 +49,6 @@ class Views
         );
 
         //$this->assign( 'navbar', $vues);
-
-        extract($this->data);
-
         $this->data['navbar'] = $vues ;
 
 

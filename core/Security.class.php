@@ -4,10 +4,10 @@ class Security{
 
     public static function isConnected(){
 
-        $user = new User();
-        $user = $user->populate( ["email" => $_SESSION['email'] ] );
-
         if(!empty($_SESSION["token"]) && !empty($_SESSION["email"])){
+
+            $user = new User();
+            $user = $user->populate( ["email" => $_SESSION['email'] ] );
 
             if( $user->getToken() == $_SESSION['token'] && $user->getEmail() == $_SESSION['email'] ){
                 return true;
@@ -19,7 +19,16 @@ class Security{
         return false;
     }
 
+    public static function checkActivate( User $user ){
+        if( $user->getStatus() == 0 || $user->getStatus() == -1 ){
+            return false;
+        }
+        return true;
+    }
+
     public static function checkLogin($email, $pwd){
+
+        //var_dump( $pwd ); die;
 
         if (password_verify( $_POST['pwd'], $pwd ) == false ){
             return false;
@@ -53,5 +62,14 @@ class Security{
     }
 
 
+    public static function isCoiffeur(){
+        $user = new User();
+        $user = $user->populate( ["email" => $_SESSION['email'] ] );
+
+        if( $user->getStatus() == 2 ){
+            return true;
+        }
+        return false;
+    }
 
 }

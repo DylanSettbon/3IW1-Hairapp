@@ -9,6 +9,7 @@
 class AccountController{
 
     public function getAccount(){
-
+        $v = new Views( "admin", "admin_header" );
+        $v->assign("current", 'dashboard');
     }
 }

@@ -5,8 +5,8 @@
         <div class="mySlides fade">
             <img class="contain-img" src="../public/img/barber1.jpg" style="width:100%">
             <diV class="text-image">
-                <h1>Prendre rendez-vous</h1>
-                <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
+                <h1 class="text-image-h1">Prendre rendez-vous</h1>
+                <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
                 <a href="<?php echo DIRNAME; ?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>
@@ -14,8 +14,8 @@
         <div class="mySlides fade">
             <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%">
             <diV class="text-image">
-                <h1>Prendre rendez-vous</h1>
-                <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
+                <h1 class="text-image-h1">Prendre rendez-vous</h1>
+                <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
                 <a href="<?php echo DIRNAME; ?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>
@@ -23,8 +23,8 @@
         <div class="mySlides fade">
             <img class="contain-img" src="../public/img/barber3.jpg" style="width:100%">
             <diV class="text-image">
-                <h1>Prendre rendez-vous</h1>
-                <h2>Prenez directement rendez-vous avec votre salon en ligne</h2>
+                <h1 class="text-image-h1">Prendre rendez-vous</h1>
+                <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
                 <a href="<?php echo DIRNAME; ?>appointment/getAppointment">Cliquez ici</a>
             </div>
         </div>

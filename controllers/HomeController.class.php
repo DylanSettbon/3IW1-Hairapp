@@ -12,7 +12,7 @@ class HomeController {
     public function getHome(){
 
 
-        $v = new Views( );
+        $v = new Views();
         $v->assign("current", 'home');
     }
 }

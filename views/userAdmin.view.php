@@ -13,7 +13,7 @@
             <div class="col-s-12 col-l-12 col-m-9 tab-admin">
                 <table class="userManagerTab col-l-12">
                     <tr>
-                        
+
                         <th id="nom">Nom Complet</th>
                         <th id="email">Email</th>
                         <th id="tel">Téléphone</th>
@@ -23,11 +23,11 @@
                         <th >Supprimer en base</th>
 
                     </tr>
-                    <?php   
-                    
+                    <?php
+
                             foreach ($u as $user) {
 
-                                
+
                                 echo "
                                  <tr>
                                     <td> ".  $user->getFirstname() . " " . $user->getLastname() ."
@@ -41,9 +41,9 @@
                                 </tr>
                                 ";
                             }
-                    
+
                     ?>
-                    
+
                     <nav aria-label="navigation">
                         <tr class="page">
                             <td class="previous"><a href="#" title="Précédent">Précédent</a></td>
@@ -55,7 +55,7 @@
                         </tr>
                     </nav>
                 </table>
-                
+
             </div>
         </article>
     </div>
