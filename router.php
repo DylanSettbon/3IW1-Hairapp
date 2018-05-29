@@ -80,10 +80,15 @@ if( $uri === 'home' ){
 
         if (!Security::isConnected()) {
 
-            include "controllers/LoginController.class.php";
+            //include "controllers/LoginController.class.php";
 
-            $objC = new LoginController();
-            $objC->getLogin();
+            //$objC = new LoginController();
+            //$objC->getLogin();
+
+            include "controllers/ErrorsController.class.php";
+
+            $objC = new ErrorsController();
+            $objC->get401();
 
         } else {
             if (!Security::isAdmin()) {

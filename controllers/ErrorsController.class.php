@@ -22,4 +22,11 @@ class ErrorsController{
         //http_response_code(404);
         header("HTTP/1.0 403 Forbidden access");
     }
+
+    public function get401(){
+        $v = new Views( "errors/401", "header");
+        $v->assign("current", '');
+        //http_response_code(404);
+        header("HTTP/1.0 401 Unauthorized");
+    }
 }

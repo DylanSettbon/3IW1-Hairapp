@@ -20,7 +20,7 @@
 
             <?php foreach ( $account as $info ): ?>
 
-                <p>ok</p>
+                <?php var_dump( $account ); die; ?>
 
             <?php endforeach; ?>
 
