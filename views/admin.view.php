@@ -8,17 +8,6 @@
 ?>
 <main class='container'>
 
-        <!--<aside class='sidebar col-s-12 col-m-2 col-l-1'>
-            <ul id='sidebar_ul'>
-                <li class='active sidebar_buttons'><a href='admin'>Dashboard</a></li>
-                <li class='sidebar_buttons'><a href='userAdmin'>User Manager</a></li>
-                <li class='sidebar_buttons'><a href='siteManager'>Website Manager</a> </li>
-            </ul>
-        </aside>
-
-    -->
-
-
         <div>
             <section class="col-l-12 col-m-9 col-s-12">
                 <h1 id="title-rdv" class="title col-l-4">Nombre de visites </h1>

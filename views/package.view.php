@@ -42,7 +42,7 @@
                             <hr class="col-s-8">
                         </div>
                     </div>
-                <? endif; ?>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
     </main>

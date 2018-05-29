@@ -10,18 +10,21 @@
                             <div class="row">
                                 <h1 id="title-rdv" class="title col-l-4">S'inscrire</h1>
                             </div>
-                            <?php $this->addModal("form", $config, $errors); ?>
+
+                            <?php $this->addModal("form", $config ); ?>
 
 
                             <ul class="errors">
-                                <?php foreach ( $errors as $error ): ?>
-                                    <li>
-                                        <div class="div-errors danger">
-                                            <p><strong> Warning ! </strong><?php echo $error;?></p>
-                                        </div>
+                                <?php if( isset( $errors ) ): ?>
+                                    <?php foreach ( $errors as $error ): ?>
+                                        <li>
+                                            <div class="div-errors danger">
+                                                <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                            </div>
 
-                                    </li>
-                                <?php endforeach; ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </ul>
 
 

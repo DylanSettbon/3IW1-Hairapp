@@ -124,6 +124,21 @@ CREATE TABLE CategoryType(
 
 
 #------------------------------------------------------------
+# Table: Pages
+#------------------------------------------------------------
+
+CREATE TABLE Pages (
+        id int(11) AUTO_INCREMENT NOT NULL,
+        title varchar(50) NOT NULL,
+        content longtext NOT NULL,
+        isNavbar tinyint(1) NOT NULL,
+        url varchar(25) NOT NULL,
+        active tinyint(4) NOT NULL
+        PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#------------------------------------------------------------
 # Table: Article
 #------------------------------------------------------------
 

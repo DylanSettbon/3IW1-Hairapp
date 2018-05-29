@@ -301,6 +301,79 @@ class User extends BaseSql {
         ];
     }
 
+    public function AccountForm(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"saveAccount", "submit"=>"Enregistrer"],
+            "input"=>[
+
+                "prenom"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre prénom",
+                    "required"=>true,
+                    "minString"=>2,
+                    "maxString"=>100,
+                    "value" => ''
+                ],
+                "nom"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre nom",
+                    "required"=>true,
+                    "minString"=>2,
+                    "maxString"=>100,
+                    "value" => ''
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre email",
+                    "required"=>true
+                ],
+                /*"emailConfirm"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Confirmation",
+                    "required"=>true,
+                    "confirm"=>"email"
+                ],*/
+                "pwd"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre mot de passe",
+                    "required"=>true
+                ],
+                /*"pwdConfirm"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Confirmation",
+                    "required"=>true,
+                    "confirm"=>"pwd"
+                ],*/
+                "tel" => [
+                    "type" => "tel",
+                    "class"=>"input input_sign-in",
+                    "placeholder" => "Téléphone",
+                    "required" => true
+                ],
+                "offers" => [
+                    "type" => "checkbox",
+                    "id" => "checkBox",
+                    "span" => "Je souhaite recevoir par e-mail des offres promotionnelles"
+                ]
+
+            ],
+
+            /*"textarea" =>[
+                "commentaire" =>[
+                    "placeholder" => 'texte'
+                ]
+            ]*/
+
+        ];
+    }
+
 
     public function __toString()
     {

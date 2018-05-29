@@ -36,7 +36,7 @@ include "templates/sidebar.view.php";
                     <?php
 
 
-                    foreach ( $this->data['pages'] as $page ):
+                    foreach ( $pages as $page ):
                         echo "<tr>
                                 
                                 <td> " . $page->getTitle() . " </td>

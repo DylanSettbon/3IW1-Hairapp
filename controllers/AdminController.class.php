@@ -44,21 +44,23 @@ class AdminController{
             if (!isset($_POST['categoryId'])) {
                 //Construction de l'objet
                 $category = new Category();
+
                 $category->setDescription($_POST['categoryDesc']);
                 //Recuperer id user
                 $category->setIdUser(1);
                 $category->setIdCategoryType(3);
 
-                if(!$category->checkIfCategoryDescriptionExists(2)) {
+                if(!$category->checkIfCategoryDescriptionExistsAndNotNull(2)) {
                     $category->updateTable(
                         [
                             "description" => $category->getDescription(),
                             "id_User" => $category->getIdUser(),
                             "id_CategoryType" => $category->getIdCategoryType()
                         ]);
+
                 }
 
-                if ($category->checkIfCategoryDescriptionExists(0)) {
+                if ($category->checkIfCategoryDescriptionExistsAndNotNull(0)) {
                     $category->updateTable(
                         ["status" => '1'],
                         ["description" => $category->getDescription()]
@@ -154,6 +156,8 @@ class AdminController{
 
     public function getPageEdit(){
         $v = new Views( 'pagesAdminEdit', "admin_header" );
+        $v->assign("current_sidebar", 'pages');
+        $v->assign("current", 'content');
     }
 
     public function addPages(){

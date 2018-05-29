@@ -34,6 +34,7 @@ if( $uri === 'home' ){
     $uri = "home/getHome";
 }
 
+
  // =============== cette partie redirige vers la bonne vue si l'url est bonne ================
 
     //TODO Faire la partie action dans l'url
@@ -53,19 +54,13 @@ if( $uri === 'home' ){
 
     }
 
-
-    //Utiliser des conditions ternaires pour mettre la chaine
-    //"index" si la clé n'existe pas :
     $c = (empty($uriExploded[0]))?"index":$uriExploded[0];
     $a = (empty($uriExploded[1]))?"index":$uriExploded[1];
 
-
-    //Controller : NomController
     $urlBase = $c;
 
 
     $c = ucfirst(strtolower($c))."Controller";
-    //Action : nomAction
     $a = strtolower($a);
 
     unset($uriExploded[0]);
@@ -79,37 +74,93 @@ if( $uri === 'home' ){
         "URL"=>$uriExploded
     );
 
-    if(file_exists("controllers/".$c.".class.php")){
-        include "controllers/".$c.".class.php";
-        if( class_exists($c) ){
+    //echo $c; die;
 
-            $objC = new $c();
+    if( $c == 'AdminController' ) {
 
-            if( method_exists($objC, $a) ){
-                $objC->$a($params);
-            }else{
-                die("L'action ".$a." n'existe pas");
+        if (!Security::isConnected()) {
+
+            include "controllers/LoginController.class.php";
+
+            $objC = new LoginController();
+            $objC->getLogin();
+
+        } else {
+            if (!Security::isAdmin()) {
+
+                include "controllers/ErrorsController.class.php";
+
+                $objC = new ErrorsController();
+                $objC->get403();
+            } elseif (file_exists("controllers/" . $c . ".class.php")) {
+                include "controllers/" . $c . ".class.php";
+                if (class_exists($c)) {
+
+                    $objC = new $c();
+
+                    if (method_exists($objC, $a)) {
+                        $objC->$a($params);
+                    } else {
+                        die("L'action " . $a . " n'existe pas");
+                    }
+                } else {
+                    die("Le controller " . $c . " n'existe pas");
+                }
+            } elseif (in_array($urlBase, $urlCreated)) {
+
+                include "controllers/PageController.class.php";
+
+                $params['URL'] = $urlBase;
+                $objC = new Page();
+                $objC->getPage($params);
+
+            } else {
+                //die("Le fichier ".$c." n'existe pas");
+                //header("HTTP/1.0 404 Not Found", true, 404);
+                include "controllers/ErrorsController.class.php";
+
+                $objC = new ErrorsController();
+                $objC->get404();
+
+                //$v = new Views( "errors/404", "header");
+                //var_dump( $v);
+
             }
-        }else{
-            die("Le controller ".$c." n'existe pas");
         }
-    }elseif ( in_array( $urlBase, $urlCreated ) ){
+    }
+    else{
+        if (file_exists("controllers/" . $c . ".class.php")) {
+            include "controllers/" . $c . ".class.php";
+            if (class_exists($c)) {
 
-        include "controllers/PageController.class.php";
+                $objC = new $c();
 
-        $params['URL'] = $urlBase;
-        $objC = new Page();
-        $objC->getPage( $params );
+                if (method_exists($objC, $a)) {
+                    $objC->$a($params);
+                } else {
+                    die("L'action " . $a . " n'existe pas");
+                }
+            } else {
+                die("Le controller " . $c . " n'existe pas");
+            }
+        } elseif (in_array($urlBase, $urlCreated)) {
 
-    }else{
-        //die("Le fichier ".$c." n'existe pas");
-        //header("HTTP/1.0 404 Not Found", true, 404);
-        include "controllers/ErrorsController.class.php";
+            include "controllers/PageController.class.php";
 
-        $objC = new ErrorsController();
-        $objC->get404();
+            $params['URL'] = $urlBase;
+            $objC = new Page();
+            $objC->getPage($params);
 
-        //$v = new Views( "errors/404", "header");
-        //var_dump( $v);
+        } else {
+            //die("Le fichier ".$c." n'existe pas");
+            //header("HTTP/1.0 404 Not Found", true, 404);
+            include "controllers/ErrorsController.class.php";
 
+            $objC = new ErrorsController();
+            $objC->get404();
+
+            //$v = new Views( "errors/404", "header");
+            //var_dump( $v);
+
+        }
     }

@@ -9,7 +9,18 @@
 class AccountController{
 
     public function getAccount(){
-        $v = new Views( "admin", "admin_header" );
-        $v->assign("current", 'dashboard');
+
+        $user = new User();
+        $form = $user->AccountForm();
+
+        $account = $user->populate( ['email' => $_SESSION['email'] ] );
+
+        $v = new Views( "account", "header" );
+        $v->assign("config",$form);
+        $v->assign("current", 'account');
+
+        $v->assign( "account", $account );
+
+
     }
 }

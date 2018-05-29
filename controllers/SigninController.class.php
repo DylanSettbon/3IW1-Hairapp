@@ -17,7 +17,7 @@ class SigninController{
         $user = new User();
         $form = $user->FormSignIn();
         $v = new Views( "signin", "header" );
-
+        $v->assign( "current", "login" );
         $v->assign("config",$form);
     }
 
@@ -65,9 +65,9 @@ class SigninController{
                     "dateUpdated" => date( "Y-m-d" ),
                     "lastConnection" => null
                 );
-
+                //var_dump( $params ); die;
                 $user->updateTable( $params );
-
+                //var_dump( $user ); die;
                 require("vendor/autoload.php");
                 //require("vendor/phpmailer/phpmailer/src/SMTP.php");
 
@@ -97,6 +97,7 @@ class SigninController{
             }
             else{
                 $v = new Views( "signin", "header" );
+                $v->assign( "current", "login" );
                 $v->assign("config",$form);
                 $v->assign("errors",$errors);
             }

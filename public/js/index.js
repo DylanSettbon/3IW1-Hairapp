@@ -7,6 +7,7 @@ $(document).ready(function() {
     });
 });
 
+/*
 
 tinymce.init({
     selector: 'textarea',
@@ -27,3 +28,5 @@ tinymce.init({
         {title: 'Some title 2', description: 'Some desc 2', url: 'development.html'}
     ]
 });
+
+*/

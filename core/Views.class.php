@@ -44,18 +44,14 @@ class Views
     public function __destruct(){
         global $a, $c;
 
-        extract($this->data);
-
         $navbar = new Pages();
         $vues = $navbar->getAllBy(
             [
                 "isNavbar" => 1
             ], null, 3
         );
-
-        //$this->assign( 'navbar', $vues);
-        $this->data['navbar'] = $vues ;
-
+        $this->assign( 'navbar', $vues);
+        extract($this->data);
 
         include "views/templates/".$this->t;
     }
