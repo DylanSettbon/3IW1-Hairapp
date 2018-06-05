@@ -32,10 +32,11 @@ class Views
     }
 
     public function assign( $key , $value){
+
         $this->data[$key] = $value;
     }
 
-    public function addModal($modal, $config, $errors=[]){
+    public function addModal($modal, $config, $errors=[], $vars = []){
 
         include "views/modals/".$modal.".mdl.php";
 

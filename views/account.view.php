@@ -18,13 +18,21 @@
     <div class="row">
         <div class="col-l-6 center">
 
-            <?php foreach ( $account as $info ): ?>
 
-                <?php var_dump( $account ); die; ?>
+            <?php $this->addModal("form", $config, [], $account ); ?>
 
-            <?php endforeach; ?>
+            <ul class="errors">
+                <?php if( isset( $errors ) ): ?>
+                    <?php foreach ( $errors as $error ): ?>
+                        <li>
+                            <div class="div-errors danger">
+                                <p><strong> Warning ! </strong><?php echo $error;?></p>
+                            </div>
 
-            <?php $this->addModal("form", $config ); ?>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
 
         </div>
     </div>

@@ -15,12 +15,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-l-6 center">
 
+    <?php $this->addModal('planning', null, null, $week )?>
 
-
-        </div>
-    </div>
 
 </div>

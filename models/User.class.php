@@ -307,20 +307,21 @@ class User extends BaseSql {
             "config"=>["method"=>"POST", "action"=>"saveAccount", "submit"=>"Enregistrer"],
             "input"=>[
 
+
                 "prenom"=>[
                     "type"=>"text",
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Votre prénom",
-                    "required"=>true,
                     "minString"=>2,
                     "maxString"=>100,
-                    "value" => ''
+                    "value" => '',
+
+
                 ],
                 "nom"=>[
                     "type"=>"text",
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Votre nom",
-                    "required"=>true,
                     "minString"=>2,
                     "maxString"=>100,
                     "value" => ''
@@ -328,8 +329,7 @@ class User extends BaseSql {
                 "email"=>[
                     "type"=>"email",
                     "class"=>"input input_sign-in",
-                    "placeholder"=>"Votre email",
-                    "required"=>true
+                    "placeholder"=>"Votre email"
                 ],
                 /*"emailConfirm"=>[
                     "type"=>"email",
@@ -341,8 +341,7 @@ class User extends BaseSql {
                 "pwd"=>[
                     "type"=>"password",
                     "class"=>"input input_sign-in",
-                    "placeholder"=>"Votre mot de passe",
-                    "required"=>true
+                    "placeholder"=>"Votre mot de passe"
                 ],
                 /*"pwdConfirm"=>[
                     "type"=>"password",

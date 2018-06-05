@@ -14,4 +14,9 @@
         <p class='text-center'>Cliquez <a href='#'>ici</a> pour retourner sur l'écran de connexion.</p>
 <meta http-equiv="refresh" content="5;<?php echo DIRNAME ?>login/getLogin">
     </div>
-</div>
+</div>RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ router.php [L]

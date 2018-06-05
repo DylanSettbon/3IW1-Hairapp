@@ -65,11 +65,9 @@ class SigninController{
                     "dateUpdated" => date( "Y-m-d" ),
                     "lastConnection" => null
                 );
-                //var_dump( $params ); die;
+
                 $user->updateTable( $params );
-                //var_dump( $user ); die;
                 require("vendor/autoload.php");
-                //require("vendor/phpmailer/phpmailer/src/SMTP.php");
 
                 $mail = new PHPMailer();
 

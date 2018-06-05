@@ -10,10 +10,13 @@
                     class="<?php echo $params['class']; ?>"
                     placeholder="<?php echo $params["placeholder"];?>"
 
-                    <?php if ( isset( $account ) ): ?>
-                        value="<?php echo $this->data['account'] ; ?>"
-                    <?php elseif( isset( $_POST[$name] ) ): ?>
-                        <?php echo "value=".$_POST[$name]; ?>
+
+                    <?php if ( !empty( $vars ) && $params['type'] != "password"): ?>
+                        <?php echo "value='" .$vars[$name] ."'" ; ?>
+                    <?php else: ?>
+                        <?php if( isset( $_POST[$name] ) ): ?>
+                                <?php echo "value=".$_POST[$name]; ?>
+                            <?php endif; ?>
                     <?php endif; ?>
 
 
@@ -30,6 +33,9 @@
                     name="<?php echo $name;?>"
                     <?php if ( isset( $params['class'] ) ) :?>
                         class="<?php echo $params['class'];?>"
+                    <?php endif; ?>
+                    <?php if( !empty( $vars[$name] ) && $vars[$name] == 1 ): ?>
+                        checked
                     <?php endif; ?>
 
             <?php if( isset( $params['span'] ) ):?>

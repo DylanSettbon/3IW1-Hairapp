@@ -69,11 +69,11 @@ CREATE TABLE Category(
 # Table: User
 #------------------------------------------------------------
 
-CREATE TABLE User(
+CREATE TABLE user(
         id               int (11) Auto_increment  NOT NULL ,
         firstname        Varchar (25) NOT NULL ,
         lastname         Varchar (25) NOT NULL ,
-        email            Varchar (25) NOT NULL ,
+        email            Varchar (150) NOT NULL ,
         pwd              Varchar (60) NOT NULL ,
         token            Varchar (25) NOT NULL ,
         tel              Varchar (25) NOT NULL ,
@@ -81,7 +81,7 @@ CREATE TABLE User(
         status           TINYINT(1) NOT NULL,
         dateInserted     Date NOT NULL ,
         dateUpdated      Date NOT NULL ,
-        lastConnection   Date NOT NULL ,
+        lastConnection   Date DEFAULT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
