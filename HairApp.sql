@@ -109,6 +109,7 @@ CREATE TABLE comment(
         id_User    Int ,
         id_Article Int ,
         statut Int (11) NULL DEFAULT '1' COMMENT '1:en attente 0:refuse 2:accepté' ,
+        date TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
