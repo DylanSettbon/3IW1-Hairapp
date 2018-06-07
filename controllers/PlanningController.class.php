@@ -20,7 +20,7 @@ class PlanningController{
         $week = self::getWeek();
 
         $v = new Views( "planning", "header" );
-        $v->assign("current", 'Planning.class');
+        $v->assign("current", 'planning');
 
         $v->assign("week", $week );
 
