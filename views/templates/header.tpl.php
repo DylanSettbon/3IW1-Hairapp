@@ -41,7 +41,7 @@
               <?php endforeach; ?>
 
               <?php if ( Security::isConnected() && Security::isCoiffeur() ): ?>
-                  <li <?php if ($current == 'account'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif; ?> >
+                  <li <?php if ($current == 'planning'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif; ?> >
                       <a href="<?php echo DIRNAME;?>planning/getPlanning">Planning</a>
                   </li>
               <?php endif; ?>
