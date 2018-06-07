@@ -103,11 +103,13 @@ CREATE TABLE Color(
 # Table: Comment
 #------------------------------------------------------------
 
-CREATE TABLE Comment(
+CREATE TABLE comment(
         id         int (11) Auto_increment  NOT NULL ,
         content    Varchar (250) NOT NULL ,
         id_User    Int ,
         id_Article Int ,
+        statut Int (11) NULL DEFAULT '1' COMMENT '1:en attente 0:refuse 2:accepté' ,
+        date TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -133,7 +135,7 @@ CREATE TABLE Pages (
         content longtext NOT NULL,
         isNavbar tinyint(1) NOT NULL,
         url varchar(25) NOT NULL,
-        active tinyint(4) NOT NULL
+        active tinyint(4) NOT NULL,
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

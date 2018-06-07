@@ -183,12 +183,12 @@ class BaseSql{
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
+
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-
         $this->update($sql_upd, $sql_params);
     }
 
@@ -212,15 +212,40 @@ class BaseSql{
         return $found;
     }
 
+    public function save(){
+
+        $this->setColumns();
+
+        if( $this->id ){
+            //UPDATE
+            foreach ($this->columns as $key => $value) {
+                $sqlSet[] = $key."=:".$key;
+            }
+
+            $query = $this->db->prepare(" UPDATE ".$this->table." SET ".implode(",", $sqlSet)." WHERE id=:id ");
+
+            $query->execute($this->columns);
+
+
+        }else{
+            //INSERT
+            unset($this->columns['id']);
+
+            $query = $this->db->prepare("INSERT INTO ".$this->table."(". implode(",", array_keys($this->columns)) .")VALUES(:". implode(",:", array_keys($this->columns)) .")");
+            $query->execute($this->columns);
+
+        }
+
+    }
     public function getUpdate($where,$choix, $column ){
         // $where = ["diff_status"=>-1, "id"=>3 ]
             if($choix == 1){
              $sql = $this->db->prepare('Update ' .$this->table.' set ' .$column.' WHERE '
-                 .$where); 
+                 .$where);
             }
             if ($choix == 2){
-                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE ' 
-                .$where);   
+                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE '
+                .$where);
             }
             if ($choix == 3){
                 $sql = $this->db->prepare('Delete from ' .$this->table. ' WHERE ' .$where);
@@ -232,6 +257,13 @@ class BaseSql{
             $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
             return $result;
         }
+
+    public function select($params){
+        $query = $this->db->prepare("SELECT * FROM ".$params.";");
+        $query->execute();
+        $res = $query->fetchAll();
+        return $res;
+    }
 
     public function getAllBy($where = [], $columns = null, $tab = null){
         // $where = ["diff_status"=>-1, "id"=>3 ]
