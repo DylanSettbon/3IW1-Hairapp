@@ -55,8 +55,11 @@
             <li <?php if ( $current == 'products'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif?>>
                 <a href='#'>Vitrine</a>
             </li>
-            <li <?php if ( $current == 'store'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif?>>
-                <a href='#'>Salon</a>
+            <li <?php if ( $this->data['current'] == 'contact') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='<?php echo DIRNAME;?>contact/getContact'>Salon</a>
+            </li>
+            <li <?php if ( $this->data['current'] == 'category') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                <a href='<?php echo DIRNAME;?>category/getCategory'>Article</a>
             </li>
               <?php if( Security::isConnected() ): ?>
                     <li <?php if ( $current == 'account'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif;?>>

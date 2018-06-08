@@ -26,7 +26,11 @@
 
         </div>
         <li class='sidebar_buttons'>
-            <a href="<?php echo DIRNAME;?>admin/getContentAdmin">Articles</a>
+            <a href='<?php echo DIRNAME;?>admin/getArticleAdmin'>Articles</a>
         </li>
+          <li class='sidebar_buttons'>
+            <a href='<?php echo DIRNAME;?>admin/getCategoryAdmin'>Category</a>
+        </li>
+
     </ul>
 </div>
