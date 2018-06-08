@@ -10,7 +10,11 @@ class Article extends BaseSql {
     protected $id=null;
     protected $name;
     protected $description;
-    protected $category;
+    protected $dateparution;
+    protected $minidescription;
+    protected $image;
+    protected $status;
+    protected $id_Category;
 
     /**
      * @return null
@@ -43,6 +47,18 @@ class Article extends BaseSql {
     {
         $this->name = $name;
     }
+    public function getDateParution()
+    {
+        return $this->dateparution;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setDateParution($dateparution): void
+    {
+        $this->dateparution = $dateparution;
+    }
 
     /**
      * @return mixed
@@ -60,12 +76,50 @@ class Article extends BaseSql {
         $this->description = $description;
     }
 
+    public function getMiniDescription()
+    {
+        return $this->minidescription;
+    }
+
+    /**
+     * @param mixed $minidescription
+     */
+    public function setMiniDescription($minidescription): void
+    {
+        $this->minidescription = $minidescription;
+    }
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $minidescription
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $minidescription
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
     /**
      * @return mixed
      */
     public function getCategory()
     {
-        return $this->category;
+        return $this->id_Category;
     }
 
     /**
@@ -73,7 +127,7 @@ class Article extends BaseSql {
      */
     public function setCategory($category): void
     {
-        $this->category = $category;
+        $this->id_Category = $category;
     }
 
 }

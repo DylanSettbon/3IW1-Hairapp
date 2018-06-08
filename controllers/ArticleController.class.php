@@ -11,6 +11,11 @@ class ArticleController  extends BaseSql {
     public function getArticle(){
 
         $v = new Views( "article", "header" );
+         $v->assign("current", 'articleCategory');
+        $article = new Article();
+        $cat=$_GET['id'];
+        $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
+        $v->assign( "article", $u[0] );
     }
 
     public function addComment($params){
@@ -42,4 +47,15 @@ class ArticleController  extends BaseSql {
 
 
     }
+    public function getArticleAdmin(){
+        $v = new Views( "listeArticle", "admin_header" );
+        $v->assign("current", 'users');
+        $article = new Article();
+
+        $a= $article->getUpdate("id=id ORDER BY dateparution DESC" , 2, "id, name , dateparution , description ");
+
+        $v->assign( "a", $a );
+    }
+
+     
 }
