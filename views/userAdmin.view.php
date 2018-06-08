@@ -13,7 +13,7 @@
             <div class="col-s-12 col-l-12 col-m-9 tab-admin">
                 <table class="userManagerTab col-l-12">
                     <tr>
-
+                        
                         <th id="nom">Nom Complet</th>
                         <th id="email">Email</th>
                         <th id="tel">Téléphone</th>
@@ -23,27 +23,27 @@
                         <th >Supprimer en base</th>
 
                     </tr>
-                    <?php
-
+                    <?php   
+                    
                             foreach ($u as $user) {
 
-
+                                
                                 echo "
                                  <tr>
                                     <td> ".  $user->getFirstname() . " " . $user->getLastname() ."
                                     </td>
                                     <td>". $user->getEmail() . "</td>
                                     <td>". $user->getTel() . "</td>
-                                    <td> ". $user->getStatus() ."</td>
+                                    <td> ". $arrayStatus[$user->getStatus()] ."</td>
                                     <td><a href='modifyUser?id=" . $user->getId() ."' class='buttonUserModify'>Modifier</a></td>
                                     <td><a href='deleteUser?id=" . $user->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
                                     <td><a href='delete?id=" . $user->getId() ."' class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
                                 </tr>
                                 ";
                             }
-
+                    
                     ?>
-
+                    
                     <nav aria-label="navigation">
                         <tr class="page">
                             <td class="previous"><a href="#" title="Précédent">Précédent</a></td>
@@ -55,10 +55,15 @@
                         </tr>
                     </nav>
                 </table>
-
+                
             </div>
         </article>
     </div>
 
   </main>
+
+<?php
+
+include "templates/footer.tpl.php";
+?>
 
