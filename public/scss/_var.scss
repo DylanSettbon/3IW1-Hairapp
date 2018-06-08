@@ -503,6 +503,133 @@ $button_color: #009CDF;
   }
 
 }
+@mixin article {
+  
+  $imgArt1 : "../img/journal.jpeg";
+
+  
+  #body-art {
+    //background-color: #FFFFFF;
+    background-image: url("../img/salon coiffure.jpeg");
+    //object-fit: cover;
+    //background-repeat: no-repeat;
+  }
+
+  #main-art {
+    background-color: white;
+    //border-radius: 5px;
+    //border: 2px solid #009CDF;
+    padding: 0 20px 100% 20px;
+    margin: 0 calc(8.33333% / 2) 0 calc(8.33333% / 2);
+    //margin-left: auto;
+    //margin-right: auto;
+    //margin-top: 15px;
+    //text-align: center;
+    //padding: 10px;
+  }
+
+  #title-art, li {
+    text-align: center;
+  }
+
+  .title-section-art {
+    font-size: 20px;
+    padding: 0;
+    margin: 0 0 15px 0;
+    width:100%;
+  }
+
+  input[type="checkbox"][id^="art"] {
+    display: none;
+  }
+
+  input[type="checkbox"][id^="art"] + label::before {
+    content: "";
+    display: inline-block;
+    width: 80px;  
+    height: 80px;
+    background-image: url($imgArt1);
+    background-size: cover;
+    border-radius: 12px;
+  }
+
+  #artTous + label::before {
+    background-image:linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
+  }
+
+  label[for="artTous"]{
+    white-space: nowrap; /* interdiction de passer à la ligne */
+  }
+
+  label[for="artTous"] span{
+    font-size:20px;
+  }
+
+
+  input[type="checkbox"][id^="art"] + label::before {
+    opacity: 0.5;
+  }
+
+  input[type="checkbox"][id^="art"]:checked + label::before {
+    border: solid black 2px;
+    font-size: 10px;
+    opacity: 1;
+  }
+
+  label[for^="art"] {
+    position: relative;
+  }
+
+  section {
+    display: inline;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  .liste_deroulante {
+    border-style: none none solid none;
+    border-width: 2px;
+    border-color: black;
+    font-size: 125%;
+    color: #B8B8B8;
+    height: 35px;
+    margin: 0 auto;
+  }
+
+  .btn-Valider {
+    background: $button_color;
+    color: white;
+    height: 35px;
+    margin-top: 15px;
+    border-radius:7px;
+  }
+
+  .nom-art {
+    position: absolute;
+    left: -1%;
+    top: -12px;
+    background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
+    color:white;
+    width:97%;
+    height:137%;
+    border-radius: 0 0 12px 12px;
+  }
+
+  #choix-art li, #selection-date li {
+    margin: 0 8px 5px 8px;
+  }
+
+   .liste-art li {
+    display: inline-block;
+  }
+  
+  #choix-art  {
+    margin-top: 35px;
+  }
+
+
+}
 
 @mixin genericClass{
   .updateButton
