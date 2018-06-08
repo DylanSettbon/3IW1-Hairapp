@@ -148,9 +148,13 @@ CREATE TABLE Article(
         id          int (11) Auto_increment  NOT NULL ,
         name        Varchar (50) NOT NULL ,
         description Varchar (250) NOT NULL ,
+        dateparution Date (50) NOT NULL,
+        minidescription Varchar(40) NOT NULL,
+        image Varchar(250) ,
         id_Category Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
+
 
 
 #------------------------------------------------------------
