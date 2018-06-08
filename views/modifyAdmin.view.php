@@ -21,7 +21,15 @@
                                 <label>Email</label>
                                 <input class='input input_sign-in' type='email' name='email' value=". $u[0]->getEmail() ."   />
                                 <label>Status</label>
-                                <input class='input input_sign-in' type='text' name='status' value=". $u[0]->getStatus() ."   />
+                                <select name='status' class='input input_sign-in' >
+                                <option value=".$u[0]->getStatus().">".$array[$u[0]->getStatus()]."</option>
+                                ";
+                                foreach($array as $key => $value)
+                                        {
+                                          echo"<option value=" . $key . ">". $value . "</option>";
+                                        }
+                                        echo"
+                                </select>
                                 <label>Telephone</label>
                                 <input class='input input_sign-in' type='tel' name='tel' value=". $u[0]->getTel() ."   />
                              "; ?>   
@@ -37,3 +45,7 @@
     </main>
 </body>
 
+
+<?php
+    include "templates/footer.tpl.php";
+?>
