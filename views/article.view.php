@@ -1,16 +1,15 @@
 <body id="body-rdv">
   <main id="main-forfait" class="col-s-11 col-l-8">
         <div class="row">
-            <h1 id="title-rdv" class="title col-l-4">Article</h1>
+            <h1 id="title-rdv" class="title col-l-4"><?php echo $article->getName();?></h1>
+            <h2><?php echo $article->getDateParution();?> </h2>
         </div>
     <div class="col-s-12 col-l-12 partie-droite">
       <div class="categorie1 container">
-      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <?php if($article->getImage()!=null): ?>
+              <img class='img-art' src='../public/img/<?php echo $article->getImage();?>' style='width:50%; padding:10px'>
+        <?php endif; ?>
+      	<p><?php echo $article->getDescription();?></p>
             <hr class="col-s-12">
           </div>
       </div>
