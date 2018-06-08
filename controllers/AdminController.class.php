@@ -10,11 +10,13 @@ class AdminController{
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
+        $arrayStatus= array("-1"=>"Supprimer","0"=> "Utilisateur", "1"=>"Coiffeur","2"=>"Admin");
         $v->assign("current", 'users');
         $user = new User();
 
         $u= $user->getAllBy(["status" => "-1"] , ["id, firstname , lastname , email , status , tel"], 4);
         $v->assign( "u", $u );
+        $v->assign("arrayStatus",$arrayStatus);
     }
 
     public function getContentAdmin(){
@@ -201,27 +203,36 @@ class AdminController{
         header("Location: getPagesAdmin");
     }
 
-    //Partie de gestion des users
+     //Partie de gestion des users
     public function modifyUser(){
         
         $user = new User();
         $a = $_GET['id'];
-        $u = $user->getUpdate("id = ".$a."", 2, "id, firstname , lastname , email , status , tel");
+        $array = array("0"=> "Utilisateur", "1"=>"Coiffeur","2"=>"Admin");
+        $u = $user->getAllBy(["id" => $a] , ["id, firstname , lastname , email , status , tel"], 2);
         $v = new Views( "modifyAdmin", "admin_header" );
         $v->assign("current", 'users');
         $v->assign( "u", $u);
+        $v->assign("array", $array);
     }
 
     public function modify(){
         $user = new User();
-        $user->setId($_POST['id']);
-        $user->setFirstname($_POST['prenom']);
-        $user->setLastname($_POST['lastname']);
-        $user->setEmail($_POST['email']);
-        $user->setTel( $_POST['tel'] );
-        $user->setStatus( $_POST['status']);
+        $user->setId(htmlentities($_POST['id']));
+        $user->setFirstname(htmlentities($_POST['prenom']));
+        $user->setLastname(htmlentities($_POST['lastname']));
+        $user->setEmail(htmlentities($_POST['email']));
+        $user->setTel(htmlentities( $_POST['tel'] ));
+        $user->setStatus( htmlentities($_POST['status']))   ;
 
-        $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
+       // $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
+
+        $user->updateTable(["firstname" => $user->getFirstname(),
+                "lastname" => $user->getLastname() ,
+                "email" => $user->getEmail(),
+                "tel" => $user->getTel(), 
+                "status" => $user->getStatus()],["id"=>$user->getId()]
+            );
         $this->getUserAdmin();
 
     } 
@@ -229,39 +240,46 @@ class AdminController{
     public function deleteUser(){
         $user = new User();
         $a = $_GET['id'];
-        $user->getUpdate("id = ".$a."", 1, "status = '-1'");
+        //$user->getUpdate("id = ".$a."", 1, "status = '-1'");
+        $user->updateTable(["status"=>"-1"],["id"=>$a]);
         $this->getUserAdmin();
     }
 
     public function delete(){
         $user = new User();
         $a = $_GET['id'];
-        $user->getUpdate("id = ".$a."", 3, " ");
+        //$user->getUpdate("id = ".$a."", 3, " ");
+        $user->delete(['id' => $a]);
         $this->getUserAdmin();
     }
 
     public function addUser(){
-        $v = new Views( "signin", "header" );
+        $array = array("0"=> "Utilisateur", "1"=>"Coiffeur","2"=>"Admin");
+        $v = new Views( "addAdmin", "header" );
         $v->assign("current", 'user');
+        $v->assign("array", $array);
+
     }
 
     public function add(){
         $user = new User();
-        $user->setFirstname($_POST['prenom']);
-        $user->setLastname($_POST['nom']);
-        $user->setEmail($_POST['email']);
-        $user->setPwd($_POST['pwd']);
+        $user->setFirstname(htmlentities($_POST['prenom']));
+        $user->setLastname(htmlentities($_POST['nom']));
+        $user->setEmail(htmlentities($_POST['email']));
         $user->setToken();
-        $user->setTel( $_POST['tel'] );
-        $user->setDateInserted( date( "Y-m-d") );
-        $user->setDateUpdated( date( "Y-m-d") );
-        if( $_POST['offers'] == 'on' ){
-            $user->setReceivePromOffer(true);
-        }
-        else{
-            $user->setReceivePromOffer(false);
-        }
-        $user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, receivePromOffer, status, dateInserted, dateUpdated) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$user->getPwd()."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getReceivePromOffer()."', '0', '".$user->getDateInserted()."', '".$user->getDateUpdated()."')");
+        $user->setTel(htmlentities( $_POST['tel'] ));
+        $user->setStatus(htmlentities( $_POST['status'] ));
+        
+        for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 10; $x = rand(0,$z), $s .= $a{$x}, $i++);
+        
+        //$user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, status) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$s."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getStatus()."')");
+        $user->updateTable(["firstname" => $user->getFirstname(),
+                "lastname" => $user->getLastname() ,
+                "email" => $user->getEmail(),
+                "tel" => $user->getTel(), 
+                "status" => $user->getStatus(), 
+                "token" =>$user->getToken(), 
+                "pwd"=>$s]);
         $this->getUserAdmin();
     }
 
@@ -308,6 +326,151 @@ class AdminController{
         );
 
         self::getPagesAdmin();
+    }
+
+    //Affiche un Article
+    public function getArticleAdmin(){
+        $v = new Views( "articleAdmin", "admin_header" );
+        $v->assign("current", 'users');
+        $article = new Article();
+        $category = new Category();
+        $array = array("0"=> "En cours de parution", "1"=>"Paru");
+        //$a= $article->getUpdate("status!= '-1' ORDER BY dateparution DESC" , 2, "id, name , dateparution , description, status, id_Category ");
+        //$b = $category->getUpdate(" ", 2, "id, description");
+        $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4);
+        $b=$category->getAllBy([],["id,description"],2);
+        $v->assign( "a", $a );
+        $v->assign( "b", $b);
+        $v->assign( "array",$array);
+    }
+
+    //Modifier Article
+    public function modifyArticle(){
+        
+        $article = new Article();
+        $category = new Category();
+        //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
+        //$b = $category->getUpdate(" ", 2, "id, description");
+        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name , dateparution , description , id_Category"], 2);
+        $b=$category->getAllBy([],["id,description"],2);
+        $v = new Views( "modifyArticleAdmin", "admin_header" );
+        $v->assign("current", 'users');
+        $v->assign( "a", $a);
+        $v->assign( "b", $b);
+    }
+
+    public function modifyAdminArticle(){
+        $article = new Article();
+        $article->setId(htmlentities($_POST['id']));
+        $article->setName(htmlentities($_POST['name']));
+        $article->setDateParution(htmlentities($_POST['dateparution']));
+        $article->setDescription(htmlentities($_POST['description']));
+        $article->setImage(htmlentities($_POST['image']));
+        $article->setCategory(htmlentities($_POST['category']));
+
+        //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
+        $article->updateTable(["name" => $article->getName(),
+                "dateparution" => $article->getDateParution() ,
+                "description" => $article->getDescription(),
+                "image" => $article->getImage(), 
+                "id_Category" => $article->getCategory()],["id"=>$article->getId()]);
+        $this->getArticleAdmin();
+
+    } 
+    //Supprimer Article
+    public function deleteArticle(){
+        $article = new Article();
+        $a = $_GET['id'];
+        //$article->getUpdate("id = ".$a."", 1, "status = '-1'");
+        $article->updateTable(["status"=>"-1"],["id"=>$a]);
+        $this->getArticleAdmin();
+    }
+
+    public function parutionArticle(){
+        $article = new Article();
+        $a = $_GET['id'];
+        //$article->getUpdate("id = ".$a."", 1, "status = '1' , dateparution=DATE( NOW())");
+        $article->updateTable(["status"=>"1","dateparution"=>DATE('Y-m-d')],["id"=>$a]);
+        $this->getArticleAdmin();
+    }
+    //Ajouter un article
+    public function addArticle(){
+        $v = new Views( "addArticleAdmin", "admin_header" );
+         $category = new Category();
+         //$b = $category->getUpdate(" ", 2, "id, description");
+         $b=$category->getAllBy([],["id,description"],2);
+        $v->assign("current", 'article');
+        $v->assign( "b", $b);
+    }
+
+    public function addAdminArticle(){
+        $article = new Article();
+        $article->setName(htmlentities($_POST['name']));
+        $article->setDescription(htmlentities($_POST['description']));
+        $article->setImage(htmlentities($_POST['image']));
+        $article->setCategory(htmlentities($_POST['category']));
+        
+        
+        //$article->getUpdate(" ", 4, "(name, dateparution, description, image, status, minidescription, id_Category) VALUES ('".$article->getName()."',DATE( NOW() ), '".$article->getDescription()."', '".$article->getImage()."', 0, '".substr($article->getDescription(), 0,19)."', '".$article->getCategory()."')");
+        $article->updateTable(["name" => $article->getName(),
+                "dateparution" => DATE('Y-m-d'),
+                "description" => $article->getDescription(),
+                "image" => $article->getImage(),
+                "status" => 0,
+                "minidescription" => substr($article->getDescription(), 0,19), 
+                "id_Category" => $article->getCategory()]);
+        $this->getArticleAdmin();
+    }
+    public function getCategoryAdmin(){
+        $v = new Views( "categoryAdmin", "admin_header" );
+        $v->assign("current", 'category');
+        $category = new Category();
+
+        $u= $category->getAllBy(["status" => "-1"] , ["id, description"], 4);
+
+        $v->assign( "u", $u );
+    }
+    public function addCategory(){
+        $v = new Views( "addCategory", "admin_header" );
+         $category = new Category();
+        $v->assign("current", 'category');
+    }
+
+    public function addAdminCategory(){
+        $category = new Category();
+        $category->setDescription(htmlentities($_POST['description']));
+        
+       // $category->getUpdate(" ", 4, "(description) VALUES ('".$category->getDescription()."')");
+        $category->updateTable(["description" => $category->getDescription()]);
+        $this->getCategoryAdmin();
+    }
+    public function modifyCategory(){
+        
+        $category = new Category();
+        //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
+        $a= $category->getAllBy(["id"=>$_GET['id']],["id, description"], 2);
+        $v = new Views( "modifyCategory", "admin_header" );
+        $v->assign("current", 'category');
+        $v->assign( "a", $a);
+    }
+
+    public function modifyAdminCategory(){
+        $category = new Category();
+        $category->setId(htmlentities($_POST['id']));
+        $category->setDescription(htmlentities($_POST['description']));
+    
+
+        //$category->getUpdate("id = ".$category->getId()."", 1, "description = '".$category->getDescription()."'");
+        $category->updateTable(["description"=>$category->getDescription()],["id"=>$category->getId()]);
+        $this->getCategoryAdmin();
+
+    } 
+    public function deleteCategory(){
+        $category = new Category();
+        $a = $_GET['id'];
+        //$category->getUpdate("id = ".$a."", 1, "status = '-1'");
+        $category->updateTable(["status"=>"-1"],["id"=>$a]);
+        $this->getCategoryAdmin();
     }
 
 
