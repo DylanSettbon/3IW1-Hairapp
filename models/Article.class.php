@@ -16,6 +16,11 @@ class Article extends BaseSql {
     protected $status;
     protected $id_Category;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @return null
      */
