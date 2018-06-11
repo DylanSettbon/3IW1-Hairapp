@@ -32,7 +32,7 @@ class Article extends BaseSql {
     /**
      * @param null $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -48,7 +48,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $name
      */
-    public function setName($name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -60,7 +60,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $name
      */
-    public function setDateParution($dateparution): void
+    public function setDateParution($dateparution)
     {
         $this->dateparution = $dateparution;
     }
@@ -76,7 +76,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $description
      */
-    public function setDescription($description): void
+    public function setDescription($description)
     {
         $this->description = $description;
     }
@@ -89,7 +89,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $minidescription
      */
-    public function setMiniDescription($minidescription): void
+    public function setMiniDescription($minidescription)
     {
         $this->minidescription = $minidescription;
     }
@@ -101,7 +101,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $minidescription
      */
-    public function setImage($image): void
+    public function setImage($image)
     {
         $this->image = $image;
     }
@@ -114,7 +114,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $minidescription
      */
-    public function setStatus($status): void
+    public function setStatus($status)
     {
         $this->status = $status;
     }
@@ -130,7 +130,7 @@ class Article extends BaseSql {
     /**
      * @param mixed $category
      */
-    public function setCategory($category): void
+    public function setCategory($category)
     {
         $this->id_Category = $category;
     }
