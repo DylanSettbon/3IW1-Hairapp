@@ -352,7 +352,7 @@ class AdminController{
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
         $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name , dateparution , description , id_Category"], 2);
-        $b=$category->getAllBy([],["id,description"],2);
+        $b=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
         $v->assign( "a", $a);
@@ -398,7 +398,7 @@ class AdminController{
         $v = new Views( "addArticleAdmin", "admin_header" );
          $category = new Category();
          //$b = $category->getUpdate(" ", 2, "id, description");
-         $b=$category->getAllBy([],["id,description"],2);
+         $b=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
         $v->assign("current", 'article');
         $v->assign( "b", $b);
     }
@@ -426,7 +426,7 @@ class AdminController{
         $v->assign("current", 'category');
         $category = new Category();
 
-        $u= $category->getAllBy(["status" => "-1"] , ["id, description"], 4);
+        $u= $category->getAllBy(["id_CategoryType"=>"1","status" => "0"] , ["id, description"], 3);
 
         $v->assign( "u", $u );
     }
@@ -441,7 +441,8 @@ class AdminController{
         $category->setDescription(htmlentities($_POST['description']));
         
        // $category->getUpdate(" ", 4, "(description) VALUES ('".$category->getDescription()."')");
-        $category->updateTable(["description" => $category->getDescription()]);
+        $category->updateTable(["description" => $category->getDescription(),
+        "id_CategoryType" => "1"]);
         $this->getCategoryAdmin();
     }
     public function modifyCategory(){

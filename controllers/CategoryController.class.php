@@ -6,7 +6,7 @@ class CategoryController{
         $v->assign("current", "category");
         $category = new Category();
 
-        $u= $category->getAllBy(["status" => "-1"] , ["id, description"], 4);
+        $u= $category->getAllBy(["status" => "0","id_CategoryType"=>"1"] , ["id, description"], 3);
         $v->assign( "u", $u );
         
     }
