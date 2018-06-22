@@ -5,7 +5,6 @@ class Security{
     public static function isConnected(){
 
         if(!empty($_SESSION["token"]) && !empty($_SESSION["email"])){
-
             $user = new User();
             $user = $user->populate( ["email" => $_SESSION['email'] ] );
 

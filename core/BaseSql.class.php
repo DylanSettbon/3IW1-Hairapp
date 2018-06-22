@@ -25,7 +25,7 @@ class BaseSql{
         }
         //$this->db = new Database();
 
-        $this->table = strtolower(get_called_class());
+        $this->table = strtolower(get_called_class()) == "hairdresser" ? "user" : strtolower(get_called_class());
     }
 
     public static function getInstance() {
@@ -72,7 +72,6 @@ class BaseSql{
         foreach($params as $key => $value) {
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
-            $tmp5[] = $key.'>:'.$key;
             $tmp4[] = $key.' <> :'.$key;
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
@@ -102,8 +101,6 @@ class BaseSql{
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
         $result['not_in'] = implode(' AND ', $tmp4);
-        //$result['min_max'] = implode(' AND ', $tmp5);
-        //$result['min_max'] = str_replace( '<:max', '>:max')
         return $result;
     }
 
@@ -193,7 +190,6 @@ class BaseSql{
             $bind_pk = $this->bindParams($fields_primary_key);
             $found = $this->countTable($table, $fields_primary_key);
         }
-
         $bind = $this->bindParams($fields);
 
         if( isset( $fields_primary_key ) ){
@@ -203,17 +199,15 @@ class BaseSql{
             $sql_params = $fields;
         }
 
-
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
-
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-        //var_dump( $sql_upd ); die;
+
         $this->update($sql_upd, $sql_params);
     }
 
@@ -266,11 +260,11 @@ class BaseSql{
         // $where = ["diff_status"=>-1, "id"=>3 ]
             if($choix == 1){
              $sql = $this->db->prepare('Update ' .$this->table.' set ' .$column.' WHERE '
-                 .$where);
+                 .$where); 
             }
             if ($choix == 2){
-                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE '
-                .$where);
+                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE ' 
+                .$where);   
             }
             if ($choix == 3){
                 $sql = $this->db->prepare('Delete from ' .$this->table. ' WHERE ' .$where);
@@ -329,7 +323,7 @@ class BaseSql{
              }
 
              $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$from.' WHERE '
+                 ' FROM '.$this->table.' WHERE '
                  .$where_type);
 
 
@@ -348,6 +342,7 @@ class BaseSql{
 
         }
 
+
     /**
      * @param array $where
      * @return Object
@@ -358,6 +353,7 @@ class BaseSql{
         //->fetchObject('User');
         $sql->execute( $where );
         $result = $sql->fetchObject('User');
+
 
         //return objet
         return $result;

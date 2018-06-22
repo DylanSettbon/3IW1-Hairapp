@@ -4,11 +4,15 @@ VALUES  ('Article'),
 		    ('Forfaits');
 
 
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '09:30', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '10:00', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '11:00', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '15:00', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '15:30', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '16:00', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '16:30', 1, 2, 1);
-INSERT INTO `Appointment`(`dateAppointment`, `hourAppointment`, `id_User`, `id_Hairdresser`, `id_Package`) VALUES ( '2018-06-01', '17:00', 1, 2, 1);
+INSERT INTO user(firstname,lastname,email,pwd,token,status)
+VALUES ('test1','test1','test1@hotmail.fr','123','123',2),
+       ('test2','test2','test2@hotmail.fr','123','123',2),
+       ('test3','test3','test3@hotmail.fr','133','133',2),
+       ('test4','test4','test4@hotmail.fr','144','144',2),
+      ('test5','test5','test5@hotmail.fr','155','155',2);
+
+INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package)
+VALUES (20180619,143000,22,14,3),
+      (20180619,163000,22,14,3),
+      (20180623,18000,22,14,3),
+      (20180623,141500,22,14,3);
