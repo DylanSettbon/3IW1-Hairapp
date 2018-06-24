@@ -14,6 +14,8 @@ define("DBPWD","root");
 define("DBPORT","8889");
 define("DBDRIVER","mysql");
 
+
+
 $initialisation = true;
 
 
@@ -22,4 +24,6 @@ $scriptName = (dirname($_SERVER["SCRIPT_NAME"]) == "/")?"":dirname($_SERVER["SCR
 
 define("DIRNAME", $scriptName.DS);
 
+define("PICTURES_DIR", DIRNAME."public/img/" );
 
+$list_of_extensions = ['.png', '.gif', '.jpg', '.jpeg'];

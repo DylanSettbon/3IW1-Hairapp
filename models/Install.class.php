@@ -6,12 +6,17 @@
  * Time: 19:05
  */
 
-class Install{
+class Install extends BaseSql {
     protected $id=null;
     protected $admin;
     protected $logo;
     protected $image;
     protected $color;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @return null

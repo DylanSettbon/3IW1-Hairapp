@@ -30,3 +30,33 @@ tinymce.init({
 });
 
 */
+
+function hairdresser( id ) {
+    var h1 = document.getElementsByClassName('coiffeur-1');
+    var h2 = document.getElementsByClassName('coiffeur-2');
+    var h3 = document.getElementsByClassName('coiffeur-3');
+
+    if( id === 1 ){
+        h1.show();
+        h2.hide();
+        h3.hide();
+    }
+    else if( id === 2 ){
+        h1.hide();
+        h2.show();
+        h3.hide();
+    }
+    else if( id === 3 ){
+        h1.hide();
+        h2.hide();
+        h3.show();
+    }
+    else if( id === 'all' ){
+        h1.show();
+        h2.show();
+        h3.show();
+    }
+
+
+
+}

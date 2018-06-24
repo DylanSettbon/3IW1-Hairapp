@@ -63,7 +63,8 @@ class SigninController{
                     "status" => $user->getStatus(),
                     "dateInserted" => date( "Y-m-d"),
                     "dateUpdated" => date( "Y-m-d" ),
-                    "lastConnection" => null
+                    "lastConnection" => null,
+                    "picture" => null
                 );
 
                 $user->updateTable( $params );

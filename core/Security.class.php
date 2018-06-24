@@ -26,21 +26,6 @@ class Security{
         return true;
     }
 
-    public static function checkLogin($email, $pwd){
-
-        //var_dump( $pwd ); die;
-
-        if (password_verify( $_POST['pwd'], $pwd ) == false ){
-            return false;
-        }
-        else if( $_POST['email'] != $email ){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
 
     public static function setSession( User $user){
 
@@ -71,5 +56,7 @@ class Security{
         }
         return false;
     }
+
+
 
 }
