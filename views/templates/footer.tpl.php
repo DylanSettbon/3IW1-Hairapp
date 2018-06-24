@@ -9,7 +9,7 @@
 <footer>
     <div class="footer">
         ©Hair'App
-        <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+        <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
         <script type="text/javascript" src="../public/js/index.js"></script>
     </div>
 </footer>

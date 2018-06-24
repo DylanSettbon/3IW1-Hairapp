@@ -202,6 +202,7 @@ class BaseSql{
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
+
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
@@ -260,11 +261,11 @@ class BaseSql{
         // $where = ["diff_status"=>-1, "id"=>3 ]
             if($choix == 1){
              $sql = $this->db->prepare('Update ' .$this->table.' set ' .$column.' WHERE '
-                 .$where); 
+                 .$where);
             }
             if ($choix == 2){
-                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE ' 
-                .$where);   
+                $sql = $this->db->prepare('Select ' .$column. ' FROM ' .$this->table. ' WHERE '
+                .$where);
             }
             if ($choix == 3){
                 $sql = $this->db->prepare('Delete from ' .$this->table. ' WHERE ' .$where);

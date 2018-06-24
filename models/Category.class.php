@@ -11,6 +11,35 @@ class Category extends BaseSql
     protected $description;
     protected $id_User;
     protected $id_CategoryType;
+    protected $status;
+
+    /*
+    public function __construct()
+    {
+        $ctps = func_num_args();
+        $args = func_get_args();
+
+        switch ($ctps){
+            case 0:
+                break;
+            case 1:
+                $this->description = $args[0];
+                break;
+            case 2:
+                $this->description = $args[0];
+                $this->id_User = $args[1];
+                break;
+            case 3 :
+                $this->description = $args[0];
+                $this->id_User = $args[1];
+                $this->id_CategoryType = $args[2];
+                break;
+            default:
+                exit();
+                break;
+        }
+    }
+    */
 
     public function getId()
     {
@@ -55,11 +84,24 @@ class Category extends BaseSql
         $this->id_CategoryType = $id_CategoryType;
     }
 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($id_Status)
+    {
+        $this->status = $id_Status;
+    }
+
     public function checkIfCategoryDescriptionExistsAndNotNull($status = null){
         if($this->description == ""){return false;}
+        //Status = 0, les categorie sont inactif
+        //Status = 1, les categoris actifs
+        //Status = 2, Toutes les categories;
 
         if($status == 0){
-            return $this->countTable('Category',['description' => $this->description,'status' => '0']) != 0 ? true : false;
+            return $this->countTable('Category',['description' => $this->description,'status' => $status]) != 0 ? true : false;
         }
         else if($status == 1){
             return $this->countTable('Category',['description' => $this->description,'status' => '1']) != 0 ? true : false;

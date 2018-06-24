@@ -6,6 +6,7 @@ $(document).ready(function() {
             $( "input[id^='coiffeur']" ).prop( "checked", false );
 
             $( this ).prop( "checked", true );
+            console.log("")
         }
     });
 
@@ -17,6 +18,51 @@ $(document).ready(function() {
             $( this ).prop( "checked", true );
         }
     });
-	
-	
+
+    //a terminer
+    var ladate=new Date()
+    var cptMonth = ladate.getFullYear()?ladate.getMonth()+1 : 1
+    showMonths(cptMonth)
+    showDays(31)
+    $("#annee").change(function(event){
+        cptMonth = $('#annee :selected').text() == ladate.getFullYear()?ladate.getMonth()+1 : 1
+        var year = event.target.value
+        showMonths(cptMonth)
+        $("#mois").change(function(event){
+            days = daysInMonth(event.target.value,year)
+            console.log(days)
+            showDays(days)
+        });
+    });
+
+    $("#annee,#mois").change(function(event){
+        console.log(event)
+    })
 });
+
+function updateDaysAndMonth(year) {
+    $("#mois").change(function(event){
+        days = daysInMonth(event.target.value,year)
+        console.log(days)
+        showDays(days)
+    });
+}
+
+
+function showMonths(start){
+    $('#mois').empty()
+    for(i = start; i<=12;i++){
+        $('#mois').append('<option value='+i+'>'+i+'</option>');
+    }
+}
+
+function showDays(end,start=1){
+    $('#jour').empty()
+    for(i = start; i<=end;i++){
+        $('#jour').append('<option value='+i+'>'+i+'</option>');
+    }
+}
+
+function daysInMonth (month, year) {
+    return new Date(year, month, 0).getDate();
+}

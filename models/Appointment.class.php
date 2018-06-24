@@ -1,170 +1,93 @@
 <?php
 class Appointment extends BaseSql{
-    protected $id ;
-    protected $id_Hairdresser;
-    protected $dateAppointment;
+    protected $id = null;
+    protected $hairdresser;
+    protected $date;
     protected $hourAppointment;
-    protected $id_Package;
-    protected $id_User;
-    protected $firstname;
-    protected $lastname;
+    protected $package;
+    protected $customer;
 
-    /**
-     * Appointment constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
 
-    }
-
-    /**
-     * @return null
-     */
+    //getters and setters
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param null $id
-     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdHairdresser()
+    public function getHairdresser()
     {
-        return $this->id_Hairdresser;
+        return $this->hairdresser;
     }
 
-    /**
-     * @param mixed $id_Hairdresser
-     */
-    public function setIdHairdresser($id_Hairdresser)
+    public function setHairdresser($hairdresser)
     {
-        $this->id_Hairdresser = $id_Hairdresser;
+        $this->hairdresser = $hairdresser;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDateAppointment()
+    public function getDate()
     {
-        return $this->dateAppointment;
+        return $this->date;
     }
 
-    /**
-     * @param mixed $dateAppointment
-     */
-    public function setDateAppointment($dateAppointment)
+    public function setDate($date)
     {
-        $this->dateAppointment = $dateAppointment;
+        $this->date = $date;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getHourAppointment()
+    public function gethourAppointment()
     {
         return $this->hourAppointment;
     }
 
-    /**
-     * @param mixed $hourAppointment
-     */
-    public function setHourAppointment($hourAppointment)
+    public function sethourAppointment($hourAppointment)
     {
         $this->hourAppointment = $hourAppointment;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdPackage()
+    public function getPackage()
     {
-        return $this->id_Package;
+        return $this->package;
     }
 
-    /**
-     * @param mixed $id_Package
-     */
-    public function setIdPackage($id_Package)
+    public function setPackage($package)
     {
-        $this->id_Package = $id_Package;
+        $this->package = $package;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdUser()
+    public function getCustomer()
     {
-        return $this->id_User;
+        return $this->customer;
     }
 
-    /**
-     * @param mixed $id_User
-     */
-    public function setIdUser($id_User)
+    public function setCustomer($customer)
     {
-        $this->id_User = $id_User;
+        $this->customer = $customer;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
+    public function getAvailableTimeBetweenAppointment($hours){
+        //TO DO : ouverture salon
+        $opening = '08:00:00';
+        $closing = '18:30:00';
+        $timeRange = [];
 
-    /**
-     * @param mixed $firstnam
-     */
-    public function setFirstnam($firstname)
-    {
-        $this->firstnam = $firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param mixed $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    public static  function changeMonth( $date ){
-        $month = date( "F", strtotime($date) );
-
-        switch ( $month ){
-            case 'January' : $res = str_replace( 'January', 'Janvier', $date ); break;
-            case 'February': $res = str_replace( 'February', 'Février', $date ); break;
-            case 'March': $res = str_replace( 'March', 'Mars', $date ); break;
-            case 'April': $res = str_replace( 'April', 'Avril', $date ); break;
-            case 'May': $res = str_replace( 'May', 'Mai', $date ); break;
-            case 'June': $res = str_replace( 'June', 'Juin', $date ); break;
-            case 'July': $res = str_replace( 'July', 'Juillet', $date ); break;
-            case 'August': $res = str_replace( 'August', 'Août', $date ); break;
-            case 'September': $res = str_replace( 'September', 'Septembre', $date ); break;
-            case 'October': $res = str_replace( 'October', 'Octobre', $date ); break;
-            case 'November': $res = str_replace( 'November', 'Novembre', $date ); break;
-            case 'December': $res = str_replace( 'December', 'Décembre', $date ); break;
+        sort($hours);
+        array_unshift($hours,$opening);
+        $hours[] = $closing;
+        for($i = 0; $i<count($hours)-1;$i++){
+            $h2 = new DateTime($hours[$i+1]);
+            $h1 = new DateTime($hours[$i]);
+            $timeRange[$hours[$i]] = (($h2->getTimestamp() -$h1->getTimestamp())/60) + (($h2->getTimestamp() -$h1->getTimestamp())%60) ;
         }
+        echo '<br>';
 
-        return $res;
+
+        return $timeRange;
+        //renvoie les durée disponible entre chaque rendez-vous sous forme de tableau associatif
+        //clé : heure de debut ; valeur : temps disponible
     }
-
 }

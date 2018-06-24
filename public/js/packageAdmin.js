@@ -41,7 +41,7 @@ function deletePackage(description){
     $.ajax({
         type: 'POST',
         url: 'ajaxDeletePackage',
-        data: { idPackageDeleted: allIdToDelete },
+        data: { idPackageDeleted: allIdToDelete},
         success: function(response) {
             for(var i=0; i< allIdToDelete.length;i++){
                 $("[class=tdPackage][id="+allIdToDelete[i]+"]").remove()
@@ -49,10 +49,6 @@ function deletePackage(description){
             console.log(response)
         }});
 }
-
-
-
-
 
 
 

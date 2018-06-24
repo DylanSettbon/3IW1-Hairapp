@@ -59,7 +59,6 @@ class AdminController{
                             "id_User" => $category->getIdUser(),
                             "id_CategoryType" => $category->getIdCategoryType()
                         ]);
-
                 }
 
                 if ($category->checkIfCategoryDescriptionExistsAndNotNull(0)) {
@@ -73,12 +72,7 @@ class AdminController{
             }
 
             else {
-            $category = new Category();
             $category->setId($_POST['categoryId']);
-            $category->setDescription($_POST['categoryDesc']);
-            //Recuperer id user
-            $category->setIdUser(1);
-            $category->setIdCategoryType(3);
             $category->updateTable(
                 ["description" => $category->getDescription()],
                 ["id" => $category->getId()]);
@@ -95,9 +89,8 @@ class AdminController{
             $package->setDuration($_POST['duration']);
             $package->setIdCategory($_POST['categoryId']);
             $package->setIdUser($_SESSION['id']);
-            if($package->checkIfPackageExistsAndNotNull()) {
-                if (!isset($_POST['packageId'])) {
-
+            if($package->checkIfPackageExistsOrIsNull()){
+                if (!isset($_POST['packageId'])){
                     $package->updateTable(
                         [
                             "description" => $package->getDescription(),
@@ -111,10 +104,11 @@ class AdminController{
                     $package->setId($_POST['packageId']);
                     $package->updateTable(
                         ["description" => $package->getDescription(),
-                        "price" => $package->getPrice(),
-                        "duration" => $package->getDuration()],
-                    ["id" => $package->getId()]
-                );
+                            "price" => $package->getPrice(),
+                            "duration" => $package->getDuration()],
+                        ["id" => $package->getId()]
+                    );
+                }
             }
         }
         $this->getPackageAdmin();

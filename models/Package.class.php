@@ -108,4 +108,11 @@ class Package extends BaseSql {
         }
         return $associativePackages;
     }
+
+    public function checkIfPackageExistsOrIsNull(){
+        if($this->description == "" or $this->price = ""){return false;}
+        var_dump($this->price);
+        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category]) != 0 ? false : true;
+    }
+
 }

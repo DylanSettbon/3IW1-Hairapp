@@ -6,7 +6,7 @@
  * Date: 04/02/2018
  * Time: 11:27
  */
-include "templates/sidebar.view.php";
+
 ?>
 <main class='container'>
     <div class="content">
@@ -18,10 +18,16 @@ include "templates/sidebar.view.php";
 
             <div id="package_content">
                 <?php
-                foreach($categories as $category):?>
-
+                foreach($categories as $key=>$category):?>
+                    <?php if($key%2 == 0):?>
+                        <div class="row">
+                    <?php endif; ?>
                     <table id="packageCategory" class="PackageTab col-l-6">
                         <caption class="packageCategory-title">
+                            <label class="switch" style="float:left">
+                                <input type="checkbox" <?php echo $category->getStatus() ? 'checked' : ''; ?>>
+                                <span class="slider"></span>
+                            </label>
 						    <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
                             <a href="deleteCategoryPackage?id=<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
                             <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription()?>'])" style="float:right";>Modifier</a>
@@ -55,6 +61,9 @@ include "templates/sidebar.view.php";
 									   <td><a href="#" class="buttonUserDelete" id='deletePackage' onclick= "deletePackage('<?php echo $category->getDescription(); ?>')" type="button" value="Supprimer">Supprimer</a></td>
 									   </tr>
 									  </table>
+                    <?php endif; ?>
+                    <?php if($key%2 != 0):?>
+                        </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
@@ -124,7 +133,6 @@ include "templates/sidebar.view.php";
         </div>
 
     </div>
-    <?php //include 'templates/footer.tpl.php' ?>
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <script type="text/javascript" src="../public/js/packageAdmin.js"></script>
 

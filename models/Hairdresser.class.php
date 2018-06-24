@@ -26,19 +26,41 @@ class Hairdresser extends User  {
         parent::setStatus(2);
     }
 
-    public function getTimeRangeAvailable($idPackage,$day){
+    public function getTimeRangeAvailable($appointments,$duration){
         //Si resultat nul: renvoyer toutes les horaires pour le package
-        $appointment= new Appointment();
-        $appointments = $appointment->getAllBy(['dateAppointment' => $day],['hourAppointment'],3);
-        $hours = [];
+        $appointmentHours = [];
+        $availableHours = [];
+        $package = new Package();
+
         foreach ($appointments as $appointment){
-            $hours[] = $appointment->getHourAppointment();
+            echo '<pre>'; print_r($appointment); echo '</pre>';
+            $appointmentDuration = $package->getAllBy(['id' => $appointment->getId()],['duration'],3)[0]->getDuration();
+            $appointmentHours[] = date('H:i',strtotime('+'.$appointmentDuration.' minutes',strtotime($appointment->getHourAppointment())));
         }
         //Creer un tableau des rendez-vous de la journée
-        $timeRange = $appointment->getAvailableTimeBetweenAppointment($hours);
+        $timesRange = $appointment->getAvailableTimeBetweenAppointment($appointmentHours);
+        echo '<pre>'; print_r($timesRange); echo '</pre>';
+        echo '<br>';
 
-        $package = new Package();
-        $duration = $package->getAllBy(['id' => $idPackage],['duration'],3)[0]->getDuration();
         echo $duration;
+        echo '<br>';
+        //Pour chaque rendez
+        foreach ($timesRange as $hour=>$availableTime){
+            if($availableTime > $duration){
+                for ($i=$duration;$i<$availableTime;$i+=$duration){
+                    $availableHours[] = date("H:i", strtotime('+'.$i.' minutes', strtotime($hour)));
+                }
+            }
+        }
+        echo '<pre>'; print_r($availableHours); echo '</pre>';
+        /*
+        echo '<br>';
+        echo $duration;
+        echo '<br>';
+        var_dump($timesRange);
+        */
     }
+
+
+
 }
