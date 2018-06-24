@@ -30,7 +30,7 @@ class AppointmentController{
         $date = new DateTime();
         $date->setDate($_POST['annee'], $_POST['mois'], $_POST['jour']);
         $idHairDresser = $_POST['hairdresser'] == 'all'? null: $_POST['hairdresser'];
-
+        //
         $appointment= new Appointment();
         $appointments = is_null($idHairDresser)?$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d')],['hourAppointment'],3):$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'id_Hairdresser'=>$idHairDresser],['hourAppointment'],3);
         //Ajouter coiffeur

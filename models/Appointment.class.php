@@ -74,7 +74,7 @@ class Appointment extends BaseSql{
         $opening = '08:00:00';
         $closing = '18:30:00';
         $timeRange = [];
-
+    //
         sort($hours);
         array_unshift($hours,$opening);
         $hours[] = $closing;

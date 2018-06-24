@@ -30,6 +30,7 @@ class Hairdresser extends User  {
         //Si resultat nul: renvoyer toutes les horaires pour le package
         $appointmentHours = [];
         $availableHours = [];
+        //
         $package = new Package();
 
         foreach ($appointments as $appointment){
