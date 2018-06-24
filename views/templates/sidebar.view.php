@@ -25,12 +25,17 @@
             <a href="<?php echo DIRNAME;?>admin/getPageEdit" >Ajouter</a>
 
         </div>
-        <li class='sidebar_buttons'>
-            <a href='<?php echo DIRNAME;?>admin/getArticleAdmin'>Articles</a>
+
+        <li <?php if ( $this->data['current_sidebar'] == 'articles') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
+            <a >Articles &nbsp;
+                <i class='fa fa-caret-down'></i>
+            </a>
         </li>
-          <li class='sidebar_buttons'>
-            <a href='<?php echo DIRNAME;?>admin/getCategoryAdmin'>Category</a>
-        </li>
+
+        <div class='dropdown-container'>
+            <a href='<?php echo DIRNAME;?>admin/getArticleAdmin'>Ajouter un article</a>
+            <a href='<?php echo DIRNAME;?>admin/getCategoryAdmin'>Categories</a>
+        </div>
 
     </ul>
 </div>
