@@ -5,11 +5,10 @@
   <meta charset='UTF-8'>
   <link rel='stylesheet' type='text/css' href= '../public/css/style.css'>
   <title>Hair'App : Le site à votre image.</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+    <script type="text/javascript" src="../public/js/index.js"></script>
 </head>
-
-<script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-<script type="text/javascript" src="../public/js/index.js"></script>
 
 <body>
 
@@ -66,21 +65,6 @@
   include $this->f;
 
   ?>
-
-  <script>
-
-      var dropdown = document.getElementsByClassName("dropdown");
-
-      var i;
-
-      for (i = 0; i < dropdown.length; i++) {
-          dropdown[i].addEventListener("click", function() {
-              this.classList.toggle("active", true);
-              var dropdownContent = this.nextElementSibling;
-              dropdownContent.style.display = "block";
-          });
-      }
-  </script>
 
 
 

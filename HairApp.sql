@@ -10,7 +10,7 @@ USE HairApp;
 # Table: Hairdresser
 #------------------------------------------------------------
 
-CREATE TABLE Hairdresser(
+CREATE TABLE hairdresser(
         id            int (11) Auto_increment  NOT NULL ,
         firstname     Varchar (50) NOT NULL ,
         lastname      Varchar (50) NOT NULL ,
@@ -25,7 +25,7 @@ CREATE TABLE Hairdresser(
 # Table: Appointment
 #------------------------------------------------------------
 
-CREATE TABLE Appointment(
+CREATE TABLE appointment(
         id              int (11) Auto_increment  NOT NULL ,
         dateAppointment Date NOT NULL ,
         hourAppointment Time NOT NULL ,
@@ -40,7 +40,7 @@ CREATE TABLE Appointment(
 # Table: Product
 #------------------------------------------------------------
 
-CREATE TABLE Product(
+CREATE TABLE product(
         id          int (11) Auto_increment  NOT NULL ,
         name        Varchar (50) NOT NULL ,
         description Varchar (250) NOT NULL ,
@@ -55,7 +55,7 @@ CREATE TABLE Product(
 # Table: Category
 #------------------------------------------------------------
 
-CREATE TABLE Category(
+CREATE TABLE category(
         id              int (11) Auto_increment  NOT NULL ,
         description     Varchar (250) NOT NULL ,
         id_User         Int ,
@@ -82,6 +82,7 @@ CREATE TABLE user(
         dateInserted     Date NOT NULL ,
         dateUpdated      Date NOT NULL ,
         lastConnection   Date DEFAULT NULL ,
+        picture          VARCHAR(150) DEFAULT NULL,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -90,7 +91,7 @@ CREATE TABLE user(
 # Table: Color
 #------------------------------------------------------------
 
-CREATE TABLE Color(
+CREATE TABLE color(
         id      int (11) Auto_increment  NOT NULL ,
         name    Varchar (50) NOT NULL ,
         code    Integer NOT NULL ,
@@ -118,7 +119,7 @@ CREATE TABLE comment(
 # Table: CategoryType
 #------------------------------------------------------------
 
-CREATE TABLE CategoryType(
+CREATE TABLE categorytype(
         id   int (11) Auto_increment  NOT NULL ,
         type Varchar (255) ,
         PRIMARY KEY (id )
@@ -129,7 +130,7 @@ CREATE TABLE CategoryType(
 # Table: Pages
 #------------------------------------------------------------
 
-CREATE TABLE Pages (
+CREATE TABLE pages (
         id int(11) AUTO_INCREMENT NOT NULL,
         title varchar(50) NOT NULL,
         content longtext NOT NULL,
@@ -144,11 +145,11 @@ CREATE TABLE Pages (
 # Table: Article
 #------------------------------------------------------------
 
-CREATE TABLE Article(
+CREATE TABLE article(
         id          int (11) Auto_increment  NOT NULL ,
         name        Varchar (50) NOT NULL ,
         description Varchar (250) NOT NULL ,
-        dateparution Date (50) NOT NULL,
+        dateparution Date NOT NULL,
         minidescription Varchar(40) NOT NULL,
         image Varchar(250) ,
         id_Category Int ,
@@ -161,7 +162,7 @@ CREATE TABLE Article(
 # Table: Package
 #------------------------------------------------------------
 
-CREATE TABLE Package(
+CREATE TABLE package(
         id          int (11) Auto_increment  NOT NULL ,
         description Varchar (250) NOT NULL ,
         price       Float NOT NULL ,
@@ -175,7 +176,7 @@ CREATE TABLE Package(
 # Table: Theme
 #------------------------------------------------------------
 
-CREATE TABLE Theme(
+CREATE TABLE theme(
         id      int (11) Auto_increment  NOT NULL ,
         name    Varchar (50) NOT NULL ,
         id_User Int ,
@@ -187,7 +188,7 @@ CREATE TABLE Theme(
 # Table: Configuration
 #------------------------------------------------------------
 
-CREATE TABLE Configuration(
+CREATE TABLE configuration(
         id       int (11) Auto_increment  NOT NULL ,
         admin    Varchar (50) NOT NULL ,
         logo     Varchar (100) NOT NULL ,
@@ -198,19 +199,20 @@ CREATE TABLE Configuration(
 )ENGINE=InnoDB;
  
  
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_Hairdresser FOREIGN KEY (id_Hairdresser) REFERENCES Hairdresser(id);
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_Package FOREIGN KEY (id_Package) REFERENCES Package(id);
-ALTER TABLE Product ADD CONSTRAINT FK_Product_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Product ADD CONSTRAINT FK_Product_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Category ADD CONSTRAINT FK_Category_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Category ADD CONSTRAINT FK_Category_id_CategoryType FOREIGN KEY (id_CategoryType) REFERENCES CategoryType(id);
-ALTER TABLE Color ADD CONSTRAINT FK_Color_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Comment ADD CONSTRAINT FK_Comment_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Comment ADD CONSTRAINT FK_Comment_id_Article FOREIGN KEY (id_Article) REFERENCES Article(id);
-ALTER TABLE Article ADD CONSTRAINT FK_Article_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Package ADD CONSTRAINT FK_Package_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Theme ADD CONSTRAINT FK_Theme_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Configuration ADD CONSTRAINT FK_Configuration_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES Color(id);
+/*ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_User FOREIGN KEY (id_User) REFERENCES user(id);
+ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_Hairdresser FOREIGN KEY (id_Hairdresser) REFERENCES Hairdresser(id);
+ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_Package FOREIGN KEY (id_Package) REFERENCES Package(id);
+ALTER TABLE product ADD CONSTRAINT FK_Product_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE product ADD CONSTRAINT FK_Product_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
+ALTER TABLE category ADD CONSTRAINT FK_Category_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE category ADD CONSTRAINT FK_Category_id_CategoryType FOREIGN KEY (id_CategoryType) REFERENCES CategoryType(id);
+ALTER TABLE color ADD CONSTRAINT FK_Color_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE comment ADD CONSTRAINT FK_Comment_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE comment ADD CONSTRAINT FK_Comment_id_Article FOREIGN KEY (id_Article) REFERENCES Article(id);
+ALTER TABLE article ADD CONSTRAINT FK_Article_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
+ALTER TABLE package ADD CONSTRAINT FK_Package_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
+ALTER TABLE theme ADD CONSTRAINT FK_Theme_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_User FOREIGN KEY (id_User) REFERENCES User(id);
+ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES Color(id);
+*/

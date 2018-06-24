@@ -15,7 +15,11 @@ class LoginController {
      */
     public function getLogin()
     {
+        $user = new User();
+        $form = $user->LoginForm();
+
         $v = new Views( "login", "header" );
+        $v->assign("config", $form );
         $v->assign( "current", "login" );
     }
 
@@ -28,15 +32,29 @@ class LoginController {
 
         //Ca doit etre un objet
         $user = new User();
+        $form = $user->LoginForm();
+        //$errors = Validator::
 
         if( $_POST['email'] != '' ){
 
             $userInformations = $user->populate(
                 array( "email" => $_POST['email'] )
             );
-            //var_dump( $userInformations ); die;
 
-            if(  Security::checkLogin( $userInformations->getEmail(), $userInformations->getPwd() ) ) {
+            if( empty( $userInformations) ){
+                $errors[] = "L'utilisateur n'existe pas.";
+            }
+            else{
+                $to_verify = array(
+                    "email" => $userInformations->getEmail(),
+                    "pwd" => $userInformations->getPwd()
+                );
+
+                $errors = Validator::login( $form, $to_verify );
+            }
+
+
+            if( empty( $errors ) ){
                 $userInformations->setToken();
                 //var_dump( $_POST ); die;
                 $params = array(
@@ -48,18 +66,16 @@ class LoginController {
                 Security::setSession($userInformations);
 
                 header("Location: " . DIRNAME . "home/getHome");
-
             }
             else{
-                echo "faux";
+                $v = new Views( "login", "header" );
+                $v->assign( "current", "login" );
+                $v->assign("config",$form);
+                $v->assign("errors",$errors);
             }
 
-        }
-        else{
-            echo "veuillez saisir des informations";
-        }
 
-
+        }
 
     }
 
@@ -68,5 +84,11 @@ class LoginController {
      */
     public function getNewPwd($email ){
 
+    }
+
+    public function logout(){
+        session_destroy();
+
+        header("Location: ".DIRNAME."home/getHome");
     }
 }

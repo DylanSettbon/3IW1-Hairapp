@@ -1,4 +1,4 @@
-<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>">
+<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>" enctype="multipart/form-data">
 
     <?php foreach ($config["input"] as $name => $params):?>
 
@@ -20,11 +20,25 @@
                     <?php endif; ?>
 
 
-
+                <?php echo (isset($params["disable"]))?"disabled":"";?>
                 <?php echo (isset($params["required"]))?"required='required'":"";?>
             >
 
         <?php endif;?>
+
+        <?php if( $params["type"] == "file" ): ?>
+
+            <label for="picture"><?php echo $params["placeholder"];?> :</label>&nbsp;
+                <input type="hidden" name="MAX_FILE_SIZE" value="100000000">
+                <input
+                        id="<?php echo $params['id']; ?>"
+                        type="file"
+                        class="input_sign-in"
+                        name="<?php echo $name;?>"
+                ><br>
+
+
+        <?php endif; ?>
 
 
         <?php if( $params['type'] == 'checkbox' ):?>
@@ -61,6 +75,8 @@
 
     <?php endif; ?>
 
-    <input type="submit" class="input center" id="valider" value="<?php echo $config["config"]["submit"];?>">
+
+
+    <input type="submit" class="input center valider" value="<?php echo $config["config"]["submit"];?>">
 
 </form>

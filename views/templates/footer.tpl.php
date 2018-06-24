@@ -37,6 +37,35 @@
         console.log( dropdown );
     </script>
 
+    <script>
+        function hairdresser( id ) {
+
+            if( id === 1 ){
+                $(".coiffeur-1").show();
+                $(".coiffeur-2").hide();
+                $(".coiffeur-3").hide();
+            }
+            else if( id === 2 ){
+                $(".coiffeur-1").hide();
+                $(".coiffeur-2").show();
+                $(".coiffeur-3").hide();
+            }
+            else if( id === 3 ){
+                $(".coiffeur-1").hide();
+                $(".coiffeur-2").hide();
+                $(".coiffeur-3").show();
+            }
+            else if( id === 'all' ){
+                $(".coiffeur-1").show();
+                $(".coiffeur-2").show();
+                $(".coiffeur-3").show();
+            }
+
+
+
+        }
+    </script>
+
     </body>
 
 </html>

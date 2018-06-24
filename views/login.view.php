@@ -8,16 +8,41 @@
                     <div class="col-s-12 col-m-6 col-l-6 center">
                         <div class="form_register">
                             <div class="row">
-                                <h1 id="title-rdv" class="title col-l-6">Se Connecter</h1>
+                                <h1 id="title-rdv" class="title col-l-12">Se Connecter</h1>
                             </div>
-                            <form method="post" action="<?php echo DIRNAME;?>login/getVerify">
-                                <input type="email" name="email" class="mail input" placeholder="Adresse e-mail"   />
-                                <input type="password" name="pwd" class="input" id="pwd" placeholder="Mot de passe"   />
-                                <input type="submit" id="connecter" class="center input" value="Me connecter" />
-                                <a class="mdp" href="#">Mot de passe oublié?</a>
-                                <hr>
-                                <p class="center"><span class="span"> Vous n'avez pas de compte ? </span><a  class="mdp" href="<?php echo DIRNAME;?>signin/getSignin">Inscription</a><p>
-                            </form>
+                            <div class="row">
+
+                                <?php $this->addModal("login", $config ); ?>
+
+                                <ul class="errors col-l-12">
+                                    <?php if( isset( $errors ) ): ?>
+                                        <?php foreach ( $errors as $error ): ?>
+                                            <li>
+                                                <div class="div-errors danger col-l-12">
+                                                    <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                                </div>
+
+                                            </li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </ul>
+
+                            </div>
+                            <a class="mdp" href="#">Mot de passe oublié?</a>
+                            <hr>
+
+                           <div class="row">
+
+                               <div class="col-l-12"><p class="center">
+                                       <span class="span"> Vous n'avez pas de compte ? </span>
+                                       <a  class="mdp" href="<?php echo DIRNAME;?>signin/getSignin">Inscription</a>
+                                   </p>
+                               </div>
+
+                           </div>
+
+
+
                         </div>
 
                         <!-- </div> -->

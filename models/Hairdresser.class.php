@@ -16,6 +16,16 @@ class Hairdresser extends BaseSql {
     protected $token;
 
     /**
+     * Hairdresser constructor.
+     * @param null $id
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
+    /**
      * @return mixed
      */
     public function getToken()
