@@ -30,7 +30,7 @@
         <section id="choix-forfait" class="row">
             <h2 class="title-section-rdv">Choissisez votre forfait</h2>
 
-            <select name="package" id="forfaits" class="col-s-12 liste_deroulante">
+            <select name="package" id="package" class="col-s-12 liste_deroulante">
                 <option selected disabled>Choisir un forfait</option>
                 <?php foreach($categories as $i=>$category):?>
                     <optgroup label="-- <?php echo $category->getDescription()?> --">
@@ -61,29 +61,7 @@
             </div>
 
 
-            <div class="container checkbox-heure-rdv">
-                <?php $availabilities = []; ?>
-                <?php foreach($availabilities as $availability): ?>
-                    <li>
-                        <input name="heure" id="heure1" type="checkbox" checked>
-                        <label for="heure1">
-                            <span class="heure">13h</span>
-                        </label>
-                    </li>
-                <?php endforeach; ?>
-                <li>
-                    <input name="heure" id="heure2" type="checkbox">
-                    <label for="heure2">
-                        <span class="heure">14h</span>
-                    </label>
-                </li>
-                <li>
-                    <input name="heure" id="heure3" type="checkbox">
-                    <label for="heure3">
-                        <span class="heure">15h</span>
-                    </label>
-                </li>
-                <li>
+            <div class="container checkbox-hour-rdv">
                     <input name="heure" id="heure4" type="checkbox">
                     <label for="heure4">
                         <span class="heure">16h</span>

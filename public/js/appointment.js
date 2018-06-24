@@ -66,3 +66,34 @@ function showDays(end,start=1){
 function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
+
+
+
+/*
+$('#package').change(function(){
+    //$_POST : package, annee, mois, jour, hairdresser
+    package = $('#package').find(":selected").val();
+    year = $('#annee').find(":selected").text();
+    month = $('#mois').find(":selected").text();
+    day = $('#jour').find(":selected").text();
+    hairdresser = $("input[id^='coiffeur']:checked").val();
+
+    getAvailableHours(day,month,year,package,hairdresser)
+});
+
+function getAvailableHours(day,month,year,idPackage,idHairdresser){
+    $.ajax({
+        type: 'POST',
+        url: 'ajaxTest',
+        datatype: "json",
+        data: { day: day,
+                month:month,
+                year : year,
+                package :idPackage,
+                hairdresser : idHairdresser},
+        success: function(response) {
+           console.log(JSON.parse(response))
+        }
+        });
+}
+*/

@@ -1,73 +1,113 @@
 <?php
 class Appointment extends BaseSql{
     protected $id = null;
-    protected $hairdresser;
-    protected $date;
+    protected $dateAppointment;
     protected $hourAppointment;
-    protected $package;
-    protected $customer;
+    protected $id_Package;
+    protected $id_User;
+    protected $id_Hairdresser;
 
+    /**
+     * @return null
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-    //getters and setters
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @param null $id
+     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function getHairdresser()
+    /**
+     * @return mixed
+     */
+    public function getDateAppointment()
     {
-        return $this->hairdresser;
+        return $this->dateAppointment;
     }
 
-    public function setHairdresser($hairdresser)
+    /**
+     * @param mixed $dateAppointment
+     */
+    public function setDateAppointment($dateAppointment)
     {
-        $this->hairdresser = $hairdresser;
+        $this->dateAppointment = $dateAppointment;
     }
 
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    public function setDate($date)
-    {
-        $this->date = $date;
-    }
-
-    public function gethourAppointment()
+    /**
+     * @return mixed
+     */
+    public function getHourAppointment()
     {
         return $this->hourAppointment;
     }
 
-    public function sethourAppointment($hourAppointment)
+    /**
+     * @param mixed $hourAppointment
+     */
+    public function setHourAppointment($hourAppointment)
     {
         $this->hourAppointment = $hourAppointment;
     }
 
-    public function getPackage()
+    /**
+     * @return mixed
+     */
+    public function getIdPackage()
     {
-        return $this->package;
+        return $this->id_Package;
     }
 
-    public function setPackage($package)
+    /**
+     * @param mixed $id_Package
+     */
+    public function setIdPackage($id_Package)
     {
-        $this->package = $package;
+        $this->id_Package = $id_Package;
     }
 
-    public function getCustomer()
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
     {
-        return $this->customer;
+        return $this->id_User;
     }
 
-    public function setCustomer($customer)
+    /**
+     * @param mixed $id_User
+     */
+    public function setIdUser($id_User)
     {
-        $this->customer = $customer;
+        $this->id_User = $id_User;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdHairdresser()
+    {
+        return $this->id_Hairdresser;
+    }
+
+    /**
+     * @param mixed $id_Hairdresser
+     */
+    public function setIdHairdresser($id_Hairdresser)
+    {
+        $this->id_Hairdresser = $id_Hairdresser;
+    }
+
 
     public function getAvailableTimeBetweenAppointment($hours){
         //TO DO : ouverture salon
@@ -83,9 +123,6 @@ class Appointment extends BaseSql{
             $h1 = new DateTime($hours[$i]);
             $timeRange[$hours[$i]] = (($h2->getTimestamp() -$h1->getTimestamp())/60) + (($h2->getTimestamp() -$h1->getTimestamp())%60) ;
         }
-        echo '<br>';
-
-
         return $timeRange;
         //renvoie les durée disponible entre chaque rendez-vous sous forme de tableau associatif
         //clé : heure de debut ; valeur : temps disponible

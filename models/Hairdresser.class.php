@@ -30,30 +30,33 @@ class Hairdresser extends User  {
         //Si resultat nul: renvoyer toutes les horaires pour le package
         $appointmentHours = [];
         $availableHours = [];
-        //
         $package = new Package();
 
         foreach ($appointments as $appointment){
-            echo '<pre>'; print_r($appointment); echo '</pre>';
-            $appointmentDuration = $package->getAllBy(['id' => $appointment->getId()],['duration'],3)[0]->getDuration();
-            $appointmentHours[] = date('H:i',strtotime('+'.$appointmentDuration.' minutes',strtotime($appointment->getHourAppointment())));
+            echo $appointment->getHourAppointment();
+
+            $duration = $package->getAllBy(['id' => $appointment->getIdPackage()],['duration'],3)[0]->getDuration();
+            echo ' '.$duration.' ';
+            $appointmentHours[] = date('H:i',strtotime('+'.$duration.' minutes',strtotime($appointment->getHourAppointment())));
         }
         //Creer un tableau des rendez-vous de la journée
         $timesRange = $appointment->getAvailableTimeBetweenAppointment($appointmentHours);
-        echo '<pre>'; print_r($timesRange); echo '</pre>';
-        echo '<br>';
+        /*echo '<pre>'; print_r($timesRange); echo '</pre>';
+        echo '<br>';*/
 
-        echo $duration;
-        echo '<br>';
-        //Pour chaque rendez
+        /*echo $duration;
+        echo '<br>';*/
+        //Pour chaque rendez-vous, récupere toutes les heures disponible entre les deux rendez-vous
         foreach ($timesRange as $hour=>$availableTime){
             if($availableTime > $duration){
                 for ($i=$duration;$i<$availableTime;$i+=$duration){
-                    $availableHours[] = date("H:i", strtotime('+'.$i.' minutes', strtotime($hour)));
+                    if($availableTime - $i > $duration) {
+                        $availableHours[] = date("H:i", strtotime('+' . $i . ' minutes', strtotime($hour)));
+                    }
                 }
             }
         }
-        echo '<pre>'; print_r($availableHours); echo '</pre>';
+        return $availableHours;
         /*
         echo '<br>';
         echo $duration;
