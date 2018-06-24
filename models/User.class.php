@@ -20,12 +20,14 @@ class User extends BaseSql {
     protected $dateInserted;
     protected $dateUpdated;
     protected $lastConnection;
+    protected $picture;
 
 
     public function __construct()
     {
         parent::__construct();
     }
+
 
     /**
      * @return null
@@ -328,6 +330,7 @@ class User extends BaseSql {
                 ],
                 "email"=>[
                     "type"=>"email",
+                    //"disable" => true,
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Votre email"
                 ],
@@ -338,29 +341,34 @@ class User extends BaseSql {
                     "required"=>true,
                     "confirm"=>"email"
                 ],*/
-                "pwd"=>[
-                    "type"=>"password",
-                    "class"=>"input input_sign-in",
-                    "placeholder"=>"Votre mot de passe"
-                ],
-                /*"pwdConfirm"=>[
-                    "type"=>"password",
-                    "class"=>"input input_sign-in",
-                    "placeholder"=>"Confirmation",
-                    "required"=>true,
-                    "confirm"=>"pwd"
-                ],*/
+//                "pwd"=>[
+//                    "type"=>"password",
+//                    "class"=>"input input_sign-in",
+//                    "placeholder"=>"Votre mot de passe"
+//                ],
+//                "pwdConfirm"=>[
+//                    "type"=>"password",
+//                    "class"=>"input input_sign-in",
+//                    "placeholder"=>"Confirmation",
+//                    "confirm"=>"pwd"
+//                ],
                 "tel" => [
                     "type" => "tel",
                     "class"=>"input input_sign-in",
                     "placeholder" => "Téléphone",
                     "required" => true
                 ],
+                "picture" => [
+                    "type" => 'file',
+                    "class"=>"input input_sign-in",
+                    'id' => 'picture',
+                    "placeholder" => "Photo de profile"
+                ],
                 "offers" => [
                     "type" => "checkbox",
                     "id" => "checkBox",
                     "span" => "Je souhaite recevoir par e-mail des offres promotionnelles"
-                ]
+                ],
 
             ],
 
@@ -372,6 +380,64 @@ class User extends BaseSql {
 
         ];
     }
+
+    public function ChangePwdForm(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"saveAccount", "submit"=>"Changer le mot de passe"],
+            "input"=>[
+                "pwd"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Confirmation",
+                    "confirm"=>"pwd"
+                ],
+            ],
+        ];
+    }
+
+    public function LoginForm(){
+        return [
+            "config"=>["method"=>"POST", "action"=>"getVerify", "submit"=>"Se connecter"],
+            "input"=>[
+                "email"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre email",
+                    "required"=>true
+                ],
+                "pwd"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre mot de passe",
+                    "required"=>true
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+
 
 
     public function __toString()
