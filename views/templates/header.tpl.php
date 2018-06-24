@@ -40,7 +40,7 @@
                   <?php endif; ?>
               <?php endforeach; ?>
 
-              <?php if ( Security::isConnected() && Security::isCoiffeur() ): ?>
+              <?php if ( Security::isConnected() && ( Security::isCoiffeur() || Security::isAdmin() ) ): ?>
                   <li <?php if ($current == 'planning'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif; ?> >
                       <a href="<?php echo DIRNAME;?>planning/getPlanning">Planning</a>
                   </li>
@@ -65,6 +65,9 @@
                     <li <?php if ( $current == 'account'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif;?>>
                         <a href='<?php echo DIRNAME;?>account/getAccount'>Mon Compte</a>
                     </li>
+                      <li <?php if ( $current == 'logout'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif;?>>
+                          <a href='<?php echo DIRNAME;?>login/logout'>Se déconnecter</a>
+                      </li>
               <?php else: ?>
                     <li <?php if ( $current == 'login'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif;?> >
                         <a href='<?php echo DIRNAME;?>login/getLogin'>Se Connecter</a>

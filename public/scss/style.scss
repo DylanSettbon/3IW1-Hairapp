@@ -60,6 +60,14 @@ div [class *= "col-"] {
   text-align: center;
 }
 
+.left{
+  text-align: left;
+}
+
+.right{
+  text-align: right;
+}
+
 
 
 @include planing;
@@ -96,7 +104,7 @@ div [class *= "col-"] {
 @media only screen and (min-width : $medium){
   .col-m-center{margin:0 auto ; float:none ;}
   @for $i from 1 through $columns{
-  .col-m-#{$i}{ 
+  .col-m-#{$i}{
     width:$i / $columns * 100%;}
 
   }
@@ -112,20 +120,45 @@ div [class *= "col-"] {
     margin-top: 60px;
   }
 
+
+
   #planning td, #planning th{
-    border-left: 2px solid $button_color;
+    border-right: 2px solid $button_color;
+    //border-right: 2px solid $button_color;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px;
   }
 
+  .coiffeur-1{
+    background-color: #F2994A;
+  }
+
+  .coiffeur-2{
+    background-color: $button_color;
+  }
+
+  .coiffeur-3{
+    background-color: #27AE60;
+  }
+
+
+  //#planning td:last-child, #planning th:last-child{
+  //  border: none;
+  //  //border-right: 2px solid $button_color;
+  //  padding-left: 10px;
+  //  padding-right: 10px;
+  //  padding-bottom: 6px;
+  //  padding-top: 6px;
+  //}
+
   .background_login{
     background-color:#E5E5E5;
     height: 100%;
   }
 
-  #valider{
+  .valider{
     background-color:#2F80ED;
     color:white;
     margin-top: 30px;
@@ -178,7 +211,7 @@ div [class *= "col-"] {
 @media only screen and (min-width : $large){
   .col-l-center{margin:0 auto ; float:none ;}
   @for $i from 1 through $columns{
-  .col-l-#{$i}{ 
+  .col-l-#{$i}{
      width:$i / $columns * 100%;}
   }
 
@@ -196,11 +229,15 @@ div [class *= "col-"] {
   }
 
   #planning td, #planning th{
-    border-left: 2px solid $button_color;
+    //border-left: 2px solid $button_color;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px;
+  }
+
+  .account{
+    margin-bottom: 60px;
   }
 
   .background_login{
@@ -678,7 +715,14 @@ input[type="checkbox"][id="template4"] + label::before{
   list-style: none;
 }
 
+#profilePicture{
+  width:180px;
+  border-radius: 50%;
+}
+
+.hr{
+  width : 1px;
+  height : 300px;
+}
+
 @include genericClass;
-
-
-
