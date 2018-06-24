@@ -222,12 +222,15 @@ h3 {
   margin-right: auto;
   text-align: center; }
 
+.left {
+  text-align: left; }
+
+.right {
+  text-align: right; }
+
 #planning {
   border-collapse: collapse;
   margin-bottom: 30px; }
-
-#planning td, #planning th {
-  border-left: 2px solid #009CDF; }
 
 #planning tr {
   padding: 5px; }
@@ -722,15 +725,21 @@ section {
   .tab-planning {
     margin-top: 60px; }
   #planning td, #planning th {
-    border-left: 2px solid #009CDF;
+    border-right: 2px solid #009CDF;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px; }
+  .coiffeur-1 {
+    background-color: #F2994A; }
+  .coiffeur-2 {
+    background-color: #009CDF; }
+  .coiffeur-3 {
+    background-color: #27AE60; }
   .background_login {
     background-color: #E5E5E5;
     height: 100%; }
-  #valider {
+  .valider {
     background-color: #2F80ED;
     color: white;
     margin-top: 30px;
@@ -795,11 +804,12 @@ section {
     display: flex;
     flex-direction: column; }
   #planning td, #planning th {
-    border-left: 2px solid #009CDF;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
     padding-top: 6px; }
+  .account {
+    margin-bottom: 60px; }
   .background_login {
     background-color: #E5E5E5;
     height: 100%; }
@@ -1384,6 +1394,14 @@ input[type="checkbox"][id="template4"] + label::before {
 
 .errors {
   list-style: none; }
+
+#profilePicture {
+  width: 180px;
+  border-radius: 50%; }
+
+.hr {
+  width: 1px;
+  height: 300px; }
 
 .updateButton {
   background-color: #009cdf;

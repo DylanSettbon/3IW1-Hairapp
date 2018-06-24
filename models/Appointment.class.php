@@ -1,71 +1,170 @@
 <?php
 class Appointment extends BaseSql{
-    protected $id = null;
-    protected $hairdresser;
-    protected $date;
-    protected $hour;
-    protected $package;
-    protected $customer;
+    protected $id ;
+    protected $id_Hairdresser;
+    protected $dateAppointment;
+    protected $hourAppointment;
+    protected $id_Package;
+    protected $id_User;
+    protected $firstname;
+    protected $lastname;
 
+    /**
+     * Appointment constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-    //getters and setters
+    }
+
+    /**
+     * @return null
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id): void
+    /**
+     * @param null $id
+     */
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function getHairdresser()
+    /**
+     * @return mixed
+     */
+    public function getIdHairdresser()
     {
-        return $this->hairdresser;
+        return $this->id_Hairdresser;
     }
 
-    public function setHairdresser($hairdresser): void
+    /**
+     * @param mixed $id_Hairdresser
+     */
+    public function setIdHairdresser($id_Hairdresser)
     {
-        $this->hairdresser = $hairdresser;
+        $this->id_Hairdresser = $id_Hairdresser;
     }
 
-    public function getDate()
+    /**
+     * @return mixed
+     */
+    public function getDateAppointment()
     {
-        return $this->date;
+        return $this->dateAppointment;
     }
 
-    public function setDate($date): void
+    /**
+     * @param mixed $dateAppointment
+     */
+    public function setDateAppointment($dateAppointment)
     {
-        $this->date = $date;
+        $this->dateAppointment = $dateAppointment;
     }
 
-    public function getHour()
+    /**
+     * @return mixed
+     */
+    public function getHourAppointment()
     {
-        return $this->hour;
+        return $this->hourAppointment;
     }
 
-    public function setHour($hour): void
+    /**
+     * @param mixed $hourAppointment
+     */
+    public function setHourAppointment($hourAppointment)
     {
-        $this->hour = $hour;
+        $this->hourAppointment = $hourAppointment;
     }
 
-    public function getPackage()
+    /**
+     * @return mixed
+     */
+    public function getIdPackage()
     {
-        return $this->package;
+        return $this->id_Package;
     }
 
-    public function setPackage($package): void
+    /**
+     * @param mixed $id_Package
+     */
+    public function setIdPackage($id_Package)
     {
-        $this->package = $package;
+        $this->id_Package = $id_Package;
     }
 
-    public function getCustomer()
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
     {
-        return $this->customer;
+        return $this->id_User;
     }
 
-    public function setCustomer($customer): void
+    /**
+     * @param mixed $id_User
+     */
+    public function setIdUser($id_User)
     {
-        $this->customer = $customer;
+        $this->id_User = $id_User;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstnam
+     */
+    public function setFirstnam($firstname)
+    {
+        $this->firstnam = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    public static  function changeMonth( $date ){
+        $month = date( "F", strtotime($date) );
+
+        switch ( $month ){
+            case 'January' : $res = str_replace( 'January', 'Janvier', $date ); break;
+            case 'February': $res = str_replace( 'February', 'Février', $date ); break;
+            case 'March': $res = str_replace( 'March', 'Mars', $date ); break;
+            case 'April': $res = str_replace( 'April', 'Avril', $date ); break;
+            case 'May': $res = str_replace( 'May', 'Mai', $date ); break;
+            case 'June': $res = str_replace( 'June', 'Juin', $date ); break;
+            case 'July': $res = str_replace( 'July', 'Juillet', $date ); break;
+            case 'August': $res = str_replace( 'August', 'Août', $date ); break;
+            case 'September': $res = str_replace( 'September', 'Septembre', $date ); break;
+            case 'October': $res = str_replace( 'October', 'Octobre', $date ); break;
+            case 'November': $res = str_replace( 'November', 'Novembre', $date ); break;
+            case 'December': $res = str_replace( 'December', 'Décembre', $date ); break;
+        }
+
+        return $res;
+    }
+
 }

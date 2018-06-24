@@ -6,10 +6,17 @@
  * Time: 16:09
  */
 
-class Planning
+class Planning extends BaseSql
 {
 
 
+    /**
+     * Planning constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 
 }

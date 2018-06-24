@@ -67,21 +67,43 @@ class BaseSql{
         $tmp2 = array();
         $tmp3 = array();
         $tmp4 = array();
+        $tmp5 = array();
 
         foreach($params as $key => $value) {
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
+            $tmp5[] = $key.'>:'.$key;
             $tmp4[] = $key.' <> :'.$key;
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
         }
+
+        if( isset( $params['min'] ) && isset( $params['max'] )  ){
+            $result['min_max'] = " BETWEEN '" . $params['min'] . "' AND '" . $params['max'] ."'";
+        }
+
+        if( isset( $params['min_to'] )   ){
+            $result['min_to'] = " <= '" . $params['min_to'] . "'";
+        }
+        if( isset( $params['max_to'] )   ){
+            $result['max_to'] = " >= '" . $params['max_to']. "'";
+        }
+
+
+        if( isset( $params['inner_table'] ) ){
+            $result['inner'] = " INNER JOIN ". $params['inner_table'] . " ON " . $params['inner_column'] . " = " . $params['inner_ref_to'];
+        }
+
+
         $result['bind_insert'] = implode(',', $tmp1);
         $result['bind_update'] = implode(',', $tmp2);
         $result['bind_delete'] = implode(' OR ', $tmp2);
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
         $result['not_in'] = implode(' AND ', $tmp4);
+        //$result['min_max'] = implode(' AND ', $tmp5);
+        //$result['min_max'] = str_replace( '<:max', '>:max')
         return $result;
     }
 
@@ -171,6 +193,7 @@ class BaseSql{
             $bind_pk = $this->bindParams($fields_primary_key);
             $found = $this->countTable($table, $fields_primary_key);
         }
+
         $bind = $this->bindParams($fields);
 
         if( isset( $fields_primary_key ) ){
@@ -179,6 +202,7 @@ class BaseSql{
         else{
             $sql_params = $fields;
         }
+
 
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
@@ -189,6 +213,7 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
+        //var_dump( $sql_upd ); die;
         $this->update($sql_upd, $sql_params);
     }
 
@@ -276,6 +301,15 @@ class BaseSql{
          if( $where != null ){
              $bind= $this->bindParams($where);
              $sql_params= $where;
+
+             if( isset( $where['inner_table']) ){
+                 $from = $this->table . $bind['inner'];
+                 //var_dump( $columns ); die;
+             }
+             else{
+                 $from = $this->table;
+             }
+
              if( $tab == 1 ){
                  $where_type = $bind['bind_insert'];
              }elseif ( $tab == 2 ){
@@ -284,10 +318,21 @@ class BaseSql{
                  $where_type = $bind['bind_primary_key'];
              }elseif ( $tab == 4 ){
                  $where_type = $bind['not_in'];
+             }elseif ( $tab == 5 ){
+                 $where_type = $columns[0] . $bind['min_max'];
              }
+             elseif ( $tab == 6 ){
+                 $where_type = $columns[0] . $bind['min_to'];
+             }
+             elseif ( $tab == 7 ){
+                 $where_type = $columns[0] . $bind['max_to'];
+             }
+
              $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
+                 ' FROM '.$from.' WHERE '
                  .$where_type);
+
+
              $sql->execute($sql_params);
 
          }
@@ -303,7 +348,6 @@ class BaseSql{
 
         }
 
-
     /**
      * @param array $where
      * @return Object
@@ -314,7 +358,6 @@ class BaseSql{
         //->fetchObject('User');
         $sql->execute( $where );
         $result = $sql->fetchObject('User');
-
 
         //return objet
         return $result;
