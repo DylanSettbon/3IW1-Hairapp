@@ -67,9 +67,6 @@ function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
 
-
-
-/*
 $('#package').change(function(){
     //$_POST : package, annee, mois, jour, hairdresser
     package = $('#package').find(":selected").val();
@@ -77,14 +74,13 @@ $('#package').change(function(){
     month = $('#mois').find(":selected").text();
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
-
     getAvailableHours(day,month,year,package,hairdresser)
 });
 
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
     $.ajax({
         type: 'POST',
-        url: 'ajaxTest',
+        url: 'ajaxGetAvailableSchedule',
         datatype: "json",
         data: { day: day,
                 month:month,
@@ -92,8 +88,33 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
                 package :idPackage,
                 hairdresser : idHairdresser},
         success: function(response) {
-           console.log(JSON.parse(response))
+            $( "#appointmentHour" ).empty();
+            $( "#hour" ).empty();
+            schedule = JSON.parse(response)
+
+            if (schedule['errors']){
+                $("#hour").replaceWith('<p>'+schedule['errors']+'</p>');
+                $("#appointmentHour").append('<p>'+schedule['errors']+'</p>');
+            }
+            else {
+                for (var i = 0; i < schedule.length; i++) {
+                    addHour(schedule[i])
+                    $('#heure').append('<option value=' + schedule[i] + '>' + schedule[i] + '</option>');
+                }
+            }
         }
         });
 }
-*/
+
+function addHour(hour){
+    hourHtml = '<li>' +
+        '<input value="'+hour+'" name="heure" id="heure'+hour+'" type="checkbox">' +
+        '<label for="heure'+hour+'">' +
+        '<span class="heure">'+hour+'</span>'+
+        '</label>'+
+        '</li>';
+
+    $( "#appointmentHour" ).append(hourHtml);
+
+}
+

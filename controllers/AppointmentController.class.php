@@ -21,34 +21,15 @@ class AppointmentController{
         $v->assign('hairdressers',$hairdressers);
     }
 
-    public function test(){
-        //Passer ID User
-        /*
-        echo '---------------';
-        echo '<pre>'; print_r($_POST); echo '</pre>';
-        echo '---------------<br><br>';
-        */
-        $hairDresser = new Hairdresser();
-        $date = new DateTime();
-        $date->setDate($_POST['annee'], $_POST['mois'], $_POST['jour']);
-        $idHairDresser = $_POST['hairdresser'] == 'all'? null: $_POST['hairdresser'];
-        //
-        $appointment= new Appointment();
-        $appointments = is_null($idHairDresser)?$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d')],null,3):$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'id_Hairdresser'=>$idHairDresser],null,3);
-
-        //Ajouter coiffeur
-        $package = new Package();
-        $duration = $package->getAllBy(['id' => $_POST['package']],['duration'],3)[0]->getDuration();
-
-        var_dump($hairDresser->getTimeRangeAvailable($appointments,$duration));
+    public function takeAppointment(){
+        var_dump($_POST);
     }
 
-    public function ajaxTest(){
-        //Passer ID User
+    public function ajaxGetAvailableSchedule(){
         /*
-        echo '---------------';
-        echo '<pre>'; print_r($_POST); echo '</pre>';
-        echo '---------------<br><br>';
+         * Ajouter les exception:
+         *      - appointments vide =aucun rendez vous ce jour, retourner toute les horaires possibles pour la durée du forfait
+         *      - timeRangeAvailable vide = aucune disponibilité, retourner message d'erreuer
         */
         $hairDresser = new Hairdresser();
         $date = new DateTime();
@@ -57,11 +38,20 @@ class AppointmentController{
         //
         $appointment= new Appointment();
         $appointments = is_null($idHairDresser)?$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d')],null,3):$appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'id_Hairdresser'=>$idHairDresser],null,3);
-
+        if(empty($appointments)){
+            // TO DO : recuperer toutes les durée disponible pour la durée du forfait
+            echo(json_encode(['errors' =>'Toutes les heures sont disponibles']));
+            return true;
+        }
         //Ajouter coiffeur
         $package = new Package();
         $duration = $package->getAllBy(['id' => $_POST['package']],['duration'],3)[0]->getDuration();
 
-        echo(json_encode($hairDresser->getTimeRangeAvailable($appointments,$duration)));
+        $timesRange = $hairDresser->getTimeRangeAvailable($appointments,$duration);
+        if (empty($timesRange)){
+            echo(json_encode(['errors' => 'Aucune horaires disponibles']));
+            return true;
+        }
+        echo(json_encode($timesRange));
     }
 }

@@ -5,7 +5,7 @@
         <h1 id="title-rdv" class="title col-l-10">Prendre rendez-vous</h1>
 
     </div>
-    <form method='post' action=test>
+    <form method='post' action='takeAppointment'>
 
         <section id="choix-coiffeur" class="row">
             <h2 class="title-section-rdv">Designez votre coiffeur</h2>
@@ -61,20 +61,12 @@
             </div>
 
 
-            <div class="container checkbox-hour-rdv">
-                    <input name="heure" id="heure4" type="checkbox">
-                    <label for="heure4">
-                        <span class="heure">16h</span>
-                    </label>
-                </li>
-            </div>
+            <ul id="appointmentHour" class="container checkbox-heure-rdv">
+
+            </ul>
 
             <select name="heure" id="heure" class="col-s-3 liste_deroulante">
                 <option selected disabled>Heure</option>
-                <option value="13">13h</option>
-                <option value="13">14h</option>
-                <option value="14">15h</option>
-                <option value="15">16h</option>
             </select>
 
         </section>
