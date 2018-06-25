@@ -110,21 +110,25 @@ class Appointment extends BaseSql{
 
 
     public function getAvailableTimeBetweenAppointment($hours){
+        /*
+         * Entrée : tableau des heures de chaques rendez avec date de début et date de fin
+         * Ajoute en début de tableau un tableau avec l'heure d'ouverture et en fin un tableau avec heure de fermeture
+         * Retourne un tableau avec comme clé l'heure de fin de rendez-vous et en valeur le temps restant jusqu'au prochain début de rendez-vous
+         */
         //TO DO : ouverture salon
         $opening = '08:00:00';
         $closing = '18:30:00';
         $timeRange = [];
-    //
+
         sort($hours);
-        array_unshift($hours,$opening);
-        $hours[] = $closing;
+        array_unshift($hours,['start' => $opening,'end' => $opening]);
+        $hours[] = ['start' => $closing,'end' => $closing];
+
         for($i = 0; $i<count($hours)-1;$i++){
-            $h2 = new DateTime($hours[$i+1]);
-            $h1 = new DateTime($hours[$i]);
-            $timeRange[$hours[$i]] = (($h2->getTimestamp() -$h1->getTimestamp())/60) + (($h2->getTimestamp() -$h1->getTimestamp())%60) ;
+            $h2 = new DateTime($hours[$i+1]['start']);
+            $h1 = new DateTime($hours[$i]['end']);
+            $timeRange[$hours[$i]['end']] = (($h2->getTimestamp() -$h1->getTimestamp())/60) + (($h2->getTimestamp() -$h1->getTimestamp())%60) ;
         }
         return $timeRange;
-        //renvoie les durée disponible entre chaque rendez-vous sous forme de tableau associatif
-        //clé : heure de debut ; valeur : temps disponible
     }
 }

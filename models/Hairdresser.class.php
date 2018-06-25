@@ -33,23 +33,18 @@ class Hairdresser extends User  {
         $package = new Package();
 
         foreach ($appointments as $appointment){
-            echo $appointment->getHourAppointment();
-
-            $duration = $package->getAllBy(['id' => $appointment->getIdPackage()],['duration'],3)[0]->getDuration();
-            echo ' '.$duration.' ';
-            $appointmentHours[] = date('H:i',strtotime('+'.$duration.' minutes',strtotime($appointment->getHourAppointment())));
+            $appointmentDuration = $package->getAllBy(['id' => $appointment->getIdPackage()],['duration'],3)[0]->getDuration();
+            $endAppointment = date('H:i:s',strtotime('+ '.$appointmentDuration.' minutes',strtotime($appointment->getHourAppointment())));
+            $appointmentHours[] = ['start' => $appointment->getHourAppointment(),'end' => $endAppointment];
         }
+
         //Creer un tableau des rendez-vous de la journée
         $timesRange = $appointment->getAvailableTimeBetweenAppointment($appointmentHours);
-        /*echo '<pre>'; print_r($timesRange); echo '</pre>';
-        echo '<br>';*/
 
-        /*echo $duration;
-        echo '<br>';*/
         //Pour chaque rendez-vous, récupere toutes les heures disponible entre les deux rendez-vous
         foreach ($timesRange as $hour=>$availableTime){
             if($availableTime > $duration){
-                for ($i=$duration;$i<$availableTime;$i+=$duration){
+                for ($i=0;$i<=$availableTime;$i+=$duration){
                     if($availableTime - $i > $duration) {
                         $availableHours[] = date("H:i", strtotime('+' . $i . ' minutes', strtotime($hour)));
                     }
@@ -57,12 +52,6 @@ class Hairdresser extends User  {
             }
         }
         return $availableHours;
-        /*
-        echo '<br>';
-        echo $duration;
-        echo '<br>';
-        var_dump($timesRange);
-        */
     }
 
 
