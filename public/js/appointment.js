@@ -19,35 +19,37 @@ $(document).ready(function() {
         }
     });
 
-    //a terminer
-    var ladate=new Date()
-    var cptMonth = ladate.getFullYear()?ladate.getMonth()+1 : 1
+    //Initialisation au chargement de la page
+    const date=new Date()
+    var cptMonth = date.getFullYear()?date.getMonth()+1 : 1
     showMonths(cptMonth)
-    showDays(31)
+    year = $('#annee').find(":selected").val();
+    month = $('#mois').find(":selected").val()
+    showDays(daysInMonth(month,year),date.getDate())
+
+
     $("#annee").change(function(event){
-        cptMonth = $('#annee :selected').text() == ladate.getFullYear()?ladate.getMonth()+1 : 1
-        var year = event.target.value
-        showMonths(cptMonth)
-        $("#mois").change(function(event){
-            days = daysInMonth(event.target.value,year)
-            console.log(days)
-            showDays(days)
-        });
+        startedMonth = $('#annee :selected').text() == date.getFullYear()?date.getMonth()+1 : 1
+        var year = event.target.value;
+        showMonths(startedMonth)
+        var month = $('#mois').find(":selected").val()
+        refreshDay(daysInMonth(month,year))
     });
 
-    $("#annee,#mois").change(function(event){
-        console.log(event)
-    })
+    $("#mois").change(function(event){
+        var lastMonthDay = daysInMonth(event.target.value,year)
+        refreshDay(lastMonthDay)
+    });
 });
 
-function updateDaysAndMonth(year) {
-    $("#mois").change(function(event){
-        days = daysInMonth(event.target.value,year)
-        console.log(days)
-        showDays(days)
-    });
+function refreshDay(lastMonthDay){
+    var date=new Date()
+    var month = $('#mois').find(":selected").val()
+    var year = $('#annee').find(":selected").val();
+    var month = $('#mois').find(":selected").val();
+    var start = year == date.getFullYear() && month == date.getMonth()+1? date.getDate() : 1
+    showDays(lastMonthDay,start)
 }
-
 
 function showMonths(start){
     $('#mois').empty()
@@ -67,7 +69,7 @@ function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
 
-$('#package').change(function(){
+$('.appointmentAttr,:checkbox').change(function(){
     //$_POST : package, annee, mois, jour, hairdresser
     package = $('#package').find(":selected").val();
     year = $('#annee').find(":selected").text();
@@ -89,7 +91,7 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
                 hairdresser : idHairdresser},
         success: function(response) {
             $( "#appointmentHour" ).empty();
-            $( "#hour" ).empty();
+            $( "#heure" ).empty();
             schedule = JSON.parse(response)
 
             if (schedule['errors']){
@@ -108,8 +110,8 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
 
 function addHour(hour){
     hourHtml = '<li>' +
-        '<input value="'+hour+'" name="heure" id="heure'+hour+'" type="checkbox">' +
-        '<label for="heure'+hour+'">' +
+        '<input value="'+hour+'" name="heure" id="heure'+hour.replace(':','-')+'" type="checkbox">' +
+        '<label for="heure'+hour.replace(':','-')+'">' +
         '<span class="heure">'+hour+'</span>'+
         '</label>'+
         '</li>';
