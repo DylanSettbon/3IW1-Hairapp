@@ -89,9 +89,12 @@ class BaseSql{
             $result['max_to'] = " >= '" . $params['max_to']. "'";
         }
 
-
-        if( isset( $params['inner_table'] ) ){
-            $result['inner'] = " INNER JOIN ". $params['inner_table'] . " ON " . $params['inner_column'] . " = " . $params['inner_ref_to'];
+        if( isset( $params['inner_table']) && isset( $params['inner_table']) && isset($params['inner_column']) ){
+            $result['inner'] = '';
+            for ($i=0; $i < count($params['inner_table']) ; $i++) {
+                $result['inner'] .= " INNER JOIN ". $params['inner_table'][$i] . " ON " . $params['inner_column'][$i] . " = " . $params['inner_ref_to'][$i];
+                $result['inner'];
+            }
         }
 
 
@@ -285,7 +288,7 @@ class BaseSql{
         return $res;
     }
 
-    public function getAllBy($where = [], $columns = null, $tab = null){
+    public function getAllBy($where = [], $columns = null, $tab = null,$inner = null){
         // $where = ["diff_status"=>-1, "id"=>3 ]
          if(is_null($columns)){
              $select="*";
@@ -332,15 +335,21 @@ class BaseSql{
 
          }
          else{
+             if( isset( $inner['inner_table']) ){
+                 $bind = $this->bindParams($inner);
+                 $from = $this->table . $bind['inner'];
+             }
+             else{
+                 $from = $this->table;
+             }
              $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table
+                 ' FROM '.$from
              );
              $sql->execute();
          }
 
             $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );
             return $result;
-
         }
 
 

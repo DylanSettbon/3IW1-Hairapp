@@ -76,7 +76,8 @@ $('.appointmentAttr,:checkbox').change(function(){
     month = $('#mois').find(":selected").text();
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
-    getAvailableHours(day,month,year,package,hairdresser)
+    console.log(package + ' ' + year + ' ' + month + ' ' + day + ' ' + hairdresser);
+    getAvailableHours(day, month, year, package, hairdresser)
 });
 
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
@@ -89,7 +90,7 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
                 year : year,
                 package :idPackage,
                 hairdresser : idHairdresser},
-        success: function(response) {
+        success: function(response){
             $( "#appointmentHour" ).empty();
             $( "#heure" ).empty();
             schedule = JSON.parse(response)
@@ -110,7 +111,7 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
 
 function addHour(hour){
     hourHtml = '<li>' +
-        '<input value="'+hour+'" name="heure" id="heure'+hour.replace(':','-')+'" type="checkbox">' +
+        '<input value="'+hour+'" name="cbHeure" id="heure'+hour.replace(':','-')+'" type="checkbox">' +
         '<label for="heure'+hour.replace(':','-')+'">' +
         '<span class="heure">'+hour+'</span>'+
         '</label>'+

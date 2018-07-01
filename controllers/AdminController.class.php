@@ -40,11 +40,29 @@ class AdminController{
         $v->assign('packages',$packages);
     }
 
+    public function getAppointmentAdmin(){
+        $v = new Views( 'appointmentAdmin', "admin_header" );
+        $v->assign("current", 'content');
+        $v->assign("current_sidebar", 'articles');
+
+        $appointment = new Appointment();
+        $inner = ['inner_table' => ['user u1','user u2','package p'],
+                  'inner_column' => ['id_User','id_Hairdresser','id_Package'],
+                  'inner_ref_to' => ['u1.id','u2.id','p.id']];
+
+        $appointments = $appointment->getAllBy(null,['appointment.id',
+                                                            'dateAppointment',
+                                                            'hourAppointment',
+                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                                                            'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                                                            'p.description as id_Package'],3,$inner);
+
+        $v->assign("appointments", $appointment->sortOnDate($appointments));
+    }
+
     public function saveCategoryPackage()
     {
         if ($_POST['categoryPackageSubmit'] == 'Valider') {
-            //$category = new Category($_POST['categoryDesc'],$_SESSION['id'],3);
-
             $category = new Category();
             $category->setDescription($_POST['categoryDesc']);
             $category->setIdUser($_SESSION['id']);
