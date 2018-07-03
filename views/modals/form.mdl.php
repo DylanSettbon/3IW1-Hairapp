@@ -11,6 +11,8 @@
                     placeholder="<?php echo $params["placeholder"];?>"
 
 
+
+
                     <?php if ( !empty( $vars ) && $params['type'] != "password"): ?>
                         <?php echo "value='" .$vars[$name] ."'" ; ?>
                     <?php else: ?>

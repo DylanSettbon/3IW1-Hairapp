@@ -137,6 +137,7 @@ CREATE TABLE pages (
         isNavbar tinyint(1) NOT NULL,
         url varchar(25) NOT NULL,
         active tinyint(4) NOT NULL,
+        id_template INT NOT NULL,
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

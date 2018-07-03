@@ -330,7 +330,7 @@ class User extends BaseSql {
                 ],
                 "email"=>[
                     "type"=>"email",
-                    //"disable" => true,
+                    "disable" => true,
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Votre email"
                 ],

@@ -13,7 +13,6 @@ class Page{
 
         $v = new Views( "page", "header" );
         $v->assign("data", $params );
-
         $v->assign("current", $params['URL']);
     }
 }

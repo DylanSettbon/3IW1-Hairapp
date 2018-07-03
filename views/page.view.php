@@ -13,9 +13,9 @@ foreach ( $navbar as $content ){
     if( $content->getUrl() == $this->data['data']['URL']  ){
         echo "
         <main class='container'>
-            <div>
+            
                 " . $content->getContent() . "
-            </div>
+            
         </main>
         ";
     }

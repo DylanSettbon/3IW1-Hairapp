@@ -31,7 +31,7 @@ function div_hide(){
 }
 
 function deletePackage(description){
-    const allIdToDelete = []
+    const allIdToDelete = [];
     const allCheckboxDelete = document.getElementsByClassName("cbDeletePackage" + description);
     for (var i = 0; i < allCheckboxDelete.length; i++) {
         if(allCheckboxDelete[i].checked){
