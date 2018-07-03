@@ -60,3 +60,12 @@ function hairdresser( id ) {
 
 
 }
+
+
+$("input[id^='template']").click( function(){
+    if( $(this).is(':checked') ) {
+        $( "input[id^='template']" ).prop( "checked", false );
+
+        $( this ).prop( "checked", true );
+    }
+});

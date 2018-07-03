@@ -71,16 +71,32 @@ include "templates/sidebar.view.php";
 
             <br>
 
-            <div class='col-l-8 center' id='addPagesForm'>
+            <div class='col-l-12 center'>
                 <form action='<?php echo DIRNAME . "Admin/addPages"; ?>' method="post" >
-                    <input class='input' id='title' type='text' name='title' value ='<?php $page_title; ?>' placeholder='Titre de la page' style='margin-bottom: 10px; '>
+                    <input class='input' required id='title' type='text' name='title' value ='<?php echo $page_title; ?>' placeholder='Titre de la page' style='margin-bottom: 10px; '>
 
+
+                    <div id="content2">
+
+
+
+                    </div>
+
+                    <?php $i = 1;
+                        foreach ( $page_content as $content ): ?>
+
+                        <div hidden class="contentHidden" id="saveContent<?php echo $i;?>" >
+
+                            <?php echo $content ?>
+                        </div>
+                    <?php $i++; endforeach; ?>
+<!--
                     <textarea id='content' name='content' placeholder='content' style='width: 100%; height: 600px;'>
-                        <?php if( isset( $page_content ) ): ?>
-                            <?php echo $page_content; ?>
-                        <?php endif; ?>
+                        <?php //if( isset( $page_content ) ): ?>
+                            <?php //echo $page_content; ?>
+                        <?php //endif; ?>
                     </textarea>
-
+-->
                 <input type="text" id="template_choosen" hidden name="id_template" value="" />
 
                     <label>
@@ -106,9 +122,9 @@ include "templates/sidebar.view.php";
 
                     </label>
 
-                    <br>
+                    &nbsp;
 
-                    <input class='input' id='url' name='url' placeholder='url de la page' type='text'
+                    <input required class='input' id='url' name='url' placeholder='url de la page' type='text'
 
                             <?php if( isset( $page_url ) ):
                                 echo "value ='" . $page_url."' >";
@@ -131,6 +147,9 @@ include "templates/sidebar.view.php";
         </div>
     </div>
 </main>
+
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script type="text/javascript" src="../public/js/index.js"></script>
 <script>
     $(function () { $('#title').keyup( function () { $('#url').val( $("#title").val().replace(/\s/g, "_")); }) } )</script>
 
@@ -165,9 +184,158 @@ include "templates/sidebar.view.php";
 <script>
     // Replace the <textarea id=\"editor1\"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace(
-        'content',{
+
+    //CKEDITOR.replaceClass = "contents";
+
+
+</script>
+
+
+<script>
+    $("input[id^='template']").click( function(){
+        if( $(this).is(':checked') ) {
+            $( "input[id^='template']" ).prop( "checked", false );
+
+            $( this ).prop( "checked", true );
+        }
+    });
+
+
+</script>
+
+
+<script>
+    function chooseTemplate( template = 1 ) {
+        var template_checked = $("#" + template );
+        var value = $("#template_choosen");
+
+        var divContent = $("#content2");
+        //var saveContent = $('#saveContent');
+
+        var contentsSaved = $('.contentHidden');
+        var saveContent = [];
+
+        var j = 0;
+
+        for( var i = 0; i < contentsSaved.length; i++ ){
+
+            saveContent[j] = contentsSaved[i];
+            j++;
+        }
+
+       switch (template){
+           case 'template1':
+               divContent[0].innerHTML =
+                   '<div class="row">' +
+                        '<div class="col-l-4"><textarea class="ckeditor" name="content1" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[0].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content2" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                   saveContent[1].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content3" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[2].innerHTML +
+                   '                    </textarea></div>' +
+                   '</div><div class="row">' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content4" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[3].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content5" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                   saveContent[4].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content6" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[5].innerHTML +
+                   '                    </textarea></div></div>';
+
+                    value.attr("value", 1);
+
+
+               break;
+           case 'template2':
+               divContent[0].innerHTML =
+                   '<div class="row">' +
+                       '<div class="col-l-4">' +
+                           '<textarea class="ckeditor" name="content1" placeholder="content" style="width: 100%; height: 100px;">' +
+                                saveContent[0].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                        '<div class="col-l-4">' +
+                   '        <textarea class="ckeditor" name="content2" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                                saveContent[1].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                        '<div class="col-l-4">' +
+                   '        <textarea class="ckeditor" name="content3" placeholder="content" style="width: 100%; height: 100px;">' +
+                                saveContent[2].innerHTML +
+                   '        </textarea>' +
+                   '     </div>' +
+                   '</div>' +
+                   '<div class="row">' +
+                        '<div class="col-l-12">' +
+                   '        <textarea class="ckeditor" name="content4" placeholder="content" style="width: 100%; height: 100px;">' +
+                                saveContent[3].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                   '</div>';
+               value.attr("value", 2);
+               break;
+           case 'template3':
+               divContent[0].innerHTML =
+                   '<div class="row">' +
+                   '<div class="col-l-12">' +
+                   '        <textarea class="ckeditor" name="content1" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[0].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                   '</div>'+
+                   '<div class="row">' +
+                   '<div class="col-l-4">' +
+                   '<textarea class="ckeditor" name="content2" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[1].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                   '<div class="col-l-4">' +
+                   '        <textarea class="ckeditor" name="content3" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                   saveContent[2].innerHTML +
+                   '        </textarea>' +
+                   '    </div>' +
+                   '<div class="col-l-4">' +
+                   '        <textarea class="ckeditor" name="content4" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[3].innerHTML +
+                   '        </textarea>' +
+                   '     </div>' +
+                   '</div>';
+               value.attr("value", 3);
+               break;
+           case 'template4':
+               break;
+           default:
+               divContent[0].innerHTML =
+                   '<div class="row">' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[0].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                   saveContent[1].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[2].innerHTML +
+                   '                    </textarea></div>' +
+                   '</div><div class="row">' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[3].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;"> ' +
+                   saveContent[4].innerHTML +
+                   '                    </textarea></div>' +
+                   '<div class="col-l-4"><textarea class="ckeditor" name="content" placeholder="content" style="width: 100%; height: 100px;">' +
+                   saveContent[5].innerHTML +
+                   '                    </textarea></div></div>';
+       }
+
+        CKEDITOR.replaceAll( 'ckeditor', {
             language: 'fr',
+            bodyId: "contentPage",
             contentsCss: '../public/css/style.css',
             toolbarGroups: [
                 { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
@@ -185,52 +353,11 @@ include "templates/sidebar.view.php";
                 { name: 'colors' },
                 { name: 'about' }
             ]
-        }
+        });
 
-
-    );
-</script>
-
-
-<script>
-    $("input[id^='template']").click( function(){
-        if( $(this).is(':checked') ) {
-            $( "input[id^='template']" ).prop( "checked", false );
-
-            $( this ).prop( "checked", true );
-        }
-    });
-
-
-</script>
-
-<script>
-    function chooseTemplate( template ) {
-        var template_checked = $("#" + template );
-        var value = $("#template_choosen").val();
-        //var value = input_template.val();
-        //console.log( input_template );
-        var Allpage = $('#content')[0];
-
-       if( value == '' ){
-
-           switch (template){
-               case 'template1':
-                   Allpage.append( "okokoko");
-                   //Allpage.append( '<div class="row"><div class="col-l-4">1ere colonne</div><div class="col-l-4">1ere colonne</div><div class="col-l-4">1ere colonne</div></div><div class="row"><div class="col-l-4"></div><div class="col-l-4"></div><div class="col-l-4"></div></div>');
-                   break;
-               case 'template2':
-                   break;
-               case 'template3':
-                   break;
-               case 'template4':
-                   break;
-               default:
-           }
-
-           //Allpage.append( '<div');
-           console.log( Allpage );
-        }
     }
 </script>
+
+<script> window.onload = chooseTemplate( 'template1' )</script>
+
 

@@ -10,7 +10,7 @@ class AdminController{
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
-        $arrayStatus= array("-1"=>"Supprimer", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Admin");
+        $arrayStatus = array("-1"=>"Supprimer", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Admin");
         $v->assign("current", 'users');
         $user = new User();
 
@@ -157,6 +157,7 @@ class AdminController{
 
         $page = new Pages();
         $pages = $page->getAllBy( null, null, 3 );
+
         $v->assign("pages", $pages );
         $v->assign("current_sidebar", 'pages');
         $v->assign("current", 'content');
@@ -172,12 +173,44 @@ class AdminController{
 
     public function addPages(){
 
+
+
+        $contents = [];
+
+        if( isset( $_POST['content1'] ) ){
+            $contents['content1'] = $_POST['content1'];
+        }
+        if( isset( $_POST['content2'] ) ){
+            $contents['content2'] = $_POST['content2'];
+        }
+        if( isset( $_POST['content3'] ) ){
+            $contents['content3'] = $_POST['content3'];
+        }
+        if( isset( $_POST['content4'] ) ){
+            $contents['content4'] = $_POST['content4'];
+        }
+        if( isset( $_POST['content5'] ) ){
+            $contents['content5'] = $_POST['content5'];
+        }
+        if( isset( $_POST['content6'] ) ){
+            $contents['content6'] = $_POST['content6'];
+        }
+
         $page = new Pages();
-        $page->setContent( $_POST['content'] );
+        //$page->setContent( $_POST['content'] );
         $page->setTitle( $_POST['title'] );
         $page->setIsNavbar( $_POST['isNavbar'] );
         $page->setUrl( $_POST['url'] );
         $page->setActive( 1 );
+
+        $content = $page->joinContents( $contents );
+        //var_dump( $content ); die;
+        $page->setContent( $content );
+
+        $page->setIdTemplate( $_POST['id_template'] );
+
+        //$page->setContent( $template );
+
 
         if( $_POST['isModify']  ){
             $page->setId( $_POST['pageId'] );
@@ -277,13 +310,29 @@ class AdminController{
         $page = new Pages();
         $pages = $page->getAllBy( ['id' => $_GET['id'] ], null, 3 );
 
+
+        $contents_bdd = explode( '&@/==/@&', $pages[0]->getContent() );
+
+        $count = count( $contents_bdd );
+        unset( $contents_bdd[$count - 1 ] ) ;
+        $count -= 1;
+
+        $contents = array();
+
+        for( $i = 0; $i < $count; $i++ ){
+            $j = $i + 1;
+            $contents['content'.$j] = $contents_bdd[$i];
+        }
+
         $v = new Views( 'pagesAdminEdit', "admin_header" );
         $v->assign("page_id", $pages[0]->getId() );
         $v->assign("page_title", $pages[0]->getTitle() );
-        $v->assign("page_content", $pages[0]->getContent() );
+        $v->assign("page_content", $contents );
         $v->assign("page_url", $pages[0]->getUrl() );
         $v->assign("page_navbar", $pages[0]->getisNavbar() );
         $v->assign("modify", true );
+        $v->assign("current", "content");
+        $v->assign("current_sidebar", "pages");
         // render sur la pageAdminEdit
 
     }
