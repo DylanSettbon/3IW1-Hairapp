@@ -141,4 +141,45 @@ class Validator
             return true;
         }
     }
+
+    public static function checkAvailableAppointment(){
+
+        $appointment = new Appointment();
+        $errors = [];
+        //Verifie si coiffeur existe, forfait existe
+        if(!isset($_POST['mois']) || !isset($_POST['jour']) ||  !isset($_POST['annee'])){
+            $errors[] = 'Aucune date selectionnée';
+        }
+        if(!isset($_POST['hairdresser'])){
+            $errors[] = 'Aucun coiffeur selectionée';
+        }
+        if(!isset($_POST['package'])){
+            $errors[] = 'Aucun forfait selectioné';
+        }
+        if(!isset($_POST['cbHeure'])){
+            $errors[] = 'Aucune horaires selectionée';
+        }
+        else{
+            $now = new DateTime();
+            $month = $_POST['mois']<10?'0'.$_POST['mois']:$_POST['mois'];
+            $day = $_POST['jour']<10?'0'.$_POST['jour']:$_POST['jour'];
+            $date = $_POST['annee'].$month.$day;
+            if($now->format('Ymd') > $date){
+                $errors[] = ['La date est inférieure à la date du jour'];
+            }
+        }
+
+        if(empty($errors)){
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_Hairdresser' => $_POST['hairdresser']]) > 0) {
+                $errors[] = 'Ce creneau horaire n\'est pas disponible';
+            }
+
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_User' => $_SESSION['id']]) > 0) {
+                $errors[] = 'Vous avez déja un rendez-vous pour cette date et ce créneau horaire';
+            }
+
+        }
+
+        return empty($errors)? [] : $errors;
+    }
 }

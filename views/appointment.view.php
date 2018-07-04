@@ -1,11 +1,32 @@
 ﻿<body id="body-rdv">
 
 <main id="main-rdv" class="col-s-11 col-l-8">
+
     <div class="row">
         <h1 id="title-rdv" class="title col-l-10">Prendre rendez-vous</h1>
-
     </div>
-    <form method='post' action='takeAppointment'>
+
+    <?php if (isset($data)):?>
+        <?php foreach ($data as $d):?>
+            <?php if(array_key_exists('errors',$data)): ?>
+                <ul class="errors">
+                <?php for ($i=0;$i<count($d);$i++):?>
+                    <li>
+                        <div class="div-errors danger">
+                            <p><?php echo $d[$i];?></p>
+                        </div>
+                    </li>
+                <?php endfor; ?>
+                </ul>
+            <?php else: ?>
+                <?php for ($i=0;$i<count($d);$i++):?>
+                    <p><?php echo $d;?></p>
+                <?php endfor; ?>
+            <?php endif; ?>
+        <?php endforeach;?>
+    <?php endif; ?>
+
+    <form method='post' action='saveAppointment'>
 
         <section id="choix-coiffeur" class="row">
             <h2 class="title-section-rdv">Designez votre coiffeur</h2>
@@ -30,7 +51,7 @@
         <section id="choix-forfait" class="row">
             <h2 class="title-section-rdv">Choissisez votre forfait</h2>
 
-            <select name="package" id="package" class="col-s-12 liste_deroulante">
+            <select name="package" id="package" class="appointmentAttr col-s-12 liste_deroulante">
                 <option selected disabled>Choisir un forfait</option>
                 <?php foreach($categories as $i=>$category):?>
                     <optgroup label="-- <?php echo $category->getDescription()?> --">
@@ -46,15 +67,15 @@
             <h2 class="title-section-rdv">Selectionnez une date</h2>
             <div class="container date">
 
-                <select name="jour" id="jour" class="liste_deroulante">
+                <select name="jour" id="jour" class="appointmentAttr liste_deroulante">
                     <option selected disabled>Jour</option>
                 </select>
 
-                <select name="mois" id="mois" class="liste_deroulante">
+                <select name="mois" id="mois" class="appointmentAttr liste_deroulante">
                     <option selected disabled>Mois</option>
                 </select>
 
-                <select name="annee" id="annee" class="liste_deroulante">
+                <select name="annee" id="annee" class="appointmentAttr liste_deroulante">
                     <option selected>2018</option>
                     <option value="2019">2019</option>
                 </select>
@@ -62,13 +83,11 @@
 
 
             <ul id="appointmentHour" class="container checkbox-heure-rdv">
-
             </ul>
 
             <select name="heure" id="heure" class="col-s-3 liste_deroulante">
                 <option selected disabled>Heure</option>
             </select>
-
         </section>
         <input class="btn-Valider col-s-12 col-l-12" type="submit" value="Valider" name="btn-Valider">
     </form>
