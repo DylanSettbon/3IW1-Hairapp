@@ -5,6 +5,16 @@
   <meta charset='UTF-8'>
   <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
   <title>Hair'App : Le site à votre image.</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121853212-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-121853212-1');
+    </script>
+
 </head>
 
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>

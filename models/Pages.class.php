@@ -12,6 +12,7 @@ class Pages extends BaseSql
     private $title;
     private $id;
     private $content;
+    private $id_template;
     private $isNavbar;
     private $url;
     private $active;
@@ -115,6 +116,24 @@ class Pages extends BaseSql
     /**
      * @return mixed
      */
+    public function getIdTemplate()
+    {
+        return $this->id_template;
+    }
+
+    /**
+     * @param mixed $id_template
+     */
+    public function setIdTemplate($id_template)
+    {
+        $this->id_template = $id_template;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
     public function getActive()
     {
         return $this->active;
@@ -128,6 +147,123 @@ class Pages extends BaseSql
         $this->active = $active;
     }
 
+    public function joinContents( $contents = array() ){
+
+        $final_content = "";
+        $salt = "&@/==/@&";
+
+        foreach ( $contents as $content ){
+            $final_content .= $content . $salt;
+        }
+
+        return $final_content;
+    }
+
+
+    public function getTemplate( $template ){
+
+        $content = '';
+
+        switch ( $template ){
+            case 1:
+                $content =
+                    '<div class="row">' .
+                        '<div class="col-l-4">'
+                            .'#@content1@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content2@#'.
+                         '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content3@#'.
+                        '</div>' .
+                    '</div>
+
+                     <div class="row">' .
+                        '<div class="col-l-4">'
+                            .'#@content4@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content5@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content6@#'.
+                        '</div>
+                     </div>';
+
+                break;
+            case 2:
+                $content =
+                    '<div class="row">' .
+                        '<div class="col-l-4">'
+                            .'#@content1@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content2@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content3@#'.
+                        '</div>' .
+                    '</div>
+
+                     <div class="row">' .
+                        '<div class="col-l-12">'
+                            .'#@content4@#'.
+                        '</div>
+                     </div>';
+                break;
+            case 3:
+                $content =
+                    '<div class="row">' .
+                        '<div class="col-l-12">'
+                            .'#@content1@#'.
+                        '</div>
+                     </div>' .
+                    '<div class="row">' .
+                        '<div class="col-l-4">'
+                            .'#@content2@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content3@#'.
+                        '</div>' .
+                        '<div class="col-l-4">'
+                            .'#@content4@#'.
+                        '</div>' .
+                    '</div>';
+                break;
+            case 4:
+                break;
+            default:
+                $content =
+                    '<div class="row">' .
+                    '<div class="col-l-4">'
+                    .'#@content1@#'.
+                    '</div>' .
+                    '<div class="col-l-4">'
+                    .'#@content2@#'.
+                    '</div>' .
+                    '<div class="col-l-4">'
+                    .'#@content3@#'.
+                    '</div>' .
+                    '</div>
+
+                     <div class="row">' .
+                    '<div class="col-l-4">'
+                    .'#@content4@#'.
+                    '</div>' .
+                    '<div class="col-l-4">'
+                    .'#@content5@#'.
+                    '</div>' .
+                    '<div class="col-l-4">'
+                    .'#@content6@#'.
+                    '</div>
+                     </div>';
+
+                break;
+        }
+
+        return $content;
+    }
 
 
 }

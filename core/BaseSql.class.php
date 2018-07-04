@@ -300,9 +300,9 @@ class BaseSql{
              $bind= $this->bindParams($where);
              $sql_params= $where;
 
-             if( isset( $where['inner_table']) ){
-                 $from = $this->table . $bind['inner'];
-                 //var_dump( $columns ); die;
+             if( isset( $inner['inner_table']) ){
+                 $bind_inner = $this->bindParams($inner);
+                 $from = $this->table . $bind_inner['inner'];
              }
              else{
                  $from = $this->table;
@@ -327,9 +327,8 @@ class BaseSql{
              }
 
              $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
+                 ' FROM '.$from.' WHERE '
                  .$where_type);
-
 
              $sql->execute($sql_params);
 

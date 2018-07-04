@@ -32,14 +32,17 @@ class AccountController{
         $where = [
             "id_User" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
-            'inner_table' => 'user u',
-            'inner_column' => 'id_Hairdresser',
-            'inner_ref_to' => 'u.id'
         ];
+
+        $inner = array(
+            'inner_table' => ['user u'],
+            'inner_column' => ['id_Hairdresser'],
+            'inner_ref_to' => ['u.id']
+        );
 
         $appointments = $appointment->getAllBy(
             $where,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7);
+            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
 
         $v->assign("account", $infos);
 

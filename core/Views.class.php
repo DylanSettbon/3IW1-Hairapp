@@ -51,6 +51,34 @@ class Views
                 "isNavbar" => 1
             ], null, 3
         );
+
+
+
+        foreach ( $vues as $vue ) {
+
+            $template = $navbar->getTemplate( $vue->getIdTemplate() );
+
+            $contents_bdd = explode( '&@/==/@&', $vue->getContent() );
+
+            $count = count( $contents_bdd );
+            unset( $contents_bdd[$count - 1 ] ) ;
+            $count -= 1;
+
+            $contents = array();
+
+            for( $i = 0; $i < $count; $i++ ){
+                $j = $i + 1;
+                $contents['content'.$j] = $contents_bdd[$i];
+            }
+
+            foreach ( $contents as $content => $value ){
+
+                $template = str_replace( "#@".$content."@#", $value, $template );
+                $vue->setContent ( $template );
+
+            }
+        }
+
         $this->assign( 'navbar', $vues);
         extract($this->data);
 

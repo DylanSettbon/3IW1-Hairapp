@@ -14,6 +14,7 @@
     </div>
 </footer>
 
+    <script src=" <?php echo DIRNAME; ?>public/js/index.js"></script>
 
     <script>
         function toggleAnimated(x) {

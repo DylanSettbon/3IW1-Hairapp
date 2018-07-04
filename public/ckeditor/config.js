@@ -17,7 +17,6 @@ CKEDITOR.editorConfig = function( config ) {
 	    { name: 'tools', items: [ 'Maximize' ] },
 	    { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'RemoveFormat' ] },
 	    { name: 'styles', items: [ 'Styles', 'Format' ] },
-	    { name: 'links', items: [ 'Link', 'Anchor' ] },
 	];
 
 };
