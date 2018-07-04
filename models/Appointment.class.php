@@ -108,6 +108,18 @@ class Appointment extends BaseSql{
         $this->id_Hairdresser = $id_Hairdresser;
     }
 
+    public function getFormatedDateAppointment(){
+        $date=date_create($this->dateAppointment);
+        return date_format($date,"d/m/Y");
+    }
+
+    public function sortOnDate($appointments){
+        usort($appointments, function($a, $b) {
+            return ($a->getDateAppointment() < $b->getDateAppointment()) ? -1 : 1;
+        });
+
+        return $appointments;
+    }
 
     public function getAvailableTimeBetweenAppointment($hours){
         /*
@@ -130,5 +142,40 @@ class Appointment extends BaseSql{
             $timeRange[$hours[$i]['end']] = (($h2->getTimestamp() -$h1->getTimestamp())/60) + (($h2->getTimestamp() -$h1->getTimestamp())%60) ;
         }
         return $timeRange;
+    }
+
+
+    public function getAllAvailableTimeRange($duration){
+        /*
+         * Refaire la selection pour Tous les coiffeur
+         * Tableau d'id avec chaque heure disponible pour chaque coiffeur
+         */
+        //TO DO : ouverture salon
+        $opening = '08:00';
+        $closing = '18:30';
+        $timeRange = [];
+        array_unshift($timeRange,$opening);
+        $i = -1;
+        $add = 0;
+        do {
+            $add += 10;
+            $timeRange[] = date("H:i", strtotime('+' . $add . ' minutes', strtotime($opening)));
+            $i += 1;
+        }while(strtotime('+'.$duration. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $duration . ' minutes', strtotime($closing)));
+
+        return $timeRange;
+    }
+
+    public function getAssociativeHaidresserAppointmentPackage($appointments){
+        $associativeHairdresserAndAppointment = [];
+        foreach($appointments as $appointment){
+            if(array_key_exists($appointment->getIdHairdresser(),$associativeHairdresserAndAppointment)){
+                array_push($associativeHairdresserAndAppointment[$appointment->getIdHairdresser()],$appointment);
+            }
+            else{
+                $associativeHairdresserAndAppointment[$appointment->getIdHairdresser()] = [$appointment];
+            }
+        }
+        return $associativeHairdresserAndAppointment;
     }
 }

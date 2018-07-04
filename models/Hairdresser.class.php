@@ -31,7 +31,6 @@ class Hairdresser extends User  {
         $appointmentHours = [];
         $availableHours = [];
         $package = new Package();
-
         foreach ($appointments as $appointment){
             $appointmentDuration = $package->getAllBy(['id' => $appointment->getIdPackage()],['duration'],3)[0]->getDuration();
             $endAppointment = date('H:i:s',strtotime('+ '.$appointmentDuration.' minutes',strtotime($appointment->getHourAppointment())));
@@ -54,6 +53,41 @@ class Hairdresser extends User  {
         return $availableHours;
     }
 
+    public function getHairdresserAvailableForSelectedHour($hour,$date,$duration){
+        $appointment = new Appointment();
+        $appointments = $appointment->getAllBy(['dateAppointment' => $date],null,3);
+        $hairdressersId = $this->getAllBy(['status' => '2'],['id'],3);
+        $associativeHairdresserAndAppointment = $appointment->getAssociativeHaidresserAppointmentPackage($appointments);
+        if($this->checkIfTheyAreFreeHairdresser($appointments,$hairdressersId)){
+            $freeHairdresser = [];
+            foreach ($hairdressersId as $id){
+                $availableHairdresser = array_key_exists($id->getId(),$associativeHairdresserAndAppointment) ? false : true;
+                if($availableHairdresser){
+                    $freeHairdresser[] = $id->getId();
+                }
+            }
+            return $freeHairdresser[array_rand($freeHairdresser)];
+        }
+        else{
+            foreach($associativeHairdresserAndAppointment as $idHairdresser =>$hairdresserAppointments){
+                foreach($this->getTimeRangeAvailable($hairdresserAppointments,$duration) as $timesRange){
+                    if($timesRange == $hour){
+                        return $idHairdresser;
+                    }
+                }
+            }
+        }
+    }
 
-
+    public function checkIfTheyAreFreeHairdresser($appointments, $hairdressers){
+        $appointment = new Appointment();
+        $associativeHairdresserAndAppointment = $appointment->getAssociativeHaidresserAppointmentPackage($appointments);
+        foreach ($hairdressers as $id){
+            $availableHairdresser = array_key_exists($id->getId(),$associativeHairdresserAndAppointment) ? false : true;
+            if($availableHairdresser){
+                return true;
+            }
+        }
+        return false;
+    }
 }
