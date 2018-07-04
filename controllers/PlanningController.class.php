@@ -22,17 +22,21 @@ class PlanningController{
 
         $planning = new Appointment();
 
-        $between = array(
+        $between = [
             //"dateAppointment >= :min AND dateAppointment <= :max ",
             "min" => $extremums[0],
             'max' => $extremums[4],
-            'inner_table' => 'user u',
-            'inner_column' => 'id_User',
-            'inner_ref_to' => 'u.id'
+        ];
+
+        $inner = array(
+            'inner_table' => ['user u'],
+            'inner_column' => ['id_User'],
+            'inner_ref_to' => ['u.id']
         );
 
-        $appointments = $planning->getAllBy( $between,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 5 );
+
+        $appointments = $planning->getAllBy( null,
+            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 3, $inner);
 
 
         $v = new Views( "planning", "header" );

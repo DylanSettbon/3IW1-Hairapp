@@ -154,28 +154,25 @@ class AdminController{
     //Partie de gestion des nouvelles pages créés
     public function getPagesAdmin(){
         $v = new Views( 'pageAdmin', "admin_header" );
-
         $page = new Pages();
         $pages = $page->getAllBy( null, null, 3 );
 
         $v->assign("pages", $pages );
         $v->assign("current_sidebar", 'pages');
         $v->assign("current", 'content');
-
-
     }
 
     public function getPageEdit(){
         $v = new Views( 'pagesAdminEdit', "admin_header" );
+        //var_dump( "ok" ); die;
         $v->assign("current_sidebar", 'pages');
         $v->assign("current", 'content');
     }
 
     public function addPages(){
-
-
-
         $contents = [];
+
+
 
         if( isset( $_POST['content1'] ) ){
             $contents['content1'] = $_POST['content1'];
@@ -195,23 +192,19 @@ class AdminController{
         if( isset( $_POST['content6'] ) ){
             $contents['content6'] = $_POST['content6'];
         }
-
         $page = new Pages();
-        //$page->setContent( $_POST['content'] );
+
         $page->setTitle( $_POST['title'] );
         $page->setIsNavbar( $_POST['isNavbar'] );
         $page->setUrl( $_POST['url'] );
         $page->setActive( 1 );
-
         $content = $page->joinContents( $contents );
         //var_dump( $content ); die;
         $page->setContent( $content );
-
         $page->setIdTemplate( $_POST['id_template'] );
 
+        //var_dump( $page->getIdTemplate() ); die;
         //$page->setContent( $template );
-
-
         if( $_POST['isModify']  ){
             $page->setId( $_POST['pageId'] );
             $page->updateTable(
@@ -234,7 +227,8 @@ class AdminController{
                     "content" => $page->getContent() ,
                     "isNavbar" => $page->getisNavbar(),
                     "url" => $page->getUrl(),
-                    "active" => $page->getActive()
+                    "active" => $page->getActive(),
+                    "id_template" => $page->getIdTemplate(),
                 ]
             );
         }
