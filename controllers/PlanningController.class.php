@@ -8,6 +8,7 @@
 
 class PlanningController{
 
+
     public function getPlanning(){
 
         /*
