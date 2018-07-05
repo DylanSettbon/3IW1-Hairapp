@@ -3,6 +3,10 @@
 
 <head>
   <meta charset='UTF-8'>
+    <meta name="description" content="Hairapp est un CMS destiné aux professionnels de la coiffure. Il leur permettra de réaliser un site professionnel rapidement de le maintenir tout ça facilement et de manière intuitive !">
+    <meta name="keywords" content="hairapp, coiffeur, coiffure,salon,prise,rendez-vous,cms,forfaits,cheveux,coupe,homme,femme,enfant,barbe,prix">
+    <meta name="robots" content="index, nofollow">
+    <meta name="language" content="french">
   <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
   <title>Hair'App : Le site à votre image.</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
