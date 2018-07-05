@@ -82,6 +82,7 @@ class AccountController{
             'tel' => $_POST['tel'],
             'dateUpdated' => date("Y-m-d"),
         );
+        unset($_POST['email'] );
 
         if( !empty( $_FILES['picture']['name'] ) ){
             $name = "public/img/U_p_p/";
@@ -89,14 +90,6 @@ class AccountController{
             $size = $_FILES['picture']['size'];
             $extension = strrchr($_FILES['picture']['name'], '.');
 
-
-//
-//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
-//                //echo "Upload OK<br>";
-//            }
-//            if( !is_dir( $name ) ){
-//                echo "Naaaah : " . $name;
-//            }
 
             $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 
@@ -115,7 +108,6 @@ class AccountController{
 
 
         $errors = Validator::validate($form, $_POST);
-        //var_dump( $update ); die;
         if( empty( $errors ) ){
 
             $user->updateTable( $update, ["id" => $_SESSION['id'] ]);

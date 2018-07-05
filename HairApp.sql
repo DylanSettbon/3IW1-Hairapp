@@ -173,7 +173,6 @@ CREATE TABLE theme(
 # Table: Configuration
 #------------------------------------------------------------
 
-CREATE TABLE Configuration(
 CREATE TABLE configuration(
         id       int (11) Auto_increment  NOT NULL ,
         admin    Varchar (50) NOT NULL ,
