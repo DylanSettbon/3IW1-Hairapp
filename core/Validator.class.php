@@ -16,7 +16,7 @@ class Validator
         foreach ($form["input"] as $name => $config) {
 
             if (isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]]) {
-                $errorsMsg[] = $name . " doit être identique à " . $config["confirm"];
+                $errorsMsg[] = "Les deux mots de passe doivent être identiques";
             } else if (!isset($config["confirm"])) {
                 if ($config["type"] == "email" && !self::checkEmail($params[$name])) {
 
@@ -71,10 +71,6 @@ class Validator
 
     public static function checkEmail($email){
         return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    public static function isUniqueEmail( $email ){
-
     }
 
 

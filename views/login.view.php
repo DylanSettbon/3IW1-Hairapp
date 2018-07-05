@@ -27,6 +27,17 @@
                                     <?php endif; ?>
                                 </ul>
 
+                                <ul class="errors col-l-12">
+                                    <?php if( isset( $success ) ): ?>
+                                            <li>
+                                                <div class="div-errors success col-l-12">
+                                                    <p><strong> Success ! </strong><?php echo $success;?></p>
+                                                </div>
+
+                                            </li>
+                                    <?php endif; ?>
+                                </ul>
+
                             </div>
                             <a class="mdp" href="#">Mot de passe oublié?</a>
                             <hr>

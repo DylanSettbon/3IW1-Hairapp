@@ -27,6 +27,16 @@
                                 <?php endif; ?>
                             </ul>
 
+                            <ul class="errors">
+                                <?php if( isset( $success ) ): ?>
+                                    <li>
+                                        <div class="div-errors success">
+                                            <p><strong> Success ! </strong><?php echo $success;?></p>
+                                        </div>
+
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
 
                         </div>
                     </div>

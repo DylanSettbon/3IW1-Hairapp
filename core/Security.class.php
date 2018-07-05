@@ -56,6 +56,17 @@ class Security{
         return false;
     }
 
+    public static function checkMailExist( $email ){
+        $user = new User();
+        $user = $user->getAllBy( ["email" =>$email ], null, 3 );
+
+        if( count( $user ) > 0 ){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
 
 }
