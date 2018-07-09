@@ -72,7 +72,7 @@
                 <span>
                     <h3 class="carte">Notre carte</h3>
                     <p class="content-carte">Decouvrez nos forfaits Homme Femme sur notre carte</p>
-                    <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
+                    <img alt="barber" class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
                 </span>
            
         <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>

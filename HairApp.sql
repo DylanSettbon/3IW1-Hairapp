@@ -58,7 +58,7 @@ CREATE TABLE user(
         id               int (11) Auto_increment  NOT NULL ,
         firstname        Varchar (25) NOT NULL ,
         lastname         Varchar (25) NOT NULL ,
-        email            Varchar (25) NOT NULL ,
+        email            Varchar (150) NOT NULL ,
         pwd              Varchar (60) NOT NULL ,
         token            Varchar (25) NOT NULL ,
         tel              Varchar (25) NOT NULL ,
@@ -175,7 +175,7 @@ CREATE TABLE theme(
 # Table: Configuration
 #------------------------------------------------------------
 
-CREATE TABLE Configuration(
+CREATE TABLE configuration(
         id       int (11) Auto_increment  NOT NULL ,
         admin    Varchar (50) NOT NULL ,
         logo     Varchar (100) NOT NULL ,
@@ -186,24 +186,24 @@ CREATE TABLE Configuration(
 )ENGINE=InnoDB;
 
 
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_Hairdresser FOREIGN KEY (id_Hairdresser) REFERENCES user(id);
-ALTER TABLE Appointment ADD CONSTRAINT FK_Appointment_id_Package FOREIGN KEY (id_Package) REFERENCES Package(id);
-ALTER TABLE Product ADD CONSTRAINT FK_Product_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Product ADD CONSTRAINT FK_Product_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Category ADD CONSTRAINT FK_Category_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Category ADD CONSTRAINT FK_Category_id_CategoryType FOREIGN KEY (id_CategoryType) REFERENCES CategoryType(id);
-ALTER TABLE Color ADD CONSTRAINT FK_Color_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Comment ADD CONSTRAINT FK_Comment_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Comment ADD CONSTRAINT FK_Comment_id_Article FOREIGN KEY (id_Article) REFERENCES Article(id);
-ALTER TABLE Article ADD CONSTRAINT FK_Article_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Package ADD CONSTRAINT FK_Package_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Category) REFERENCES Category(id);
-ALTER TABLE Theme ADD CONSTRAINT FK_Theme_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Configuration ADD CONSTRAINT FK_Configuration_id_user FOREIGN KEY (id_user) REFERENCES user(id);
-ALTER TABLE Configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES Color(id);
+ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_Hairdresser FOREIGN KEY (id_Hairdresser) REFERENCES user(id);
+ALTER TABLE appointment ADD CONSTRAINT FK_Appointment_id_Package FOREIGN KEY (id_Package) REFERENCES package(id);
+ALTER TABLE product ADD CONSTRAINT FK_Product_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE product ADD CONSTRAINT FK_Product_id_Category FOREIGN KEY (id_Category) REFERENCES category(id);
+ALTER TABLE category ADD CONSTRAINT FK_Category_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE category ADD CONSTRAINT FK_Category_id_CategoryType FOREIGN KEY (id_CategoryType) REFERENCES categoryType(id);
+ALTER TABLE color ADD CONSTRAINT FK_Color_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE comment ADD CONSTRAINT FK_Comment_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE comment ADD CONSTRAINT FK_Comment_id_Article FOREIGN KEY (id_Article) REFERENCES article(id);
+ALTER TABLE article ADD CONSTRAINT FK_Article_id_Category FOREIGN KEY (id_Category) REFERENCES category(id);
+ALTER TABLE package ADD CONSTRAINT FK_Package_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Category) REFERENCES category(id);
+ALTER TABLE theme ADD CONSTRAINT FK_Theme_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES color(id);
 
-INSERT INTO CategoryType(type)
+INSERT INTO categoryType(type)
 VALUES  ('Article'),
 		    ('Produits'),
 		    ('Forfaits');

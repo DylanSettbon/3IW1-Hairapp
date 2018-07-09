@@ -32,14 +32,17 @@ class AccountController{
         $where = [
             "id_User" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
-            'inner_table' => 'user u',
-            'inner_column' => 'id_Hairdresser',
-            'inner_ref_to' => 'u.id'
         ];
+
+        $inner = array(
+            'inner_table' => ['user u'],
+            'inner_column' => ['id_Hairdresser'],
+            'inner_ref_to' => ['u.id']
+        );
 
         $appointments = $appointment->getAllBy(
             $where,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7);
+            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
 
         $v->assign("account", $infos);
 
@@ -122,6 +125,7 @@ class AccountController{
             'tel' => $_POST['tel'],
             'dateUpdated' => date("Y-m-d"),
         );
+        unset($_POST['email'] );
 
         if( !empty( $_FILES['picture']['name'] ) ){
             $name = "public/img/U_p_p/";
@@ -129,14 +133,6 @@ class AccountController{
             $size = $_FILES['picture']['size'];
             $extension = strrchr($_FILES['picture']['name'], '.');
 
-
-//
-//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
-//                //echo "Upload OK<br>";
-//            }
-//            if( !is_dir( $name ) ){
-//                echo "Naaaah : " . $name;
-//            }
 
             $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 
@@ -155,7 +151,6 @@ class AccountController{
 
 
         $errors = Validator::validate($form, $_POST);
-        //var_dump( $update ); die;
         if( empty( $errors ) ){
 
             $user->updateTable( $update, ["id" => $_SESSION['id'] ]);
