@@ -17,6 +17,7 @@ CREATE TABLE appointment(
         id_user         Int ,
         id_Hairdresser  Int ,
         id_Package      Int ,
+        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -154,6 +155,7 @@ CREATE TABLE package(
         duration	int (5) DEFAULT 0,
         id_User     Int ,
         id_Category Int ,
+        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 

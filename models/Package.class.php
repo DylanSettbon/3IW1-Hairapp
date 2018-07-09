@@ -96,7 +96,7 @@ class Package extends BaseSql {
 
     public function getAssociativeArrayPackage(){
         $package = new Package();
-        $packages = $package->getAllBy([], null, 2);
+        $packages = $package->getAllBy(['status' => '1'], null, 2);
         $associativePackages = [];
         foreach($packages as $package){
             if(array_key_exists($package->getIdCategory(),$associativePackages)){
@@ -111,7 +111,7 @@ class Package extends BaseSql {
 
     public function checkIfPackageExistsOrIsNull(){
         if($this->description == "" or $this->price == ""){return false;}
-        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category]) != 0 ? false : true;
+        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category,'status' => 1]) != 0 ? false : true;
     }
 
 }
