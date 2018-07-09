@@ -8,12 +8,11 @@
                     <div class="col-s-12 col-m-6 col-l-6 center">
                         <div class="form_register">
                             <div class="row">
-                                <h1 id="title-rdv" class="title col-l-4">S'inscrire</h1>
+                                <h1 id="title-rdv" class="title col-l-12">Changer votre mot de passe</h1>
                             </div>
 
-                            <?php $this->addModal("form", $config ); ?>
-
-
+                            <?php $this->addModal("changeToPwd", $config ,[] ); ?>
+                        
                             <ul class="errors">
                                 <?php if( isset( $errors ) ): ?>
                                     <?php foreach ( $errors as $error ): ?>
@@ -26,16 +25,6 @@
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </ul>
-                            <ul class="errors col-l-12">
-                                  <?php if( isset( $success ) ): ?>
-                                           <li>
-                                                <div class="div-errors success col-l-12">
-                                                    <p><strong> Success ! </strong><?php echo $success;?></p>
-                                                </div>
-
-                                            </li>
-                                    <?php endif; ?>
-                                </ul>
 
 
                         </div>

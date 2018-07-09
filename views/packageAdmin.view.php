@@ -2,10 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: antoine
-<<<<<<< HEAD
+
  * Date: 04/02/2018
  * Time: 11:27
  */
+include "templates/sidebar.view.php";
 
 ?>
 <main class='container'>
