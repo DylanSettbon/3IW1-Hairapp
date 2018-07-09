@@ -28,6 +28,12 @@ class Validator
 
             }
 
+            if( $config["type"] == "tel" ){
+                if( !self::checkTel( $params[$name] ) ){
+                    $errorsMsg[] = "Numero de téléphone non conforme";
+                }
+            }
+
 
             if (isset($config["required"]) && !self::minLength($params[$name], 1)) {
                 $errorsMsg[] = $name . " doit faire plus de 1 caractère";
@@ -56,6 +62,74 @@ class Validator
         return $errorsMsg;
     }
 
+    public static function isUnique($form, $params)
+    {
+        $errorsMsg = [];
+
+        foreach ($form["input"] as $name => $config) {
+
+            if( $config["type"] == "email" ){
+                if( !self::isUniqueEmail( $params[$name] ) ){
+                    $errorsMsg[] = "Email deja existant";
+                }
+            }
+
+            if( $config["type"] == "text" ){
+                if( !self::isUniqueCategory( $params[$name] ) ){
+                    $errorsMsg[] = "Categorie deja existante";
+                }
+            } 
+
+            if( $config["type"] == "tel" ){
+                if( !self::isUniqueTel( $params[$name] ) ){
+                    $errorsMsg[] = "Telephone deja existant";
+                }
+            } 
+
+        }
+
+        //deuxième foreach pour les textarea
+
+
+        return $errorsMsg;
+    }
+    public static function checkTel( $phone ){
+        if( preg_match( "#^0[1-68]([-. ]?\d{2}){4}$#", $phone ) ){
+            return true;
+        }
+        return false;
+    }
+
+    public static function isUniqueEmail( $email ){
+        $users = new User();
+        $users = $users->getAllBy(["email" => $email], ["id, email, status"], 2);
+        foreach ($users as $user) {
+        if ($user->getStatus() != '-1')
+            return false;
+        }
+        return true;
+    }
+
+    public static function isUniqueTel( $tel ){
+        $users = new User();
+        $users = $users->getAllBy(["tel" => $tel], ["id, tel, status"], 2);
+        foreach ($users as $user) {
+        if ( $user->getStatus() != '-1')
+            return false;
+        }
+        return true;
+    }
+
+    public static function isUniqueCategory( $categorie ){
+        $cat = new Category();
+        $cat = $cat->getAllBy(["description" => $categorie], ["id, description, status, id_CategoryType"], 2);
+        foreach ($cat as $category) {
+        if ( $category->getStatus() != '-1' && $category->getIdCategoryType()==1)
+            return false;
+        }
+        return true;
+    }
+
 
     public static function login( $form, $params ){
 
@@ -71,10 +145,6 @@ class Validator
 
     public static function checkEmail($email){
         return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    public static function isUniqueEmail( $email ){
-
     }
 
 

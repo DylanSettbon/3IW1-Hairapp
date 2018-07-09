@@ -66,6 +66,49 @@ class AccountController{
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
     }
+    
+    public function getChangeToPwd(){
+        $user = new User();
+        $form = $user->FormChangeToPwd();
+        $v = new Views( "changetopwd", "header" );
+        $v->assign( "current", "login" );
+        $v->assign("config",$form);
+    }
+
+    public function Validate( $params ){
+
+        $user = new User();
+        $form = $user->FormChangeToPwd();
+
+        if(!empty($params["POST"])) {
+            //Verification des saisies
+
+            $errors = Validator::validate($form, $params["POST"]);
+            //var_dump( $errors ); die;
+            if( empty( $errors ) ){
+                $user->setId($_SESSION['id']);
+                $user->setPwd($_POST['pwd']);
+
+                $params = array(
+                    "id" => $user->getId(),
+                    "pwd" => $user->getPwd(),
+                    "changetopwd" => false
+                );
+
+                $user->updateTable( $params, ["id"=>$user->getId()]);
+
+                header("Location: ".DIRNAME."home/getHome");
+
+            }
+            else{
+                $v = new Views( "changetopwd", "header" );
+                $v->assign( "current", "login" );
+                $v->assign("config",$form);
+                $v->assign("errors",$errors);
+            }
+
+        }
+    }
 
     public function saveAccount( $params ){
 
