@@ -2,14 +2,19 @@
   <main id="main-forfait" class="col-s-11 col-l-8">
         <div class="row">
             <h1 id="title-rdv" class="title col-l-4"><?php echo $article->getName();?></h1>
-            <h2><?php echo $article->getDateParution();?> </h2>
+            <h2 style='text-align: left; position:absolute;'><?php echo $article->getDateParution();?> </h2>
         </div>
     <div class="col-s-12 col-l-12 partie-droite">
       <div class="categorie1 container">
         <?php if($article->getImage()!=null): ?>
-              <img class='img-art' src='../public/img/<?php echo $article->getImage();?>' style='width:50%; padding:10px'>
+              <!-- SI oversize == 1 alors tu redimensionne avec un attribut style avec height = $ratio
+                
+              --> 
+              <img class='img-art' src='<?php echo DIRNAME. $article->getImage();?>' style='width:25%; height:25% ;display: block;
+    margin-left: auto;
+    margin-right: auto;'>
         <?php endif; ?>
-      	<p><?php echo $article->getDescription();?></p>
+        <p><?php echo $article->getDescription();?></p>
             <hr class="col-s-12">
           </div>
       </div>
