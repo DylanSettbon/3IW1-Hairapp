@@ -463,7 +463,7 @@ class AdminController{
                  $mail->Body = 'Bienvenue sur Hairapp !<br>
                  Pour activer votre compte, veuillez cliquer sur le lien ci dessous ou copier/coller dans votre navigateur internet. <br>
                  ' . DIRNAME .'/signin/activate?token='.urlencode($user->getToken() ).' <br> --------------- <br>
-                 Voici le mot de passe de votre compte: '.$s.'
+                 Voici le mot de passe de votre compte: '.$s.'<br>
                  Ceci est un mail automatique, Merci de ne pas y répondre.';
                  $mail->AddAddress( $user->getEmail() );
                  if(!$mail->Send()) {

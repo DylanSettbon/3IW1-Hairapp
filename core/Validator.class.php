@@ -18,13 +18,22 @@ class Validator
             if (isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]]) {
                 $errorsMsg[] = "Les deux mots de passe doivent être identiques";
             } else if (!isset($config["confirm"] ) ) {
-                if ($config["type"] == "email" && $config['disable'] != true ) {
+                if ( $config["type"] == "email" ){
+                    if(isset($config['disable'])) {
 
-                    if( !self::checkEmail($params[$name] ) ){
-                        $errorsMsg[] = "L'email n'est pas valide";
+                        if( $config['disable'] != true ){
+                            if( !self::checkEmail($params[$name] ) ){
+                                $errorsMsg[] = "L'email n'est pas valide";
+                            }
+                        }
+                    }
+                    else{
+                        if( !self::checkEmail($params[$name] ) ){
+                            $errorsMsg[] = "L'email n'est pas valide";
+                        }
                     }
 
-
+                
 
                 } else if ($config["type"] == "password" && !self::checkPwd($params[$name])) {
                     $errorsMsg[] = "Le mot de passe est incorrect (6 à 12, min, maj, chiffres)";
