@@ -417,7 +417,7 @@ class User extends BaseSql {
 
     public function LoginForm(){
         return [
-            "config"=>["method"=>"POST", "action"=>"getVerify", "submit"=>"Se connecter"],
+            "config"=>["method"=>"POST", "action"=>"login/getVerify", "submit"=>"Se connecter"],
             "input"=>[
                 "email"=>[
                     "type"=>"email",
