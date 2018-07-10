@@ -8,8 +8,8 @@
 
     <?php if (isset($data)):?>
         <?php foreach ($data as $d):?>
+            <ul class="errors">
             <?php if(array_key_exists('errors',$data)): ?>
-                <ul class="errors">
                 <?php for ($i=0;$i<count($d);$i++):?>
                     <li>
                         <div class="div-errors danger">
@@ -17,12 +17,15 @@
                         </div>
                     </li>
                 <?php endfor; ?>
-                </ul>
+
             <?php else: ?>
                 <?php for ($i=0;$i<count($d);$i++):?>
-                    <p><?php echo $d;?></p>
+                    <div class="div-errors success">
+                        <p><?php echo $d;?></p>
+                    </div>
                 <?php endfor; ?>
             <?php endif; ?>
+            </ul>
         <?php endforeach;?>
     <?php endif; ?>
 
@@ -80,7 +83,6 @@
                     <option value="2019">2019</option>
                 </select>
             </div>
-
 
             <ul id="appointmentHour" class="container checkbox-heure-rdv">
             </ul>

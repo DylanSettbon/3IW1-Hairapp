@@ -24,12 +24,8 @@ include "templates/sidebar.view.php";
                     <?php endif; ?>
                     <table id="packageCategory" class="PackageTab col-l-6">
                         <caption class="packageCategory-title">
-                            <label class="switch" style="float:left">
-                                <input type="checkbox" <?php echo $category->getStatus() ? 'checked' : ''; ?>>
-                                <span class="slider"></span>
-                            </label>
 						    <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
-                            <a href="deleteCategoryPackage?id=<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
+                            <a href="/admin/deleteCategoryPackage/<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
                             <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription()?>'])" style="float:right";>Modifier</a>
 
 								  </caption>
@@ -134,7 +130,7 @@ include "templates/sidebar.view.php";
 
     </div>
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-    <script type="text/javascript" src="../public/js/packageAdmin.js"></script>
+    <script type="text/javascript" src="/public/js/packageAdmin.js"></script>
 
 
     </main>
