@@ -17,6 +17,7 @@ CREATE TABLE appointment(
         id_user         Int ,
         id_Hairdresser  Int ,
         id_Package      Int ,
+        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -62,6 +63,7 @@ CREATE TABLE user(
         pwd              Varchar (60) NOT NULL ,
         token            Varchar (25) NOT NULL ,
         tel              Varchar (25) NOT NULL ,
+        changetopwd      Boolean NOT NULL ,
         receivePromOffer TINYINT(1) NOT NULL,
         status           TINYINT(1) NOT NULL,
         dateInserted     Date NOT NULL ,
@@ -138,6 +140,7 @@ CREATE TABLE article(
         dateparution Date NOT NULL,
         minidescription Varchar(40) NOT NULL,
         image Varchar(250) ,
+        status tinyint(1) NOT NULL,
         id_Category Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
@@ -154,6 +157,7 @@ CREATE TABLE package(
         duration	int (5) DEFAULT 0,
         id_User     Int ,
         id_Category Int ,
+        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 

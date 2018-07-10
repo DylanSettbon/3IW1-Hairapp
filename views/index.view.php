@@ -51,32 +51,20 @@
             </div>
 
 
+             <?php while ($i < 4): ?>
             <div class="col-s-3 col-m-6 col-l-12 article-accueil">
                 <img class="img-art" src="../public/img/quote.svg"/>
                 <span>
-                    <h3 class="titre-article">Nouvelle Promotion pour 2018 !!</h3>
-                    <p class="content-art">-15% sur différentes coupes</p>
+
+                    <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
+                    <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
+
                 </span>
-                <a href="<?php echo DIRNAME; ?>article/getArticle">Voir plus...</a>
+                <a href="<?php echo DIRNAME.'article/getArticle?id='. $articles[$i]->getId().''; ?>" >Voir plus...</a>
             </div>
-
-
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" alt="quote-article" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article">Changement de numéro de téléphone</h3>
-                    <p class="content-art">Notre nouveau numero de téléphone est le 0101010101</p>
-                </span>
-            </div>
-
-
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" alt="quote-article" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article">Nouveau produit en stock</h3>
-                    <p class="content-art">C’est un soin restructurant élaboré par L’OREAL PROFESSIONNEL qui agit directement dans le cheveu pour étirer sa texture. Des polymères pénètrent au cœur des fibres pour les galber progressivement, donnant ainsi un aspect subtilement épaissi à votre chevelure. </p>
-                </span>
-            </div>
+            <?php $i++; ?>
+        <?php endwhile ?>
+          
     </section>
 
     <section class="col-s-12 col-m-12 col-l-4 forfait-accueil">

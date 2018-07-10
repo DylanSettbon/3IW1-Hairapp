@@ -121,5 +121,56 @@ class Category extends BaseSql
         }
         return array_values($categories);
     }
+
+    public function formAddCategory(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"addAdminCategory", "submit"=>"Enregistrer"],
+            "input"=>[
+
+                "description"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Nom de la categorie",
+                    "required"=>true
+
+
+                ]
+
+            ],
+
+
+            
+
+        ];
+    }
+
+     public function formUpdateCategory(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"modifyAdminCategory", "submit"=>"Enregistrer"],
+            "input"=>[
+                "id"=>[
+                    "type"=>"hidden",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Nom de la categorie"
+                ],
+
+                "description"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Nom de la categorie",
+                    "required"=>true
+
+
+                ]
+
+            ],
+
+
+            
+
+        ];
+    }
 }
 

@@ -429,7 +429,8 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/salon coiffure.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg");
+  height: 0; }
 
 #main-art {
   background-color: white;
@@ -857,6 +858,9 @@ section {
   border-radius: 5px;
   display: inline-block;
   margin-bottom: 10px; }
+
+.article-accueil:last-child {
+  margin-bottom: 70px; }
 
 .img-art {
   display: inline;
@@ -1433,6 +1437,10 @@ input[type="checkbox"][id="template4"] + label::before {
 .danger {
   background-color: #ffdddd;
   border-left: 6px solid #f44336; }
+
+.success {
+  background-color: #ddffdd;
+  border-left: 6px solid #4CAF50; }
 
 .success {
   background-color: #ddffdd;

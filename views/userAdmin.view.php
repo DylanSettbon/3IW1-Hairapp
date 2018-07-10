@@ -50,14 +50,13 @@
                             <td class="page center" colspan="5">1/104</td>
                             <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                         </tr>
-                        <tr>
-                            <td colspan="7"><a href=" <?php echo DIRNAME;?>admin/addUser"  class="buttonUserAdd">Ajouter un utilisateur</a></td>
-                        </tr>
+                       
                     </nav>
                 </table>
                 
             </div>
         </article>
+        <a href=" <?php echo DIRNAME;?>admin/addUser"  class="buttonUserAdd">Ajouter un utilisateur</a>
     </div>
 
   </main>
