@@ -1442,6 +1442,10 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
 
+.success {
+  background-color: #ddffdd;
+  border-left: 6px solid #4CAF50; }
+
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px; }

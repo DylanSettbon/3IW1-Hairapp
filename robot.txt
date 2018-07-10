@@ -1,0 +1,7 @@
+User-Agent: *
+Disallow: public/
+Disallow: vendor/
+Disallow: core/
+Disallow: controllers/
+Disallow: models/
+Disallow: HairApp.sql
