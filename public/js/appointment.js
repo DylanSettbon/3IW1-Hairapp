@@ -77,8 +77,7 @@ $('.appointmentAttr,:checkbox').change(function(){
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
     console.log(package + ' ' + year + ' ' + month + ' ' + day + ' ' + hairdresser);
-    response = getAvailableHours(day, month, year, package, hairdresser)
-    showAllHour(response)
+    getAvailableHours(day, month, year, package, hairdresser)
 });
 
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
@@ -92,16 +91,15 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
                 package :idPackage,
                 hairdresser : idHairdresser},
         success: function(response){
-            return response
+            showAllHour(JSON.parse(response))
         }
         });
 }
 
-function showAllHour(response)
+function showAllHour(schedule)
 {
     $( "#appointmentHour" ).empty();
     $( "#heure" ).empty();
-    schedule = JSON.parse(response)
 
     if (schedule['errors']){
         $("#hour").replaceWith('<p>'+schedule['errors']+'</p>');
