@@ -14,8 +14,9 @@
 
                                 <?php $this->addModal("login", $config ); ?>
 
-                                <ul class="errors col-l-12">
+                                
                                     <?php if( isset( $errors ) ): ?>
+                                      <ul class="errors col-l-12">
                                         <?php foreach ( $errors as $error ): ?>
                                             <li>
                                                 <div class="div-errors danger col-l-12">
@@ -24,8 +25,9 @@
 
                                             </li>
                                         <?php endforeach; ?>
+                                        </ul>
                                     <?php endif; ?>
-                                </ul>
+                                
 
                                 <ul class="errors col-l-12">
                                     <?php if( isset( $success ) ): ?>
@@ -39,7 +41,19 @@
                                 </ul>
 
                             </div>
-                            <a class="mdp" href="#">Mot de passe oublié?</a>
+                            
+                                   <?php if( isset( $success ) ): ?>
+                                      <ul class="errors col-l-12">
+                                           <li>
+                                               <div class="div-errors success col-l-12">
+                                                    <p><strong> Success ! </strong><?php echo $success;?></p>
+                                                </div>
+
+                                            </li>
+                                      </ul>
+                                    <?php endif; ?>
+                                
+                            <a class="mdp" href="<?php echo DIRNAME;?>login/forgetPwd">Mot de passe oublié?</a>
                             <hr>
 
                            <div class="row">

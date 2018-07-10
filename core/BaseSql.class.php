@@ -288,7 +288,7 @@ class BaseSql{
         return $res;
     }
 
-    public function getAllBy($where = [], $columns = null, $tab = null,$inner = null){
+    public function getAllBy($where = [], $columns = null, $tab = null,$inner = null, $options = null ){
         // $where = ["diff_status"=>-1, "id"=>3 ]
          if(is_null($columns)){
              $select="*";
@@ -325,10 +325,16 @@ class BaseSql{
              elseif ( $tab == 7 ){
                  $where_type = $columns[0] . $bind['max_to'];
              }
-
+            if ($options != null){
+                $sql = $this->db->prepare('SELECT ' .$select.
+                 ' FROM '.$this->table.' WHERE '
+                 .$where_type.' '. $options);
+             }else {
              $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$from.' WHERE '
                  .$where_type);
+
+            }
 
              $sql->execute($sql_params);
 
@@ -341,10 +347,16 @@ class BaseSql{
              else{
                  $from = $this->table;
              }
-             $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$from
+             if ($options != null){
+                $sql = $this->db->prepare('SELECT ' .$select.
+                 ' FROM '.$this->table.' WHERE '
+                 .$where_type.' '. $options);
+             }else {
+                 $sql = $this->db->prepare('SELECT ' .$select.
+                 ' FROM '.$this->table
              );
-             $sql->execute();
+             }
+             $sql->execute();  
          }
 
             $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );

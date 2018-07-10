@@ -8,20 +8,22 @@
                     <div class="col-s-12 col-m-6 col-l-6 center">
                         <div class="form_register">
                             <div class="row">
-                                <h1 id="title-rdv" class="title col-l-4">Modifier la categorie</h1>
+                                <h1 id="title-rdv" class="title col-l-12">Modifier la categorie</h1>
                             </div>
-                            <form method="post" action="<?php echo DIRNAME;?>admin/modifyAdminCategory" >
                             <?php
-                             echo "
-                                <label>Nom</label>
-                                <input type='hidden' value=" .$a[0]->getId() ." name='id' />
-                                <input class='input input_sign-in' name='description' value=".$a[0]->getDescription()." />
-                                
-                             "; ?>   
+                             $this->addModal( "updateCategoryForm", $config, [], $options ); ?>
+                            <ul class="errors">
+                            <?php if( isset( $errors ) ): ?>
+                                <?php foreach ( $errors as $error ): ?>
+                                    <li>
+                                        <div class="div-errors danger">
+                                            <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                        </div>
 
-                                <input type="submit" class="input center" id="valider" value="Valider" />
-
-                            </form>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </ul>
                         </div>
                     </div>
                 </div>

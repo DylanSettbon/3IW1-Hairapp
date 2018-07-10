@@ -429,7 +429,8 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/salon coiffure.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg");
+  height: 0; }
 
 #main-art {
   background-color: white;
@@ -857,6 +858,9 @@ section {
   border-radius: 5px;
   display: inline-block;
   margin-bottom: 10px; }
+
+.article-accueil:last-child {
+  margin-bottom: 70px; }
 
 .img-art {
   display: inline;

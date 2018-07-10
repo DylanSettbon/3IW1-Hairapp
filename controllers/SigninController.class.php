@@ -21,6 +21,40 @@ class SigninController{
         $v->assign("config",$form);
     }
 
+    public function activate(){
+
+        $user = new User();
+
+        $userInformations = $user->getAllBy(
+            array( "token" => $_GET['token'], "status" => 0 ), null, 3
+        );
+
+
+        if( !empty( $userInformations ) ){
+            //$userInformations[0]->setStatus(1);
+
+            $userInformations[0]->setToken();
+
+            $params = array(
+                "token" => $userInformations[0]->getToken(),
+                "status" => 1,
+                "dateUpdated" => date("Y-m-d")
+            );
+
+
+            $user->updateTable( $params, array( "id" => $userInformations[0]->getId() ) );
+
+
+        }
+        $form = $user->LoginForm();
+
+        $v = new Views( "login", "header" );
+        $v->assign("config", $form );
+        $v->assign( "current", "login" );
+        $v->assign("success","Vous pouvez désormais vous connecter !");
+         header("Location: " . DIRNAME . "login/getLogin");
+    }
+
     /**
      *
      */
@@ -70,7 +104,6 @@ class SigninController{
                     "lastConnection" => null,
                     "picture" => null
                 );
-
                 $user->updateTable( $params );
                 require("vendor/autoload.php");
 
