@@ -51,19 +51,23 @@
             </div>
 
 
-             <?php while ($i < 4): ?>
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="../public/img/quote.svg"/>
-                <span>
+            <?php if( !empty( $i ) ): ?>
+                 <?php while ($i < 4): ?>
+                <div class="col-s-3 col-m-6 col-l-12 article-accueil">
+                    <img class="img-art" src="../public/img/quote.svg"/>
+                    <span>
 
-                    <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
-                    <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
+                        <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
+                        <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
 
-                </span>
-                <a href="<?php echo DIRNAME.'article/getArticle?id='. $articles[$i]->getId().''; ?>" >Voir plus...</a>
-            </div>
-            <?php $i++; ?>
-        <?php endwhile ?>
+                    </span>
+                    <a href="<?php echo DIRNAME.'article/getArticle?id='. $articles[$i]->getId().''; ?>" >Voir plus...</a>
+                </div>
+                <?php $i++; ?>
+            <?php endwhile ?>
+                <?php else: ?>
+                <p> Aucun article</p>
+            <?php endif; ?>
           
     </section>
 
