@@ -1,13 +1,12 @@
 <?php
 class Appointment extends BaseSql{
-    protected $id = null;
-    protected $dateAppointment;
-    protected $hourAppointment;
-    protected $id_Package;
-    protected $id_User;
-    protected $id_Hairdresser;
-    protected $firstname;
-    protected $lastname;
+    private $idAppointment = null;
+    private $dateAppointment;
+    private $hourAppointment;
+    private $id_Package;
+    private $id_User;
+    private $id_Hairdresser;
+    private $planned;
 
     /**
      * @return null
@@ -19,7 +18,7 @@ class Appointment extends BaseSql{
 
     public function getId()
     {
-        return $this->id;
+        return $this->idAppointment;
     }
 
     /**
@@ -27,7 +26,7 @@ class Appointment extends BaseSql{
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->idAppointment = $id;
     }
 
     /**
@@ -108,6 +107,19 @@ class Appointment extends BaseSql{
     public function setIdHairdresser($id_Hairdresser)
     {
         $this->id_Hairdresser = $id_Hairdresser;
+    }
+
+    public function getPlanned()
+    {
+        return $this->planned;
+    }
+
+    /**
+     * @param mixed $id_Hairdresser
+     */
+    public function setPlanned($planned)
+    {
+        $this->planned = $planned;
     }
 
     public function getFormatedDateAppointment(){
@@ -206,7 +218,7 @@ class Appointment extends BaseSql{
         $this->lastname = $lastname;
     }
 
-    public static  function changeMonth( $date ){
+    public static function changeMonth($date){
         $month = date( "F", strtotime($date) );
         switch ( $month ){
             case 'January' : $res = str_replace( 'January', 'Janvier', $date ); break;

@@ -78,7 +78,7 @@ class AppointmentController{
         $appointment= new Appointment();
         if(is_null($idHairDresser)){
 
-            $appointments = $appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d')],null,3);
+            $appointments = $appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'planned'=> 1],null,3);
             $associativeHairdresserAndAppointment = $appointment->getAssociativeHaidresserAppointmentPackage($appointments);
 
             //Verifie si il y a un coiffeur n'ayant aucun rendez-vous
@@ -98,7 +98,7 @@ class AppointmentController{
             return true;
         }
         else{
-            $appointments = $appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'id_Hairdresser'=>$idHairDresser],null,3);
+            $appointments = $appointment->getAllBy(['dateAppointment' => $date->format('Y-m-d'),'id_Hairdresser'=>$idHairDresser,'planned'=> 1],null,3);
             if(empty($appointments)){
                 echo(json_encode($appointment->getAllAvailableTimeRange($duration)));
                 return true;

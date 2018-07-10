@@ -32,6 +32,7 @@ class AccountController{
         $where = [
             "id_User" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
+            'planned'=> 1
         ];
 
         $inner = array(
@@ -71,8 +72,6 @@ class AccountController{
     }
 
     public function saveAccount( $params ){
-
-
         $user = new User();
         $form = $user->AccountForm();
 
