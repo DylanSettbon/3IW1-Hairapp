@@ -40,7 +40,12 @@ class PlanningController{
             ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 3, $inner);
 
 
-        $v = new Views( "planning", "header" );
+        if( $_GET["h"] == 'admin' ){
+            $v = new Views( "planning", "admin_header" );
+        }
+        else{
+            $v = new Views( "planning", "header" );
+        }
         $v->assign("current", 'planning');
         $v->assign("appointments", $appointments );
         $v->assign("week", $week );

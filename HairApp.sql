@@ -202,6 +202,4 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_user FOREIGN KEY (i
 ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES color(id);
 
 INSERT INTO categoryType(type)
-VALUES  ('Article'),
-		    ('Produits'),
-		    ('Forfaits');
+VALUES  ('Article'),('Produits'),('Forfaits');
