@@ -356,7 +356,7 @@ class BaseSql{
                  ' FROM '.$this->table
              );
              }
-             $sql->execute();  
+             $sql->execute();
          }
 
             $result = $sql->fetchAll(PDO::FETCH_CLASS, ucfirst( $this->table ) );

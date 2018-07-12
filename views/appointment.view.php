@@ -79,15 +79,15 @@
                 </select>
 
                 <select name="annee" id="annee" class="appointmentAttr liste_deroulante">
-                    <option selected>2018</option>
-                    <option value="2019">2019</option>
+                    <option selected><?php echo date("Y");?></option>
+                    <option value="2019"><?php echo date("Y") +1;?></option>
                 </select>
             </div>
 
             <ul id="appointmentHour" class="container checkbox-heure-rdv">
             </ul>
 
-            <select name="heure" id="heure" class="col-s-3 liste_deroulante">
+            <select name="appointmentHour" id="heure" class="col-s-3 liste_deroulante">
                 <option selected disabled>Heure</option>
             </select>
         </section>

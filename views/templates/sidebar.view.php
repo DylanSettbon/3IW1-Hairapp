@@ -52,6 +52,9 @@
             <a href="<?php echo DIRNAME;?>admin/getCommentAdmin">Comments</a>
         </li>
 
+        <li <?php if ( $this->data['current_sidebar'] == 'appointment') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
+            <a href="<?php echo DIRNAME;?>admin/getAppointmentAdmin">Rendez-vous</a>
+        </li>
 
     </ul>
 </div>

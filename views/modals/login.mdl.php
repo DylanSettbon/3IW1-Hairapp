@@ -23,6 +23,11 @@
 
             <?php echo (isset($params["disable"]))?"disabled":"";?>
             <?php echo (isset($params["required"]))?"required='required'":"";?>
+            <?php echo (isset($params["hidden"]))?"hidden":"";?>
+
+            <?php if ($name == 'referer'): ?>
+                value="<?php echo parse_url($_SERVER["HTTP_REFERER"])["path"]?>"
+            <?php endif;?>
         >
 
     <?php endif;?>
