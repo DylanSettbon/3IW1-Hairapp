@@ -435,6 +435,10 @@ class User extends BaseSql {
                     "placeholder"=>"Votre mot de passe",
                     "required"=>true
                 ],
+                "referer"=>[
+                    "type"=>"text",
+                    "hidden"=>true
+                ],
             ],
         ];
     }

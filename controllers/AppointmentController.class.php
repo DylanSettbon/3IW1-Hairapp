@@ -20,10 +20,7 @@ class AppointmentController{
     }
 
     public function saveAppointment(){
-        //Enregistrer tous les champs
-        /* Pr coiffeur = all :
-        *  Faire une fonction qui cherche un des coiffeur ayant la disponibilité sur cette heure
-        */
+        if (Security::isConnected()){
         $errors = ['errors' => Validator::checkAvailableAppointment()];
         if (!empty($errors['errors'])){
             return $this->getAppointment($errors);
@@ -70,6 +67,10 @@ class AppointmentController{
             $mail = new Mail([$_SESSION['email']],'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
             $mail->send();
             return $this->getAppointment($success);
+            }
+        }
+        else{
+            header("Location: /login/getLogin");
         }
     }
 
