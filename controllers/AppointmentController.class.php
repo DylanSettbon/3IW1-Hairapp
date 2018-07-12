@@ -58,14 +58,9 @@ class AppointmentController{
             ]);
 
             $success = ['success' => 'Votre rendez-vous a bien été pris'];
-            $object = 'Confirmation de votre rendez-vous le '.$appointment->getFormatedDateAppointment();
-            $body = 'Bonjour, !<br>
-                 Nous vous confirmons votre rendez-vous le '.$appointment->getFormatedDateAppointment().' a '.$appointment->getHourAppointment().'.<br>
-                 Ce rendez-vous durera approximativement :'.$package->getTextDuration().'
-                 <br><br>Merci';
 
-            $mail = new Mail([$_SESSION['email']],'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
-            $mail->send();
+            $object = 'Confirmation de votre rendez-vous le '.$appointment->getFormatedDateAppointment();
+            $appointment->sendAddAppointmentMail([$_SESSION['email']]);
             return $this->getAppointment($success);
             }
         }
