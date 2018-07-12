@@ -19,6 +19,7 @@ $(document).ready(function() {
     });
 
     $("#mois").change(function(event){
+        $('#jour').empty()
         var lastMonthDay = daysInMonth(event.target.value,year)
         refreshDay(lastMonthDay)
     });
@@ -26,7 +27,6 @@ $(document).ready(function() {
 
 function refreshDay(lastMonthDay){
     var date=new Date()
-    var month = $('#mois').find(":selected").val()
     var year = $('#annee').find(":selected").val();
     var month = $('#mois').find(":selected").val();
     var start = year == date.getFullYear() && month == date.getMonth()+1? date.getDate() : 1

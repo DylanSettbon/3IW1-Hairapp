@@ -195,32 +195,6 @@ class Appointment extends BaseSql{
         return $associativeHairdresserAndAppointment;
     }
 
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-    /**
-     * @param mixed $firstnam
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstnam = $firstname;
-    }
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-    /**
-     * @param mixed $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
     public static function changeMonth($date){
         $month = date( "F", strtotime($date) );
         switch ( $month ){
