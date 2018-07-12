@@ -752,7 +752,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 25%; }
+    margin-top: 10%; }
   .sidenav {
     height: 100%;
     width: 160px;
@@ -833,7 +833,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 25%; }
+    margin-top: 10%; }
   .sidenav li {
     display: block;
     padding: 10px 0px; }
