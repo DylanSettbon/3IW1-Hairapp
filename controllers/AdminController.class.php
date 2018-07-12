@@ -167,6 +167,21 @@ class AdminController{
         $this->getPackageAdmin();
     }
 
+    public function saveAppointment($params){
+        if ($params['POST']['btn-Valider']) {
+            $appointment = new Appointment();
+            if (isset($params['URL'][0])) {
+                foreach ($params['POST'] as $name => $post){
+                }
+                echo 'update';
+            } else {
+                echo 'insert';
+                var_dump($_POST);
+                var_dump(Validator::checkAvailableAppointment());
+            }
+        }
+    }
+
     public function deleteCategoryPackage($params){
         $category = new Category();
         $category->setId($params['URL'][0]);
@@ -192,11 +207,16 @@ class AdminController{
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();
 
+        $category = new Category();
+        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+
         $hairdresser = new Hairdresser();
         $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
 
         $appointment = new Appointment();
         //Selection de tous les coiffeurs et des forfaits
+        $hours = $appointment->getAllAvailableTimeRange();
+
         if (isset($params['URL'][0])){
 
             $inner = ['inner_table' => ['user u1','user u2','package p'],
@@ -209,24 +229,28 @@ class AdminController{
                 'hourAppointment',
                 'CONCAT(u1.firstname," ",u1.lastname) as id_User',
                 'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
-                'p.description as id_Package'],3,$inner)[0];
+                'p.description as id_Package'],3,$inner);
 
             if(!empty($currentAppointment)){
-                $hours = array_diff($appointment->getAllAvailableTimeRange(10),[substr($currentAppointment->getHourAppointment(),0,5)]);
+                $currentAppointment = $currentAppointment[0];
+                $hours = array_diff($hours,[substr($currentAppointment->getHourAppointment(),0,5)]);
                 $v->assign("currentAppointment", $currentAppointment);
-                $v->assign("titleEdit", 'Modification du rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
                 $v->assign("hours",$hours);
-                $v->assign("packages",'a');
+                $v->assign("titleEdit", 'Rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
+            }
+            else {
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
             }
         }
         else{
-
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
         }
-            //Selection du rendez-vous courant
-            //Mettre tous les champs qui sont égales au champs du rendez-vous
-            //enlever dans les forfaits et dans les coiffeur les coiffeur deja selectionner
-        //Sinon
-            //Afficher tout dans la vue (package,heure, date, coiffeur, user)
+
+        $v->assign("packages",$packages);
+        $v->assign("hairdressers",$hairdressers);
+        $v->assign("categories",$categories);
         $v->assign("current_sidebar", 'appointment');
         $v->assign("current", 'content');
     }
@@ -240,12 +264,9 @@ class AdminController{
         $this->getAppointmentAdmin();
     }
 
-
     //ADMIN : PAGES
     public function addPages(){
         $contents = [];
-
-
 
         if( isset( $_POST['content1'] ) ){
             $contents['content1'] = $_POST['content1'];

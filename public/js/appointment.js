@@ -76,7 +76,6 @@ $('.appointmentAttr,:checkbox').change(function(){
     month = $('#mois').find(":selected").text();
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
-    console.log(package + ' ' + year + ' ' + month + ' ' + day + ' ' + hairdresser);
     getAvailableHours(day, month, year, package, hairdresser)
 });
 

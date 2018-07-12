@@ -12,9 +12,7 @@ include "templates/sidebar.view.php";
 <div class="content">
     <article class="arriere_plan">
         <input id="search" class="input col-l-2" placeholder="Recherchez...">
-
         <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
-
             <div class="col-l-4">
                 <h2 class="center title">Gestion des rendez-vous</h2>
             </div>
@@ -52,6 +50,9 @@ include "templates/sidebar.view.php";
             </table>
         </div>
     </article>
+    <a id='add' href="updateAppointment" class='buttonUserAdd'>Ajouter un rendez-vous</a>
+
+
 </div>
 
 </main>
