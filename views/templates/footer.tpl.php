@@ -10,7 +10,7 @@
     <div class="footer">
         ©Hair'App
         <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-        <script type="text/javascript" src="../public/js/index.js"></script>
+        <script type="text/javascript" src="<?php echo DIRNAME;?>public/js/index.js"></script>
     </div>
 </footer>
 
@@ -23,7 +23,6 @@
     gtag('config', 'UA-121853212-1');
 </script>
 
-    <script src=" <?php echo DIRNAME; ?>public/js/index.js"></script>
 
     <script>
         function toggleAnimated(x) {

@@ -44,6 +44,15 @@ class BaseSql{
         );
     }
 
+    public function createDatabase( $name ){
+
+        //var_dump($name) ; die;
+
+        $pseudo = substr($this->db->quote($name), 1, strlen($name));
+        $this->db->exec( "CREATE DATABASE IF NOT EXISTS `$name` ");
+        //$sql->execute(array('name' => $pseudo ));
+    }
+
     public function update( $statement, $params ){
 
         $query = $this->db->prepare( $statement );

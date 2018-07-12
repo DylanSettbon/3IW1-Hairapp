@@ -1461,6 +1461,25 @@ input[type="checkbox"][id="template4"] + label::before {
   width: 1px;
   height: 300px; }
 
+#search {
+  margin-top: 1%;
+  margin-left: 1%;
+  width: 180px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out; }
+
+/* When the input field gets focus, change its width to 100% */
+#search:focus {
+  width: 50%; }
+
 .updateButton {
   background-color: #009cdf;
   border-radius: 30px;
@@ -1480,3 +1499,67 @@ input[type="checkbox"][id="template4"] + label::before {
   display: inline-block;
   font-size: 16px;
   cursor: pointer; }
+
+#configForm {
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px; }
+
+input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #aaaaaa; }
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd; }
+
+/* Hide all steps by default: */
+.tab {
+  display: none; }
+
+button {
+  background-color: #009CDF;
+  border-radius: 5px;
+  color: #ffffff;
+  border: none;
+  font-family: "Roboto";
+  font-size: 16px;
+  padding: 10px 25px;
+  cursor: pointer; }
+
+button:hover {
+  opacity: 0.8; }
+
+#prevBtn {
+  background-color: #bbbbbb; }
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5; }
+
+.step.active {
+  opacity: 1; }
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #009CDF; }
+
+.content-on-image {
+  background: rgba(0, 0, 0, 0.5);
+  /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+  /* Grey text */
+  width: 100%;
+  /* Full width */
+  padding: 50px;
+  /* Some padding */ }

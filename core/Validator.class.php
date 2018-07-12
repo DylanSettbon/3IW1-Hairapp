@@ -17,7 +17,8 @@ class Validator
 
             if (isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]]) {
                 $errorsMsg[] = "Les deux mots de passe doivent être identiques";
-            } else if (!isset($config["confirm"] ) ) {
+            }
+            else if (!isset($config["confirm"] ) ) {
                 if ( $config["type"] == "email" ){
                     if(isset($config['disable'])) {
 
@@ -264,5 +265,71 @@ class Validator
         }
 
         return empty($errors)? [] : $errors;
+    }
+
+    public static function validateInstall( $form, $params ){
+
+        $errorsMsg = [];
+
+        foreach ( $form["div"] as $groups => $config ){
+
+            foreach ( $config['input'] as $nameIpt => $paramsIpt ){
+                if (isset($paramsIpt["confirm"]) && $params[$nameIpt] !== $params[$paramsIpt["confirm"]]) {
+                    $errorsMsg[] = "Les deux mots de passe doivent être identiques";
+                }
+                else if (!isset($paramsIpt["confirm"] ) ) {
+
+                    if ( $paramsIpt["type"] == "email" ){
+                        if(isset($paramsIpt['disable'])) {
+
+                            if( $paramsIpt['disable'] != true ){
+                                if( !self::checkEmail($params[$nameIpt] ) ){
+                                    $errorsMsg[] = "L'email n'est pas valide";
+                                }
+                            }
+                        }
+                        else{
+                            if( !self::checkEmail($params[$nameIpt] ) ){
+                                $errorsMsg[] = "L'email n'est pas valide";
+                            }
+                        }
+
+                    } else if ($paramsIpt["type"] == "password" && !self::checkPwd($params[$nameIpt])) {
+                        $errorsMsg[] = "Le mot de passe est incorrect (6 à 12, min, maj, chiffres)";
+                    }
+
+                }
+
+                if( $paramsIpt["type"] == "tel" ){
+                    if( !self::checkTel( $params[$nameIpt] ) ){
+                        $errorsMsg[] = "Numero de téléphone non conforme";
+                    }
+                }
+
+
+                if (isset($paramsIpt["required"]) && !self::minLength($params[$nameIpt], 1)) {
+                    $errorsMsg[] = $name . " doit faire plus de 1 caractère";
+                }
+
+                if (isset($paramsIpt["minString"]) && !self::minLength($params[$nameIpt], $paramsIpt["minString"])) {
+                    $errorsMsg[] = $nameIpt . " doit faire plus de " . $paramsIpt["minString"] . " caractères";
+                }
+
+                if (isset($paramsIpt["maxString"]) && !self::maxLength($params[$nameIpt], $paramsIpt["maxString"])) {
+                    $errorsMsg[] = $nameIpt . " doit faire moins de " . $paramsIpt["maxString"] . " caractères";
+                }
+
+                if( isset( $params['picture'] ) ){
+                    if( $paramsIpt['type'] == "file" && !self::VerifImgExt() ){
+                        $errorsMsg[] = $nameIpt . " doit avoir une extension en .PNG . JPG  .GIF ou .JPEG ";
+                    }
+                    if( $paramsIpt['type'] == "file" && !self::VerifImgSize( $params[$nameIpt] ) ){
+                        $errorsMsg[] = $nameIpt . " La taille du fichier est supérieure à 1MO";
+                    }
+                }
+            }
+        }
+
+        return $errorsMsg;
     }
 }

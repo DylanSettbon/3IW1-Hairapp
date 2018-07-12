@@ -760,3 +760,5 @@ input[type="checkbox"][id="template4"] + label::before{
   width: 50%;
 }
 @include genericClass;
+
+@include install;
