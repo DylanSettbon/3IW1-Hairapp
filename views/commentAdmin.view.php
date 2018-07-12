@@ -10,8 +10,20 @@ include "templates/sidebar.view.php";
                 <div class="col-l-4">
                     <h2 class="center title"> Gestion des Pages</h2>
                 </div>
-
-            </div>
+                
+		 <form method="post" id="listArticle" name="listArticle" action="<?php echo DIRNAME;?>admin/getCommentAdmin?article="<?php echo $article["id"]?> >
+			<section id="choix-art">
+				<div class="container-artcat liste-art">
+					<select name='article' class='input input_sign-in' >
+                        <option value=" ">Tous</option>
+                          <?php foreach($articles as $article):?>
+                            <option value=<?php echo $article["id"]?>><?php echo $article["name"]?></option>
+                          <?php endforeach;?>
+                    </select>
+				</div>
+			</section>
+			    <input type="submit" class="input center" id="valider" value="Valider" />
+		</form>
 
             <div class="col-s-12 col-l-12 col-m-9 tab-admin">
                 <table class="userManagerTab col-l-12">
@@ -58,4 +70,4 @@ include "templates/sidebar.view.php";
     </div>
 
   </main>
-
+<script src="../public/js/comment.js"></script>

@@ -15,7 +15,7 @@
             <a href="<?php echo DIRNAME;?>admin/getPackageAdmin">Forfaits</a>
         </li>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'pages') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
+        <li <?php if ( $this->data['current_sidebar'] == 'pages') {echo ' class="sidebar_buttons dropdown" ';} else echo ' class="sidebar_buttons dropdown"';?>>
             <a >Pages &nbsp;
                 <i class='fa fa-caret-down'></i>
             </a>
