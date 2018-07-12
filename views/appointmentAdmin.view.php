@@ -29,6 +29,7 @@ include "templates/sidebar.view.php";
                 </tr>
                 <tbody id="appointmentList">
                 <?php foreach ( $appointments as $appointment ): ?>
+                    <?php if ($appointment->getPlanned()== 1): ?>
                     <tr>
                         <td><?php echo $appointment->getFormatedDateAppointment(); ?></td>
                         <td><?php echo $appointment->getHourAppointment(); ?> </td>
@@ -38,6 +39,7 @@ include "templates/sidebar.view.php";
                         <td><a id='modify' href="/admin/updateAppointment/<?php echo $appointment->getId() ?>" class='buttonUserModify'>Modifier</a></td>
                         <td><a id='delete' href="/admin/deleteAppointment/<?php echo $appointment->getId() ?>" class='buttonUserDelete'>Supprimer</a></td>
                     </tr>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 </tbody>
                 <nav aria-label="navigation">
@@ -50,7 +52,7 @@ include "templates/sidebar.view.php";
             </table>
         </div>
     </article>
-    <a id='add' href="updateAppointment" class='buttonUserAdd'>Ajouter un rendez-vous</a>
+    <a id='add' href="/admin/updateAppointment" class='buttonUserAdd'>Ajouter un rendez-vous</a>
 
 
 </div>
