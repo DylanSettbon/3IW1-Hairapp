@@ -951,5 +951,141 @@ class AdminController{
         return $res;
     }
 
+    // COMMENTAIRES
+    
+        public function getCommentAdmin(){
+            $v = new Views( "commentAdmin", "admin_header" );
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'comments');
+            $comment = new Comment();
+            $user = new User();
+            $comments = $comment->select("comment ORDER BY date DESC");
+            $u = $user->select("user");
+            $v->assign("comments", $comments);
+            $v->assign("u", $u);
+            //$u= $comment->getAllBy(["status" => "1"] , ["id, na , lastname , email , status , tel"], 4);
+        }
+        public function declineComment(){
+            $comment = new Comment();
+            $idComment = $_GET['id'];
+            $comment->getUpdate("id = ".$idComment."", 1, "statut = '0'");
+            $this->getCommentAdmin();
+        }
+        public function acceptComment(){
+            $comment = new Comment();
+            $idComment = $_GET['id'];
+            $comment->getUpdate("id = ".$idComment."", 1, "statut = '2'");
+            $this->getCommentAdmin();
+        }
+        public function deleteComment(){
+            $comment = new Comment();
+            $idComment = $_GET['id'];
+            $comment->getUpdate("id = ".$idComment."", 3, " ");
+            $this->getCommentAdmin();
+        }
+    
+        //COLORPAGE
+    
+        public function getColorPage(){
+            $v = new Views("color", "admin_header");
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'color');
+    
+        }
+    
+    
+        public function colorChange(){
+            if ($_POST['customColor'] == ""){
+                //Msg d'erreur ou autre
+            }
+            else{
+            $color = new Color();
+    
+            $current = $color->getUpdate("name LIKE 'current'", 2, "code");
+            $currentColor = $current[0]->getCode();
+            $newColor = ($_POST['customColor']);
+            $change = "main_color: ". $currentColor .";";
+            $to = "main_color: ". $newColor .";";
+            $path = './public/scss/_var.scss';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+            $color->getUpdate("name LIKE 'current'", 1, "code = '". $newColor ."'");
+            }
+            sleep(1);
+            $this->getColorPage();
+            //$myFile=fopen("./conf.inc.php", "w");
+        }
+    
+        public function colorStandard(){
+            $color = new Color();
+    
+            $current = $color->getUpdate("name LIKE 'current'", 2, "code");
+            $currentColor = $current[0]->getCode();
+    
+            $standard = $color->getUpdate("name LIKE 'standard'", 2, "code");
+            $standardColor = $standard[0]->getCode();
+            $change = "main_color: ". $currentColor .";";
+            $to = "main_color: ". $standardColor .";";
+            $path = './public/scss/_var.scss';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+            $color->getUpdate("name LIKE 'current'", 1, "code = '". $standardColor ."'");
+            sleep(1);
+            $this->getColorPage();
+            //$myFile=fopen("./conf.inc.php", "w");
+        }
+    
+        //COLORPAGE
+    
+        public function getColorPageBtn(){
+            $v = new Views("colorBtn", "admin_header");
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'color');
+        }
+    
+    
+        public function colorChangeBtn(){
+            if ($_POST['customColor'] == ""){
+                //Msg d'erreur ou autre
+            }
+            else{
+            $color = new Color();
+    
+            $current = $color->getUpdate("name LIKE 'currentBtn'", 2, "code");
+            $currentColor = $current[0]->getCode();
+            $newColor = ($_POST['customColor']);
+            $change = "button_color: ". $currentColor .";";
+            $to = "button_color: ". $newColor .";";
+            $path = './public/scss/_var.scss';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+            $color->getUpdate("name LIKE 'currentBtn'", 1, "code = '". $newColor ."'");
+            }
+            sleep(1);
+            $this->getColorPageBtn();
+        }
+    
+        public function colorStandardBtn(){
+            $color = new Color();
+    
+            $current = $color->getUpdate("name LIKE 'currentBtn'", 2, "code");
+            $currentColor = $current[0]->getCode();
+    
+            $standard = $color->getUpdate("name LIKE 'standardBtn'", 2, "code");
+            $standardColor = $standard[0]->getCode();
+            $change = "button_color: ". $currentColor .";";
+            $to = "button_color: ". $standardColor .";";
+            $path = './public/scss/_var.scss';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+            $color->getUpdate("name LIKE 'currentBtn'", 1, "code = '". $standardColor ."'");
+            sleep(1);
+            $this->getColorPageBtn();
+        }
+
 
 }
