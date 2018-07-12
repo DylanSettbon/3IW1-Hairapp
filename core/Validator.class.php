@@ -248,7 +248,7 @@ class Validator
             $day = $_POST['jour']<10?'0'.$_POST['jour']:$_POST['jour'];
             $date = $_POST['annee'].$month.$day;
             if($now->format('Ymd') > $date){
-                $errors[] = ['La date est inférieure à la date du jour'];
+                $errors[] = 'La date est inférieure à la date du jour';
             }
         }
 

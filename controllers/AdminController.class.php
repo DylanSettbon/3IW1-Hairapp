@@ -5,6 +5,11 @@ class AdminController{
 
     //Partie d'administration globale
     public function getTestAdmin(){
+        $user = new User();
+        $package = new Package();
+        $appointment = new Appointment();
+
+
         $v = new Views( "dashboard", "admin_header" );
         $v->assign("current", 'dashboard');
     }
@@ -52,9 +57,7 @@ class AdminController{
     }
 
     public function getContentAdmin(){
-        $v = new Views( "packageAdmin", "admin_header" );
-        $v->assign("current", 'content');
-        $v->assign("current_sidebar", 'packages');
+       $this->getPackageAdmin();
     }
 
     //Partie de gestion des forfaits
@@ -79,18 +82,21 @@ class AdminController{
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'appointment');
 
+        $max = ['max_to' => date('Y-m-d')];
+
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy(['dateAppointment' => date('Y-m-d'),'planned' => 1],[
-                                                            'idAppointment',
+        $appointments = $appointment->getAllBy($max,[
                                                             'dateAppointment',
+                                                            'idAppointment',
                                                             'hourAppointment',
-                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_user',
                                                             'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
-                                                            'p.description as id_Package'],3,$inner);
+                                                            'p.description as id_Package',
+                                                            'planned'],7,$inner);
 
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
@@ -170,14 +176,54 @@ class AdminController{
     public function saveAppointment($params){
         if ($params['POST']['btn-Valider']) {
             $appointment = new Appointment();
+            $month = $_POST['mois']<10 ? '0' . $_POST['mois'] : $_POST['mois'];
+            $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
+            $date = $_POST['annee'] . $month . $day;
+
+
             if (isset($params['URL'][0])) {
-                foreach ($params['POST'] as $name => $post){
+                $appointment->setId($params['URL'][0]);
+                $current = $appointment->getAllBy(['idAppointment' => $appointment->getId()],null,3)[0];
+                $appointment->setHourAppointment(isset($_POST['appointmentHour'])?$_POST['appointmentHour']:$current->getHourAppointment());
+                $appointment->setDateAppointment($date);
+                $appointment->setIdHairdresser(isset($_POST['hairdresser'])?$_POST['hairdresser']:$current->getIdHairdresser());
+                $appointment->setIdPackage(isset($_POST['package'])?$_POST['package']:$current->getIdPackage());
+                $appointment->updateTable( ['dateAppointment' => $appointment->getDateAppointment(),
+                                            'hourAppointment' => $appointment->getHourAppointment(),
+                                            'id_Hairdresser' => $appointment->getIdHairdresser(),
+                                            'id_Package' => $appointment->getIdPackage()],
+                                            ['idAppointment' => $appointment->getId()]);
+
+
+                if (!empty($current)) {
+                    $idUser = $current->getIdUser();
+                    $user = new User();
+                    $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+                    $current->sendUpdateAppointmentMail($appointment,[$mailUser]);
                 }
-                echo 'update';
+                $this->getAppointmentAdmin();
             } else {
-                echo 'insert';
-                var_dump($_POST);
-                var_dump(Validator::checkAvailableAppointment());
+                $errors = ['errors' => Validator::checkAvailableAppointment()];
+                if(!empty($errors['errors'])) {
+                    $this->updateAppointment($params,$errors);
+                }
+                else {
+                    $appointment->setHourAppointment($_POST['appointmentHour']);
+                    $appointment->setDateAppointment($date);
+                    $appointment->setIdHairdresser($_POST['hairdresser']);
+                    $appointment->setIdPackage($_POST['package']);
+                    $appointment->setIdUser($_POST['user']);
+                    $appointment->updateTable(['dateAppointment' => $appointment->getDateAppointment(),
+                        'hourAppointment' => $appointment->getHourAppointment(),
+                        'id_User' => $appointment->getIdUser(),
+                        'id_Hairdresser' => $appointment->getIdHairdresser(),
+                        'id_Package' => $appointment->getIdPackage()]);
+                    $idUser = $appointment->getIdUser();
+                    $user = new User();
+                    $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+                    $appointment->sendAddAppointmentMail([$mailUser]);
+                    $this->getAppointmentAdmin();
+                }
             }
         }
     }
@@ -201,7 +247,7 @@ class AdminController{
     }
 
     //ADMIN : APPOINTMENT
-    public function updateAppointment($params){
+    public function updateAppointment($params,$data = null){
         $v = new Views( 'appointmentAdminEdit', "admin_header" );
 
         $package =  new Package();
@@ -218,7 +264,6 @@ class AdminController{
         $hours = $appointment->getAllAvailableTimeRange();
 
         if (isset($params['URL'][0])){
-
             $inner = ['inner_table' => ['user u1','user u2','package p'],
                 'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                 'inner_ref_to' => ['u1.id','u2.id','p.id']];
@@ -227,7 +272,7 @@ class AdminController{
                 'idAppointment',
                 'dateAppointment',
                 'hourAppointment',
-                'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                'CONCAT(u1.firstname," ",u1.lastname) as id_user',
                 'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
                 'p.description as id_Package'],3,$inner);
 
@@ -237,6 +282,9 @@ class AdminController{
                 $v->assign("currentAppointment", $currentAppointment);
                 $v->assign("hours",$hours);
                 $v->assign("titleEdit", 'Rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
+                $v->assign("day",str_replace('0','',explode('-', $currentAppointment->getDateAppointment())[2]));
+                $v->assign("month",str_replace('0','',explode('-', $currentAppointment->getDateAppointment())[1]));
+                $v->assign("year",explode('-', $currentAppointment->getDateAppointment())[0]);
             }
             else {
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
@@ -244,6 +292,9 @@ class AdminController{
             }
         }
         else{
+                $user = new User();
+                $users = $user->getAllBy(['status' => '1'],null,3);
+                $v->assign("users",$users);
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
         }
@@ -253,10 +304,19 @@ class AdminController{
         $v->assign("categories",$categories);
         $v->assign("current_sidebar", 'appointment');
         $v->assign("current", 'content');
+        isset($data)?$v->assign('data',$data):'';
     }
 
     public function deleteAppointment($params){
         $appointment = new Appointment();
+        $currentAppointment = $appointment->getAllBy(['planned' => 1,'idAppointment' => $params['URL'][0]],null,3);
+        if (!empty($currentAppointment)) {
+            $idUser = $currentAppointment[0]->getIdUser();
+            $user = new User();
+            $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+            $currentAppointment[0]->sendDeleteAppointmentMail([$mailUser]);
+        }
+
         $appointment->updateTable(
             ['planned' => 0],
             ['idAppointment' => $params['URL'][0]]
