@@ -1068,7 +1068,6 @@ class AdminController{
             }
             else{
             $color = new Color();
-    
             $current = $color->getUpdate("name LIKE 'current'", 2, "code");
             $currentColor = $current[0]->getCode();
             $newColor = ($_POST['customColor']);

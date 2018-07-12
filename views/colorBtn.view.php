@@ -7,8 +7,16 @@ include "templates/sidebar.view.php";
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
             <h1 class="packageAdmin-title">Personnaliser la couleur secondaire (Boutons, onglet actif...)</h1>
 
+        <div class="col-s-12 col-l-6 col-m-6 form_register_admin">
+Choisir sa propre couleur :
+<form method="post" action="<?php echo DIRNAME;?>admin/colorChangeBtn"> <input type="color" name="customColor"/>
+<input type="submit" id="colorChoose" class="btnForfait" value="Valider" href="colorChange" />
+</form>
+</div>
 
-        <div class="col-s-12 col-l-12 col-m-9 tab-admin">
+
+        <div class="col-s-12 col-l-6 col-m-12 form_register_admin">
+    Choisir une couleur :
             <form method="post" action="<?php echo DIRNAME;?>admin/colorChangeBtn">
             <div class="color-wrapper">
               <input type="text" name="customColor" placeholder="#FFFFFF" id="pickcolor" class="call-picker" style="display: none">

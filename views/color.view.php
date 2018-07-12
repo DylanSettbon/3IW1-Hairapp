@@ -2,21 +2,33 @@
 
 include "templates/sidebar.view.php";
 ?>
-<main class='container'>
-    <div class="content">
-        <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
+
+<div class="content">
+    <article class="arriere_plan">
+
+        <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
             <h1 class="packageAdmin-title">Personnaliser la couleur principale du site </h1>
 
 
+        <div class="col-s-12 col-l-6 col-m-6 form_register_admin">
+Choisir sa propre couleur :
+<form method="post" action="<?php echo DIRNAME;?>admin/colorChange"> <input type="color" name="customColor"/>
+<input type="submit" id="colorChoose" class="btnForfait" value="Valider" href="colorChange" />
+</form>
+</div>
+
+        <div class="col-s-12 col-l-6 col-m-12 form_register_admin">
+Choisir une couleur : 
 <form method="post" action="<?php echo DIRNAME;?>admin/colorChange">
 <div class="color-wrapper">
-  <input type="text" name="customColor" placeholder="#FFFFFF" id="pickcolor" class="call-picker" style="display: none">
+    <input type="text" name="customColor" placeholder="#FFFFFF" id="pickcolor" class="call-picker" style="display: none">
   <div class="color-holder call-picker"></div>
   <div class="color-picker" id="color-picker" ></div>
 </div>
 <input type="submit" id="colorChoose" class="btnForfait" value="Valider" href="colorChange" />
 <a type="button" id="colorStandard" class="btnForfait" href="<?php echo DIRNAME;?>admin/colorStandard">Couleur Standard </a>
 </form>
+</div>
 
 
     <script  src="js/index.js"></script>
