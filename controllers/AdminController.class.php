@@ -4,6 +4,11 @@ class AdminController{
 
 
     //Partie d'administration globale
+    public function getTestAdmin(){
+        $v = new Views( "dashboard", "admin_header" );
+        $v->assign("current", 'dashboard');
+    }
+
     public function getAdmin(){
 
         $week = self::getWeek();
@@ -68,16 +73,19 @@ class AdminController{
     }
 
     public function getAppointmentAdmin(){
+        //Faire un appel ajax sur une case:
+        // Si elle est cocher afficher tous les rdv
         $v = new Views( 'appointmentAdmin', "admin_header" );
         $v->assign("current", 'content');
-        $v->assign("current_sidebar", 'articles');
+        $v->assign("current_sidebar", 'appointment');
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy(null,['appointment.id',
+        $appointments = $appointment->getAllBy(['dateAppointment' => date('Y-m-d'),'planned' => 1],[
+                                                            'idAppointment',
                                                             'dateAppointment',
                                                             'hourAppointment',
                                                             'CONCAT(u1.firstname," ",u1.lastname) as id_User',
@@ -89,6 +97,7 @@ class AdminController{
 
     public function saveCategoryPackage()
     {
+        //ajouter les erreurs
         if ($_POST['categoryPackageSubmit'] == 'Valider') {
             $category = new Category();
             $category->setDescription($_POST['categoryDesc']);
@@ -117,12 +126,11 @@ class AdminController{
             }
 
             else {
-            $category->setId($_POST['categoryId']);
-            $category->updateTable(
-                ["description" => $category->getDescription()],
-                ["id" => $category->getId()]);
-        }}
-
+                $category->setId($_POST['categoryId']);
+                $category->updateTable(
+                    ["description" => $category->getDescription()],
+                    ["id" => $category->getId()]);
+            }}
         $this->getPackageAdmin();
     }
 
@@ -159,9 +167,24 @@ class AdminController{
         $this->getPackageAdmin();
     }
 
-    public function deleteCategoryPackage(){
+    public function saveAppointment($params){
+        if ($params['POST']['btn-Valider']) {
+            $appointment = new Appointment();
+            if (isset($params['URL'][0])) {
+                foreach ($params['POST'] as $name => $post){
+                }
+                echo 'update';
+            } else {
+                echo 'insert';
+                var_dump($_POST);
+                var_dump(Validator::checkAvailableAppointment());
+            }
+        }
+    }
+
+    public function deleteCategoryPackage($params){
         $category = new Category();
-        $category->setId($_GET['id']);
+        $category->setId($params['URL'][0]);
         $category->updateTable(
             ["status" => 0],
             ["id" => $category->getId()]);
@@ -169,37 +192,81 @@ class AdminController{
     }
 
     public function ajaxDeletePackage(){
-        //Modifier fonction pour where in
         foreach($_POST['idPackageDeleted'] as $id){
             $package = new Package();
-            $package->delete(['id' => $id]);
-            echo 'ok';
+            $package->updateTable(
+                ["status" => 0],
+                ["id" => $id]);
         }
     }
 
+    //ADMIN : APPOINTMENT
+    public function updateAppointment($params){
+        $v = new Views( 'appointmentAdminEdit', "admin_header" );
 
-    //Partie de gestion des nouvelles pages créés
-    public function getPagesAdmin(){
-        $v = new Views( 'pageAdmin', "admin_header" );
-        $page = new Pages();
-        $pages = $page->getAllBy( null, null, 3 );
+        $package =  new Package();
+        $packages = $package->getAssociativeArrayPackage();
 
-        $v->assign("pages", $pages );
-        $v->assign("current_sidebar", 'pages');
+        $category = new Category();
+        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+
+        $hairdresser = new Hairdresser();
+        $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
+
+        $appointment = new Appointment();
+        //Selection de tous les coiffeurs et des forfaits
+        $hours = $appointment->getAllAvailableTimeRange();
+
+        if (isset($params['URL'][0])){
+
+            $inner = ['inner_table' => ['user u1','user u2','package p'],
+                'inner_column' => ['id_User','id_Hairdresser','id_Package'],
+                'inner_ref_to' => ['u1.id','u2.id','p.id']];
+
+            $currentAppointment = $appointment->getAllBy(['idAppointment' => $params['URL'][0]],[
+                'idAppointment',
+                'dateAppointment',
+                'hourAppointment',
+                'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                'p.description as id_Package'],3,$inner);
+
+            if(!empty($currentAppointment)){
+                $currentAppointment = $currentAppointment[0];
+                $hours = array_diff($hours,[substr($currentAppointment->getHourAppointment(),0,5)]);
+                $v->assign("currentAppointment", $currentAppointment);
+                $v->assign("hours",$hours);
+                $v->assign("titleEdit", 'Rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
+            }
+            else {
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+            }
+        }
+        else{
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+        }
+
+        $v->assign("packages",$packages);
+        $v->assign("hairdressers",$hairdressers);
+        $v->assign("categories",$categories);
+        $v->assign("current_sidebar", 'appointment');
         $v->assign("current", 'content');
     }
 
-    public function getPageEdit(){
-        $v = new Views( 'pagesAdminEdit', "admin_header" );
-        //var_dump( "ok" ); die;
-        $v->assign("current_sidebar", 'pages');
-        $v->assign("current", 'content');
+    public function deleteAppointment($params){
+        $appointment = new Appointment();
+        $appointment->updateTable(
+            ['planned' => 0],
+            ['idAppointment' => $params['URL'][0]]
+        );
+        $this->getAppointmentAdmin();
     }
 
+    //ADMIN : PAGES
     public function addPages(){
         $contents = [];
-
-
 
         if( isset( $_POST['content1'] ) ){
             $contents['content1'] = $_POST['content1'];
@@ -292,10 +359,10 @@ class AdminController{
             "user" => $users
         );
 
-        
+
         $v->assign("options", $vars);
         //$v->assign( "u", $u);
-        
+
     }
 
     public function modify(){
@@ -329,7 +396,7 @@ class AdminController{
                     break;
             }
 
-           
+
 
            // $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
 
@@ -362,7 +429,7 @@ class AdminController{
             $user->updateTable(["firstname" => $user->getFirstname(),
                     "lastname" => $user->getLastname() ,
                     "email" => $user->getEmail(),
-                    "tel" => $user->getTel(), 
+                    "tel" => $user->getTel(),
                     "dateUpdated"=>$user->getDateUpdated(),
                     "status" => $user->getStatus()],["id"=>$user->getId()]
                 );
@@ -385,12 +452,12 @@ class AdminController{
                 "user" => $_POST
             );
 
-            
+
             $v->assign("options", $vars);
             $v->assign("errors",$errors);
         }
 
-        
+
 
     } 
 
@@ -436,7 +503,7 @@ class AdminController{
         $form = $user->formAddUser();
         $errors=Validator::validate($form,$_POST);
         $errorsUnique=Validator::isUnique($form,$_POST);
-        
+
         for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 10; $x = rand(0,$z), $s .= $a{$x}, $i++);
 
         if (empty($errors) && empty($errorsUnique)){
@@ -496,16 +563,16 @@ class AdminController{
                    //echo 'Message sent!';
                 }
          }
-           
+
         $user->setPwd( $s );
         //$user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, status) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$s."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getStatus()."')");
         $user->updateTable(["firstname" => $user->getFirstname(),
                 "lastname" => $user->getLastname() ,
                 "email" => $user->getEmail(),
-                "tel" => $user->getTel(), 
+                "tel" => $user->getTel(),
                 "status" => $user->getStatus(),
-                "changetopwd" => true, 
-                "token" =>$user->getToken(), 
+                "changetopwd" => true,
+                "token" =>$user->getToken(),
                 "dateUpdated"=>$user->getDateUpdated(),
                 "dateInserted"=>$user->getDateInserted(),
                 "pwd"=>$user->getPwd()]);
@@ -597,7 +664,7 @@ class AdminController{
         $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4, '' , "ORDER BY status ASC");
         $b=$category->getAllBy([],["id,description"],2);
 
-    
+
         $v->assign( "a", $a );
         $v->assign( "b", $b);
         $v->assign( "array",$array);
@@ -606,7 +673,7 @@ class AdminController{
 
     //Modifier Article
     public function modifyArticle(){
-        
+
         $article = new Article();
         $category = new Category();
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
@@ -631,7 +698,7 @@ class AdminController{
             "dateparution" => $a[0]->getDateParution(),
             "description" => $a[0]->getDescription(),
             "category" => $a[0]->getCategory()
-            
+
         );
 
         $vars = array(
@@ -639,11 +706,11 @@ class AdminController{
             "article" => $articles
         );
 
-        
+
         $v->assign("options", $vars);
         //$v->assign( "u", $u);
-        
-    
+
+
     }
 
     public function modifyAdminArticle(){
@@ -689,11 +756,11 @@ class AdminController{
         $article->updateTable(["name" => $article->getName(),
                 "dateparution" => $article->getDateParution() ,
                 "description" => $article->getDescription(),
-                "image" => $article->getImage(), 
+                "image" => $article->getImage(),
                 "id_Category" => $article->getCategory()],["id"=>$article->getId()]);
         $this->getArticleAdmin();
 
-    } 
+    }
     //Supprimer Article
     public function deleteArticle(){
         $article = new Article();
@@ -730,6 +797,7 @@ class AdminController{
         $v->assign("config", $form );
         $v->assign( "options", $b);
     }
+
     public function addAdminArticle(){
         $article = new Article();
         $article->setName(htmlentities($_POST['name']));
@@ -774,9 +842,9 @@ class AdminController{
                 "dateparution" => DATE('Y-m-d'),
                 "minidescription" => substr($article->getDescription(), 0,19),
                 "image" => $article->getImage(),
-                "status" => 0, 
+                "status" => 0,
                 "id_Category" => $article->getCategory()];
-        
+
         //$article->getUpdate(" ", 4, "(name, dateparution, description, image, status, minidescription, id_Category) VALUES ('".$article->getName()."',DATE( NOW() ), '".$article->getDescription()."', '".$article->getImage()."', 0, '".substr($article->getDescription(), 0,19)."', '".$article->getCategory()."')");
         $article->updateTable($params);
         $this->getArticleAdmin();
@@ -795,7 +863,7 @@ class AdminController{
         $v = new Views( "addCategory", "admin_header" );
          $category = new Category();
          $form = $category->formAddCategory();
-        
+
         $v->assign("config", $form );
         $v->assign("current", 'category');
     }
@@ -817,7 +885,7 @@ class AdminController{
         $v = new Views( "addCategory", "admin_header" );
          $category = new Category();
          $form = $category->formAddCategory();
-    
+
         $v->assign("config", $form );
         $v->assign("current", 'category');
         $v->assign("errors",$errors);
@@ -827,7 +895,7 @@ class AdminController{
 
     }
     public function modifyCategory(){
-        
+
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
         $a= $category->getAllBy(["id"=>$_GET['id']],["id, description"], 2);
@@ -836,7 +904,7 @@ class AdminController{
 
          $form = $category->formUpdateCategory();
 
-       
+
         $v->assign("current", 'category');
         $v->assign("config", $form );
 
@@ -844,7 +912,7 @@ class AdminController{
         $categories = array(
             "id" => $a[0]->getId(),
             "description" => $a[0]->getDescription(),
-            
+
         );
 
         $vars = array(
@@ -852,7 +920,7 @@ class AdminController{
         );
 
          $v->assign("options", $vars);
-        
+
     }
 
     public function modifyAdminCategory(){
@@ -862,13 +930,13 @@ class AdminController{
         $category->setIdUser($_SESSION["id"]);
         $form = $category->formUpdateCategory();
         $errors=Validator::validate($form,$_POST);
-    
+
 
         //$category->getUpdate("id = ".$category->getId()."", 1, "description = '".$category->getDescription()."'");
         $category->updateTable(["description"=>$category->getDescription()],["id"=>$category->getId()]);
         $this->getCategoryAdmin();
 
-    } 
+    }
     public function deleteCategory(){
         $category = new Category();
         $a = $_GET['id'];
@@ -876,7 +944,7 @@ class AdminController{
         $category->updateTable(["status"=>"-1"],["id"=>$a]);
         $this->getCategoryAdmin();
     }
-    
+
 
 
 

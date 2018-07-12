@@ -158,7 +158,7 @@ class Appointment extends BaseSql{
         return $timeRange;
     }
 
-    public function getAllAvailableTimeRange($duration){
+    public function getAllAvailableTimeRange(){
         /*
          * Refaire la selection pour Tous les coiffeur
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
@@ -170,13 +170,16 @@ class Appointment extends BaseSql{
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
+        $timeOut = 10;
         do {
-            $add += 10;
+            $add += $timeOut;
+            //Remplacer par un temps moyen de rendez-vous
             $timeRange[] = date("H:i", strtotime('+' . $add . ' minutes', strtotime($opening)));
             $i += 1;
-        }while(strtotime('+'.$duration. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $duration . ' minutes', strtotime($closing)));
+        }while(strtotime('+'.$timeOut. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $timeOut . ' minutes', strtotime($closing)));
 
         return $timeRange;
+
     }
 
     public function getAssociativeHaidresserAppointmentPackage($appointments){

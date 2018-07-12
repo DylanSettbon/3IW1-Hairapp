@@ -13,7 +13,7 @@ include "templates/sidebar.view.php";
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
             <h1 class="packageAdmin-title">Personnaliser la carte du salon</h1>
             <div class="row">
-                <a href='#' method="post" class="btnCreateCategory col-l-3" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
+                <a href='#' method="post" class="buttonUserAdd" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
             </div>
 
             <div id="package_content">
@@ -22,7 +22,7 @@ include "templates/sidebar.view.php";
                     <?php if($key%2 == 0):?>
                         <div class="row">
                     <?php endif; ?>
-                    <table id="packageCategory" class="PackageTab col-l-6">
+                    <table id="packageCategory" class="PackageTab">
                         <caption class="packageCategory-title">
 						    <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
                             <a href="/admin/deleteCategoryPackage/<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
@@ -68,7 +68,7 @@ include "templates/sidebar.view.php";
 
         <div id="categoryPackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=saveCategoryPackage method="post">
+                <form class="formPackage createCategoryPackage" action=/admin/saveCategoryPackage method="post">
                     <h2>Ajouter une catégorie</h2>
                     <hr>
                     <input id="categoryDesc" type="text" name="categoryDesc" placeholder="Entrez le nom de la categorie">
@@ -81,7 +81,7 @@ include "templates/sidebar.view.php";
 
         <div id="updateCategoryPackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage updateCategoryPackage" action=saveCategoryPackage method="post">
+                <form class="formPackage updateCategoryPackage" action=/admin/saveCategoryPackage method="post">
                     <h2>Modifier le nom de la catégorie</h2>
                     <hr>
                     <input id="categoryIdUpdate" type="hidden" name="categoryId">
@@ -95,7 +95,7 @@ include "templates/sidebar.view.php";
 
         <div id="packageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=savePackage method="post">
+                <form class="formPackage createCategoryPackage" action=/admin/savePackage method="post">
                     <h2 class="categoryTitleForm">Ajouter un forfait à </h2>
                     <hr>
                     <input id="pCategoryId" type="hidden" name="categoryId">
@@ -111,7 +111,7 @@ include "templates/sidebar.view.php";
 
         <div id="updatePackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=savePackage method="post">
+                <form class="formPackage createCategoryPackage" action=/admin/savePackage method="post">
                     <h2 class="categoryTitleForm">Modifier un forfait</h2>
                     <hr>
                     <input id="packageId" type="hidden" name="packageId">

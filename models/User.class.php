@@ -246,6 +246,10 @@ class User extends BaseSql {
         $this->lastConnection = $lastConnection;
     }
 
+    public function getFullName(){
+        return $this->lastname.' '.$this->firstname;
+    }
+
     public function FormSignIn(){
 
         return [
