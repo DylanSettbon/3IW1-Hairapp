@@ -1,3 +1,21 @@
+<?php
+$urldemandee=$_SERVER['REQUEST_URI']; // on récupère l'url de la page courante
+// on met cette url en forme pour en faire un nom de fichier valide
+$urldemandee=str_replace("/",'-',$urldemandee);
+if($urldemandee=="-") $urldemandee="-index.html";
+$fichierSitemaps="sitemaps".$urldemandee;
+$fichierSitemaps=str_replace('sitemaps-','',$fichierSitemaps);
+// on teste si le fichier existe déjà
+if(!file_exists(DIRNAME."/sitemaps/".$fichierSitemaps)!==false) {
+    $fd = fopen("sitemaps/".$fichierSitemaps,"w"); //on ouvre le fichier
+    if ($fd) {
+        if($_SERVER['REQUEST_URI']=="/") $filtrePage="/index.html";else $filtrePage=$_SERVER['REQUEST_URI']; //on evite de dupliquer domaine.com et domaine.com/index.html
+        $sitemapsContent="<url>\n\t<loc>http://www.grandprix4.org".$filtrePage."</loc>\n\t<lastmod>".date('Y-m-d')."T".date('H:m:s+00:00')."</lastmod>\n</url>\n"; //on formate les infos pour le XML
+        fwrite($fd,$sitemapsContent); //on ecrit le fichier
+        fclose($fd); //on ferme le fichier
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang='fr' >
 
@@ -14,7 +32,7 @@
 </head>
 
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-<script type="text/javascript" src="../public/js/index.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME;?>public/js/index.js"></script>
 
 
 <body>
