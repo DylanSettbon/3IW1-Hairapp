@@ -17,6 +17,7 @@ class User extends BaseSql {
     protected $tel;
     protected $receivePromOffer = 0;
     protected $status=0;
+    protected $changetopwd;
     protected $dateInserted;
     protected $dateUpdated;
     protected $lastConnection;
@@ -131,6 +132,19 @@ class User extends BaseSql {
             die("Veuillez préciser un email");
         }
     }
+    public function getChangeToPwd()
+    {
+        return $this->changetopwd;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setChangeToPwd($changetopwd)
+    {
+        $this->changetopwd = $changetopwd;
+    }
+
 
     /**
      * @return mixed
@@ -230,6 +244,10 @@ class User extends BaseSql {
     public function setLastConnection($lastConnection)
     {
         $this->lastConnection = $lastConnection;
+    }
+
+    public function getFullName(){
+        return $this->lastname.' '.$this->firstname;
     }
 
     public function FormSignIn(){
@@ -403,7 +421,7 @@ class User extends BaseSql {
 
     public function LoginForm(){
         return [
-            "config"=>["method"=>"POST", "action"=>"getVerify", "submit"=>"Se connecter"],
+            "config"=>["method"=>"POST", "action"=>"login/getVerify", "submit"=>"Se connecter"],
             "input"=>[
                 "email"=>[
                     "type"=>"email",
@@ -420,6 +438,160 @@ class User extends BaseSql {
             ],
         ];
     }
+    public function formAddUser(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"add", "submit"=>"Enregistrer"],
+            "input"=>[
+
+                "nom"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Nom",
+                    "required"=>true
+
+
+                ],
+                "prenom"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Prenom",
+                    "required"=>true
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre Email",
+                    "required"=>true
+                ],
+                "tel"=>[
+                    "type"=>"tel",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Telephone",
+                    "required"=>true
+                ]
+
+
+            ],
+
+
+            "select" => [
+                "status" =>[
+                    "class" => "input input_sign-in"
+                ]
+            ]
+
+        ];
+    }
+    public function formUpdateUser(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"modify", "submit"=>"Enregistrer"],
+            "input"=>[
+
+
+                "id"=>[
+                    "type"=>"hidden",
+                    "class"=>"input input_sign-in",
+                    
+
+                ],
+
+                "lastname"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Nom",
+                    "required"=>true
+                    
+
+                ],
+                "prenom"=>[
+                    "type"=>"text",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Prenom",
+                    "required"=>true
+                    
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre Email",
+                    "required"=>true
+                    
+                ],
+            
+                "tel"=>[
+                    "type"=>"tel",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Telephone",
+                    "required"=>true
+                    
+                ]
+
+
+            ],
+
+
+            "select" => [
+                "status" =>[
+                    "class" => "input input_sign-in"
+                    //"value"=>$u[0]->getStatus()
+                ]
+            ]
+
+        ];
+    }
+
+    public function FormChangeToPwd(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"validate", "submit"=>"Enregistrer"],
+            "input"=>[
+
+                 "id"=>[
+                    "type"=>"hidden",
+                    "class"=>"input input_sign-in",
+                    
+                ],
+                "pwd"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre mot de passe",
+                    "required"=>true
+                ],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Confirmation",
+                    "required"=>true,
+                    "confirm"=>"pwd"
+                ]
+
+            ],
+
+        ];
+    }
+    public function formForgetPwd(){
+
+        return [
+            "config"=>["method"=>"POST", "action"=>"getNewPwd", "submit"=>"Enregistrer"],
+            "input"=>[
+
+                "email"=>[
+                    "type"=>"email",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre Email",
+                    "required"=>true
+                ]
+
+
+            ]
+
+        ];
+    }
+
 
     /**
      * @return mixed

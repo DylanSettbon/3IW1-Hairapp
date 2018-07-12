@@ -1,9 +1,9 @@
 
-<section>
+<main>
     <div class="row slideshow-container">
 
         <div class="mySlides fade">
-            <img class="contain-img" src="../public/img/barber1.jpg" style="width:100%">
+            <img class="contain-img" alt="Hairapp" src="../public/img/barber1.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%">
+            <img class="contain-img" alt="Voir les forfaits" src="../public/img/barber2.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" src="../public/img/barber3.jpg" style="width:100%">
+            <img class="contain-img" alt="Prendre rendez-vous" src="../public/img/barber3.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -41,52 +41,44 @@
         <span class="dot" onclick="currentSlide(3)"></span>
     </div>
 
-</section>
+</main>
 <main class="container">
 
     <section id="acc-articles" class="col-s-3 col-m-12 col-l-4">
         <div class="container">
             <div class="row">
-                <h1 class="title col-s-8 col-m-8 col-l-12">Articles</h1>
+                <h2 class="title-carte col-s-8 col-m-8 col-l-12">Articles</h2>
             </div>
 
 
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article">Nouvelle Promotion pour 2018 !!</h3>
-                    <p class="content-art">-15% sur différentes coupes</p>
-                </span>
-                <a href="<?php echo DIRNAME; ?>article/getArticle">Voir plus...</a>
-            </div>
+            <?php if( !empty( $i ) ): ?>
+                 <?php while ($i < 4): ?>
+                <div class="col-s-3 col-m-6 col-l-12 article-accueil">
+                    <img class="img-art" src="../public/img/quote.svg"/>
+                    <span>
 
+                        <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
+                        <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
 
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article">Changement de numéro de téléphone</h3>
-                    <p class="content-art">Notre nouveau numero de téléphone est le 0101010101</p>
-                </span>
-            </div>
-
-
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article">Nouveau produit en stock</h3>
-                    <p class="content-art">C’est un soin restructurant élaboré par L’OREAL PROFESSIONNEL qui agit directement dans le cheveu pour étirer sa texture. Des polymères pénètrent au cœur des fibres pour les galber progressivement, donnant ainsi un aspect subtilement épaissi à votre chevelure. </p>
-                </span>
-            </div>
+                    </span>
+                    <a href="<?php echo DIRNAME.'article/getArticle?id='. $articles[$i]->getId().''; ?>" >Voir plus...</a>
+                </div>
+                <?php $i++; ?>
+            <?php endwhile ?>
+                <?php else: ?>
+                <p> Aucun article</p>
+            <?php endif; ?>
+          
     </section>
 
     <section class="col-s-12 col-m-12 col-l-4 forfait-accueil">
-        <h1 class="title-carte" style="margin-right: 35px;">Découvrez notre carte</h1>
+        <h2 class="title-carte" style="margin-right: 35px;">Découvrez notre carte</h2>
          
                 
                 <span>
                     <h3 class="carte">Notre carte</h3>
                     <p class="content-carte">Decouvrez nos forfaits Homme Femme sur notre carte</p>
-                    <img class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
+                    <img alt="barber" class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
                 </span>
            
         <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>
@@ -97,7 +89,7 @@
 
     </section>
     <section id="" class="col-s-12 col-m-12 col-l-4">
-        <h1 class="title center" style="margin-right: 30px;">Flux RSS</h1>
+        <h2 class="title-carte center" style="margin-right: 30px;">Flux RSS</h2>
         <div class="col-s-3 col-m-6 col-l-12 side-accueil" style="overflow:scroll;">
             <a class="twitter-timeline" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Flux RSS</a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

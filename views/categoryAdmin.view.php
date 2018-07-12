@@ -1,10 +1,14 @@
+<?php
 
-    <div>
+
+include "templates/sidebar.view.php";
+?>
+    <div class="content">
         <article class="arriere_plan">
 
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
 
-                <div class="col-l-7">
+                <div class="col-l-4">
                     <h2 class="center title"> Gestion des categories</h2>
                 </div>
 
@@ -22,7 +26,7 @@
                     </tr>
                     <?php   
                     
-                            foreach ($u as $category) {
+                            foreach ($u as $category):
 
                                 
                                 echo "
@@ -33,7 +37,7 @@
                                     <td><a href='deleteCategory?id=" . $category->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
                                 </tr>
                                 ";
-                            }
+                            endforeach;
                     
                     ?>
                     
@@ -43,14 +47,13 @@
                             <td class="page center" colspan="3">1/104</td>
                             <td class="next-admin"><a href="#" title="Suivant">Suivant</a></td>
                         </tr>
-                        <tr>
-                            <td colspan="7"><a href=" <?php echo DIRNAME;?>admin/addCategory"  class="buttonUserAdd">Ajouter une categorie</a></td>
-                        </tr>
+                       
                     </nav>
                 </table>
                 
             </div>
         </article>
+         <a href=" <?php echo DIRNAME;?>admin/addCategory"  class="buttonUserAdd">Ajouter une categorie</a>
     </div>
 
   </main>

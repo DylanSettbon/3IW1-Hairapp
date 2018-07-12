@@ -1,4 +1,4 @@
-function createCategoryPackageForm_show() {
+function createCategoryPackageForm_show(){
     document.getElementById('categoryPackageForm').style.display = "block";
 }
 

@@ -33,6 +33,10 @@ class SigninController{
             //Verification des saisies
 
             $errors = Validator::validate($form, $params["POST"]);
+
+            if( !Security::checkMailExist( $_POST['email'] ) ){
+                $errors[] = "Cet email est déjà utilisé.";
+            }
             //var_dump( $errors ); die;
             if( empty( $errors ) ){
                 $user->setFirstname($_POST['prenom']);
@@ -66,7 +70,6 @@ class SigninController{
                     "lastConnection" => null,
                     "picture" => null
                 );
-
                 $user->updateTable( $params );
                 require("vendor/autoload.php");
 
@@ -83,7 +86,17 @@ class SigninController{
                 $mail->From = 'notifications.hairapp@gmail.com';
                 $mail->FromName = 'notifications-hairapp';
                 $mail->Subject = 'Activation de votre compte';
-                $mail->Body = 'Pour activer votre compte, veuillez suive le lien suivant : ';
+                //$mail->Body = 'Pour activer votre compte, veuillez suive le lien suivant : localhost/3IW1-coiffeur/signin/activate?token='.$user->getToken();
+                $mail->Body = 'Bienvenue sur Hairapp !
+ 
+Pour activer votre compte, veuillez cliquer sur le lien ci dessous
+ou copier/coller dans votre navigateur internet.
+ 
+localhost/3IW1-coiffeur/signin/activate?token='.urlencode($user->getToken() ).'
+ 
+ 
+---------------
+Ceci est un mail automatique, Merci de ne pas y répondre.';
                 $mail->AddAddress( $user->getEmail() );
                 if(!$mail->Send()) {
                     //echo 'Mail error: '.$mail->ErrorInfo;
@@ -91,8 +104,10 @@ class SigninController{
                    // echo 'Message sent!';
                 }
 
-                header("Location: ".DIRNAME."home/getHome");
-
+                $v = new Views( "signin", "header" );
+                $v->assign( "current", "login" );
+                $v->assign("config",$form);
+                $v->assign("success","Un mail de validation vous a été envoyé afin de finaliser votre inscription.");
             }
             else{
                 $v = new Views( "signin", "header" );
@@ -102,5 +117,38 @@ class SigninController{
             }
 
         }
+    }
+
+    public function activate(){
+
+        $user = new User();
+
+        $userInformations = $user->getAllBy(
+            array( "token" => $_GET['token'], "status" => 0 ), null, 3
+        );
+
+
+        if( !empty( $userInformations ) ){
+            //$userInformations[0]->setStatus(1);
+
+            $userInformations[0]->setToken();
+
+            $params = array(
+                "token" => $userInformations[0]->getToken(),
+                "status" => 1,
+                "dateUpdated" => date("Y-m-d")
+            );
+
+
+            $user->updateTable( $params, array( "id" => $userInformations[0]->getId() ) );
+
+
+        }
+        $form = $user->LoginForm();
+
+        $v = new Views( "login", "header" );
+        $v->assign("config", $form );
+        $v->assign( "current", "login" );
+        $v->assign("success","Vous pouvez désormais vous connecter !");
     }
 }

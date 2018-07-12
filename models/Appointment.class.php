@@ -1,13 +1,12 @@
 <?php
 class Appointment extends BaseSql{
-    protected $id = null;
-    protected $dateAppointment;
-    protected $hourAppointment;
-    protected $id_Package;
-    protected $id_User;
-    protected $id_Hairdresser;
-    protected $firstname;
-    protected $lastname;
+    private $idAppointment = null;
+    private $dateAppointment;
+    private $hourAppointment;
+    private $id_Package;
+    private $id_User;
+    private $id_Hairdresser;
+    private $planned;
 
     /**
      * @return null
@@ -19,7 +18,7 @@ class Appointment extends BaseSql{
 
     public function getId()
     {
-        return $this->id;
+        return $this->idAppointment;
     }
 
     /**
@@ -27,7 +26,7 @@ class Appointment extends BaseSql{
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->idAppointment = $id;
     }
 
     /**
@@ -110,6 +109,19 @@ class Appointment extends BaseSql{
         $this->id_Hairdresser = $id_Hairdresser;
     }
 
+    public function getPlanned()
+    {
+        return $this->planned;
+    }
+
+    /**
+     * @param mixed $id_Hairdresser
+     */
+    public function setPlanned($planned)
+    {
+        $this->planned = $planned;
+    }
+
     public function getFormatedDateAppointment(){
         $date=date_create($this->dateAppointment);
         return date_format($date,"d/m/Y");
@@ -146,7 +158,7 @@ class Appointment extends BaseSql{
         return $timeRange;
     }
 
-    public function getAllAvailableTimeRange($duration){
+    public function getAllAvailableTimeRange(){
         /*
          * Refaire la selection pour Tous les coiffeur
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
@@ -158,13 +170,16 @@ class Appointment extends BaseSql{
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
+        $timeOut = 10;
         do {
-            $add += 10;
+            $add += $timeOut;
+            //Remplacer par un temps moyen de rendez-vous
             $timeRange[] = date("H:i", strtotime('+' . $add . ' minutes', strtotime($opening)));
             $i += 1;
-        }while(strtotime('+'.$duration. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $duration . ' minutes', strtotime($closing)));
+        }while(strtotime('+'.$timeOut. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $timeOut . ' minutes', strtotime($closing)));
 
         return $timeRange;
+
     }
 
     public function getAssociativeHaidresserAppointmentPackage($appointments){
@@ -206,7 +221,7 @@ class Appointment extends BaseSql{
         $this->lastname = $lastname;
     }
 
-    public static  function changeMonth( $date ){
+    public static function changeMonth($date){
         $month = date( "F", strtotime($date) );
         switch ( $month ){
             case 'January' : $res = str_replace( 'January', 'Janvier', $date ); break;

@@ -10,33 +10,20 @@
                             <div class="row">
                                 <h1 id="title-rdv" class="title col-l-4">Modifier l'utilisateur</h1>
                             </div>
-                            <form method="post" action="<?php echo DIRNAME;?>admin/modify" >
                             <?php
-                             echo "
-                                <label>Nom</label>
-                                <input type='hidden' value=" .$u[0]->getId() ." name='id' />
-                                <input class='input input_sign-in' type='text' name='lastname' value=" . $u[0]->getLastname() ."   />
-                                <label>Prenom</label>
-                                <input class='input input_sign-in' type='text' name='prenom' value=".  $u[0]->getFirstname() . "   />
-                                <label>Email</label>
-                                <input class='input input_sign-in' type='email' name='email' value=". $u[0]->getEmail() ."   />
-                                <label>Status</label>
-                                <select name='status' class='input input_sign-in' >
-                                <option value=".$u[0]->getStatus().">".$array[$u[0]->getStatus()]."</option>
-                                ";
-                                foreach($array as $key => $value)
-                                        {
-                                          echo"<option value=" . $key . ">". $value . "</option>";
-                                        }
-                                        echo"
-                                </select>
-                                <label>Telephone</label>
-                                <input class='input input_sign-in' type='tel' name='tel' value=". $u[0]->getTel() ."   />
-                             "; ?>   
+                             $this->addModal( "updateUserForm", $config, [], $options ); ?>
+                            <ul class="errors">
+                    <?php if( isset( $errors ) ): ?>
+                        <?php foreach ( $errors as $error ): ?>
+                            <li>
+                                <div class="div-errors danger">
+                                    <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                </div>
 
-                                <input type="submit" class="input center" id="valider" value="Valider" />
-
-                            </form>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
                         </div>
                     </div>
                 </div>

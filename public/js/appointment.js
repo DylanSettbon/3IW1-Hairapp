@@ -76,7 +76,6 @@ $('.appointmentAttr,:checkbox').change(function(){
     month = $('#mois').find(":selected").text();
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
-    console.log(package + ' ' + year + ' ' + month + ' ' + day + ' ' + hairdresser);
     getAvailableHours(day, month, year, package, hairdresser)
 });
 
@@ -91,22 +90,26 @@ function getAvailableHours(day,month,year,idPackage,idHairdresser){
                 package :idPackage,
                 hairdresser : idHairdresser},
         success: function(response){
-            $( "#appointmentHour" ).empty();
-            $( "#heure" ).empty();
-            schedule = JSON.parse(response)
-
-            if (schedule['errors']){
-                $("#hour").replaceWith('<p>'+schedule['errors']+'</p>');
-                $("#appointmentHour").append('<p>'+schedule['errors']+'</p>');
-            }
-            else {
-                for (var i = 0; i < schedule.length; i++) {
-                    addHour(schedule[i])
-                    $('#heure').append('<option value=' + schedule[i] + '>' + schedule[i] + '</option>');
-                }
-            }
+            showAllHour(JSON.parse(response))
         }
         });
+}
+
+function showAllHour(schedule)
+{
+    $( "#appointmentHour" ).empty();
+    $( "#heure" ).empty();
+
+    if (schedule['errors']){
+        $("#hour").replaceWith('<p>'+schedule['errors']+'</p>');
+        $("#appointmentHour").append('<p>'+schedule['errors']+'</p>');
+    }
+    else {
+        for (var i = 0; i < schedule.length; i++) {
+            addHour(schedule[i])
+            $('#heure').append('<option value=' + schedule[i] + '>' + schedule[i] + '</option>');
+        }
+    }
 }
 
 function addHour(hour){
@@ -118,6 +121,5 @@ function addHour(hour){
         '</li>';
 
     $( "#appointmentHour" ).append(hourHtml);
-
 }
 

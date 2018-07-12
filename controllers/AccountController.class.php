@@ -32,6 +32,7 @@ class AccountController{
         $where = [
             "id_User" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
+            'planned'=> 1
         ];
 
         $inner = array(
@@ -69,10 +70,51 @@ class AccountController{
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
     }
+    
+    public function getChangeToPwd(){
+        $user = new User();
+        $form = $user->FormChangeToPwd();
+        $v = new Views( "changetopwd", "header" );
+        $v->assign( "current", "login" );
+        $v->assign("config",$form);
+    }
+
+    public function Validate( $params ){
+
+        $user = new User();
+        $form = $user->FormChangeToPwd();
+
+        if(!empty($params["POST"])) {
+            //Verification des saisies
+
+            $errors = Validator::validate($form, $params["POST"]);
+            //var_dump( $errors ); die;
+            if( empty( $errors ) ){
+                $user->setId($_SESSION['id']);
+                $user->setPwd($_POST['pwd']);
+
+                $params = array(
+                    "id" => $user->getId(),
+                    "pwd" => $user->getPwd(),
+                    "changetopwd" => false
+                );
+
+                $user->updateTable( $params, ["id"=>$user->getId()]);
+
+                header("Location: ".DIRNAME."home/getHome");
+
+            }
+            else{
+                $v = new Views( "changetopwd", "header" );
+                $v->assign( "current", "login" );
+                $v->assign("config",$form);
+                $v->assign("errors",$errors);
+            }
+
+        }
+    }
 
     public function saveAccount( $params ){
-
-
         $user = new User();
         $form = $user->AccountForm();
 
@@ -82,6 +124,7 @@ class AccountController{
             'tel' => $_POST['tel'],
             'dateUpdated' => date("Y-m-d"),
         );
+        unset($_POST['email'] );
 
         if( !empty( $_FILES['picture']['name'] ) ){
             $name = "public/img/U_p_p/";
@@ -89,14 +132,6 @@ class AccountController{
             $size = $_FILES['picture']['size'];
             $extension = strrchr($_FILES['picture']['name'], '.');
 
-
-//
-//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
-//                //echo "Upload OK<br>";
-//            }
-//            if( !is_dir( $name ) ){
-//                echo "Naaaah : " . $name;
-//            }
 
             $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 
@@ -115,7 +150,6 @@ class AccountController{
 
 
         $errors = Validator::validate($form, $_POST);
-        //var_dump( $update ); die;
         if( empty( $errors ) ){
 
             $user->updateTable( $update, ["id" => $_SESSION['id'] ]);

@@ -10,24 +10,31 @@
                             <div class="row">
                                 <h1 id="title-rdv" class="title col-l-10">Contactez-Nous</h1>
                             </div>
-                            <form method="post" action="<?php echo DIRNAME;?>contact/validate" >
-                            <?php
-                             echo "
-                                <label>Nom</label>
-                                <input class='input input_sign-in' type='text' name='nom' />
-                                <label>Email</label>
-                                <input class='input input_sign-in' type='text' name='email' />
-                                <label>Objet</label>
-                                <input class='input input_sign-in' type='text' name='objet' />
-                                <label>Message</label>
-                                <textarea class='input input_sign-in' rows=5 cols=50 name='message'>
-                                </textarea>
-                                
-                             "; ?>   
+                             <?php
 
-                                <input type="submit" class="input center" name="valider" id="valider" value="Valider" />
+                            $this->addModal( "contactForm", $config, []); ?>
+                            <ul class="errors">
+                    <?php if( isset( $errors ) ): ?>
+                        <?php foreach ( $errors as $error ): ?>
+                            <li>
+                                <div class="div-errors danger">
+                                    <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                </div>
 
-                            </form>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
+                <ul class="errors col-l-12">
+                                   <?php if( isset( $success ) ): ?>
+                                           <li>
+                                               <div class="div-errors success col-l-12">
+                                                    <p><strong> Success ! </strong><?php echo $success;?></p>
+                                                </div>
+
+                                            </li>
+                                    <?php endif; ?>
+                                </ul>
                         </div>
                     </div>
                 </div>

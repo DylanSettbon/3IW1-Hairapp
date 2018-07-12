@@ -1,8 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
 class AdminController{
 
 
     //Partie d'administration globale
+    public function getTestAdmin(){
+        $v = new Views( "dashboard", "admin_header" );
+        $v->assign("current", 'dashboard');
+    }
+
     public function getAdmin(){
 
         $week = self::getWeek();
@@ -67,16 +73,19 @@ class AdminController{
     }
 
     public function getAppointmentAdmin(){
+        //Faire un appel ajax sur une case:
+        // Si elle est cocher afficher tous les rdv
         $v = new Views( 'appointmentAdmin', "admin_header" );
         $v->assign("current", 'content');
-        $v->assign("current_sidebar", 'articles');
+        $v->assign("current_sidebar", 'appointment');
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy(null,['appointment.id',
+        $appointments = $appointment->getAllBy(['dateAppointment' => date('Y-m-d'),'planned' => 1],[
+                                                            'idAppointment',
                                                             'dateAppointment',
                                                             'hourAppointment',
                                                             'CONCAT(u1.firstname," ",u1.lastname) as id_User',
@@ -88,6 +97,7 @@ class AdminController{
 
     public function saveCategoryPackage()
     {
+        //ajouter les erreurs
         if ($_POST['categoryPackageSubmit'] == 'Valider') {
             $category = new Category();
             $category->setDescription($_POST['categoryDesc']);
@@ -116,12 +126,11 @@ class AdminController{
             }
 
             else {
-            $category->setId($_POST['categoryId']);
-            $category->updateTable(
-                ["description" => $category->getDescription()],
-                ["id" => $category->getId()]);
-        }}
-
+                $category->setId($_POST['categoryId']);
+                $category->updateTable(
+                    ["description" => $category->getDescription()],
+                    ["id" => $category->getId()]);
+            }}
         $this->getPackageAdmin();
     }
 
@@ -158,9 +167,24 @@ class AdminController{
         $this->getPackageAdmin();
     }
 
-    public function deleteCategoryPackage(){
+    public function saveAppointment($params){
+        if ($params['POST']['btn-Valider']) {
+            $appointment = new Appointment();
+            if (isset($params['URL'][0])) {
+                foreach ($params['POST'] as $name => $post){
+                }
+                echo 'update';
+            } else {
+                echo 'insert';
+                var_dump($_POST);
+                var_dump(Validator::checkAvailableAppointment());
+            }
+        }
+    }
+
+    public function deleteCategoryPackage($params){
         $category = new Category();
-        $category->setId($_GET['id']);
+        $category->setId($params['URL'][0]);
         $category->updateTable(
             ["status" => 0],
             ["id" => $category->getId()]);
@@ -168,37 +192,81 @@ class AdminController{
     }
 
     public function ajaxDeletePackage(){
-        //Modifier fonction pour where in
         foreach($_POST['idPackageDeleted'] as $id){
             $package = new Package();
-            $package->delete(['id' => $id]);
-            echo 'ok';
+            $package->updateTable(
+                ["status" => 0],
+                ["id" => $id]);
         }
     }
 
+    //ADMIN : APPOINTMENT
+    public function updateAppointment($params){
+        $v = new Views( 'appointmentAdminEdit', "admin_header" );
 
-    //Partie de gestion des nouvelles pages créés
-    public function getPagesAdmin(){
-        $v = new Views( 'pageAdmin', "admin_header" );
-        $page = new Pages();
-        $pages = $page->getAllBy( null, null, 3 );
+        $package =  new Package();
+        $packages = $package->getAssociativeArrayPackage();
 
-        $v->assign("pages", $pages );
-        $v->assign("current_sidebar", 'pages');
+        $category = new Category();
+        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+
+        $hairdresser = new Hairdresser();
+        $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
+
+        $appointment = new Appointment();
+        //Selection de tous les coiffeurs et des forfaits
+        $hours = $appointment->getAllAvailableTimeRange();
+
+        if (isset($params['URL'][0])){
+
+            $inner = ['inner_table' => ['user u1','user u2','package p'],
+                'inner_column' => ['id_User','id_Hairdresser','id_Package'],
+                'inner_ref_to' => ['u1.id','u2.id','p.id']];
+
+            $currentAppointment = $appointment->getAllBy(['idAppointment' => $params['URL'][0]],[
+                'idAppointment',
+                'dateAppointment',
+                'hourAppointment',
+                'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                'p.description as id_Package'],3,$inner);
+
+            if(!empty($currentAppointment)){
+                $currentAppointment = $currentAppointment[0];
+                $hours = array_diff($hours,[substr($currentAppointment->getHourAppointment(),0,5)]);
+                $v->assign("currentAppointment", $currentAppointment);
+                $v->assign("hours",$hours);
+                $v->assign("titleEdit", 'Rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
+            }
+            else {
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+            }
+        }
+        else{
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+        }
+
+        $v->assign("packages",$packages);
+        $v->assign("hairdressers",$hairdressers);
+        $v->assign("categories",$categories);
+        $v->assign("current_sidebar", 'appointment');
         $v->assign("current", 'content');
     }
 
-    public function getPageEdit(){
-        $v = new Views( 'pagesAdminEdit', "admin_header" );
-        //var_dump( "ok" ); die;
-        $v->assign("current_sidebar", 'pages');
-        $v->assign("current", 'content');
+    public function deleteAppointment($params){
+        $appointment = new Appointment();
+        $appointment->updateTable(
+            ['planned' => 0],
+            ['idAppointment' => $params['URL'][0]]
+        );
+        $this->getAppointmentAdmin();
     }
 
+    //ADMIN : PAGES
     public function addPages(){
         $contents = [];
-
-
 
         if( isset( $_POST['content1'] ) ){
             $contents['content1'] = $_POST['content1'];
@@ -266,23 +334,130 @@ class AdminController{
         
         $user = new User();
         $a = $_GET['id'];
-        $u = $user->getUpdate("id = ".$a."", 2, "id, firstname , lastname , email , status , tel");
+        $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
+        $u = $user->getAllBy(["id" => $a] , ["id, firstname , lastname , email , status , tel"], 2);
         $v = new Views( "modifyAdmin", "admin_header" );
+
+
+        $form = $user->formUpdateUser();
+
         $v->assign("current", 'users');
-        $v->assign( "u", $u);
+        $v->assign("config", $form );
+
+
+        $users = array(
+            "id" => $u[0]->getId(),
+            "lastname" => $u[0]->getLastname(),
+            "prenom" => $u[0]->getFirstname(),
+            "email" => $u[0]->getEmail(),
+            "tel" => $u[0]->getTel(),
+            "status" => $u[0]->getStatus()
+        );
+
+        $vars = array(
+            "options" => $array,
+            "user" => $users
+        );
+
+
+        $v->assign("options", $vars);
+        //$v->assign( "u", $u);
+
     }
 
     public function modify(){
         $user = new User();
-        $user->setId($_POST['id']);
-        $user->setFirstname($_POST['prenom']);
-        $user->setLastname($_POST['lastname']);
-        $user->setEmail($_POST['email']);
-        $user->setTel( $_POST['tel'] );
-        $user->setStatus( $_POST['status']);
+        $user->setId(htmlentities($_POST['id']));
+        $user->setFirstname(htmlentities($_POST['prenom']));
+        $user->setLastname(htmlentities($_POST['lastname']));
+        $user->setEmail(htmlentities($_POST['email']));
+        $user->setTel(htmlentities( $_POST['tel'] ));
+        $user->setStatus( htmlentities($_POST['status']));
+        $user->setDateUpdated(htmlentities(DATE('Y-m-d')));
+        $form = $user->formUpdateUser();
+        $errors=Validator::validate($form,$_POST);
 
-        $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
-        $this->getUserAdmin();
+        if( empty( $errors ) ){
+            $message = "Votre compte à été modifié, voici vos nouvelles informations : ";
+         #toutes ses infos contenues dans user
+
+            switch( $user->getStatus() ){
+                case '0':
+                    $status = "Votre compte a été désactivé.";
+                    break;
+                case '1':
+                    $status = "Votre compte a été activé.";
+                    break;
+                case '2':
+                    $status = "Votre compte a été passé coiffeur.";
+                    break;
+                case '3':
+                    $status = "Votre compte a été passé administrateur.";
+                    break;
+            }
+
+
+
+           // $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
+
+            require("vendor/autoload.php");
+
+                    $mail = new PHPMailer();
+
+                    $mail->IsSMTP(); // enable SMTP
+                    $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+                    $mail->SMTPAuth = true;  // authentication enabled
+                    $mail->CharSet = "UTF-8";
+                    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Port = 465; //25 ou 465
+                    $mail->Username = 'notifications.hairapp@gmail.com' ;
+                    $mail->Password = 'zKXJKrMeGMH9';
+                    $mail->From = 'notifications.hairapp@gmail.com';
+                    $mail->FromName = 'notifications-hairapp';
+                    $mail->Subject = 'Modification de vos données';
+                    $mail->Body = 'Voici vos nouvelles données: <br>'.$user->getFirstname().'<br>'.$user->getLastname().'<br>'.$user->getEmail().'<br>'.$user->getTel().'<br>'.$status;
+                    $mail->IsHTML(true);
+                    $mail->AddAddress( $user->getEmail() );
+                    if(!$mail->Send()) {
+                        echo 'Mail error: '.$mail->ErrorInfo;
+                    } else {
+                       echo 'Message sent!';
+                    }
+
+
+            $user->updateTable(["firstname" => $user->getFirstname(),
+                    "lastname" => $user->getLastname() ,
+                    "email" => $user->getEmail(),
+                    "tel" => $user->getTel(),
+                    "dateUpdated"=>$user->getDateUpdated(),
+                    "status" => $user->getStatus()],["id"=>$user->getId()]
+                );
+            $this->getUserAdmin();
+        }
+        else{
+            $user = new User();
+            $a = $_POST['id'];
+            $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
+            $v = new Views( "modifyAdmin", "admin_header" );
+
+
+            $form = $user->formUpdateUser();
+
+            $v->assign("current", 'users');
+            $v->assign("config", $form );
+
+            $vars = array(
+                "options" => $array,
+                "user" => $_POST
+            );
+
+
+            $v->assign("options", $vars);
+            $v->assign("errors",$errors);
+        }
+
+
 
     } 
 
@@ -301,28 +476,119 @@ class AdminController{
     }
 
     public function addUser(){
-        $v = new Views( "signin", "header" );
+        $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
+        $v = new Views( "addAdmin", "header" );
+
+        $user = new User();
+        $form = $user->formAddUser();
         $v->assign("current", 'user');
+        $v->assign("config", $form );
+        $v->assign("options", $array);
+
     }
 
     public function add(){
         $user = new User();
-        $user->setFirstname($_POST['prenom']);
-        $user->setLastname($_POST['nom']);
-        $user->setEmail($_POST['email']);
-        $user->setPwd($_POST['pwd']);
+
+        $folder = DIRNAME;
+
+        $user->setFirstname(htmlentities($_POST['prenom']));
+        $user->setLastname(htmlentities($_POST['nom']));
+        $user->setEmail(htmlentities($_POST['email']));
         $user->setToken();
-        $user->setTel( $_POST['tel'] );
-        $user->setDateInserted( date( "Y-m-d") );
-        $user->setDateUpdated( date( "Y-m-d") );
-        if( $_POST['offers'] == 'on' ){
-            $user->setReceivePromOffer(true);
-        }
-        else{
-            $user->setReceivePromOffer(false);
-        }
-        $user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, receivePromOffer, status, dateInserted, dateUpdated) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$user->getPwd()."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getReceivePromOffer()."', '0', '".$user->getDateInserted()."', '".$user->getDateUpdated()."')");
+        $user->setTel(htmlentities( $_POST['tel'] ));
+        $user->setStatus(htmlentities( $_POST['status'] ));
+        $user->setDateInserted(htmlentities(DATE('Y-m-d')));
+        $user->setDateUpdated(htmlentities(DATE('Y-m-d')));
+        $form = $user->formAddUser();
+        $errors=Validator::validate($form,$_POST);
+        $errorsUnique=Validator::isUnique($form,$_POST);
+
+        for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 10; $x = rand(0,$z), $s .= $a{$x}, $i++);
+
+        if (empty($errors) && empty($errorsUnique)){
+
+        require("vendor/autoload.php");
+
+        if ($user->getStatus()==0){
+
+             $mail = new PHPMailer();
+
+                $mail->IsSMTP(); // enable SMTP
+                $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+                $mail->SMTPAuth = true;  // authentication enabled
+                $mail->CharSet = 'UTF-8';
+                $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 465; //25 ou 465
+                $mail->Username = 'notifications.hairapp@gmail.com' ;
+                $mail->Password = 'zKXJKrMeGMH9';
+                 $mail->From = 'notifications.hairapp@gmail.com';
+                 $mail->FromName = 'notifications-hairapp';
+                 $mail->IsHTML(true);
+                 $mail->Subject = 'Activation de votre compte';
+                 $mail->Body = 'Bienvenue sur Hairapp !<br>
+                 Pour activer votre compte, veuillez cliquer sur le lien ci dessous ou copier/coller dans votre navigateur internet. <br>
+                 ' . DIRNAME .'/signin/activate?token='.urlencode($user->getToken() ).' <br> --------------- <br>
+                 Voici le mot de passe de votre compte: '.$s.'<br>
+                 Ceci est un mail automatique, Merci de ne pas y répondre.';
+                 $mail->AddAddress( $user->getEmail() );
+                 if(!$mail->Send()) {
+                     //echo 'Mail error: '.$mail->ErrorInfo;
+                 } else {
+                   // echo 'Message sent!';
+                 }
+
+        }else{
+
+                $mail = new PHPMailer();
+
+                $mail->IsSMTP(); // enable SMTP
+                $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+                $mail->SMTPAuth = true;  // authentication enabled
+                $mail->CharSet = 'UTF-8';
+                $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 465; //25 ou 465
+                $mail->Username = 'notifications.hairapp@gmail.com' ;
+                $mail->Password = 'zKXJKrMeGMH9';
+                $mail->From = 'notifications.hairapp@gmail.com';
+                $mail->FromName = 'notifications-hairapp';
+                $mail->Subject = 'Mot de passe de votre compte';
+                $mail->Body = 'Voici le mot de passe de votre compte: '.$s;
+                $mail->AddAddress( $user->getEmail() );
+                if(!$mail->Send()) {
+                    echo 'Mail error: '.$mail->ErrorInfo;
+                } else {
+                   //echo 'Message sent!';
+                }
+         }
+
+        $user->setPwd( $s );
+        //$user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, status) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$s."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getStatus()."')");
+        $user->updateTable(["firstname" => $user->getFirstname(),
+                "lastname" => $user->getLastname() ,
+                "email" => $user->getEmail(),
+                "tel" => $user->getTel(),
+                "status" => $user->getStatus(),
+                "changetopwd" => true,
+                "token" =>$user->getToken(),
+                "dateUpdated"=>$user->getDateUpdated(),
+                "dateInserted"=>$user->getDateInserted(),
+                "pwd"=>$user->getPwd()]);
         $this->getUserAdmin();
+    }else{
+        $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
+        $v = new Views( "addAdmin", "header" );
+
+        $user = new User();
+        $form = $user->formAddUser();
+        $v->assign("current", 'user');
+        $v->assign("config", $form );
+        $v->assign("options", $array);
+        $v->assign("errors",$errors);
+        $v->assign("errorsUnique",$errorsUnique);
+    }
     }
 
     public function modifyPages(){
@@ -389,17 +655,20 @@ class AdminController{
     //Affiche un Article
     public function getArticleAdmin(){
         $v = new Views( "articleAdmin", "admin_header" );
-        $v->assign("current", 'users');
+        $v->assign("current", 'content');
         $article = new Article();
         $category = new Category();
         $array = array("0"=> "En cours de parution", "1"=>"Paru");
         //$a= $article->getUpdate("status!= '-1' ORDER BY dateparution DESC" , 2, "id, name , dateparution , description, status, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
-        $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4);
+        $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4, '' , "ORDER BY status ASC");
         $b=$category->getAllBy([],["id,description"],2);
+
+
         $v->assign( "a", $a );
         $v->assign( "b", $b);
         $v->assign( "array",$array);
+        $v->assign("current_sidebar", 'article');
     }
 
     //Modifier Article
@@ -409,22 +678,79 @@ class AdminController{
         $category = new Category();
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
-        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name , dateparution , description , id_Category"], 2);
-        $b=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
+        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name ,image, dateparution , description , id_Category"], 2);
+        $array=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
-        $v->assign( "a", $a);
-        $v->assign( "b", $b);
+       // $v->assign( "a", $a);
+       // $v->assign( "b", $b);
+
+        $form = $article->formUpdateArticle();
+
+        $v->assign("current", 'users');
+        $v->assign("config", $form );
+
+
+        $articles = array(
+            "id" => $a[0]->getId(),
+            "name" => $a[0]->getName(),
+            "picture" => $a[0]->getImage(),
+            "dateparution" => $a[0]->getDateParution(),
+            "description" => $a[0]->getDescription(),
+            "category" => $a[0]->getCategory()
+
+        );
+
+        $vars = array(
+            "options" => $array,
+            "article" => $articles
+        );
+
+
+        $v->assign("options", $vars);
+        //$v->assign( "u", $u);
+
+
     }
 
     public function modifyAdminArticle(){
         $article = new Article();
-        $article->setId( $_POST['id'] );
-        $article->setName( $_POST['name'] );
-        $article->setDateParution( $_POST['dateparution'] );
-        $article->setDescription( $_POST['description'] );
-        $article->setImage( $_POST['image'] );
-        $article->setCategory( $_POST['category'] );
+        $article->setId(htmlentities($_POST['id']));
+        $article->setName(htmlentities($_POST['name']));
+        $article->setDateParution(htmlentities($_POST['dateparution']));
+        $article->setDescription(htmlentities($_POST['description']));
+        //$article->setImage(htmlentities($_POST['picture']));
+        if( !empty( $_FILES['picture']['name'] ) ){
+            $name = "public/img/a_p/"; // changer le répertoire
+            $file_name = basename($_FILES['picture']['name']);
+            $size = $_FILES['picture']['size'];
+            $extension = strrchr($_FILES['picture']['name'], '.');
+//
+//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
+//                //echo "Upload OK<br>";
+//            }
+//            if( !is_dir( $name ) ){
+//                echo "Naaaah : " . $name;
+//            }
+
+            $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+            if(move_uploaded_file($_FILES['picture']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            {
+                //$update['picture'] = $name.$file_name;
+                $article->setImage( $name.$file_name );
+            }
+            else //Sinon (la fonction renvoie FALSE).
+            {
+                echo "An error occured: no file uploaded";die;
+                //echo self::file_upload_error_message($_FILES['picture']['error']);
+                //echo 'Echec de l\'upload !';
+                //print_r($_FILES);
+            }
+        }
+        $article->setCategory(htmlentities($_POST['category']));
+        $form = $article->formUpdateArticle();
+        $errors=Validator::validate($form,$_POST);
+
 
         //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
         $article->updateTable(["name" => $article->getName(),
@@ -437,73 +763,136 @@ class AdminController{
     }
     //Supprimer Article
     public function deleteArticle(){
-        $article = new Article( $_GET['id']);
+        $article = new Article();
+        $article->setId($_GET['id']);
         //$a = $_GET['id'];
         //$article->getUpdate("id = ".$a."", 1, "status = '-1'");
-        $article->updateTable(["status"=>"-1"],["id"=>$article->getId() ]);
+        $article->updateTable(["status"=>"-1"],["id" => $article->getId()]);
         $this->getArticleAdmin();
     }
 
     public function parutionArticle(){
-        $article = new Article( $_GET['id'] );
-        //$a = $_GET['id'];
+        $article = new Article();
+        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name , dateparution , description , id_Category, status"], 2);
         //$article->getUpdate("id = ".$a."", 1, "status = '1' , dateparution=DATE( NOW())");
-        $article->updateTable(["status"=>"1","dateparution"=>DATE('Y-m-d')],["id"=>$article->getId() ]);
+        if ($a[0]->getStatus()==0)
+            $article->updateTable(["status"=>"1","dateparution"=>DATE('Y-m-d')],["id"=>$a[0]->getId()]);
+        if ($a[0]->getStatus()==1)
+            $article->updateTable(["status"=>"0","dateparution"=>DATE('Y-m-d')],["id"=>$a[0]->getId()]);
         $this->getArticleAdmin();
     }
     //Ajouter un article
     public function addArticle(){
         $v = new Views( "addArticleAdmin", "admin_header" );
          $category = new Category();
+
+
+         $article = new Article();
+         $form = $article->formArticle();
+
+         //var_dump( $form ); die;
          //$b = $category->getUpdate(" ", 2, "id, description");
-         $b=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
+         $b=$category->getAllBy(["id_CategoryType"=>"1", "status" => "1"],["id,description"],3);
         $v->assign("current", 'article');
-        $v->assign( "b", $b);
+        $v->assign("config", $form );
+        $v->assign( "options", $b);
     }
 
     public function addAdminArticle(){
         $article = new Article();
-        $article->setName( $_POST['name'] );
-        $article->setDescription( $_POST['description'] );
-        $article->setImage( $_POST['image'] );
-        $article->setCategory( $_POST['category'] );
+        $article->setName(htmlentities($_POST['name']));
+        $article->setDescription(htmlentities($_POST['description']));
+        $article->setCategory(htmlentities($_POST['category']));
 
-        $params = ["name" => $article->getName(),
-            "dateparution" => date('Y-m-d'),
-            "description" => $article->getDescription(),
-            "image" => $article->getImage(),
-            "status" => 0,
-            "minidescription" => substr($article->getDescription(), 0,19),
-            "id_Category" => $article->getCategory()];
 
-        //var_dump( $params ); die;
+        // le $_FILES['picture'] il faut remplacer le picture par ton name de ton input
+
+        if( !empty( $_FILES['picture']['name'] ) ){
+            $name = "public/img/a_p/"; // changer le répertoire
+            $file_name = basename($_FILES['picture']['name']);
+            $size = $_FILES['picture']['size'];
+            $extension = strrchr($_FILES['picture']['name'], '.');
+//
+//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
+//                //echo "Upload OK<br>";
+//            }
+//            if( !is_dir( $name ) ){
+//                echo "Naaaah : " . $name;
+//            }
+
+            $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+            if(move_uploaded_file($_FILES['picture']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            {
+                //$update['picture'] = $name.$file_name;
+                $article->setImage( $name.$file_name );
+            }
+            else //Sinon (la fonction renvoie FALSE).
+            {
+                echo "An error occured: no file uploaded";die;
+                //echo self::file_upload_error_message($_FILES['picture']['error']);
+                //echo 'Echec de l\'upload !';
+                //print_r($_FILES);
+            }
+        }
+        //$article->setImage($_POST['picture']);
+        $form = $article->formArticle();
+        $errors=Validator::validate($form,$_POST);
+        $params=["name" => $article->getName(),
+                "description" => $article->getDescription(),
+                "dateparution" => DATE('Y-m-d'),
+                "minidescription" => substr($article->getDescription(), 0,19),
+                "image" => $article->getImage(),
+                "status" => 0,
+                "id_Category" => $article->getCategory()];
+
         //$article->getUpdate(" ", 4, "(name, dateparution, description, image, status, minidescription, id_Category) VALUES ('".$article->getName()."',DATE( NOW() ), '".$article->getDescription()."', '".$article->getImage()."', 0, '".substr($article->getDescription(), 0,19)."', '".$article->getCategory()."')");
-        $article->updateTable( $params );
+        $article->updateTable($params);
         $this->getArticleAdmin();
     }
     public function getCategoryAdmin(){
         $v = new Views( "categoryAdmin", "admin_header" );
-        $v->assign("current", 'category');
+        $v->assign("current", 'content');
         $category = new Category();
 
-        $u= $category->getAllBy(["id_CategoryType"=>"1","status" => "0"] , ["id, description"], 3);
+        $u= $category->getAllBy(["id_CategoryType"=>"1","status" => "1"] , ["id, description"], 3);
 
         $v->assign( "u", $u );
+        $v->assign("current_sidebar", 'category');
     }
     public function addCategory(){
         $v = new Views( "addCategory", "admin_header" );
-        $category = new Category();
+         $category = new Category();
+         $form = $category->formAddCategory();
+
+        $v->assign("config", $form );
         $v->assign("current", 'category');
     }
 
     public function addAdminCategory(){
-        $category = new Category( );
-        $category->setDescription(htmlentities( $_POST['description'] ));
+        $category = new Category();
+        $category->setDescription(htmlentities($_POST['description']));
+        $category->setIdUser($_SESSION["id"]);
+        $form = $category->formAddCategory();
+        $errors=Validator::validate($form,$_POST);
+        $errorsUnique=Validator::isUnique($form,$_POST);
 
+        if(empty($errors) && empty($errorsUnique)){
        // $category->getUpdate(" ", 4, "(description) VALUES ('".$category->getDescription()."')");
         $category->updateTable(["description" => $category->getDescription(),
-        "id_CategoryType" => "1"]);
+        "id_CategoryType" => "1", "id_User"=> $category->getIdUser() ]);
         $this->getCategoryAdmin();
+    }else{
+        $v = new Views( "addCategory", "admin_header" );
+         $category = new Category();
+         $form = $category->formAddCategory();
+
+        $v->assign("config", $form );
+        $v->assign("current", 'category');
+        $v->assign("errors",$errors);
+        $v->assign("errorsUnique",$errorsUnique);
+
+    }
+
     }
     public function modifyCategory(){
 
@@ -511,14 +900,36 @@ class AdminController{
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
         $a= $category->getAllBy(["id"=>$_GET['id']],["id, description"], 2);
         $v = new Views( "modifyCategory", "admin_header" );
-        $v->assign("current", 'category');
         $v->assign( "a", $a);
+
+         $form = $category->formUpdateCategory();
+
+
+        $v->assign("current", 'category');
+        $v->assign("config", $form );
+
+
+        $categories = array(
+            "id" => $a[0]->getId(),
+            "description" => $a[0]->getDescription(),
+
+        );
+
+        $vars = array(
+            "category" => $categories
+        );
+
+         $v->assign("options", $vars);
+
     }
 
     public function modifyAdminCategory(){
         $category = new Category();
-        $category->setId(htmlentities( $_POST['id'] ));
-        $category->setDescription(htmlentities( $_POST['description'] ));
+        $category->setId(htmlentities($_POST['id']));
+        $category->setDescription(htmlentities($_POST['description']));
+        $category->setIdUser($_SESSION["id"]);
+        $form = $category->formUpdateCategory();
+        $errors=Validator::validate($form,$_POST);
 
 
         //$category->getUpdate("id = ".$category->getId()."", 1, "description = '".$category->getDescription()."'");
@@ -527,11 +938,13 @@ class AdminController{
 
     }
     public function deleteCategory(){
-        $category = new Category( $_GET['id'] );
+        $category = new Category();
+        $a = $_GET['id'];
         //$category->getUpdate("id = ".$a."", 1, "status = '-1'");
-        $category->updateTable(["status"=>"-1"],["id"=>$category->getId() ]);
+        $category->updateTable(["status"=>"-1"],["id"=>$a]);
         $this->getCategoryAdmin();
     }
+
 
 
 

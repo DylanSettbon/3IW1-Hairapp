@@ -16,16 +16,35 @@ class Validator
         foreach ($form["input"] as $name => $config) {
 
             if (isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]]) {
-                $errorsMsg[] = $name . " doit être identique à " . $config["confirm"];
-            } else if (!isset($config["confirm"])) {
-                if ($config["type"] == "email" && !self::checkEmail($params[$name])) {
+                $errorsMsg[] = "Les deux mots de passe doivent être identiques";
+            } else if (!isset($config["confirm"] ) ) {
+                if ( $config["type"] == "email" ){
+                    if(isset($config['disable'])) {
 
-                    $errorsMsg[] = "L'email n'est pas valide";
+                        if( $config['disable'] != true ){
+                            if( !self::checkEmail($params[$name] ) ){
+                                $errorsMsg[] = "L'email n'est pas valide";
+                            }
+                        }
+                    }
+                    else{
+                        if( !self::checkEmail($params[$name] ) ){
+                            $errorsMsg[] = "L'email n'est pas valide";
+                        }
+                    }
+
+                
 
                 } else if ($config["type"] == "password" && !self::checkPwd($params[$name])) {
                     $errorsMsg[] = "Le mot de passe est incorrect (6 à 12, min, maj, chiffres)";
                 }
 
+            }
+
+            if( $config["type"] == "tel" ){
+                if( !self::checkTel( $params[$name] ) ){
+                    $errorsMsg[] = "Numero de téléphone non conforme";
+                }
             }
 
 
@@ -56,6 +75,74 @@ class Validator
         return $errorsMsg;
     }
 
+    public static function isUnique($form, $params)
+    {
+        $errorsMsg = [];
+
+        foreach ($form["input"] as $name => $config) {
+
+            if( $config["type"] == "email" ){
+                if( !self::isUniqueEmail( $params[$name] ) ){
+                    $errorsMsg[] = "Email deja existant";
+                }
+            }
+
+            if( $config["type"] == "text" ){
+                if( !self::isUniqueCategory( $params[$name] ) ){
+                    $errorsMsg[] = "Categorie deja existante";
+                }
+            } 
+
+            if( $config["type"] == "tel" ){
+                if( !self::isUniqueTel( $params[$name] ) ){
+                    $errorsMsg[] = "Telephone deja existant";
+                }
+            } 
+
+        }
+
+        //deuxième foreach pour les textarea
+
+
+        return $errorsMsg;
+    }
+    public static function checkTel( $phone ){
+        if( preg_match( "#^0[1-68]([-. ]?\d{2}){4}$#", $phone ) ){
+            return true;
+        }
+        return false;
+    }
+
+    public static function isUniqueEmail( $email ){
+        $users = new User();
+        $users = $users->getAllBy(["email" => $email], ["id, email, status"], 2);
+        foreach ($users as $user) {
+        if ($user->getStatus() != '-1')
+            return false;
+        }
+        return true;
+    }
+
+    public static function isUniqueTel( $tel ){
+        $users = new User();
+        $users = $users->getAllBy(["tel" => $tel], ["id, tel, status"], 2);
+        foreach ($users as $user) {
+        if ( $user->getStatus() != '-1')
+            return false;
+        }
+        return true;
+    }
+
+    public static function isUniqueCategory( $categorie ){
+        $cat = new Category();
+        $cat = $cat->getAllBy(["description" => $categorie], ["id, description, status, id_CategoryType"], 2);
+        foreach ($cat as $category) {
+        if ( $category->getStatus() != '-1' && $category->getIdCategoryType()==1)
+            return false;
+        }
+        return true;
+    }
+
 
     public static function login( $form, $params ){
 
@@ -71,10 +158,6 @@ class Validator
 
     public static function checkEmail($email){
         return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    public static function isUniqueEmail( $email ){
-
     }
 
 
@@ -156,7 +239,7 @@ class Validator
         if(!isset($_POST['package'])){
             $errors[] = 'Aucun forfait selectioné';
         }
-        if(!isset($_POST['cbHeure'])){
+        if(!isset($_POST['cbHeure']) && !isset($_POST['appointmentHour'])){
             $errors[] = 'Aucune horaires selectionée';
         }
         else{
@@ -170,11 +253,11 @@ class Validator
         }
 
         if(empty($errors)){
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_Hairdresser' => $_POST['hairdresser']]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
                 $errors[] = 'Ce creneau horaire n\'est pas disponible';
             }
 
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_User' => $_SESSION['id']]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
                 $errors[] = 'Vous avez déja un rendez-vous pour cette date et ce créneau horaire';
             }
 

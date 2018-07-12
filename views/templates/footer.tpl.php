@@ -14,6 +14,15 @@
     </div>
 </footer>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121853212-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-121853212-1');
+</script>
+
     <script src=" <?php echo DIRNAME; ?>public/js/index.js"></script>
 
     <script>

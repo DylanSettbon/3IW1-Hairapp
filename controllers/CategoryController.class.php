@@ -6,7 +6,7 @@ class CategoryController{
         $v->assign("current", "category");
         $category = new Category();
 
-        $u= $category->getAllBy(["status" => "0","id_CategoryType"=>"1"] , ["id, description"], 3);
+        $u= $category->getAllBy(["status" => "1","id_CategoryType"=>"1"] , ["id, description"], 3);
         $v->assign( "u", $u );
         
     }
@@ -17,12 +17,12 @@ class CategoryController{
         $article = new Article();
         $cat=$_POST['category'];
         
-        if ($cat == " "){
-        	$u= $article->getAllBy(["status" => "1"] , ["id,name,image, minidescription,dateparution"], 2);
-        }else{
-        	$u= $article->getAllBy(["status" => "1" , "id_Category" => $cat] , ["id,name,image, minidescription,dateparution"], 3);
+        if ($cat == " "):
+            $u= $article->getAllBy(["status" => "1"] , ["id,name,image, minidescription,dateparution"], 2);
+        else:
+            $u= $article->getAllBy(["status" => "1" , "id_Category" => $cat] , ["id,name,image, minidescription,dateparution"], 3);
             
-        }
+        endif;
 
         
 
