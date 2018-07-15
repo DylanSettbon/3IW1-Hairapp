@@ -94,25 +94,27 @@ class Category extends BaseSql
         $this->status = $id_Status;
     }
 
-    public function checkIfCategoryDescriptionExistsAndNotNull($status = null){
-        if($this->description == ""){return false;}
+    public function checkIfCategoryDescriptionExistsAndNotNull($status = null)
+    {
+        if ($this->description == "") {
+            return false;
+        }
         //Status = 0, les categorie sont inactif
         //Status = 1, les categoris actifs
         //Status = 2, Toutes les categories;
 
-        if($status == 0){
-            return $this->countTable('Category',['description' => $this->description,'status' => $status]) != 0 ? true : false;
-        }
-        else if($status == 1){
-            return $this->countTable('Category',['description' => $this->description,'status' => '1']) != 0 ? true : false;
-        }
-        else if($status == 2) {
+        if ($status == 0) {
+            return $this->countTable('Category', ['description' => $this->description, 'status' => $status]) != 0 ? true : false;
+        } else if ($status == 1) {
+            return $this->countTable('Category', ['description' => $this->description, 'status' => '1']) != 0 ? true : false;
+        } else if ($status == 2) {
             return $this->countTable('Category', ['description' => $this->description]) > 0 ? true : false;
         }
     }
 
-    public static function getCategoriesWithPackage($categories){
-        foreach($categories as $i=>$category) {
+    public static function getCategoriesWithPackage($categories)
+    {
+        foreach ($categories as $i => $category) {
             $package = new Package();
             $packages = $package->getAllBy(['id_Category' => $category->getId()], null, 2);
             if (empty($packages)) {
@@ -122,45 +124,45 @@ class Category extends BaseSql
         return array_values($categories);
     }
 
-    public function formAddCategory(){
+    public function formAddCategory()
+    {
 
         return [
-            "config"=>["method"=>"POST", "action"=>"addAdminCategory", "submit"=>"Enregistrer"],
-            "input"=>[
+            "config" => ["method" => "POST", "action" => "addAdminCategory", "submit" => "Enregistrer"],
+            "input" => [
 
-                "description"=>[
-                    "type"=>"text",
-                    "class"=>"input input_sign-in",
-                    "placeholder"=>"Nom de la categorie",
-                    "required"=>true
+                "description" => [
+                    "type" => "text",
+                    "class" => "input input_sign-in",
+                    "placeholder" => "Nom de la categorie",
+                    "required" => true
 
 
                 ]
 
             ],
 
-
-            
 
         ];
     }
 
-     public function formUpdateCategory(){
+    public function formUpdateCategory()
+    {
 
         return [
-            "config"=>["method"=>"POST", "action"=>"modifyAdminCategory", "submit"=>"Enregistrer"],
-            "input"=>[
-                "id"=>[
-                    "type"=>"hidden",
-                    "class"=>"input input_sign-in",
-                    "placeholder"=>"Nom de la categorie"
+            "config" => ["method" => "POST", "action" => "modifyAdminCategory", "submit" => "Enregistrer"],
+            "input" => [
+                "id" => [
+                    "type" => "hidden",
+                    "class" => "input input_sign-in",
+                    "placeholder" => "Nom de la categorie"
                 ],
 
-                "description"=>[
-                    "type"=>"text",
-                    "class"=>"input input_sign-in",
-                    "placeholder"=>"Nom de la categorie",
-                    "required"=>true
+                "description" => [
+                    "type" => "text",
+                    "class" => "input input_sign-in",
+                    "placeholder" => "Nom de la categorie",
+                    "required" => true
 
 
                 ]
@@ -168,8 +170,65 @@ class Category extends BaseSql
             ],
 
 
-            
+        ];
+    }
 
+    public function formAddCategoryForPackageAdmin()
+    {
+        return [
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/saveCategoryPackage"],
+            "h2" => [
+                "value" => "Ajouter une catégorie"
+            ],
+            "input" => [
+                "categoryDesc" => [
+                    "id" => "categoryDesc",
+                    "type" => "text",
+                    "placeholder" => "Entrez le nom de la categorie",
+                    "required" => true
+                ],
+                "categoryPackageSubmit" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Valider"
+                ],
+                "categoryPackageCancel" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Annuler",
+                ],
+
+            ],
+        ];
+    }
+
+    public function formUpdateCategoryForPackageAdmin()
+    {
+        return [
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/saveCategoryPackage"],
+            "h2" => [
+                "value" => "Modifier le nom de la catégorie"
+            ],
+            "input" => [
+                "categoryId" => [
+                    "id" => "categoryIdUpdate",
+                    "type" => "hidden",
+                ],
+                "categoryDesc" => [
+                    "id" => "categoryDescUpdate",
+                    "type" => "text",
+                ],
+                "categoryPackageSubmit" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Valider"
+                ],
+                "categoryPackageCancel" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Annuler",
+                ],
+            ],
         ];
     }
 }

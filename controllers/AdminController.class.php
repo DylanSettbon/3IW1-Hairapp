@@ -2,20 +2,32 @@
 use PHPMailer\PHPMailer\PHPMailer;
 class AdminController{
 
-
-    //Partie d'administration globale
-    public function getTestAdmin(){
+    public function getDashboard(){
         $user = new User();
         $package = new Package();
         $appointment = new Appointment();
+        $max = ['max_to' => date('Y-m-d')];
+        $min = ['min_to' => (new DateTime('-1 day'))->format('Y-m-d')];
 
+        var_dump($user->getAllBy(['id' => ['1','2','3']],null,8));
+
+        $countUser = $user->countTable();
+        $avgPackage= $package->getAllBy(null,['AVG(price) as price','AVG(duration) as duration'],3)[0];
+        $avgPrice = round($avgPackage->getPrice(),2);
+        $avgDuration = round($avgPackage->getDuration(),2);
+        $futurAppointment = count($appointment->getAllBy($max,['dateAppointment','planned' => 1],7));
+        $pastAppointment = count($appointment->getAllBy($min,['dateAppointment','planned' => 1],6));
+        $nowAppointment = $appointment->countTable(null,['dateAppointment' => date('Y-m-d'),'planned' => 1]);
 
         $v = new Views( "dashboard", "admin_header" );
+        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'nowAppointment' => $nowAppointment,'futurAppointment' => $futurAppointment]);
+        $v->assign('countUser',$countUser);
+        $v->assign('avgPackagePrice',$avgPrice);
+        $v->assign('avgPackageDuration',$avgDuration);
         $v->assign("current", 'dashboard');
     }
 
     public function getAdmin(){
-
         $week = self::getWeek();
         $extremums = self::getExtemum();
 
@@ -65,14 +77,30 @@ class AdminController{
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
+        $article = new Article();
+        $form = $article->formArticle();
+
+
 
         $category = new Category();
         $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
+        $v->assign("config", $form );
 
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();
         $v->assign('packages',$packages);
+
+        //form
+        $formAddCategory = $category->formAddCategoryForPackageAdmin();
+        $formUpdateCategory = $category->formUpdateCategoryForPackageAdmin();
+        $formAddPackage = $package->formAddPackageForPackageAdmin();
+        $formUpdatePackage = $package->formUpdatePackageForPackageAdmin();
+        $v->assign("configAddCategory", $formAddCategory );
+        $v->assign("configUpdateCategory", $formUpdateCategory);
+        $v->assign("configAddPackage", $formAddPackage);
+        $v->assign("configUpdatePackage", $formUpdatePackage);
     }
 
     public function getAppointmentAdmin(){
@@ -104,7 +132,7 @@ class AdminController{
     public function saveCategoryPackage()
     {
         //ajouter les erreurs
-        if ($_POST['categoryPackageSubmit'] == 'Valider') {
+        if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
             $category = new Category();
             $category->setDescription($_POST['categoryDesc']);
             $category->setIdUser($_SESSION['id']);
@@ -141,7 +169,7 @@ class AdminController{
     }
 
     public function savePackage(){
-        if($_POST['packageSubmit'] == 'Valider') {
+        if(isset($_POST['packageSubmit']) && $_POST['packageSubmit'] == 'Valider') {
             $package = new Package();
             $package->setDescription($_POST['description']);
             $package->setPrice($_POST['price']);
