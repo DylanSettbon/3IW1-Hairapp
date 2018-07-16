@@ -1,4 +1,4 @@
-<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>" enctype="multipart/form-data">
+<form method="<?php echo $config["config"]["method"]?>" action="<?php echo DIRNAME . $config["config"]["action"]?>" enctype="multipart/form-data">
 
 
     <?php foreach ($config["input"] as $name => $params):?>
@@ -34,12 +34,12 @@
                     class="<?php echo $params['class']; ?>"
                     placeholder="<?php echo $params["placeholder"];?>"
                     value="<?php echo DIRNAME.$vars['article'][$name]; ?>"
-            >
+            
             <?php if( isset( $_POST[$name] ) ): ?>
                 <?php echo "value=".DIRNAME."public/img/a_p/".$_POST[$name]; ?>
             <?php endif; ?>
             <?php echo (isset($params["required"]))?"required='required'":"";?>
-
+>
 
 
         <?php endif;?>

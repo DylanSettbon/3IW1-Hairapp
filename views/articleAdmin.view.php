@@ -30,38 +30,30 @@ include "templates/sidebar.view.php";
                         
 
                     </tr>
-                    <?php   
-                    
-                            foreach ($a as $article):
+                    <?php  foreach ($a as $article): ?>
                                 
-
-                                
-                                echo "
+    
                                  <tr>
-                                    <td> ".  $article->getName() . " 
+                                    <td> <?php echo $article->getName(); ?> 
                                     </td>
-                                    <td> ".  $article->getDateParution() . " 
-                                    </td>"; 
-                                    foreach($b as $category):
-                                        if($article->getCategory()==$category->getId()){
-                                        echo"<td> ". $category->getDescription()." </td>";
-                                    }
-                                endforeach;
-                                echo"
-                                    <td> ". $array[$article->getStatus()] ."</td>
-                                    <td><a href='".DIRNAME."article/getArticle?id=".$article->getId()."' class='buttonUserModify'>Voir plus</a></td>
-                                    <td><a href='modifyArticle?id=" . $article->getId() ."' class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href='deleteArticle?id=" . $article->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
-                                    "; ?>
+                                    <td> <?php echo $article->getDateParution(); ?> 
+                                    </td>
+
+                                    <?php foreach($b as $category): ?>
+
+                                        <?php if($article->getCategory()==$category->getId()): ?>
+                                        <td><?php echo $category->getDescription();?> </td>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                    <td> <?php echo $array[$article->getStatus()] ?></td>
+                                    <td><a href="<?php echo DIRNAME; ?>article/getArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Voir plus</a></td>
+                                    <td><a href="/admin/modifyArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href="/admin/deleteArticle/<?php echo $article->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
                                     <?php if($article->getStatus()==0):?>
-                                     <?php   echo"
-                                    <td><a href='parutionArticle?id=" . $article->getId() ."' class='buttonUserModify'>Activer</a></td>
-                                    "; ?>
+                                    <td><a href="/admin/parutionArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Activer</a></td>
                                     <?php endif; ?>
                                     <?php if($article->getStatus()==1): ?>
-                                    <?php echo"
-                                    <td><a href='parutionArticle?id=" . $article->getId() ."' class='buttonUserDelete'>Désactiver</a></td>
-                                    ";?>
+                                    <td><a href="/admin/parutionArticle/<?php echo $article->getId() ; ?>" class='buttonUserDelete'>Désactiver</a></td>
                                 <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>

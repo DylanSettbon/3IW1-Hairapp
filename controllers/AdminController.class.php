@@ -263,10 +263,10 @@ class AdminController{
     }
 
     //Partie de gestion des users
-    public function modifyUser(){
+    public function modifyUser($params){
         
         $user = new User();
-        $a = $_GET['id'];
+        $a = $params['URL'][0];
         $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
         $u = $user->getAllBy(["id" => $a] , ["id, firstname , lastname , email , status , tel"], 2);
         $v = new Views( "modifyAdmin", "admin_header" );
@@ -394,16 +394,16 @@ class AdminController{
 
     } 
 
-    public function deleteUser(){
+    public function deleteUser($params){
         $user = new User();
-        $a = $_GET['id'];
+        $a = $params['URL'][0];
         $user->getUpdate("id = ".$a."", 1, "status = '-1'");
         $this->getUserAdmin();
     }
 
-    public function delete(){
+    public function delete($params){
         $user = new User();
-        $a = $_GET['id'];
+        $a = $params['URL'][0];
         $user->getUpdate("id = ".$a."", 3, " ");
         $this->getUserAdmin();
     }
@@ -422,8 +422,6 @@ class AdminController{
 
     public function add(){
         $user = new User();
-
-        $folder = DIRNAME;
 
         $user->setFirstname(htmlentities($_POST['prenom']));
         $user->setLastname(htmlentities($_POST['nom']));
@@ -605,13 +603,13 @@ class AdminController{
     }
 
     //Modifier Article
-    public function modifyArticle(){
+    public function modifyArticle($params){
         
         $article = new Article();
         $category = new Category();
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
-        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name ,image, dateparution , description , id_Category"], 2);
+        $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name ,image, dateparution , description , id_Category"], 2);
         $array=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
@@ -649,11 +647,18 @@ class AdminController{
     public function modifyAdminArticle(){
         $article = new Article();
         $article->setId(htmlentities($_POST['id']));
-        $article->setName(htmlentities($_POST['name']));
-        $article->setDateParution(htmlentities($_POST['dateparution']));
-        $article->setDescription(htmlentities($_POST['description']));
-        //$article->setImage(htmlentities($_POST['picture']));
+        $article->setName(htmlentities( $_POST['name'] ) );
+        $article->setDateParution(htmlentities( $_POST['dateparution'] ) );
+        $article->setDescription(htmlentities( $_POST['description'] ) );
+
+        $params = array(
+            "name" => $article->getName(),
+            "dateparution" => $article->getDateParution() ,
+            "description" =>  $article->getDescription()      
+        );
+                //$article->setImage(htmlentities($_POST['picture']));
         if( !empty( $_FILES['picture']['name'] ) ){
+            
             $name = "public/img/a_p/"; // changer le répertoire
             $file_name = basename($_FILES['picture']['name']);
             $size = $_FILES['picture']['size'];
@@ -671,6 +676,7 @@ class AdminController{
             {
                 //$update['picture'] = $name.$file_name;
                 $article->setImage( $name.$file_name );
+                $params[] = $article->getImage();
             }
             else //Sinon (la fonction renvoie FALSE).
             {
@@ -686,27 +692,27 @@ class AdminController{
 
 
         //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
-        $article->updateTable(["name" => $article->getName(),
-                "dateparution" => $article->getDateParution() ,
-                "description" => $article->getDescription(),
-                "image" => $article->getImage(), 
-                "id_Category" => $article->getCategory()],["id"=>$article->getId()]);
+        
+        $article->updateTable($params,["id"=>$article->getId()]);
         $this->getArticleAdmin();
 
     } 
     //Supprimer Article
-    public function deleteArticle(){
+    public function deleteArticle($params){
+
         $article = new Article();
-        $article->setId($_GET['id']);
+        $article->setId($params['URL'][0]);
         //$a = $_GET['id'];
         //$article->getUpdate("id = ".$a."", 1, "status = '-1'");
         $article->updateTable(["status"=>"-1"],["id" => $article->getId()]);
         $this->getArticleAdmin();
     }
 
-    public function parutionArticle(){
+    public function parutionArticle($params){
+       
+
         $article = new Article();
-        $a=$article->getAllBy(["id" => $_GET['id']] , ["id, name , dateparution , description , id_Category, status"], 2);
+        $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name , dateparution , description , id_Category, status"], 2);
         //$article->getUpdate("id = ".$a."", 1, "status = '1' , dateparution=DATE( NOW())");
         if ($a[0]->getStatus()==0)
             $article->updateTable(["status"=>"1","dateparution"=>DATE('Y-m-d')],["id"=>$a[0]->getId()]);
@@ -826,11 +832,11 @@ class AdminController{
     }
 
     }
-    public function modifyCategory(){
+    public function modifyCategory($params){
         
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
-        $a= $category->getAllBy(["id"=>$_GET['id']],["id, description"], 2);
+        $a= $category->getAllBy(["id"=>$params['URL'][0]],["id, description"], 2);
         $v = new Views( "modifyCategory", "admin_header" );
         $v->assign( "a", $a);
 
@@ -869,9 +875,9 @@ class AdminController{
         $this->getCategoryAdmin();
 
     } 
-    public function deleteCategory(){
+    public function deleteCategory($params){
         $category = new Category();
-        $a = $_GET['id'];
+        $a = $params['URL'][0];
         //$category->getUpdate("id = ".$a."", 1, "status = '-1'");
         $category->updateTable(["status"=>"-1"],["id"=>$a]);
         $this->getCategoryAdmin();

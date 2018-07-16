@@ -302,7 +302,8 @@ class BaseSql{
 
              if( isset( $inner['inner_table']) ){
                  $bind_inner = $this->bindParams($inner);
-                 $from = $this->table . $bind_inner['inner'];
+                 $firstTable = substr( $this->table, 0, 1);
+                 $from = $this->table.' '.$firstTable . $bind_inner['inner'];
              }
              else{
                  $from = $this->table;
@@ -325,6 +326,7 @@ class BaseSql{
              elseif ( $tab == 7 ){
                  $where_type = $columns[0] . $bind['max_to'];
              }
+             
             if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$this->table.' WHERE '
@@ -335,7 +337,7 @@ class BaseSql{
                  .$where_type);
 
             }
-
+         
              $sql->execute($sql_params);
 
          }

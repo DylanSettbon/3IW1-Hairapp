@@ -8,12 +8,12 @@
 
 class ArticleController  extends BaseSql {
 
-    public function getArticle(){
-
+    public function getArticle($params){
+        
         $v = new Views( "article", "header" );
-         $v->assign("current", 'articleCategory');
+        $v->assign("current", 'articleCategory');
         $article = new Article();
-        $cat=$_GET['id'];
+        $cat=$params['URL'][0];
         $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
 
 #Voir sur internet pour recuperer hauter et largeur de l'image

@@ -70,7 +70,7 @@
                 <a href='#'>Vitrine</a>
             </li>
             <li <?php if ( $this->data['current'] == 'contact') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
-                <a href='<?php echo DIRNAME;?>contact/getContact'>Salon</a>
+                <a href='<?php echo DIRNAME;?>contact/getContact'>Contact</a>
             </li>
             <li <?php if ( $this->data['current'] == 'category') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
                 <a href='<?php echo DIRNAME;?>category/getCategory'>Article</a>

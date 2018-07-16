@@ -44,25 +44,47 @@
 </section>
 <main class="container">
 
-    <section id="acc-articles" class="col-s-3 col-m-12 col-l-4">
+    <section id="acc-articles" class="col-s-12 col-m-12 col-l-4">
         <div class="container">
             <div class="row">
-                <h1 class="title col-s-8 col-m-8 col-l-12">Articles</h1>
+                <h1 class="title col-s-12 col-m-12 col-l-12">Articles</h1>
             </div>
 
+            <div class="row">
+            <?php if (count($articles) > 3 ) : ?>
+             <?php while ($i < 3): ?>
+                 <div class="col-s-12 col-m-12 col-l-12">
+                    <div class="article-accueil">
+                        <img class="img-art" src="../public/img/quote.svg"/>
+                        <span>
+                            <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
+                            <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
+                        </span>
 
-             <?php while ($i < 4): ?>
-            <div class="col-s-3 col-m-6 col-l-12 article-accueil">
-                <img class="img-art" src="../public/img/quote.svg"/>
-                <span>
-                    <h3 class="titre-article"><?php echo $articles[$i]->getName(); ?></h3>
-                    <p class="content-art"><?php echo $articles[$i]->getMiniDescription(); ?></p>
-                </span>
-                <a href="<?php echo DIRNAME.'article/getArticle?id='. $articles[$i]->getId().''; ?>" >Voir plus...</a>
-            </div>
+                        <a class='button-title' href="<?php echo DIRNAME.'article/getArticle/'. $articles[$i]->getId().''; ?>" >Voir plus...</a>
+                     </div>
+                </div>
             <?php $i++; ?>
         <?php endwhile ?>
-          
+            <?php elseif (count($articles) == 0) : ?>
+                         <h3 style="margin: auto;">Aucun article disponible </h3>
+             <?php else : ?>
+                <?php foreach( $articles as $article) : ?>
+                     <div class="col-s-12 col-m-12 col-l-12">
+                        <div class="article-accueil">
+                            <img class="img-art" src="../public/img/quote.svg"/>
+                            <span>
+                                <h3 class="titre-article"><?php echo $article->getName(); ?></h3>
+                                <p class="content-art"><?php echo $article->getMiniDescription(); ?></p>
+                            </span>
+                            <a class='button-title' href="<?php echo DIRNAME.'article/getArticle/'. $article->getId().''; ?>" >Voir plus...</a>
+                        </div>
+                     </div>
+                <?php endforeach ?>
+            <?php endif ?>
+            
+        </div>
+           
     </section>
 
     <section class="col-s-12 col-m-12 col-l-4 forfait-accueil">
