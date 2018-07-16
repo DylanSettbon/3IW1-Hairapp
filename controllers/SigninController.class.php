@@ -21,40 +21,6 @@ class SigninController{
         $v->assign("config",$form);
     }
 
-    public function activate(){
-
-        $user = new User();
-
-        $userInformations = $user->getAllBy(
-            array( "token" => $_GET['token'], "status" => 0 ), null, 3
-        );
-
-
-        if( !empty( $userInformations ) ){
-            //$userInformations[0]->setStatus(1);
-
-            $userInformations[0]->setToken();
-
-            $params = array(
-                "token" => $userInformations[0]->getToken(),
-                "status" => 1,
-                "dateUpdated" => date("Y-m-d")
-            );
-
-
-            $user->updateTable( $params, array( "id" => $userInformations[0]->getId() ) );
-
-
-        }
-        $form = $user->LoginForm();
-
-        $v = new Views( "login", "header" );
-        $v->assign("config", $form );
-        $v->assign( "current", "login" );
-        $v->assign("success","Vous pouvez désormais vous connecter !");
-         header("Location: " . DIRNAME . "login/getLogin");
-    }
-
     /**
      *
      */
@@ -142,7 +108,6 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
                 $v->assign( "current", "login" );
                 $v->assign("config",$form);
                 $v->assign("success","Un mail de validation vous a été envoyé afin de finaliser votre inscription.");
-
             }
             else{
                 $v = new Views( "signin", "header" );

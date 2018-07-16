@@ -26,15 +26,20 @@
 
           <div class="nav-left" id="nav-left">
               <ul>
-                  <li <?php if ( $this->data['current'] == 'dashboard') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                  <li <?php if ( $current == 'dashboard') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
                     <a href="<?php echo DIRNAME;?>admin/getAdmin">Dashboard</a>
                   </li>
-                  <li <?php if ( $this->data['current'] == 'users') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                  <li <?php if ( $current == 'users') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
                       <a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a>
                   </li>
-                  <li <?php if ( $this->data['current'] == 'content') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
-                      <a href="<?php echo DIRNAME;?>admin/getContentAdmin">Gestion du contenu</a>
+                  <li <?php if ( $current == 'content') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
+                      <a href="<?php echo DIRNAME;?>admin/getPackageAdmin">Gestion du contenu</a>
                   </li>
+                  <?php if ( Security::isConnected() && ( Security::isCoiffeur() || Security::isAdmin() ) ): ?>
+                      <li <?php if ($current == 'planning'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif; ?> >
+                          <a href="<?php echo DIRNAME;?>planning/getPlanning?h=admin">Planning</a>
+                      </li>
+                  <?php endif; ?>
               </ul>
           </div>
 

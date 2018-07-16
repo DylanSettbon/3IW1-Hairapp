@@ -434,8 +434,7 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/salon coiffure.jpeg");
-  height: 0; }
+  background-image: url("../img/salon coiffure.jpeg"); }
 
 #main-art {
   background-color: white;
@@ -758,7 +757,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; }
+    margin-top: 10%; }
   .sidenav {
     height: 100%;
     width: 160px;
@@ -839,7 +838,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; }
+    margin-top: 10%; }
   .sidenav li {
     display: block;
     padding: 10px 0px; }
@@ -1069,7 +1068,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #009cdf;
+  background-color: #009CDF;
   text-align: center;
   cursor: pointer;
   margin: 25px; }
@@ -1086,7 +1085,7 @@ img {
   margin-left: 35px; }
 
 .buttonUser {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1122,7 +1121,7 @@ img {
   cursor: pointer; }
 
 .buttonUserModify {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1325,10 +1324,10 @@ input[type=submit].btnFormCategory {
   transition: .4s; }
 
 input:checked + .slider {
-  background-color: #009cdf; }
+  background-color: #009CDF; }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #009cdf; }
+  box-shadow: 0 0 1px #009CDF; }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -1463,10 +1462,6 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
 
-.success {
-  background-color: #ddffdd;
-  border-left: 6px solid #4CAF50; }
-
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px; }
@@ -1483,7 +1478,7 @@ input[type="checkbox"][id="template4"] + label::before {
   height: 300px; }
 
 .updateButton {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;

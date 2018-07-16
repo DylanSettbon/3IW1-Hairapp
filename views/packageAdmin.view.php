@@ -13,8 +13,19 @@ include "templates/sidebar.view.php";
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
             <h1 class="packageAdmin-title">Personnaliser la carte du salon</h1>
             <div class="row">
-                <a href='#' method="post" class="btnCreateCategory col-l-3" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
+                <a href='#' method="post" class="buttonUserAdd" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
             </div>
+            <?php if (isset($errors)): ?>
+                <ul class="errors">
+                            <?php foreach ($errors as $error):?>
+                            <li>
+                                <div class="div-errors danger">
+                                    <p><?php echo $error;?></p>
+                                </div>
+                            </li>
+                            <?php endforeach;?>
+                </ul>
+            <?php endif; ?>
 
             <div id="package_content">
                 <?php
@@ -22,17 +33,14 @@ include "templates/sidebar.view.php";
                     <?php if($key%2 == 0):?>
                         <div class="row">
                     <?php endif; ?>
-                    <table id="packageCategory" class="PackageTab col-l-6">
+                    <table id="packageCategory" class="PackageTab">
                         <caption class="packageCategory-title">
-                            <label class="switch" style="float:left">
-                                <input type="checkbox" <?php echo $category->getStatus() ? 'checked' : ''; ?>>
-                                <span class="slider"></span>
-                            </label>
-						    <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
-                            <a href="deleteCategoryPackage?id=<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
-                            <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription()?>'])" style="float:right";>Modifier</a>
+                                <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
+                                <span style="float:left; margin-left:2%"><?php echo $category->getDisplayOrder();?></span>
+                            <a href="/admin/deleteCategoryPackage/<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
+                            <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription() . '\',\'' . $category->getDisplayOrder()?>'])" style="float:right";>Modifier</a>
 
-								  </caption>
+                        </caption>
                                     <tr>
                                         <th id="tablePackageDesc">Description</th>
                                         <th id="tablePackagePrice">Prix</th>
@@ -72,69 +80,33 @@ include "templates/sidebar.view.php";
 
         <div id="categoryPackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=saveCategoryPackage method="post">
-                    <h2>Ajouter une catégorie</h2>
-                    <hr>
-                    <input id="categoryDesc" type="text" name="categoryDesc" placeholder="Entrez le nom de la categorie">
-                    <input class="btnFormCategory" type="submit" value="Valider" name="categoryPackageSubmit">
-                    <input class="btnFormCategory" type="submit" value="Annuler" name="categoryPackageSubmit">
-                </form>
+                <?php $this->addModal("formPackageAdmin", $configAddCategory, []); ?>
             </div>
         </div>
 
 
         <div id="updateCategoryPackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage updateCategoryPackage" action=saveCategoryPackage method="post">
-                    <h2>Modifier le nom de la catégorie</h2>
-                    <hr>
-                    <input id="categoryIdUpdate" type="hidden" name="categoryId">
-                    <input id="categoryDescUpdate" type="text" name="categoryDesc">
-                    <input class="btnFormCategory" type="submit" value="Valider" name="categoryPackageSubmit">
-                    <input class="btnFormCategory" type="submit" value="Annuler" name="categoryPackageSubmit">
-                </form>
+                <?php $this->addModal("formPackageAdmin", $configUpdateCategory, []); ?>
             </div>
         </div>
 
 
         <div id="packageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=savePackage method="post">
-                    <h2 class="categoryTitleForm">Ajouter un forfait à </h2>
-                    <hr>
-                    <input id="pCategoryId" type="hidden" name="categoryId">
-                    <input id="packageDesc" type="text" name="description" placeholder="Entrez une description">
-                    <input id="packagePrice" type="text" name="price" placeholder="Entrez un prix">
-                    <input id="packageDuration" type="text" name="duration" placeholder="Entrez une durée en minute">
-                    <input class="btnFormCategory" type="submit" value="Valider" name="packageSubmit">
-                    <input class="btnFormCategory" type="submit" value="Cancel" name="packageSubmit" onclick=div_hide()>
-                </form>
+                <?php $this->addModal("formPackageAdmin", $configAddPackage, []); ?>
             </div>
         </div>
 
-
         <div id="updatePackageForm" style="overflow:hidden;">
             <div id="popUpForm">
-                <form class="formPackage createCategoryPackage" action=savePackage method="post">
-                    <h2 class="categoryTitleForm">Modifier un forfait</h2>
-                    <hr>
-                    <input id="packageId" type="hidden" name="packageId">
-                    <input id="pCategoryIdUpdate" type="hidden" name="categoryId">
-                    <label>Description</label>
-                    <input id="packageDescUpdate" type="text" name="description">
-                    <label>Prix</label>
-                    <input id="packagePriceUpdate" type="text" name="price">
-                    <label>Durée</label>
-                    <input id="packageDurationUpdate" type="text" name="duration">
-                    <input class="btnFormCategory" type="submit" value="Valider" name="packageSubmit">
-                    <input class="btnFormCategory" type="submit" value="Annuler" name="packageSubmit" onclick=div_hide()>
-                </form>
+                <?php $this->addModal("formPackageAdmin", $configUpdatePackage, []); ?>
             </div>
         </div>
 
     </div>
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-    <script type="text/javascript" src="../public/js/packageAdmin.js"></script>
+    <script type="text/javascript" src="/public/js/packageAdmin.js"></script>
 
 
     </main>

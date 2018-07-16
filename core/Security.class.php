@@ -10,8 +10,8 @@ class Security{
             if( $user->getToken() == $_SESSION['token'] && $user->getEmail() == $_SESSION['email'] ){
                 return true;
             }
-            else{
-                return false;
+                else{
+                    return false;
             }
         }
         return false;

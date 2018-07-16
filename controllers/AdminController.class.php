@@ -2,10 +2,32 @@
 use PHPMailer\PHPMailer\PHPMailer;
 class AdminController{
 
+    public function getDashboard(){
+        $user = new User();
+        $package = new Package();
+        $appointment = new Appointment();
+        $max = ['max_to' => date('Y-m-d')];
+        $min = ['min_to' => (new DateTime('-1 day'))->format('Y-m-d')];
 
-    //Partie d'administration globale
+        var_dump($user->getAllBy(['id' => ['1','2','3']],null,8));
+
+        $countUser = $user->countTable();
+        $avgPackage= $package->getAllBy(null,['AVG(price) as price','AVG(duration) as duration'],3)[0];
+        $avgPrice = round($avgPackage->getPrice(),2);
+        $avgDuration = round($avgPackage->getDuration(),2);
+        $futurAppointment = count($appointment->getAllBy($max,['dateAppointment','planned' => 1],7));
+        $pastAppointment = count($appointment->getAllBy($min,['dateAppointment','planned' => 1],6));
+        $nowAppointment = $appointment->countTable(null,['dateAppointment' => date('Y-m-d'),'planned' => 1]);
+
+        $v = new Views( "dashboard", "admin_header" );
+        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'nowAppointment' => $nowAppointment,'futurAppointment' => $futurAppointment]);
+        $v->assign('countUser',$countUser);
+        $v->assign('avgPackagePrice',$avgPrice);
+        $v->assign('avgPackageDuration',$avgDuration);
+        $v->assign("current", 'dashboard');
+    }
+
     public function getAdmin(){
-
         $week = self::getWeek();
         $extremums = self::getExtemum();
 
@@ -47,159 +69,328 @@ class AdminController{
     }
 
     public function getContentAdmin(){
-        $v = new Views( "packageAdmin", "admin_header" );
-        $v->assign("current", 'content');
-        $v->assign("current_sidebar", 'packages');
+       $this->getPackageAdmin();
     }
 
     //Partie de gestion des forfaits
-    public function getPackageAdmin(){
+    public function getPackageAdmin($data = null){
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
-
-        $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
+        $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
+        $v->assign("config", $form );
 
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();
         $v->assign('packages',$packages);
+
+        //form
+        $formAddCategory = $category->formAddCategoryForPackageAdmin();
+        $formUpdateCategory = $category->formUpdateCategoryForPackageAdmin();
+        $formAddPackage = $package->formAddPackageForPackageAdmin();
+        $formUpdatePackage = $package->formUpdatePackageForPackageAdmin();
+        $v->assign("configAddCategory", $formAddCategory );
+        $v->assign("configUpdateCategory", $formUpdateCategory);
+        $v->assign("configAddPackage", $formAddPackage);
+        $v->assign("configUpdatePackage", $formUpdatePackage);
+        if(isset($data['errors'])){
+            $v->assign("errors",$data['errors']);
+        }
     }
 
     public function getAppointmentAdmin(){
+        //Faire un appel ajax sur une case:
+        // Si elle est cocher afficher tous les rdv
         $v = new Views( 'appointmentAdmin', "admin_header" );
         $v->assign("current", 'content');
-        $v->assign("current_sidebar", 'articles');
+        $v->assign("current_sidebar", 'appointment');
+
+        $max = ['max_to' => date('Y-m-d')];
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy(null,['appointment.id',
+        $appointments = $appointment->getAllBy($max,[
                                                             'dateAppointment',
+                                                            'idAppointment',
                                                             'hourAppointment',
-                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_User',
+                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_user',
                                                             'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
-                                                            'p.description as id_Package'],3,$inner);
+                                                            'p.description as id_Package',
+                                                            'planned'],7,$inner);
 
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
 
     public function saveCategoryPackage()
     {
-        if ($_POST['categoryPackageSubmit'] == 'Valider') {
-            $category = new Category();
+        if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
+            $category = new Category(3);
             $category->setDescription($_POST['categoryDesc']);
             $category->setIdUser($_SESSION['id']);
-            $category->setIdCategoryType(3);
-
+            $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
+            $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
+            $category->setDisplayOrder($displayOrder);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
 
             if (!isset($_POST['categoryId'])) {
-                if(!$category->checkIfCategoryDescriptionExistsAndNotNull(2)) {
-                    $category->updateTable(
-                        [
-                            "description" => $category->getDescription(),
-                            "id_User" => $category->getIdUser(),
-                            "id_CategoryType" => $category->getIdCategoryType()
-                        ]);
-                }
+                $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
+                if (empty($errors)) {
+                    if (!empty($oldCategory[0])) {
+                        $oldCategory = $oldCategory[0];
+                        $oldCategory->setDisplayOrder(9999);
+                        $oldCategory->updateTable(
+                            ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                            ["id" => $oldCategory->getId()]
+                        );
+                    }
 
-                if ($category->checkIfCategoryDescriptionExistsAndNotNull(0)) {
-                    $category->updateTable(
-                        ["status" => '1'],
-                        ["description" => $category->getDescription()]
-                    );
-                } else if($category->checkIfCategoryDescriptionExistsAndNotNull(1)){
-                    echo '<span style="background-color: red;">Catégorie déja existante</span>';
+                    if (!$category->checkIfCategoryDescriptionExists(2)) {
+                        //Si order existe = remplacer l'ancien par le derniere ordre possible
+                        $category->updateTable(
+                            [
+                                "description" => $category->getDescription(),
+                                "id_User" => $category->getIdUser(),
+                                "id_CategoryType" => $category->getIdCategoryType(),
+                                "displayOrder" => $category->getDisplayOrder()
+                            ]);
+                    }
+
+                    else if ($category->checkIfCategoryDescriptionExists(0)) {
+                        $category->updateTable(
+                            ["status" => '1', "displayOrder" => $category->getDisplayOrder()],
+                            ["description" => $category->getDescription()]
+                        );
+                    }
                 }
             }
-
             else {
-            $category->setId($_POST['categoryId']);
-            $category->updateTable(
-                ["description" => $category->getDescription()],
-                ["id" => $category->getId()]);
-        }}
+                $category->setId($_POST['categoryId']);
+                if (!empty($oldCategory[0])) {
+                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $oldCategory = $oldCategory[0];
+                    $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
+                    $oldCategory->updateTable(
+                        ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                        ["id" => $oldCategory->getId()]
+                    );
+                }
+                $category->updateTable(
+                    ["description" => $category->getDescription(), "displayOrder" => $category->getDisplayOrder()],
+                    ["id" => $category->getId()]);
+            }
+        }
+        $this->getPackageAdmin(isset($errors) ? $errors : null);
 
-        $this->getPackageAdmin();
     }
 
-    public function savePackage(){
-        if($_POST['packageSubmit'] == 'Valider') {
+    public function savePackage()
+    {
+        if (isset($_POST['packageSubmit']) && $_POST['packageSubmit'] == 'Valider') {
             $package = new Package();
             $package->setDescription($_POST['description']);
             $package->setPrice($_POST['price']);
             $package->setDuration($_POST['duration']);
             $package->setIdCategory($_POST['categoryId']);
             $package->setIdUser($_SESSION['id']);
-            if($package->checkIfPackageExistsOrIsNull()){
-                if (!isset($_POST['packageId'])){
-                    $package->updateTable(
-                        [
-                            "description" => $package->getDescription(),
-                            "price" => $package->getPrice(),
-                            "duration" => $package->getDuration(),
-                            "id_User" => $package->getIdUser(),
-                            "id_Category" => $package->getIdCategory()
-                        ]
-                    );
-                } else {
-                    $package->setId($_POST['packageId']);
-                    $package->updateTable(
-                        ["description" => $package->getDescription(),
-                            "price" => $package->getPrice(),
-                            "duration" => $package->getDuration()],
-                        ["id" => $package->getId()]
-                    );
+            if ($package->checkIfPackageExists()) {
+                $errors = ['errors' =>'Ce forfait existe déja pour cette catégorie'];
+            }
+            else{
+                    if (!isset($_POST['packageId'])) {
+                        $package->updateTable(
+                            [
+                                "description" => $package->getDescription(),
+                                "price" => $package->getPrice(),
+                                "duration" => $package->getDuration(),
+                                "id_User" => $package->getIdUser(),
+                                "id_Category" => $package->getIdCategory()
+                            ]
+                        );
+                    } else {
+                        $package->setId($_POST['packageId']);
+                        $package->updateTable(
+                            ["description" => $package->getDescription(),
+                                "price" => $package->getPrice(),
+                                "duration" => $package->getDuration()],
+                            ["id" => $package->getId()]
+                        );
+                    }
                 }
+            }
+            $this->getPackageAdmin(isset($errors)?$errors:'');
+        }
+
+    public function saveAppointment($params){
+        if ($params['POST']['btn-Valider']) {
+            $appointment = new Appointment();
+            $month = $_POST['mois']<10 ? '0' . $_POST['mois'] : $_POST['mois'];
+            $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
+            $date = $_POST['annee'] . $month . $day;
+
+
+            if (isset($params['URL'][0])) {
+                $appointment->setId($params['URL'][0]);
+                $current = $appointment->getAllBy(['idAppointment' => $appointment->getId()],null,3)[0];
+                $appointment->setHourAppointment(isset($_POST['appointmentHour'])?$_POST['appointmentHour']:$current->getHourAppointment());
+                $appointment->setDateAppointment($date);
+                $appointment->setIdHairdresser(isset($_POST['hairdresser'])?$_POST['hairdresser']:$current->getIdHairdresser());
+                $appointment->setIdPackage(isset($_POST['package'])?$_POST['package']:$current->getIdPackage());
+                $appointment->updateTable( ['dateAppointment' => $appointment->getDateAppointment(),
+                                            'hourAppointment' => $appointment->getHourAppointment(),
+                                            'id_Hairdresser' => $appointment->getIdHairdresser(),
+                                            'id_Package' => $appointment->getIdPackage()],
+                                            ['idAppointment' => $appointment->getId()]);
+
+
+                if (!empty($current)) {
+                    $idUser = $current->getIdUser();
+                    $user = new User();
+                    $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+                    $current->sendUpdateAppointmentMail($appointment,[$mailUser]);
+                }
+                $this->getAppointmentAdmin();
+            } else {
+                $errors = ['errors' => Validator::checkAvailableAppointment()];
+                if(!empty($errors['errors'])) {
+                    $this->updateAppointment($params,$errors);
+                }
+                else {
+                    $appointment->setHourAppointment($_POST['appointmentHour']);
+                    $appointment->setDateAppointment($date);
+                    $appointment->setIdHairdresser($_POST['hairdresser']);
+                    $appointment->setIdPackage($_POST['package']);
+                    $appointment->setIdUser($_POST['user']);
+                    $appointment->updateTable(['dateAppointment' => $appointment->getDateAppointment(),
+                        'hourAppointment' => $appointment->getHourAppointment(),
+                        'id_User' => $appointment->getIdUser(),
+                        'id_Hairdresser' => $appointment->getIdHairdresser(),
+                        'id_Package' => $appointment->getIdPackage()]);
+                    $idUser = $appointment->getIdUser();
+                    $user = new User();
+                    $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+                    $appointment->sendAddAppointmentMail([$mailUser]);
+                    $this->getAppointmentAdmin();
+                }
+            }
+        }
+    }
+
+    public function deleteCategoryPackage($params){
+        $category = new Category(3);
+        $category->setId($params['URL'][0]);
+        $category->updateTable(
+            ["status" => 0],
+            ["id" => $category->getId()]);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        if (!empty($categories)){
+            $categories = Category::getCategoriesSortedByOrder($categories);
+            foreach($categories as $key=>$category){
+                $category->updateTable(
+                    ['displayOrder' => $key +1],
+                    ['id' => $category->getId()]
+                );
             }
         }
         $this->getPackageAdmin();
     }
 
-    public function deleteCategoryPackage(){
-        $category = new Category();
-        $category->setId($_GET['id']);
-        $category->updateTable(
-            ["status" => 0],
-            ["id" => $category->getId()]);
-        $this->getPackageAdmin();
-    }
-
     public function ajaxDeletePackage(){
-        //Modifier fonction pour where in
+        $package = new Package();
         foreach($_POST['idPackageDeleted'] as $id){
-            $package = new Package();
-            $package->delete(['id' => $id]);
-            echo 'ok';
+            $package->updateTable(
+                ["status" => 0],
+                ["id" => $id]);
         }
     }
 
+    //ADMIN : APPOINTMENT
+    public function updateAppointment($params,$data = null){
+        $v = new Views( 'appointmentAdminEdit', "admin_header" );
 
-    //Partie de gestion des nouvelles pages créés
-    public function getPagesAdmin(){
-        $v = new Views( 'pageAdmin', "admin_header" );
-        $page = new Pages();
-        $pages = $page->getAllBy( null, null, 3 );
+        $package =  new Package();
+        $packages = $package->getAssociativeArrayPackage();
 
-        $v->assign("pages", $pages );
-        $v->assign("current_sidebar", 'pages');
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+
+        $hairdresser = new Hairdresser();
+        $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
+
+        $appointment = new Appointment();
+        //Selection de tous les coiffeurs et des forfaits
+        $hours = $appointment->getAllAvailableTimeRange();
+
+        if (isset($params['URL'][0])){
+            $inner = ['inner_table' => ['user u1','user u2','package p'],
+                'inner_column' => ['id_User','id_Hairdresser','id_Package'],
+                'inner_ref_to' => ['u1.id','u2.id','p.id']];
+
+            $currentAppointment = $appointment->getAllBy(['idAppointment' => $params['URL'][0]],[
+                'idAppointment',
+                'dateAppointment',
+                'hourAppointment',
+                'CONCAT(u1.firstname," ",u1.lastname) as id_user',
+                'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                'p.description as id_Package'],3,$inner);
+
+            if(!empty($currentAppointment)){
+                $currentAppointment = $currentAppointment[0];
+                $hours = array_diff($hours,[substr($currentAppointment->getHourAppointment(),0,5)]);
+                $v->assign("currentAppointment", $currentAppointment);
+                $v->assign("hours",$hours);
+                $v->assign("titleEdit", 'Rendez-vous de '.$currentAppointment->getIdUser().' le '.$currentAppointment->getFormatedDateAppointment());
+                $v->assign("day",str_replace('0','',explode('-', $currentAppointment->getDateAppointment())[2]));
+                $v->assign("month",str_replace('0','',explode('-', $currentAppointment->getDateAppointment())[1]));
+                $v->assign("year",explode('-', $currentAppointment->getDateAppointment())[0]);
+            }
+            else {
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+            }
+        }
+        else{
+                $user = new User();
+                $users = $user->getAllBy(['status' => '1'],null,3);
+                $v->assign("users",$users);
+                $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
+                $v->assign("hours",$hours);
+        }
+
+        $v->assign("packages",$packages);
+        $v->assign("hairdressers",$hairdressers);
+        $v->assign("categories",$categories);
+        $v->assign("current_sidebar", 'appointment');
         $v->assign("current", 'content');
+        isset($data)?$v->assign('data',$data):'';
     }
 
-    public function getPageEdit(){
-        $v = new Views( 'pagesAdminEdit', "admin_header" );
-        //var_dump( "ok" ); die;
-        $v->assign("current_sidebar", 'pages');
-        $v->assign("current", 'content');
+    public function deleteAppointment($params){
+        $appointment = new Appointment();
+        $currentAppointment = $appointment->getAllBy(['planned' => 1,'idAppointment' => $params['URL'][0]],null,3);
+        if (!empty($currentAppointment)) {
+            $idUser = $currentAppointment[0]->getIdUser();
+            $user = new User();
+            $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
+            $currentAppointment[0]->sendDeleteAppointmentMail([$mailUser]);
+        }
+
+        $appointment->updateTable(
+            ['planned' => 0],
+            ['idAppointment' => $params['URL'][0]]
+        );
+        $this->getAppointmentAdmin();
     }
 
+    //ADMIN : PAGES
     public function addPages(){
         $contents = [];
-
-
 
         if( isset( $_POST['content1'] ) ){
             $contents['content1'] = $_POST['content1'];
@@ -292,10 +483,10 @@ class AdminController{
             "user" => $users
         );
 
-        
+
         $v->assign("options", $vars);
         //$v->assign( "u", $u);
-        
+
     }
 
     public function modify(){
@@ -329,7 +520,7 @@ class AdminController{
                     break;
             }
 
-           
+
 
            // $user->getUpdate("id = ".$user->getId()."", 1, "firstname = '".$user->getFirstname()."', lastname = '".$user->getLastname().  "', email = '".$user->getEmail()."',  status = ".$user->getStatus().", tel = ".$user->getTel()."");
 
@@ -362,7 +553,7 @@ class AdminController{
             $user->updateTable(["firstname" => $user->getFirstname(),
                     "lastname" => $user->getLastname() ,
                     "email" => $user->getEmail(),
-                    "tel" => $user->getTel(), 
+                    "tel" => $user->getTel(),
                     "dateUpdated"=>$user->getDateUpdated(),
                     "status" => $user->getStatus()],["id"=>$user->getId()]
                 );
@@ -385,12 +576,12 @@ class AdminController{
                 "user" => $_POST
             );
 
-            
+
             $v->assign("options", $vars);
             $v->assign("errors",$errors);
         }
 
-        
+
 
     } 
 
@@ -434,7 +625,7 @@ class AdminController{
         $form = $user->formAddUser();
         $errors=Validator::validate($form,$_POST);
         $errorsUnique=Validator::isUnique($form,$_POST);
-        
+
         for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 10; $x = rand(0,$z), $s .= $a{$x}, $i++);
 
         if (empty($errors) && empty($errorsUnique)){
@@ -494,16 +685,16 @@ class AdminController{
                    //echo 'Message sent!';
                 }
          }
-           
+
         $user->setPwd( $s );
         //$user->getUpdate(" ", 4, "(firstname, lastname, email, pwd, token, tel, status) VALUES ('".$user->getFirstname()."', '".$user->getLastname()."', '".$user->getEmail()."', '".$s."', '".$user->getToken()."', '".$user->getTel()."', '".$user->getStatus()."')");
         $user->updateTable(["firstname" => $user->getFirstname(),
                 "lastname" => $user->getLastname() ,
                 "email" => $user->getEmail(),
-                "tel" => $user->getTel(), 
+                "tel" => $user->getTel(),
                 "status" => $user->getStatus(),
-                "changetopwd" => true, 
-                "token" =>$user->getToken(), 
+                "changetopwd" => true,
+                "token" =>$user->getToken(),
                 "dateUpdated"=>$user->getDateUpdated(),
                 "dateInserted"=>$user->getDateInserted(),
                 "pwd"=>$user->getPwd()]);
@@ -595,7 +786,7 @@ class AdminController{
         $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4, '' , "ORDER BY status ASC");
         $b=$category->getAllBy([],["id,description"],2);
 
-    
+
         $v->assign( "a", $a );
         $v->assign( "b", $b);
         $v->assign( "array",$array);
@@ -603,8 +794,13 @@ class AdminController{
     }
 
     //Modifier Article
+<<<<<<< HEAD
     public function modifyArticle($params){
         
+=======
+    public function modifyArticle(){
+
+>>>>>>> master
         $article = new Article();
         $category = new Category();
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
@@ -629,7 +825,7 @@ class AdminController{
             "dateparution" => $a[0]->getDateParution(),
             "description" => $a[0]->getDescription(),
             "category" => $a[0]->getCategory()
-            
+
         );
 
         $vars = array(
@@ -637,11 +833,11 @@ class AdminController{
             "article" => $articles
         );
 
-        
+
         $v->assign("options", $vars);
         //$v->assign( "u", $u);
-        
-    
+
+
     }
 
     public function modifyAdminArticle(){
@@ -692,11 +888,19 @@ class AdminController{
 
 
         //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
+<<<<<<< HEAD
         
         $article->updateTable($params,["id"=>$article->getId()]);
+=======
+        $article->updateTable(["name" => $article->getName(),
+                "dateparution" => $article->getDateParution() ,
+                "description" => $article->getDescription(),
+                "image" => $article->getImage(),
+                "id_Category" => $article->getCategory()],["id"=>$article->getId()]);
+>>>>>>> master
         $this->getArticleAdmin();
 
-    } 
+    }
     //Supprimer Article
     public function deleteArticle($params){
 
@@ -736,6 +940,7 @@ class AdminController{
         $v->assign("config", $form );
         $v->assign( "options", $b);
     }
+
     public function addAdminArticle(){
         $article = new Article();
         $article->setName(htmlentities($_POST['name']));
@@ -780,9 +985,9 @@ class AdminController{
                 "dateparution" => DATE('Y-m-d'),
                 "minidescription" => substr($article->getDescription(), 0,19),
                 "image" => $article->getImage(),
-                "status" => 0, 
+                "status" => 0,
                 "id_Category" => $article->getCategory()];
-        
+
         //$article->getUpdate(" ", 4, "(name, dateparution, description, image, status, minidescription, id_Category) VALUES ('".$article->getName()."',DATE( NOW() ), '".$article->getDescription()."', '".$article->getImage()."', 0, '".substr($article->getDescription(), 0,19)."', '".$article->getCategory()."')");
         $article->updateTable($params);
         $this->getArticleAdmin();
@@ -801,7 +1006,7 @@ class AdminController{
         $v = new Views( "addCategory", "admin_header" );
          $category = new Category();
          $form = $category->formAddCategory();
-        
+
         $v->assign("config", $form );
         $v->assign("current", 'category');
     }
@@ -823,7 +1028,7 @@ class AdminController{
         $v = new Views( "addCategory", "admin_header" );
          $category = new Category();
          $form = $category->formAddCategory();
-    
+
         $v->assign("config", $form );
         $v->assign("current", 'category');
         $v->assign("errors",$errors);
@@ -832,8 +1037,13 @@ class AdminController{
     }
 
     }
+<<<<<<< HEAD
     public function modifyCategory($params){
         
+=======
+    public function modifyCategory(){
+
+>>>>>>> master
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
         $a= $category->getAllBy(["id"=>$params['URL'][0]],["id, description"], 2);
@@ -842,7 +1052,7 @@ class AdminController{
 
          $form = $category->formUpdateCategory();
 
-       
+
         $v->assign("current", 'category');
         $v->assign("config", $form );
 
@@ -850,7 +1060,7 @@ class AdminController{
         $categories = array(
             "id" => $a[0]->getId(),
             "description" => $a[0]->getDescription(),
-            
+
         );
 
         $vars = array(
@@ -858,7 +1068,7 @@ class AdminController{
         );
 
          $v->assign("options", $vars);
-        
+
     }
 
     public function modifyAdminCategory(){
@@ -868,21 +1078,26 @@ class AdminController{
         $category->setIdUser($_SESSION["id"]);
         $form = $category->formUpdateCategory();
         $errors=Validator::validate($form,$_POST);
-    
+
 
         //$category->getUpdate("id = ".$category->getId()."", 1, "description = '".$category->getDescription()."'");
         $category->updateTable(["description"=>$category->getDescription()],["id"=>$category->getId()]);
         $this->getCategoryAdmin();
 
+<<<<<<< HEAD
     } 
     public function deleteCategory($params){
+=======
+    }
+    public function deleteCategory(){
+>>>>>>> master
         $category = new Category();
         $a = $params['URL'][0];
         //$category->getUpdate("id = ".$a."", 1, "status = '-1'");
         $category->updateTable(["status"=>"-1"],["id"=>$a]);
         $this->getCategoryAdmin();
     }
-    
+
 
 
 

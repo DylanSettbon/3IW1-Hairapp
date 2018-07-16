@@ -103,7 +103,7 @@ include "templates/sidebar.view.php";
 
                     </label>
                     <label>
-                        <input class='addPageRadio' type='radio' name='isNavbar' ";
+                        <input class='addPageRadio' type='radio' name='isNavbar' ;
                         <?php if( isset( $page_navbar ) && $page_navbar == 0 ):
                             echo "value ='" . $page_navbar."' checked >Ne pas afficher dans la barre de navigation";
                         else:
@@ -132,21 +132,8 @@ include "templates/sidebar.view.php";
 </main>
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 <script type="text/javascript" src="../public/js/index.js"></script>
-<script>
-    $(function () { $('#title').keyup( function () { $('#url').val( $("#title").val().replace(/\s/g, "_")); }) } )</script>
-
 
 <script src='../public/ckeditor/ckeditor.js'></script>
-
-<script>
-    $("input[id^='template']").click( function(){
-        if( $(this).is(':checked') ) {
-            $( "input[id^='template']" ).prop( "checked", false );
-            $( this ).prop( "checked", true );
-        }
-    });
-</script>
-
 
 <script>
     function chooseTemplate( template = 1 ) {

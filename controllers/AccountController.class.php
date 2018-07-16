@@ -32,6 +32,7 @@ class AccountController{
         $where = [
             "id_User" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
+            'planned'=> 1
         ];
 
         $inner = array(
@@ -69,7 +70,7 @@ class AccountController{
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
         if (count($errors)!=3){
-              $v->assign("errors",$errors); 
+              $v->assign("errors_account",$errors); 
         }
     }
     
@@ -119,6 +120,7 @@ class AccountController{
                 header("Location: ".DIRNAME."home/getHome");
 
             } else{
+                
              $this->getAccount($errors);
             }
         }
@@ -165,8 +167,6 @@ class AccountController{
     }
 
     public function saveAccount( $params ){
-
-
         $user = new User();
         $form = $user->AccountForm();
 

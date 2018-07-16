@@ -96,7 +96,7 @@ class Package extends BaseSql {
 
     public function getAssociativeArrayPackage(){
         $package = new Package();
-        $packages = $package->getAllBy([], null, 2);
+        $packages = $package->getAllBy(['status' => '1'], null, 2);
         $associativePackages = [];
         foreach($packages as $package){
             if(array_key_exists($package->getIdCategory(),$associativePackages)){
@@ -109,9 +109,99 @@ class Package extends BaseSql {
         return $associativePackages;
     }
 
-    public function checkIfPackageExistsOrIsNull(){
-        if($this->description == "" or $this->price == ""){return false;}
-        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category]) != 0 ? false : true;
+    public function checkIfPackageExists(){
+        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category,'status' => 1]) >  0 ? true : false;
     }
 
+    public function formAddPackageForPackageAdmin()
+    {
+        return [
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/savePackage"],
+            "h2" => [
+                "class" => "categoryTitleForm",
+                "value" => "Ajouter un forfait à "
+            ],
+            "input" => [
+                "categoryId" => [
+                    "id" => "pCategoryId",
+                    "type" => "hidden",
+                ],
+                "description" => [
+                    "id" => "packageDesc",
+                    "placeholder" => "Entrez une description",
+                    "type" => "text",
+                    "required" => true
+                ],
+                "price" => [
+                    "id" => "packagePrice",
+                    "placeholder" => "Entrez un prix",
+                    "type" => "text",
+                    "required" => true
+                ],
+                "duration" => [
+                    "id" => "packageDuration",
+                    "placeholder" => "Entrez une durée en minute",
+                    "type" => "text",
+                    "required" => true
+                ],
+                "packageSubmit" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Valider"
+                ],
+                "packageCancel" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Annuler",
+                ],
+            ],
+        ];
+    }
+
+    public function formUpdatePackageForPackageAdmin()
+    {
+        return [
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/savePackage"],
+            "h2" => [
+                "class" => "categoryTitleForm",
+                "value" => "Modifier un forfait"
+            ],
+            "input" => [
+                "packageId" => [
+                    "id" => "packageId",
+                    "type" => "hidden",
+                ],
+                "categoryId" => [
+                    "id" => "pCategoryIdUpdate",
+                    "type" => "hidden",
+                ],
+                "description" => [
+                    "label" => ["text" => "Description"],
+                    "id" => "packageDescUpdate",
+                    "type" => "text",
+                ],
+                "price" => [
+                    "label" => ["text" => "Prix"],
+                    "id" => "packagePriceUpdate",
+                    "type" => "text",
+                ],
+                "duration" => [
+                    "label" => ["text" => "Durée"],
+                    "id" => "packageDurationUpdate",
+                    "type" => "text",
+                ],
+
+                "packageSubmit" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Valider"
+                ],
+                "packageCancel" => [
+                    "class" => "btnFormCategory",
+                    "type" => "submit",
+                    "value" => "Annuler",
+                ],
+            ],
+        ];
+    }
 }

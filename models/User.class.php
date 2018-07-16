@@ -246,6 +246,10 @@ class User extends BaseSql {
         $this->lastConnection = $lastConnection;
     }
 
+    public function getFullName(){
+        return $this->lastname.' '.$this->firstname;
+    }
+
     public function FormSignIn(){
 
         return [
@@ -422,7 +426,7 @@ class User extends BaseSql {
 
     public function LoginForm(){
         return [
-            "config"=>["method"=>"POST", "action"=>"getVerify", "submit"=>"Se connecter"],
+            "config"=>["method"=>"POST", "action"=>"login/getVerify", "submit"=>"Se connecter"],
             "input"=>[
                 "email"=>[
                     "type"=>"email",
@@ -435,6 +439,10 @@ class User extends BaseSql {
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Votre mot de passe",
                     "required"=>true
+                ],
+                "referer"=>[
+                    "type"=>"text",
+                    "hidden"=>true
                 ],
             ],
         ];

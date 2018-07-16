@@ -1,4 +1,4 @@
-<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>" class="col-l-12">
+<form method="<?php echo $config["config"]["method"]?>" action="<?php echo DIRNAME.$config["config"]["action"]?>" class="col-l-12">
 
 
     <?php foreach ($config["input"] as $name => $params):?>
@@ -23,6 +23,11 @@
 
             <?php echo (isset($params["disable"]))?"disabled":"";?>
             <?php echo (isset($params["required"]))?"required='required'":"";?>
+            <?php echo (isset($params["hidden"]))?"hidden":"";?>
+
+            <?php if ($name == 'referer'): ?>
+                value="<?php echo parse_url($_SERVER["HTTP_REFERER"])["path"]?>"
+            <?php endif;?>
         >
 
     <?php endif;?>

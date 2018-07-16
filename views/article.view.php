@@ -23,23 +23,26 @@
             <h2>Commentaire</h2>
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-6">
-              <?php foreach($all as $item):?>
-              	<?php foreach($theUser as $user):?>
-                    <?php if($item["statut"]==2):?>
-                  <!-- <div style="border: 1.5px groove #e6e6e6; border-radius:5px;"><?php echo $item["idUser"];?> -->
-                  <div style="position: relative;max-width: 300px;height: auto;margin: 10px 10px;padding: 2px;background-color: #DADADA;
-                              border-radius: 3px;border: 5px solid #ccc;"><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
-                    <br>
-                    <div style="margin:4px;font-size:14px;"><?php echo $item["content"];?></div></div>
-                    <div style="font-style:italic; font-size:10px;"><?php echo "Publié le ". $item["date"]?></div>
+     <div class="col-md-6">
+              <?php foreach($comments as $comment):?>
+                <?php foreach($users as $user):?>
+                  <?php if($comment["statut"]==2):?>
+                    <?php if($comment["id_user"]==$user["id"]):?>
 
-              <?php endif;?>
-              <?php endforeach;?>
+                    <!-- <div style="border: 1.5px groove #e6e6e6; border-radius:5px;"><?php echo $item["idUser"];?> -->
+                      <div style="position: relative;max-width: 300px;height: auto;margin: 10px 10px;padding: 2px;background-color: #DADADA;
+                                border-radius: 3px;border: 5px solid #ccc;"><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
+                      <br>
+                      <div style="margin:4px;font-size:14px;"><?php echo $comment["content"];?></div></div>
+                      <div style="font-style:italic; font-size:10px;"><?php echo "Publié le ". $comment["date"]?></div>
+
+                    <?php endif;?>
+                  <?php endif;?>
+                <?php endforeach;?>
               <?php endforeach;?>
 
             <?php if(Security::isConnected()){
-             $this->addModal("com", $config, $errors, $all);} ?>
+             $this->addModal("com", $config, $errors, $comments);} ?>
 
           </div>
         <hr>

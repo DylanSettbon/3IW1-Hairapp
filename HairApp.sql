@@ -46,6 +46,7 @@ CREATE TABLE category(
         id_user         Int ,
         id_CategoryType Int ,
         status          TINYINT(1) DEFAULT 1,
+        displayOrder    INT(4) NULL DEFAULT NULL,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -80,7 +81,7 @@ CREATE TABLE user(
 CREATE TABLE color(
         id      int (11) Auto_increment  NOT NULL ,
         name    Varchar (50) NOT NULL ,
-        code    Integer NOT NULL ,
+        code    Varchar (7) NOT NULL ,
         id_user Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
@@ -143,7 +144,6 @@ CREATE TABLE article(
         id_Category Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
-
 
 #------------------------------------------------------------
 # Table: Package

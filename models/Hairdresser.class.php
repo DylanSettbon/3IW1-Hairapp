@@ -55,7 +55,7 @@ class Hairdresser extends User  {
 
     public function getHairdresserAvailableForSelectedHour($hour,$date,$duration){
         $appointment = new Appointment();
-        $appointments = $appointment->getAllBy(['dateAppointment' => $date],null,3);
+        $appointments = $appointment->getAllBy(['dateAppointment' => $date,'planned'=> 1],null,3);
         $hairdressersId = $this->getAllBy(['status' => '2'],['id'],3);
         $associativeHairdresserAndAppointment = $appointment->getAssociativeHaidresserAppointmentPackage($appointments);
         if($this->checkIfTheyAreFreeHairdresser($appointments,$hairdressersId)){
