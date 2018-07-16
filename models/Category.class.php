@@ -12,34 +12,20 @@ class Category extends BaseSql
     protected $id_User;
     protected $id_CategoryType;
     protected $status;
+    protected $displayOrder;
 
-    /*
-    public function __construct()
+    /**
+     * @return mixed
+     */
+
+    public function __construct($type = null)
     {
-        $ctps = func_num_args();
-        $args = func_get_args();
-
-        switch ($ctps){
-            case 0:
-                break;
-            case 1:
-                $this->description = $args[0];
-                break;
-            case 2:
-                $this->description = $args[0];
-                $this->id_User = $args[1];
-                break;
-            case 3 :
-                $this->description = $args[0];
-                $this->id_User = $args[1];
-                $this->id_CategoryType = $args[2];
-                break;
-            default:
-                exit();
-                break;
-        }
+        // 1 : Article
+        // 2 : Produit
+        // 3 : Forfaits
+        parent::__construct();
+        isset($type)?$this->id_CategoryType = $type : '';
     }
-    */
 
     public function getId()
     {
@@ -94,30 +80,30 @@ class Category extends BaseSql
         $this->status = $id_Status;
     }
 
-    public function checkIfCategoryDescriptionExists($status = null,$type)
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    public function setDisplayOrder($displayOrder)
+    {
+        $countCategory = $this->countTable(null,['status' => '1','id_CategoryType' => $this->getIdCategoryType()]);
+        $displayOrder = $displayOrder > $countCategory ? $countCategory +1 : $displayOrder;
+        $displayOrder = $displayOrder < 1 ? 1 : $displayOrder;
+        $this->displayOrder = $displayOrder;
+    }
+
+    public function checkIfCategoryDescriptionExists($status = null)
     {
         //Status = 0, les categorie sont inactif
         //Status = 1, les categoris actifs
         //Status = 2, Toutes les categories;
-
-        switch ($type){
-            case 'article':
-                $idType = 1;
-                break;
-            case 'produit':
-                $idType = 2;
-            case 'package':
-                $idType = 3;
-        }
-
         if ($status == 0) {
-            return $this->countTable('Category',['description' => $this->description, 'status' => $status,'id_CategoryType' => $idType]) > 0 ? true : false;
+            return $this->countTable(null,['description' => $this->description, 'status' => $status,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 1) {
-            echo $this->description;
-            var_dump($this->countTable('Category',['description' => $this->description, 'status' => '1','id_CategoryType' => $idType]));
-            return $this->countTable('Category',['description' => $this->description, 'status' => '1','id_CategoryType' => $idType]) > 0 ? true : false;
+            return $this->countTable(null,['description' => $this->description, 'status' => '1','id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 2) {
-            return $this->countTable('Category',['description' => $this->description,'id_CategoryType' => $idType]) > 0 ? true : false;
+            return $this->countTable(null,['description' => $this->description,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         }
     }
 
@@ -133,6 +119,15 @@ class Category extends BaseSql
         return array_values($categories);
     }
 
+    public static function getCategoriesSortedByOrder($categories)
+    {
+        usort($categories, function($a, $b)
+        {
+            return $a->getDisplayOrder() > $b->getDisplayOrder();
+        });
+        return $categories;
+    }
+
     public function formAddCategory()
     {
 
@@ -145,8 +140,6 @@ class Category extends BaseSql
                     "class" => "input input_sign-in",
                     "placeholder" => "Nom de la categorie",
                     "required" => true
-
-
                 ]
 
             ],
@@ -193,8 +186,13 @@ class Category extends BaseSql
                 "categoryDesc" => [
                     "id" => "categoryDesc",
                     "type" => "text",
-                    "placeholder" => "Entrez le nom de la categorie",
+                    "placeholder" => "Entrez le nom de votre catégorie",
                     "required" => true
+                ],
+                "categoryOrder" => [
+                    "id" => "categoryOrder",
+                    "type" => "text",
+                    "placeholder" => "Entrez l'ordre d'apparition",
                 ],
                 "categoryPackageSubmit" => [
                     "class" => "btnFormCategory",
@@ -226,6 +224,11 @@ class Category extends BaseSql
                 "categoryDesc" => [
                     "id" => "categoryDescUpdate",
                     "type" => "text",
+                ],
+                "categoryOrder" => [
+                    "id" => "categoryOrderUpdate",
+                    "type" => "text",
+                    "placeholder" => "Entrez l'ordre d'apparition",
                 ],
                 "categoryPackageSubmit" => [
                     "class" => "btnFormCategory",

@@ -77,13 +77,9 @@ class AdminController{
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
-        $article = new Article();
-        $form = $article->formArticle();
-
-
-
-        $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
         $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
         $v->assign("config", $form );
@@ -134,41 +130,64 @@ class AdminController{
 
     public function saveCategoryPackage()
     {
-
         if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
-            $category = new Category();
+            $category = new Category(3);
             $category->setDescription($_POST['categoryDesc']);
             $category->setIdUser($_SESSION['id']);
-            $category->setIdCategoryType(3);
-
+            $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
+            $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
+            $category->setDisplayOrder($displayOrder);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
 
             if (!isset($_POST['categoryId'])) {
-                if(!$category->checkIfCategoryDescriptionExists(2,'package')) {
-                    $category->updateTable(
-                        [
-                            "description" => $category->getDescription(),
-                            "id_User" => $category->getIdUser(),
-                            "id_CategoryType" => $category->getIdCategoryType()
-                        ]);
-                }
+                $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
+                if (empty($errors)) {
+                    if (!empty($oldCategory[0])) {
+                        $oldCategory = $oldCategory[0];
+                        $oldCategory->setDisplayOrder(9999);
+                        $oldCategory->updateTable(
+                            ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                            ["id" => $oldCategory->getId()]
+                        );
+                    }
 
-                else if ($category->checkIfCategoryDescriptionExists(0,'package')) {
-                    $category->updateTable(
-                        ["status" => '1'],
-                        ["description" => $category->getDescription()]
-                    );
-                }else if($category->checkIfCategoryDescriptionExists(1,'package')){
-                    $errors = ['errors' =>'Cette catégorie est déja existante'];
+                    if (!$category->checkIfCategoryDescriptionExists(2)) {
+                        //Si order existe = remplacer l'ancien par le derniere ordre possible
+                        $category->updateTable(
+                            [
+                                "description" => $category->getDescription(),
+                                "id_User" => $category->getIdUser(),
+                                "id_CategoryType" => $category->getIdCategoryType(),
+                                "displayOrder" => $category->getDisplayOrder()
+                            ]);
+                    }
+
+                    else if ($category->checkIfCategoryDescriptionExists(0)) {
+                        $category->updateTable(
+                            ["status" => '1', "displayOrder" => $category->getDisplayOrder()],
+                            ["description" => $category->getDescription()]
+                        );
+                    }
                 }
             }
-
             else {
                 $category->setId($_POST['categoryId']);
+                if (!empty($oldCategory[0])) {
+                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $oldCategory = $oldCategory[0];
+                    $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
+                    $oldCategory->updateTable(
+                        ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                        ["id" => $oldCategory->getId()]
+                    );
+                }
                 $category->updateTable(
-                    ["description" => $category->getDescription()],
+                    ["description" => $category->getDescription(), "displayOrder" => $category->getDisplayOrder()],
                     ["id" => $category->getId()]);
-            }}
-        $this->getPackageAdmin(isset($errors)?$errors:'');
+            }
+        }
+        $this->getPackageAdmin(isset($errors) ? $errors : null);
+
     }
 
     public function savePackage()
@@ -264,18 +283,27 @@ class AdminController{
     }
 
     public function deleteCategoryPackage($params){
-        $category = new Category();
+        $category = new Category(3);
         $category->setId($params['URL'][0]);
         $category->updateTable(
             ["status" => 0],
             ["id" => $category->getId()]);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        if (!empty($categories)){
+            $categories = Category::getCategoriesSortedByOrder($categories);
+            foreach($categories as $key=>$category){
+                $category->updateTable(
+                    ['displayOrder' => $key +1],
+                    ['id' => $category->getId()]
+                );
+            }
+        }
         $this->getPackageAdmin();
     }
 
     public function ajaxDeletePackage(){
         $package = new Package();
         foreach($_POST['idPackageDeleted'] as $id){
-            var_dump($_POST['idPackageDeleted']);
             $package->updateTable(
                 ["status" => 0],
                 ["id" => $id]);
@@ -289,8 +317,8 @@ class AdminController{
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();
 
-        $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
 
         $hairdresser = new Hairdresser();
         $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);

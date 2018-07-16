@@ -2,8 +2,8 @@
 class AppointmentController{
     public function getAppointment($data){
         $v = new Views( "appointment", "header" );
-        $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
         $categories = $category->getCategoriesWithPackage($categories);
 
         $package =  new Package();
@@ -22,6 +22,7 @@ class AppointmentController{
     public function saveAppointment(){
         if (Security::isConnected()){
         $errors = ['errors' => Validator::checkAvailableAppointment()];
+
         if (!empty($errors['errors'])){
             return $this->getAppointment($errors);
         }

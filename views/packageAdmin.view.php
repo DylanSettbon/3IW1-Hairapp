@@ -15,14 +15,15 @@ include "templates/sidebar.view.php";
             <div class="row">
                 <a href='#' method="post" class="buttonUserAdd" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
             </div>
-
             <?php if (isset($errors)): ?>
                 <ul class="errors">
+                            <?php foreach ($errors as $error):?>
                             <li>
                                 <div class="div-errors danger">
-                                    <p><?php echo $errors;?></p>
+                                    <p><?php echo $error;?></p>
                                 </div>
                             </li>
+                            <?php endforeach;?>
                 </ul>
             <?php endif; ?>
 
@@ -35,9 +36,9 @@ include "templates/sidebar.view.php";
                     <table id="packageCategory" class="PackageTab">
                         <caption class="packageCategory-title">
                                 <h5 class="categoryTitle"><?php echo $category->getDescription(); ?></h5>
-                                <span style="float:left; margin-left:2%">1</span>
+                                <span style="float:left; margin-left:2%"><?php echo $category->getDisplayOrder();?></span>
                             <a href="/admin/deleteCategoryPackage/<?php echo $category->getId() ?>" name="categoryPackageSubmit" class="buttonUserDelete"style="float:right;">Supprimer</a>
-                            <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription()?>'])" style="float:right";>Modifier</a>
+                            <a href="#" class="buttonUser" type="submit" name="updateCategory" onclick="updateCategoryPackageForm_show(['<?php echo $category->getId(). '\',\'' . $category->getDescription() . '\',\'' . $category->getDisplayOrder()?>'])" style="float:right";>Modifier</a>
 
                         </caption>
                                     <tr>
