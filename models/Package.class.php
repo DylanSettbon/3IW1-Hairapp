@@ -109,9 +109,8 @@ class Package extends BaseSql {
         return $associativePackages;
     }
 
-    public function checkIfPackageExistsOrIsNull(){
-        if($this->description == "" or $this->price == ""){return false;}
-        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category,'status' => 1]) != 0 ? false : true;
+    public function checkIfPackageExists(){
+        return $this->countTable('Package',['description' => $this->description,'price' => $this->price,'duration' => $this->duration,'id_Category' =>$this->id_Category,'status' => 1]) >  0 ? true : false;
     }
 
     public function formAddPackageForPackageAdmin()

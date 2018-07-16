@@ -73,7 +73,7 @@ class AdminController{
     }
 
     //Partie de gestion des forfaits
-    public function getPackageAdmin(){
+    public function getPackageAdmin($data = null){
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
@@ -101,6 +101,9 @@ class AdminController{
         $v->assign("configUpdateCategory", $formUpdateCategory);
         $v->assign("configAddPackage", $formAddPackage);
         $v->assign("configUpdatePackage", $formUpdatePackage);
+        if(isset($data['errors'])){
+            $v->assign("errors",$data['errors']);
+        }
     }
 
     public function getAppointmentAdmin(){
@@ -131,7 +134,7 @@ class AdminController{
 
     public function saveCategoryPackage()
     {
-        //ajouter les erreurs
+
         if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
             $category = new Category();
             $category->setDescription($_POST['categoryDesc']);
@@ -140,7 +143,7 @@ class AdminController{
 
 
             if (!isset($_POST['categoryId'])) {
-                if(!$category->checkIfCategoryDescriptionExistsAndNotNull(2)) {
+                if(!$category->checkIfCategoryDescriptionExists(2,'package')) {
                     $category->updateTable(
                         [
                             "description" => $category->getDescription(),
@@ -149,13 +152,13 @@ class AdminController{
                         ]);
                 }
 
-                if ($category->checkIfCategoryDescriptionExistsAndNotNull(0)) {
+                else if ($category->checkIfCategoryDescriptionExists(0,'package')) {
                     $category->updateTable(
                         ["status" => '1'],
                         ["description" => $category->getDescription()]
                     );
-                } else if($category->checkIfCategoryDescriptionExistsAndNotNull(1)){
-                    echo '<span style="background-color: red;">Catégorie déja existante</span>';
+                }else if($category->checkIfCategoryDescriptionExists(1,'package')){
+                    $errors = ['errors' =>'Cette catégorie est déja existante'];
                 }
             }
 
@@ -165,41 +168,45 @@ class AdminController{
                     ["description" => $category->getDescription()],
                     ["id" => $category->getId()]);
             }}
-        $this->getPackageAdmin();
+        $this->getPackageAdmin(isset($errors)?$errors:'');
     }
 
-    public function savePackage(){
-        if(isset($_POST['packageSubmit']) && $_POST['packageSubmit'] == 'Valider') {
+    public function savePackage()
+    {
+        if (isset($_POST['packageSubmit']) && $_POST['packageSubmit'] == 'Valider') {
             $package = new Package();
             $package->setDescription($_POST['description']);
             $package->setPrice($_POST['price']);
             $package->setDuration($_POST['duration']);
             $package->setIdCategory($_POST['categoryId']);
             $package->setIdUser($_SESSION['id']);
-            if($package->checkIfPackageExistsOrIsNull()){
-                if (!isset($_POST['packageId'])){
-                    $package->updateTable(
-                        [
-                            "description" => $package->getDescription(),
-                            "price" => $package->getPrice(),
-                            "duration" => $package->getDuration(),
-                            "id_User" => $package->getIdUser(),
-                            "id_Category" => $package->getIdCategory()
-                        ]
-                    );
-                } else {
-                    $package->setId($_POST['packageId']);
-                    $package->updateTable(
-                        ["description" => $package->getDescription(),
-                            "price" => $package->getPrice(),
-                            "duration" => $package->getDuration()],
-                        ["id" => $package->getId()]
-                    );
+            if ($package->checkIfPackageExists()) {
+                $errors = ['errors' =>'Ce forfait existe déja pour cette catégorie'];
+            }
+            else{
+                    if (!isset($_POST['packageId'])) {
+                        $package->updateTable(
+                            [
+                                "description" => $package->getDescription(),
+                                "price" => $package->getPrice(),
+                                "duration" => $package->getDuration(),
+                                "id_User" => $package->getIdUser(),
+                                "id_Category" => $package->getIdCategory()
+                            ]
+                        );
+                    } else {
+                        $package->setId($_POST['packageId']);
+                        $package->updateTable(
+                            ["description" => $package->getDescription(),
+                                "price" => $package->getPrice(),
+                                "duration" => $package->getDuration()],
+                            ["id" => $package->getId()]
+                        );
+                    }
                 }
             }
+            $this->getPackageAdmin(isset($errors)?$errors:'');
         }
-        $this->getPackageAdmin();
-    }
 
     public function saveAppointment($params){
         if ($params['POST']['btn-Valider']) {
@@ -266,8 +273,9 @@ class AdminController{
     }
 
     public function ajaxDeletePackage(){
+        $package = new Package();
         foreach($_POST['idPackageDeleted'] as $id){
-            $package = new Package();
+            var_dump($_POST['idPackageDeleted']);
             $package->updateTable(
                 ["status" => 0],
                 ["id" => $id]);

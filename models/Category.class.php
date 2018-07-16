@@ -94,21 +94,30 @@ class Category extends BaseSql
         $this->status = $id_Status;
     }
 
-    public function checkIfCategoryDescriptionExistsAndNotNull($status = null)
+    public function checkIfCategoryDescriptionExists($status = null,$type)
     {
-        if ($this->description == "") {
-            return false;
-        }
         //Status = 0, les categorie sont inactif
         //Status = 1, les categoris actifs
         //Status = 2, Toutes les categories;
 
+        switch ($type){
+            case 'article':
+                $idType = 1;
+                break;
+            case 'produit':
+                $idType = 2;
+            case 'package':
+                $idType = 3;
+        }
+
         if ($status == 0) {
-            return $this->countTable('Category', ['description' => $this->description, 'status' => $status]) != 0 ? true : false;
+            return $this->countTable('Category',['description' => $this->description, 'status' => $status,'id_CategoryType' => $idType]) > 0 ? true : false;
         } else if ($status == 1) {
-            return $this->countTable('Category', ['description' => $this->description, 'status' => '1']) != 0 ? true : false;
+            echo $this->description;
+            var_dump($this->countTable('Category',['description' => $this->description, 'status' => '1','id_CategoryType' => $idType]));
+            return $this->countTable('Category',['description' => $this->description, 'status' => '1','id_CategoryType' => $idType]) > 0 ? true : false;
         } else if ($status == 2) {
-            return $this->countTable('Category', ['description' => $this->description]) > 0 ? true : false;
+            return $this->countTable('Category',['description' => $this->description,'id_CategoryType' => $idType]) > 0 ? true : false;
         }
     }
 

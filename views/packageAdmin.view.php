@@ -16,6 +16,16 @@ include "templates/sidebar.view.php";
                 <a href='#' method="post" class="buttonUserAdd" type="button" onclick ="createCategoryPackageForm_show()">Ajouter une catégorie</a>
             </div>
 
+            <?php if (isset($errors)): ?>
+                <ul class="errors">
+                            <li>
+                                <div class="div-errors danger">
+                                    <p><?php echo $errors;?></p>
+                                </div>
+                            </li>
+                </ul>
+            <?php endif; ?>
+
             <div id="package_content">
                 <?php
                 foreach($categories as $key=>$category):?>

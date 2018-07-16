@@ -40,7 +40,7 @@ function deletePackage(description){
     }
     $.ajax({
         type: 'POST',
-        url: 'ajaxDeletePackage',
+        url: '/admin/ajaxDeletePackage',
         data: { idPackageDeleted: allIdToDelete},
         success: function(response) {
             for(var i=0; i< allIdToDelete.length;i++){
