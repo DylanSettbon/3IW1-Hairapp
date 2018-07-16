@@ -72,13 +72,71 @@ class AdminController{
        $this->getPackageAdmin();
     }
 
+    public function saveCategoryPackage()
+    {
+        if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
+            $category = new Category(3);
+            $category->setDescription($_POST['categoryDesc']);
+            $category->setIdUser($_SESSION['id']);
+            $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
+            $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
+            $category->setDisplayOrder($displayOrder);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
+            if (!isset($_POST['categoryId'])) {
+                $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
+                if (empty($errors)) {
+                    if (!empty($oldCategory[0])) {
+                        $oldCategory = $oldCategory[0];
+                        $oldCategory->setDisplayOrder(9999);
+                        $oldCategory->updateTable(
+                            ["status_category" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                            ["id_category" => $oldCategory->getId()]
+                        );
+                    }
+                    if (!$category->checkIfCategoryDescriptionExists(2)) {
+                        //Si order existe = remplacer l'ancien par le derniere ordre possible
+                        $category->updateTable(
+                            [
+                                "description_category" => $category->getDescription(),
+                                "id_User" => $category->getIdUser(),
+                                "id_CategoryType" => $category->getIdCategoryType(),
+                                "displayOrder" => $category->getDisplayOrder()
+                            ]);
+                    }
+                    else if ($category->checkIfCategoryDescriptionExists(0)) {
+                        $category->updateTable(
+                            ["status_category" => '1', "displayOrder" => $category->getDisplayOrder()],
+                            ["description_category" => $category->getDescription()]
+                        );
+                    }
+                }
+            }
+            else {
+                $category->setId($_POST['categoryId']);
+                if (!empty($oldCategory[0])) {
+                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $oldCategory = $oldCategory[0];
+                    $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
+                    $oldCategory->updateTable(
+                        ["status_category" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
+                        ["id_category" => $oldCategory->getId()]
+                    );
+                }
+                $category->updateTable(
+                    ["description_category" => $category->getDescription(), "displayOrder" => $category->getDisplayOrder()],
+                    ["id_category" => $category->getId()]);
+            }
+        }
+        $this->getPackageAdmin(isset($errors) ? $errors : null);
+    }
+
     //Partie de gestion des forfaits
     public function getPackageAdmin($data = null){
         $v = new Views( 'packageAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'packages');
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
         $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
@@ -86,6 +144,7 @@ class AdminController{
 
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();
+
         $v->assign('packages',$packages);
 
         //form
@@ -128,67 +187,6 @@ class AdminController{
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
 
-    public function saveCategoryPackage()
-    {
-        if (isset($_POST['categoryPackageSubmit']) && $_POST['categoryPackageSubmit'] == 'Valider') {
-            $category = new Category(3);
-            $category->setDescription($_POST['categoryDesc']);
-            $category->setIdUser($_SESSION['id']);
-            $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
-            $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
-            $category->setDisplayOrder($displayOrder);
-            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
-
-            if (!isset($_POST['categoryId'])) {
-                $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
-                if (empty($errors)) {
-                    if (!empty($oldCategory[0])) {
-                        $oldCategory = $oldCategory[0];
-                        $oldCategory->setDisplayOrder(9999);
-                        $oldCategory->updateTable(
-                            ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
-                            ["id" => $oldCategory->getId()]
-                        );
-                    }
-
-                    if (!$category->checkIfCategoryDescriptionExists(2)) {
-                        //Si order existe = remplacer l'ancien par le derniere ordre possible
-                        $category->updateTable(
-                            [
-                                "description" => $category->getDescription(),
-                                "id_User" => $category->getIdUser(),
-                                "id_CategoryType" => $category->getIdCategoryType(),
-                                "displayOrder" => $category->getDisplayOrder()
-                            ]);
-                    }
-
-                    else if ($category->checkIfCategoryDescriptionExists(0)) {
-                        $category->updateTable(
-                            ["status" => '1', "displayOrder" => $category->getDisplayOrder()],
-                            ["description" => $category->getDescription()]
-                        );
-                    }
-                }
-            }
-            else {
-                $category->setId($_POST['categoryId']);
-                if (!empty($oldCategory[0])) {
-                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
-                    $oldCategory = $oldCategory[0];
-                    $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
-                    $oldCategory->updateTable(
-                        ["status" => '1', "displayOrder" => $oldCategory->getDisplayOrder()],
-                        ["id" => $oldCategory->getId()]
-                    );
-                }
-                $category->updateTable(
-                    ["description" => $category->getDescription(), "displayOrder" => $category->getDisplayOrder()],
-                    ["id" => $category->getId()]);
-            }
-        }
-        $this->getPackageAdmin(isset($errors) ? $errors : null);
-
-    }
 
     public function savePackage()
     {
@@ -389,6 +387,26 @@ class AdminController{
     }
 
     //ADMIN : PAGES
+
+    public function getPagesAdmin(){
+        $v = new Views( 'pageAdmin', "admin_header" );
+        $page = new Pages();
+        $pages = $page->getAllBy( null, null, 3 );
+
+        $v->assign("pages", $pages );
+        $v->assign("current_sidebar", 'pages');
+        $v->assign("current", 'content');
+    }
+
+    public function getPageEdit(){
+        $v = new Views( 'pagesAdminEdit', "admin_header" );
+        //var_dump( "ok" ); die;
+        $v->assign("current_sidebar", 'pages');
+        $v->assign("current", 'content');
+    }
+
+
+
     public function addPages(){
         $contents = [];
 
@@ -784,7 +802,7 @@ class AdminController{
         //$a= $article->getUpdate("status!= '-1' ORDER BY dateparution DESC" , 2, "id, name , dateparution , description, status, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
         $a= $article->getAllBy(["status" => "-1"] , ["id, name , dateparution , description , status , id_Category"], 4, '' , "ORDER BY status ASC");
-        $b=$category->getAllBy([],["id,description"],2);
+        $b=$category->getAllBy([],["id_category,description_category"],2);
 
 
         $v->assign( "a", $a );
@@ -794,13 +812,8 @@ class AdminController{
     }
 
     //Modifier Article
-<<<<<<< HEAD
     public function modifyArticle($params){
-        
-=======
-    public function modifyArticle(){
 
->>>>>>> master
         $article = new Article();
         $category = new Category();
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
@@ -888,16 +901,8 @@ class AdminController{
 
 
         //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
-<<<<<<< HEAD
         
         $article->updateTable($params,["id"=>$article->getId()]);
-=======
-        $article->updateTable(["name" => $article->getName(),
-                "dateparution" => $article->getDateParution() ,
-                "description" => $article->getDescription(),
-                "image" => $article->getImage(),
-                "id_Category" => $article->getCategory()],["id"=>$article->getId()]);
->>>>>>> master
         $this->getArticleAdmin();
 
     }
@@ -935,7 +940,7 @@ class AdminController{
 
          //var_dump( $form ); die;
          //$b = $category->getUpdate(" ", 2, "id, description");
-         $b=$category->getAllBy(["id_CategoryType"=>"1", "status" => "1"],["id,description"],3);
+         $b=$category->getAllBy(["id_CategoryType"=>"1", "status_category" => "1"],["id_category,description_category"],3);
         $v->assign("current", 'article');
         $v->assign("config", $form );
         $v->assign( "options", $b);
@@ -997,7 +1002,7 @@ class AdminController{
         $v->assign("current", 'content');
         $category = new Category();
 
-        $u= $category->getAllBy(["id_CategoryType"=>"1","status" => "1"] , ["id, description"], 3);
+        $u= $category->getAllBy(["id_CategoryType"=>"1","status_category" => "1"] , ["id_category, description_category"], 3);
 
         $v->assign( "u", $u );
         $v->assign("current_sidebar", 'category');
@@ -1021,8 +1026,8 @@ class AdminController{
 
         if(empty($errors) && empty($errorsUnique)){
        // $category->getUpdate(" ", 4, "(description) VALUES ('".$category->getDescription()."')");
-        $category->updateTable(["description" => $category->getDescription(),
-        "id_CategoryType" => "1", "id_User"=> $category->getIdUser() ]);
+        $category->updateTable(["description_category" => $category->getDescription(),
+        "id_CategoryType" => "1", "id_user"=> $category->getIdUser() ]);
         $this->getCategoryAdmin();
     }else{
         $v = new Views( "addCategory", "admin_header" );
@@ -1037,16 +1042,11 @@ class AdminController{
     }
 
     }
-<<<<<<< HEAD
-    public function modifyCategory($params){
-        
-=======
-    public function modifyCategory(){
 
->>>>>>> master
+    public function modifyCategory($params){
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
-        $a= $category->getAllBy(["id"=>$params['URL'][0]],["id, description"], 2);
+        $a= $category->getAllBy(["id"=>$params['URL'][0]],["id_category, description_category"], 2);
         $v = new Views( "modifyCategory", "admin_header" );
         $v->assign( "a", $a);
 
@@ -1058,8 +1058,8 @@ class AdminController{
 
 
         $categories = array(
-            "id" => $a[0]->getId(),
-            "description" => $a[0]->getDescription(),
+            "id_category" => $a[0]->getId(),
+            "description_category" => $a[0]->getDescription(),
 
         );
 
@@ -1081,20 +1081,16 @@ class AdminController{
 
 
         //$category->getUpdate("id = ".$category->getId()."", 1, "description = '".$category->getDescription()."'");
-        $category->updateTable(["description"=>$category->getDescription()],["id"=>$category->getId()]);
+        $category->updateTable(["description_category"=>$category->getDescription()],["id_category"=>$category->getId()]);
         $this->getCategoryAdmin();
 
-<<<<<<< HEAD
+
     } 
     public function deleteCategory($params){
-=======
-    }
-    public function deleteCategory(){
->>>>>>> master
         $category = new Category();
         $a = $params['URL'][0];
         //$category->getUpdate("id = ".$a."", 1, "status = '-1'");
-        $category->updateTable(["status"=>"-1"],["id"=>$a]);
+        $category->updateTable(["status_category"=>"-1"],["id_category"=>$a]);
         $this->getCategoryAdmin();
     }
 
@@ -1171,6 +1167,143 @@ class AdminController{
 
         return $res;
     }
+
+
+    // COMMENTAIRES
+
+        public function getCommentAdmin(){
+                $v = new Views( "commentAdmin", "admin_header" );
+                $v->assign("current", 'content');
+                $v->assign("current_sidebar", 'comments');
+                $comment = new Comment();
+                $user = new User();
+                $comments = $comment->select("comment ORDER BY date DESC");
+                $u = $user->select("user");
+                $v->assign("comments", $comments);
+                $v->assign("u", $u);
+                //$u= $comment->getAllBy(["status" => "1"] , ["id, na , lastname , email , status , tel"], 4);
+            }
+        public function declineComment(){
+                $comment = new Comment();
+                $idComment = $_GET['id'];
+                $comment->getUpdate("id = ".$idComment."", 1, "statut = '0'");
+                $this->getCommentAdmin();
+            }
+        public function acceptComment(){
+                $comment = new Comment();
+                $idComment = $_GET['id'];
+                $comment->getUpdate("id = ".$idComment."", 1, "statut = '2'");
+                $this->getCommentAdmin();
+            }
+        public function deleteComment(){
+                $comment = new Comment();
+                $idComment = $_GET['id'];
+                $comment->getUpdate("id = ".$idComment."", 3, " ");
+                $this->getCommentAdmin();
+            }
+
+        //COLORPAGE
+
+        public function getColorPage(){
+                $v = new Views("color", "admin_header");
+                $v->assign("current", 'content');
+                $v->assign("current_sidebar", 'color');
+
+            }
+
+
+        public function colorChange(){
+                if ($_POST['customColor'] == ""){
+                        //Msg d'erreur ou autre
+                    }
+            else{
+                    $color = new Color();
+
+                    $current = $color->getUpdate("name LIKE 'current'", 2, "code");
+                    $currentColor = $current[0]->getCode();
+                    $newColor = ($_POST['customColor']);
+                    $change = "main_color: ". $currentColor .";";
+                    $to = "main_color: ". $newColor .";";
+                    $path = './public/scss/_var.scss';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+                    $color->getUpdate("name LIKE 'current'", 1, "code = '". $newColor ."'");
+                    }
+            sleep(1);
+            $this->getColorPage();
+            //$myFile=fopen("./conf.inc.php", "w");
+        }
+
+        public function colorStandard(){
+                $color = new Color();
+
+                $current = $color->getUpdate("name LIKE 'current'", 2, "code");
+                $currentColor = $current[0]->getCode();
+
+                $standard = $color->getUpdate("name LIKE 'standard'", 2, "code");
+                $standardColor = $standard[0]->getCode();
+                $change = "main_color: ". $currentColor .";";
+                $to = "main_color: ". $standardColor .";";
+                $path = './public/scss/_var.scss';
+                $content = file_get_contents($path);
+                $contentReplace = str_replace($change, $to, $content);
+                file_put_contents($path, $contentReplace);
+                $color->getUpdate("name LIKE 'current'", 1, "code = '". $standardColor ."'");
+                sleep(1);
+                $this->getColorPage();
+                //$myFile=fopen("./conf.inc.php", "w");
+            }
+
+        //COLORPAGE
+
+        public function getColorPageBtn(){
+                $v = new Views("colorBtn", "admin_header");
+                $v->assign("current", 'content');
+                $v->assign("current_sidebar", 'color');
+            }
+
+
+        public function colorChangeBtn(){
+                if ($_POST['customColor'] == ""){
+                        //Msg d'erreur ou autre
+                    }
+            else{
+                    $color = new Color();
+
+                    $current = $color->getUpdate("name LIKE 'currentBtn'", 2, "code");
+                    $currentColor = $current[0]->getCode();
+                    $newColor = ($_POST['customColor']);
+                    $change = "button_color: ". $currentColor .";";
+                    $to = "button_color: ". $newColor .";";
+                    $path = './public/scss/_var.scss';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+                    $color->getUpdate("name LIKE 'currentBtn'", 1, "code = '". $newColor ."'");
+                    }
+            sleep(1);
+            $this->getColorPageBtn();
+        }
+
+        public function colorStandardBtn(){
+                $color = new Color();
+
+                $current = $color->getUpdate("name LIKE 'currentBtn'", 2, "code");
+                $currentColor = $current[0]->getCode();
+
+                $standard = $color->getUpdate("name LIKE 'standardBtn'", 2, "code");
+                $standardColor = $standard[0]->getCode();
+                $change = "button_color: ". $currentColor .";";
+                $to = "button_color: ". $standardColor .";";
+                $path = './public/scss/_var.scss';
+                $content = file_get_contents($path);
+                $contentReplace = str_replace($change, $to, $content);
+                file_put_contents($path, $contentReplace);
+                $color->getUpdate("name LIKE 'currentBtn'", 1, "code = '". $standardColor ."'");
+                sleep(1);
+                $this->getColorPageBtn();
+            }
 
 
 }

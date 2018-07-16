@@ -72,12 +72,12 @@
                     class="<?php echo $params['class']; ?>"
                     placeholder="<?php echo $params["placeholder"];?>"
                     value="<?php echo $vars['article'][$name]; ?>"
-            >
+
             <?php if( isset( $_POST[$name] ) ): ?>
                 <?php echo "value=".$_POST[$name]; ?>
             <?php endif; ?>
             <?php echo (isset($params["required"]))?"required='required'":"";?>
-
+>
         <?php endif;?>
 
 

@@ -3,7 +3,7 @@ class AppointmentController{
     public function getAppointment($data){
         $v = new Views( "appointment", "header" );
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = $category->getCategoriesWithPackage($categories);
 
         $package =  new Package();

@@ -14,7 +14,7 @@ class CategoryController{
             'inner_column' => ['a.id_Category'],
             'inner_ref_to' => ['c.id_category']
         );
-        $a= $article->getAllBy(["status" => "1"] , ["id","name","image", "minidescription","dateparution", "c.description_category"], 3, $inner);
+        $a= $article->getAllBy(["status_category" => "1"] , ["id","name","image", "minidescription","dateparution", "c.description_category"], 3, $inner);
 
         $v->assign( "a", $a );
         $v->assign( "u", $u );

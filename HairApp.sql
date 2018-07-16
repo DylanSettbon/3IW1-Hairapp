@@ -41,13 +41,13 @@ CREATE TABLE product(
 #------------------------------------------------------------
 
 CREATE TABLE category(
-        id              int (11) Auto_increment  NOT NULL ,
-        description     Varchar (250) NOT NULL ,
+        id_category              int (11) Auto_increment  NOT NULL ,
+        description_category     Varchar (250) NOT NULL ,
         id_user         Int ,
         id_CategoryType Int ,
-        status          TINYINT(1) DEFAULT 1,
+        status_category          TINYINT(1) DEFAULT 1,
         displayOrder    INT(4) NULL DEFAULT NULL,
-        PRIMARY KEY (id )
+        PRIMARY KEY (id_category )
 )ENGINE=InnoDB;
 
 

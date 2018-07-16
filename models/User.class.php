@@ -442,7 +442,9 @@ class User extends BaseSql {
                 ],
                 "referer"=>[
                     "type"=>"text",
-                    "hidden"=>true
+                    "hidden"=>true,
+                    "class" => '',
+                    "placeholder" => '',
                 ],
             ],
         ];
@@ -496,7 +498,7 @@ class User extends BaseSql {
     public function formUpdateUser(){
 
         return [
-            "config"=>["method"=>"POST", "action"=>"modify", "submit"=>"Enregistrer"],
+            "config"=>["method"=>"POST", "action"=>"admin/modify", "submit"=>"Enregistrer"],
             "input"=>[
 
 

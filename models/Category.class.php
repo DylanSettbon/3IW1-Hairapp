@@ -117,11 +117,11 @@ class Category extends BaseSql
         //Status = 1, les categoris actifs
         //Status = 2, Toutes les categories;
         if ($status == 0) {
-            return $this->countTable(null,['description' => $this->description, 'status' => $status,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category, 'status_category' => $status,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 1) {
-            return $this->countTable(null,['description' => $this->description, 'status' => '1','id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category, 'status_category' => '1','id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 2) {
-            return $this->countTable(null,['description' => $this->description,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
 
         }
     }

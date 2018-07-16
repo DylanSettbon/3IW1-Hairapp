@@ -47,13 +47,13 @@ include "templates/sidebar.view.php";
                                 <?php endforeach; ?>
                                     <td> <?php echo $array[$article->getStatus()] ?></td>
                                     <td><a href="<?php echo DIRNAME; ?>article/getArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Voir plus</a></td>
-                                    <td><a href="/admin/modifyArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href="/admin/deleteArticle/<?php echo $article->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
+                                    <td><a href="<?php echo DIRNAME ."/admin/modifyArticle/".$article->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href=<?php echo DIRNAME ."admin/deleteArticle/ ". $article->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
                                     <?php if($article->getStatus()==0):?>
-                                    <td><a href="/admin/parutionArticle/<?php echo $article->getId(); ?>" class='buttonUserModify'>Activer</a></td>
+                                    <td><a href="<?php echo DIRNAME ."admin/parutionArticle/".$article->getId() ; ?>" class='buttonUserModify'>Activer</a></td>
                                     <?php endif; ?>
                                     <?php if($article->getStatus()==1): ?>
-                                    <td><a href="/admin/parutionArticle/<?php echo $article->getId() ; ?>" class='buttonUserDelete'>Désactiver</a></td>
+                                    <td><a href="<?php echo DIRNAME ."admin/parutionArticle/".$article->getId() ; ?>" class='buttonUserDelete'>Désactiver</a></td>
                                 <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>

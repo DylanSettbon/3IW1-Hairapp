@@ -32,9 +32,9 @@
                                     <td><?php echo $user->getEmail(); ?></td>
                                     <td><?php echo $user->getTel(); ?></td>
                                     <td> <?php echo $arrayStatus[$user->getStatus()]; ?></td>
-                                    <td><a href="/admin/modifyUser/<?php echo $user->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href="/admin/deleteUser/<?php echo $user->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
-                                    <td><a href="/admin/delete/<?php echo $user->getId(); ?>" class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/modifyUser/". $user->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/deleteUser/".$user->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/delete/".$user->getId(); ?>" class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
                                 </tr>
                                 
                             <?php endforeach; ?>
