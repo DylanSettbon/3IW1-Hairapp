@@ -225,6 +225,19 @@ class Validator
         }
     }
 
+    public static function checkAvailableCategoryOrderForPackageAdmin($displayOrder){
+        return ctype_digit($displayOrder)? true : $errors['errors'][] = 'L\'ordre de la catégorie doit être un nombre';;
+    }
+
+    public static function checkAvailableCategoryForPackageAdmin($category){
+        if ($category->checkIfCategoryDescriptionExists(1)) {
+            $errors['errors'][] = 'Cette catégorie est déja existante';
+        }
+        return isset($errors)?$errors:0;
+    }
+
+
+
     public static function checkAvailableAppointment(){
 
         $appointment = new Appointment();

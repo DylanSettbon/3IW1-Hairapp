@@ -47,6 +47,7 @@ CREATE TABLE category(
         id_user         Int ,
         id_CategoryType Int ,
         status          TINYINT(1) DEFAULT 1,
+        displayOrder    INT(4) NULL DEFAULT NULL,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
