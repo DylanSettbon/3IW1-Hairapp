@@ -18,14 +18,17 @@ class BaseSql{
      */
 
     public function __construct(){
-        try{;
-            $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
-        }catch(Exception $e){
-            die("Erreur SQL :".$e->getMessage());
-        }
-        //$this->db = new Database();
 
-        $this->table = strtolower(get_called_class()) == "hairdresser" ? "user" : strtolower(get_called_class());
+        //if( INSTALLED == true ){
+            try{
+                $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
+            }catch(Exception $e){
+                die("Erreur SQL :".$e->getMessage());
+            }
+
+            $this->table = strtolower(get_called_class()) == "hairdresser" ? "user" : strtolower(get_called_class());
+        //}
+
     }
 
     public static function getInstance() {
@@ -44,13 +47,10 @@ class BaseSql{
         );
     }
 
-    public function createDatabase( $name ){
+    public function createDatabase( $query ){
 
-        //var_dump($name) ; die;
-
-        $pseudo = substr($this->db->quote($name), 1, strlen($name));
-        $this->db->exec( "CREATE DATABASE IF NOT EXISTS `$name` ");
-        //$sql->execute(array('name' => $pseudo ));
+        $sql = $this->db->prepare( $query );
+        $sql->execute();
     }
 
     public function update( $statement, $params ){

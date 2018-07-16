@@ -207,13 +207,19 @@ class Install extends BaseSql {
                             "minString"=>2,
                             "maxString"=>100
                         ],
-                        "nom"=>[
+                        "secondColor"=>[
                             "type"=>"text",
                             "class"=>"input input_sign-in",
                             "placeholder"=>"Couleur secondaire souhaitée",
                             "required"=>true,
                             "minString"=>2,
                             "maxString"=>100
+                        ],
+                        "logo" => [
+                            "type" => 'file',
+                            "class"=>"input input_sign-in",
+                            'id' => 'logo',
+                            "placeholder" => "Logo du site"
                         ],
                     ],
                     "class" => "tab",
@@ -293,7 +299,13 @@ class Install extends BaseSql {
                             "placeholder"=>"Confirmation",
                             "required"=>true,
                             "confirm"=>"pwd"
-                        ]
+                        ],
+                        "tel" => [
+                            "type" => "tel",
+                            "class"=>"input input_sign-in",
+                            "placeholder" => "Téléphone",
+                            "required" => true
+                        ],
 
                     ],
                     "class" => "tab",

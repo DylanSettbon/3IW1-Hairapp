@@ -1,6 +1,6 @@
 <form method="<?php echo $config["config"]["method"]?>"
       action="<?php echo DIRNAME . $config["config"]["action"]?>"
-      id="<?php echo $config["config"]["id"];?>" >
+      id="<?php echo $config["config"]["id"];?>" enctype="multipart/form-data">
 
     <?php foreach ( $config["div"] as $groups => $params ):?>
 
@@ -14,7 +14,6 @@
                             type="<?php echo $paramsIpt["type"];?>"
                             class="<?php echo $paramsIpt['class'];?>"
                             placeholder="<?php echo $paramsIpt['placeholder'];?>"
-                            oninput="this.className = ''"
                             name="<?php echo $nameIpt;?>"
                     <?php endif; ?>
 
@@ -24,8 +23,21 @@
                             type="<?php echo $paramsIpt["type"];?>"
                             class="<?php echo $paramsIpt['class'];?>"
                             id="<?php echo $paramsIpt['id'];?>"
-                            oninput="this.className = ''"
                             name="<?php echo $nameIpt;?>"
+                    <?php endif; ?>
+
+                    <?php if( $paramsIpt["type"] == "file" ): ?>
+
+                        <label for="picture"><?php echo $paramsIpt["placeholder"];?> :</label>&nbsp;
+                        <input type="hidden" name="MAX_FILE_SIZE" value="100000000">
+                        <input
+                                id="<?php echo $paramsIpt['id']; ?>"
+                                type="file"
+                                class="input_sign-in"
+                                name="<?php echo $nameIpt;?>"
+
+
+
                     <?php endif; ?>
 
                     <?php if( isset( $_POST[$nameIpt] ) ): ?>

@@ -1507,11 +1507,6 @@ input[type="checkbox"][id="template4"] + label::before {
   width: 70%;
   min-width: 300px; }
 
-input {
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #aaaaaa; }
-
 /* Mark input boxes that gets an error on validation: */
 input.invalid {
   background-color: #ffdddd; }

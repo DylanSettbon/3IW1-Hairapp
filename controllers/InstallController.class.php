@@ -34,24 +34,80 @@ class InstallController{
          * TODO:
          * 1) vérifications des champs ✓
          * 2) séparation entre infos user et infos site
-         * 3) générer un nouveau dossier dans /var/www avec le nom du client
-         * 4) automatiser git pull depuis master
-         * 5) voir comment créer bdd auto avec nom du client
-         * 6) intégrer le fichier SQL dedans
+         * 5) voir comment créer bdd auto avec nom du client ✓
+         * 6) intégrer le fichier SQL dedans ✓
          * 7) insérer les données du User dans users en tant qu'admin
-         * 8) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas
+         * 8) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas ✓
          */
 
+        self::changeConfigFile( "conf.inc.php", $params['POST'] );
+
         $install = new Install();
+        $user = new User();
+
         $form = $install->configForm();
+
+        //var_dump( $params['POST'] ); die;
+        $user->setFirstname($params['POST']['prenom']);
+        $user->setLastname($params['POST']['nom']);
+        $user->setEmail($params['POST']['email']);
+        $user->setPwd($params['POST']['pwd']);
+        $user->setToken();
+        $user->setTel( $params['POST']['tel'] );
+        $user->setStatus( 3 );
 
         $errors = Validator::validateInstall( $form, $params['POST'] );
 
+        //self::changeConfigFile( "conf.inc.php", $params['POST'] );
+
         if( empty( $errors ) ){
 
-            //var_dump( $params['POST']['name'] ) ; die;
+            // Execution du fichier SQL
+            $sql = self::executeQueryFile( "sql/HairApp.sql", $params['POST']['name'] );
 
-            $install->createDatabase( $params['POST']['name'] );
+            //var_dump( $sql ); die;
+            /*
+             * Debut de la transaction
+             * Creation de la base de données
+             */
+            $install->beginTransaction();
+            try{
+                for ($i=0; $i < count($sql) ; $i++) {
+                    $str = $sql[$i];
+                    if ($str != '') {
+                        $str .= ';';
+                        $install->createDatabase( $str );
+                        //execution des requetes
+                    }
+                }
+                $install->commit();
+            }catch ( Exception $e){
+                echo $e->getMessage();
+                $install->rollback();
+            }
+
+
+            $userParams = array(
+                "firstname" => $user->getFirstname(),
+                "lastname" => $user->getLastname(),
+                "email" => $user->getEmail(),
+                "pwd" => $user->getPwd(),
+                "token" => $user->getToken() ,
+                "tel" => $user->getTel(),
+                "changetopwd" => 0,
+                "receivePromOffer" => 0,
+                "status" => $user->getStatus(),
+                "dateInserted" => date( "Y-m-d"),
+                "dateUpdated" => date( "Y-m-d" ),
+                "lastConnection" => null,
+                "picture" => null
+            );
+
+            $user->updateTable( $userParams );
+
+
+            self::setInstalled( "conf.inc.php" );
+
         }
         else{
             $view = new Views( 'install', 'install_header');
@@ -61,4 +117,38 @@ class InstallController{
 
         }
     }
+
+    public static function executeQueryFile( $filesql, $dbname ) {
+        $query = file_get_contents( $filesql );
+        $dbname = str_replace( ' ', '_', $dbname );
+        //var_dump( $query ); die;
+        $query = str_replace( 'DB_NAME', $dbname, $query );
+
+        $array = explode(";\n", $query);
+
+        return $array;
+    }
+
+    public static function changeConfigFile( $filename, $vars ){
+
+        $content = file_get_contents( $filename );
+
+        $bddname = str_replace( ' ', '_', $vars['name'] );
+        $content = str_replace( "define('DBNAME','')", "define('DBNAME','".$bddname."')", $content );
+        //$content = str_replace( "define('INSTALLED', false )", "define('INSTALLED', true )", $content );
+
+        $content = str_replace( "define('OPENING_HOUR','')", "define('OPENING_HOUR','".$vars['opening']."')", $content );
+        $content = str_replace( "define('CLOSING_HOUR','')", "define('CLOSING_HOUR','".$vars['closing']."')", $content );
+        $content = str_replace( "define('DURATION','')", "define('DURATION','".$vars['duration']."')", $content );
+
+        file_put_contents( $filename, $content );
+    }
+
+    public static function setInstalled( $filename ){
+
+        $content = file_get_contents( $filename );
+        $content = str_replace( "define('INSTALLED', false )", "define('INSTALLED', true )", $content );
+        file_put_contents( $filename, $content );
+    }
+
 }
