@@ -9,8 +9,8 @@
 
 define("DBUSER","root");
 define("DBHOST","localhost");
-define('DBNAME','belhair');
-define("DBPWD","");
+define('DBNAME','azertyu');
+define("DBPWD","root");
 define("DBPORT","8889");
 define("DBDRIVER","mysql");
 define('INSTALLED', true );

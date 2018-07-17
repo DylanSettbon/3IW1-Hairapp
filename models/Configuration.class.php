@@ -7,12 +7,18 @@ class Configuration extends BaseSql
 {
 
 
-  private $id_config = null;
-  private $logo;
-  private $email_address;
-  private $email_pwd;
-  private $postal_address;
-  private $status_configuration;
+
+    private $id_config = null;
+    private $logo;
+    private $email_address;
+    private $email_pwd;
+    private $postal_address;
+    private $status_configuration;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @return null

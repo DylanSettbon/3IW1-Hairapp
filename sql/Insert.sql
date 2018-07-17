@@ -13,3 +13,12 @@ VALUES (20180619,143000,22,3,1),
 
       INSERT INTO categoryType(type)
       VALUES  ('Article'),('Produits'),('Forfaits');
+
+
+INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )
+    VALUES( 'FN_TOCHANGE', 'LN_TOCHANGE', 'MAIL_TOCHANGE',
+                         'PWD_TOCHANGE', 'TOKEN_TOCHANGE', 'TEL_TOCHANGE', 0, 0, 'STATUS_TOCHANGE', 'DATE_TOCHANGE',
+                         'DATE_TOCHANGE', null, null );
+
+INSERT INTO configuration( logo, email_address, email_pwd, postal_address, status_configuration )
+    VALUES( 'LOGO_TOCHANGE', ' EMAILADDRESS_TOCHANGE', 'EMAILPWD_TOCHANGE', ' POSTAL_TOCHANGE', 'STATUSCONFIG_TOCHANGE' );

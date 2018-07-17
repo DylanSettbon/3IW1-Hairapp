@@ -17,22 +17,14 @@ class InstallController{
 //        }
     }
 
-    public function getInstall( $params ){
+    public function getInstall(){
 
         $view = new Views( 'install', 'install_header');
         $view->assign("current", 'install' );
         $install = new Install();
         $form = $install->configForm();
 
-        if( !empty( $params['POST'] ) ){
-            $view->assign("loading", true );
-        }
-        else{
-            $view->assign( "config", $form);
-        }
-
-
-
+        $view->assign( "config", $form);
     }
 
     public function save( $params ){
@@ -46,53 +38,20 @@ class InstallController{
         /*
          * TODO:
          * 1) vérifications des champs ✓
-         * 2) séparation entre infos user et infos site
-         * 5) voir comment créer bdd auto avec nom du client ✓
-         * 6) intégrer le fichier SQL dedans ✓
-         * 7) insérer les données du User dans users en tant qu'admin
-         * 8) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas ✓
+         * 2) séparation entre infos user et infos site ✓
+         * 3) voir comment créer bdd auto avec nom du client ✓
+         * 4) intégrer le fichier SQL dedans ✓
+         * 5) insérer les données du User dans users en tant qu'admin ✓
+         * 6) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas ✓
          */
 
         $install = new Install();
-        $user = new User();
-        $config = new Configuration();
+
 
         $form = $install->configForm();
 
-        //var_dump( $params['POST'] ); die;
-        $user->setFirstname($params['POST']['prenom']);
-        $user->setLastname($params['POST']['nom']);
-        $user->setEmail($params['POST']['email']);
-        $user->setPwd($params['POST']['pwd']);
-        $user->setToken();
-        $user->setTel( $params['POST']['tel'] );
-        $user->setStatus( 3 );
 
-        $config->setEmailPwd( $_POST['application_pwd'] );
-        $config->setEmailAddress( $_POST['application_mail'] );
-        $config->setPostalAddress( $_POST['address'] );
-
-        $config_params = array(
-            "email_address" => $config->getEmailAddress(),
-            "email_pwd" => $config->getEmailPwd(),
-            "postal_address" => $config->getPostalAddress()
-        );
-
-        $userParams = array(
-            "firstname" => $user->getFirstname(),
-            "lastname" => $user->getLastname(),
-            "email" => $user->getEmail(),
-            "pwd" => $user->getPwd(),
-            "token" => $user->getToken() ,
-            "tel" => $user->getTel(),
-            "changetopwd" => 0,
-            "receivePromOffer" => 0,
-            "status" => $user->getStatus(),
-            "dateInserted" => date( "Y-m-d"),
-            "dateUpdated" => date( "Y-m-d" ),
-            "lastConnection" => null,
-            "picture" => null
-        );
+        $errors = Validator::validateInstall( $form, $params['POST'] );
 
         if( !empty( $_FILES['logo']['name'] ) ){
             $name = "public/img/logo/";
@@ -105,7 +64,7 @@ class InstallController{
 
             if(move_uploaded_file($_FILES['logo']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
             {
-                $config_params['logo'] = $name.$file_name;
+                $params['POST']['logo'] = $name.$file_name;
             }
             else //Sinon (la fonction renvoie FALSE).
             {
@@ -115,8 +74,6 @@ class InstallController{
                 //print_r($_FILES);
             }
         }
-
-        $errors = Validator::validateInstall( $form, $params['POST'] );
 
         if( empty( $errors ) ){
 
@@ -133,42 +90,35 @@ class InstallController{
                 self::changeConfigFile( "conf.inc.php", $params['POST'] );
                 $sql = self::executeQueryFile( "sql/HairApp.sql", $params['POST']['name'] );
 
-                if( $_POST['data'] == 'on' ){
-                  $sql_insert = self::executeQueryFile( "sql/Insert.sql" );
 
-                  for ($i=0; $i < count($sql_insert) ; $i++) {
-                      $str_insert = $sql_insert[$i];
-                      if ($str_insert != '') {
-                          $str_insert .= ';';
-                          $install->createDatabase( $str_insert );
-                          //execution des requetes
-                      }
-                  }
+
+                for ($i=0; $i < count($sql) ; $i++) {
+                   $str = $sql[$i];
+                   if ($str != '') {
+                       $str .= ';';
+                       $install->createDatabase( $str );
+                       //execution des requetes
+                   }
                 }
+                if( $_POST['data'] == 'on' ){
+                    $sql_insert = self::executeQueryFile( "sql/Insert.sql" );
 
-                  for ($i=0; $i < count($sql) ; $i++) {
-                      $str = $sql[$i];
-                      if ($str != '') {
-                          $str .= ';';
-                          $install->createDatabase( $str );
-                          //execution des requetes
-                      }
-                  }
+                    for ($i=0; $i < count($sql_insert) ; $i++) {
+                        $str_insert = $sql_insert[$i];
+                        if ($str_insert != '') {
+                            $str_insert .= ';';
+                            $str_insert = self::insertUserData( $str_insert, $params );
+                            $install->createDatabase( $str_insert );
+                            //execution des requetes
+                        }
+                    }
+                    //var_dump( "yes" ); die;
+                }
                   $install->commit();
               }catch ( Exception $e){
                   echo $e->getMessage();
                   $install->rollback();
               }
-
-
-              $config->updateTable( $config_params );
-              $user->updateTable( $userParams );
-
-              self::setInstalled( "conf.inc.php" );
-
-
-              $view->assign("success", "L'installation s'est déroulée avec succès ! Vous pouvez désormais commencer votre navigation sur Hairapp !");
-              $view->assign( "config", $form);
 
           }
           else{
@@ -177,6 +127,14 @@ class InstallController{
               $view->assign( "config", $form);
 
           }
+
+
+        //self::insertUserData( $params );
+        self::setInstalled( "conf.inc.php" );
+
+
+        $view->assign("success", "L'installation s'est déroulée avec succès ! Vous pouvez désormais commencer votre navigation sur Hairapp !");
+        $view->assign( "config", $form);
     }
 
     public static function executeQueryFile( $filesql, $dbname = null ) {
@@ -213,6 +171,44 @@ class InstallController{
         $content = file_get_contents( $filename );
         $content = str_replace( "define('INSTALLED', false )", "define('INSTALLED', true )", $content );
         file_put_contents( $filename, $content );
+    }
+
+    public static function insertUserData( $query, $params ){
+
+        $user = new User();
+        $config = new Configuration();
+        //try{
+        $user->setFirstname($params['POST']['prenom']);
+        $user->setLastname($params['POST']['nom']);
+        $user->setEmail($params['POST']['email']);
+        $user->setPwd($params['POST']['pwd']);
+        $user->setToken();
+        $user->setTel( $params['POST']['tel'] );
+        $user->setStatus( 3 );
+
+        $config->setEmailPwd( $params['POST']['application_pwd'] );
+        $config->setEmailAddress( $params['POST']['application_mail'] );
+        $config->setPostalAddress( $params['POST']['address'] );
+
+        $query = str_replace( "FN_TOCHANGE", $user->getFirstname(), $query );
+        $query = str_replace( "LN_TOCHANGE", $user->getLastname(), $query );
+        $query = str_replace( "MAIL_TOCHANGE", $user->getEmail(), $query );
+        $query = str_replace( "PWD_TOCHANGE", $user->getPwd(), $query );
+        $query = str_replace( "TOKEN_TOCHANGE", $user->getToken(), $query );
+        $query = str_replace( "TEL_TOCHANGE", $user->getTel(), $query );
+        $query = str_replace( "STATUS_TOCHANGE", 3, $query );
+        $query = str_replace( "DATE_TOCHANGE", date( "Y-m-d"), $query );
+
+
+        $query = str_replace( "LOGO_TOCHANGE", $params['POST']['logo'], $query );
+        $query = str_replace( "EMAILADDRESS_TOCHANGE", $config->getEmailAddress(), $query );
+        $query = str_replace( "EMAILPWD_TOCHANGE", $config->getEmailPwd(), $query );
+        $query = str_replace( "POSTAL_TOCHANGE", $config->getPostalAddress(), $query );
+        $query = str_replace( "STATUSCONFIG_TOCHANGE", 1, $query );
+
+        return $query;
+
+
     }
 
 }
