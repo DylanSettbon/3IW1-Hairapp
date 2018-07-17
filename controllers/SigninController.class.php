@@ -108,7 +108,6 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
                 $v->assign( "current", "login" );
                 $v->assign("config",$form);
                 $v->assign("success","Un mail de validation vous a été envoyé afin de finaliser votre inscription.");
-
             }
             else{
                 $v = new Views( "signin", "header" );

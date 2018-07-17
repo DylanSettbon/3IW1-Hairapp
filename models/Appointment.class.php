@@ -3,8 +3,8 @@ class Appointment extends BaseSql{
     private $idAppointment = null;
     private $dateAppointment;
     private $hourAppointment;
+    private $id_user;
     private $id_Package;
-    private $id_User;
     private $id_Hairdresser;
     private $planned;
 
@@ -82,15 +82,15 @@ class Appointment extends BaseSql{
      */
     public function getIdUser()
     {
-        return $this->id_User;
+        return $this->id_user;
     }
 
     /**
      * @param mixed $id_User
      */
-    public function setIdUser($id_User)
+    public function setIdUser($id_user)
     {
-        $this->id_User = $id_User;
+        $this->id_user = $id_user;
     }
 
     /**
@@ -158,7 +158,7 @@ class Appointment extends BaseSql{
         return $timeRange;
     }
 
-    public function getAllAvailableTimeRange($duration){
+    public function getAllAvailableTimeRange(){
         /*
          * Refaire la selection pour Tous les coiffeur
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
@@ -170,13 +170,16 @@ class Appointment extends BaseSql{
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
+        $timeOut = 10;
         do {
-            $add += 10;
+            $add += $timeOut;
+            //Remplacer par un temps moyen de rendez-vous
             $timeRange[] = date("H:i", strtotime('+' . $add . ' minutes', strtotime($opening)));
             $i += 1;
-        }while(strtotime('+'.$duration. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $duration . ' minutes', strtotime($closing)));
+        }while(strtotime('+'.$timeOut. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $timeOut . ' minutes', strtotime($closing)));
 
         return $timeRange;
+
     }
 
     public function getAssociativeHaidresserAppointmentPackage($appointments){
@@ -190,32 +193,6 @@ class Appointment extends BaseSql{
             }
         }
         return $associativeHairdresserAndAppointment;
-    }
-
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-    /**
-     * @param mixed $firstnam
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstnam = $firstname;
-    }
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-    /**
-     * @param mixed $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
     }
 
     public static function changeMonth($date){
@@ -235,5 +212,55 @@ class Appointment extends BaseSql{
             case 'December': $res = str_replace( 'December', 'Décembre', $date ); break;
         }
         return $res;
+    }
+
+    public function sendDeleteAppointmentMail($customerMail){
+        $object = 'Annulation de votre rendez-vous du '.$this->getFormatedDateAppointment().' à '.$this->getHourAppointment();
+        $body = 'Bonjour, <br><br>
+                 Malheuresement, nous devons annuler votre rendez-vous du <strong>'.$this->getFormatedDateAppointment().'</strong> à <strong>'.$this->getHourAppointment().'.</strong><br><br>
+                 Nous vous invitons à reprendre rendez-vous sur notre site'.'
+                 <br><br>Nous nous excusons pour la gêne occasionnée';
+
+        $mail = new Mail($customerMail,'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
+        $mail->send();
+    }
+
+    public function sendUpdateAppointmentMail($newAppointment,$customerMail){
+        $package = new Package();
+        $hairdresser = new Hairdresser();
+
+        $p = $package->getAllBy(['id' => $newAppointment->getIdPackage()],['description','duration'],3)[0];
+        $packageDescription = $p->getDescription();
+        $packageDuration = $p->getTextDuration();
+        $hairdresserName = $hairdresser->getAllBy(['id' => $this->getIdHairdresser()],null,3)[0]->getFullName();
+
+        $object = 'Modification de votre rendez-vous du '.$this->getFormatedDateAppointment().' à '.$this->getHourAppointment();
+        $body = 'Bonjour, <br><br>
+                 Votre rendez-vous du '.$this->getFormatedDateAppointment().' à '.$this->getHourAppointment().'. à été modifié, veuillez trouvez-ci joint votre nouveau rendez-vous:<br><br>
+                 Le <strong>'.$newAppointment->getFormatedDateAppointment().'</strong> à <strong>'.$newAppointment->getHourAppointment().'</strong><br>
+                 Vous avez rendez-vous avec <strong>'.$hairdresserName.'</strong> pour un(e) <strong>'.$packageDescription.'</strong> pour une durée d\'environ : '.$packageDuration.'
+                 <br><br>Nous vous remercions de prendre en compte ces modifications et nous nous excusons pour la gêne occasionnée';
+        $mail = new Mail($customerMail,'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
+        $mail->send();
+    }
+
+    public function sendAddAppointmentMail($customerMail){
+        $package = new Package();
+        $hairdresser = new Hairdresser();
+
+        $p = $package->getAllBy(['id' => $this->getIdPackage()],['description','duration'],3)[0];
+        $packageDescription = $p->getDescription();
+        $packageDuration = $p->getTextDuration();
+        $hairdresserName = $hairdresser->getAllBy(['id' => $this->getIdHairdresser()],null,3)[0]->getFullName();
+
+        $object = 'Confirmation de votre rendez-vous le '.$this->getFormatedDateAppointment().' à '.$this->getHourAppointment();
+        $body = 'Bonjour,<br><br>
+                 Nous vous confirmons votre rendez-vous le <strong>'.$this->getFormatedDateAppointment().'</strong> a <strong>'.$this->getHourAppointment().'</strong>
+                 avec <strong>'.$hairdresserName.'</strong> pour un(e) <strong>'.$packageDescription.'</strong>.<br><br>
+                 Ce rendez-vous durera approximativement :'.$packageDuration.'
+                 <br><br>Merci';
+
+        $mail = new Mail($customerMail,'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
+        $mail->send();
     }
 }

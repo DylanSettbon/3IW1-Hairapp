@@ -12,7 +12,7 @@ class Comment extends BaseSql
     protected $content;
     protected $id_User;
     protected $id_Article;
-    protected $statut;
+    protected $statut=1;
     /**
      * @return null
      */

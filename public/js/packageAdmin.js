@@ -1,4 +1,4 @@
-function createCategoryPackageForm_show() {
+function createCategoryPackageForm_show(){
     document.getElementById('categoryPackageForm').style.display = "block";
 }
 
@@ -12,6 +12,7 @@ function createPackageForm_show(category) {
 }
 
 function updateCategoryPackageForm_show(category) {
+    document.getElementById('categoryOrderUpdate').setAttribute("value",category[2])
     document.getElementById('categoryDescUpdate').setAttribute("value",category[1])
     document.getElementById('categoryIdUpdate').setAttribute("value",category[0])
     document.getElementById('updateCategoryPackageForm').style.display = "block";
@@ -40,7 +41,7 @@ function deletePackage(description){
     }
     $.ajax({
         type: 'POST',
-        url: 'ajaxDeletePackage',
+        url: '/admin/ajaxDeletePackage',
         data: { idPackageDeleted: allIdToDelete},
         success: function(response) {
             for(var i=0; i< allIdToDelete.length;i++){

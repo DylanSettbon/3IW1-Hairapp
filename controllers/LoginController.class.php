@@ -30,7 +30,6 @@ class LoginController {
      * @internal param $mdp_
      */
     public function getVerify(){
-
         //Ca doit etre un objet
         $user = new User();
         $form = $user->LoginForm();
@@ -64,12 +63,14 @@ class LoginController {
                 //var_dump( $_POST ); die;
                 $user->updateTable( $params, ["id" => $userInformations->getId()] );
                  $u=$user->getAllBy(["id" => $userInformations->getId()] , ["changetopwd"], 2);
+
                 Security::setSession($userInformations);
-                
                  if ($u[0]->getChangeToPwd() == 1 ){
                    header("Location: " . DIRNAME . "account/getChangeToPwd?id=". $userInformations->getId());
-
-                }else {
+                }elseif($_POST['referer'] == '/appointment/getAppointment'){
+                     header("Location: " . DIRNAME . "appointment/getAppointment");
+                 }
+                else {
                 header("Location: " . DIRNAME . "home/getHome");
             }
         }

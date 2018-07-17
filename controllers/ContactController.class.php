@@ -30,12 +30,16 @@ class ContactController{
         $message->setEmail(htmlentities($_POST['email']));
         $message->setObjet(htmlentities( $_POST['objet'] ));
         $message->setMessage(htmlentities( $_POST['message'] ));
+        $users = new User();
+        $users = $users->getAllBy(["status" => 3], ["id, email, status"], 2);
         
-        
-
+        //echo $adressAdmin;
    require("vendor/autoload.php");
 
                 $mail = new PHPMailer();
+                foreach ($users as $user) :
+                $mail->AddAddress($user->getEmail());
+                endforeach;
 
                 $mail->IsSMTP(); // enable SMTP
                 $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
@@ -43,14 +47,13 @@ class ContactController{
                 $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
                 $mail->Host = 'smtp.gmail.com';
                 $mail->Port = 465; //25 ou 465
-                $mail->Username = 'notifications.hairapp@gmail.com' ;
+                $mail->Username = 'notifications.hairapp@gmail.com';
                 $mail->Password = 'zKXJKrMeGMH9';
-                $mail->From =$message->getEmail();
+                $mail->From =$message->getEmail() ;
+                $mail->AddReplyTo($message->getEmail());
                 $mail->FromName = $message->getLastName();
                 $mail->Subject = $message->getObjet();
-                $mail->IsHTML(true);
-                $mail->Body = 'Adresse mail: '.$message->getEmail().'<br>  Message: '.$message->getMessage();
-                $mail->AddAddress( 'notifications.hairapp@gmail.com' );
+                $mail->Body =  'Message: '.$message->getMessage();
                 if(!$mail->Send()) {
 
                 } else {

@@ -8,12 +8,13 @@
 
 class ArticleController  extends BaseSql {
 
-    public function getArticle(){
 
+    public function getArticle($params){
+        
         $v = new Views( "article", "header" );
-         $v->assign("current", 'articleCategory');
+        $v->assign("current", 'articleCategory');
         $article = new Article();
-        $cat=$_GET['id'];
+        $cat=$params['URL'][0];
         $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
 
 #Voir sur internet pour recuperer hauter et largeur de l'image
@@ -28,13 +29,15 @@ class ArticleController  extends BaseSql {
     }
 
     public function addComment($params){
+
         $comment =new Comment();
         $user=new User();
+        $cat=$_GET['id'];
         $comment->setIdUser($_SESSION['id']);
-        $form = $comment ->configFormAdd();
-        if(!empty($params["POST"])){
-            //Verification des saisies
+        $comment->setIdArticle($cat);
+        $form = $comment->configFormAdd();
 
+        if(!empty($params["POST"])){
             $errors = Validator::validate($form, $params["POST"]);
 
             if(empty($errors)){
@@ -43,17 +46,23 @@ class ArticleController  extends BaseSql {
             $comment->save();
         }
 
-        //$all =$comment->getUpdate("date;", 2, "*");
-        //var_dump($all);die;
-        $all =$comment->select("comment");
-        //$firstname=$user->select("id LIKE ".$_SESSION['id'].";", 2,"firstname");
-        $theUser=$user->select("user WHERE id like ".$_SESSION['id']." ;");
-        $v = new Views("article", "header");
+        #Voir sur internet pour recuperer hauter et largeur de l'image
+        
+                # definir une hauteur max et largeur max
+                # si largeur image > Largeur_max => $v->assign( "oversize", "1" );
+                # $ratio = hauteur de l'image divisé par hauteur MAX => 1.25
+                # tu dois te retrouver avce ratio = 75%
+                # $v->assign( "ratio", $ratio );        
+        
+
+        $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
+        $comments =$comment->select("comment WHERE id_Article = '". $cat ."'");
+        $users=$user->select("user");
         $v->assign("config",$form);
         $v->assign("errors",$errors);
-        $v->assign("all",$all);
-        $v->assign("theUser", $theUser);
-
+        $v->assign("comments",$comments);
+        $v->assign("users", $users);
+        $v->assign("article", $u[0]);
 
     }
     

@@ -33,8 +33,8 @@ include "templates/sidebar.view.php";
                                  <tr>
                                     <td> ".  $category->getDescription() . " 
                                     </td>
-                                    <td colspan='3'><a href='modifyCategory?id=" . $category->getId() ."' class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href='deleteCategory?id=" . $category->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
+                                    <td colspan='3'><a href='/admin/modifyCategory/" . $category->getId() ."' class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href='/admin/deleteCategory/" . $category->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
                                 </tr>
                                 ";
                             endforeach;

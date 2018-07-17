@@ -226,6 +226,19 @@ class Validator
         }
     }
 
+    public static function checkAvailableCategoryOrderForPackageAdmin($displayOrder){
+        return ctype_digit($displayOrder)? true : $errors['errors'][] = 'L\'ordre de la catégorie doit être un nombre';;
+    }
+
+    public static function checkAvailableCategoryForPackageAdmin($category){
+        if ($category->checkIfCategoryDescriptionExists(1)) {
+            $errors['errors'][] = 'Cette catégorie est déja existante';
+        }
+        return isset($errors)?$errors:0;
+    }
+
+
+
     public static function checkAvailableAppointment(){
 
         $appointment = new Appointment();
@@ -240,7 +253,7 @@ class Validator
         if(!isset($_POST['package'])){
             $errors[] = 'Aucun forfait selectioné';
         }
-        if(!isset($_POST['cbHeure'])){
+        if(!isset($_POST['cbHeure']) && !isset($_POST['appointmentHour'])){
             $errors[] = 'Aucune horaires selectionée';
         }
         else{
@@ -249,16 +262,16 @@ class Validator
             $day = $_POST['jour']<10?'0'.$_POST['jour']:$_POST['jour'];
             $date = $_POST['annee'].$month.$day;
             if($now->format('Ymd') > $date){
-                $errors[] = ['La date est inférieure à la date du jour'];
+                $errors[] = 'La date est inférieure à la date du jour';
             }
         }
 
         if(empty($errors)){
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
                 $errors[] = 'Ce creneau horaire n\'est pas disponible';
             }
 
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => $_POST['cbHeure'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
                 $errors[] = 'Vous avez déja un rendez-vous pour cette date et ce créneau horaire';
             }
 

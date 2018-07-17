@@ -1,18 +1,19 @@
 <body id="body-rdv">
   <main id="main-forfait" class="col-s-11 col-l-8">
         <div class="row">
-            <h1 id="title-rdv" class="title col-l-4"><?php echo $article->getName();?></h1>
-            <h2 style='text-align: left; position:absolute;'><?php echo $article->getDateParution();?> </h2>
+            <div>
+                <h2 style='margin: 0;'><?php echo $article->getDateParution();?> </h2>
+            </div>
+            <div style="width: 100%;">
+                <h1 id="titre-article" class="col-l-4"><?php echo $article->getName();?></h1>
+            </div>
         </div>
     <div class="col-s-12 col-l-12 partie-droite">
       <div class="categorie1 container">
         <?php if($article->getImage()!=null): ?>
-              <!-- SI oversize == 1 alors tu redimensionne avec un attribut style avec height = $ratio
-                
-              --> 
               <img class='img-art' src='<?php echo DIRNAME. $article->getImage();?>' style='width:25%; height:25% ;display: block;
-    margin-left: auto;
-    margin-right: auto;'>
+                margin-left: auto;
+                margin-right: auto; min-width: 200px'>
         <?php endif; ?>
         <p><?php echo $article->getDescription();?></p>
             <hr class="col-s-12">
@@ -22,23 +23,26 @@
             <h2>Commentaire</h2>
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-6">
-              <?php foreach($all as $item):?>
-              	<?php foreach($theUser as $user):?>
-                    <?php if($item["statut"]==2):?>
-                  <!-- <div style="border: 1.5px groove #e6e6e6; border-radius:5px;"><?php echo $item["idUser"];?> -->
-                  <div style="position: relative;max-width: 300px;height: auto;margin: 10px 10px;padding: 2px;background-color: #DADADA;
-                              border-radius: 3px;border: 5px solid #ccc;"><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
-                    <br>
-                    <div style="margin:4px;font-size:14px;"><?php echo $item["content"];?></div></div>
-                    <div style="font-style:italic; font-size:10px;"><?php echo "Publié le ". $item["date"]?></div>
+     <div class="col-md-6">
+              <?php foreach($comments as $comment):?>
+                <?php foreach($users as $user):?>
+                  <?php if($comment["statut"]==2):?>
+                    <?php if($comment["id_user"]==$user["id"]):?>
 
-              <?php endif;?>
-              <?php endforeach;?>
+                    <!-- <div style="border: 1.5px groove #e6e6e6; border-radius:5px;"><?php echo $item["idUser"];?> -->
+                      <div style="position: relative;max-width: 300px;height: auto;margin: 10px 10px;padding: 2px;background-color: #DADADA;
+                                border-radius: 3px;border: 5px solid #ccc;"><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
+                      <br>
+                      <div style="margin:4px;font-size:14px;"><?php echo $comment["content"];?></div></div>
+                      <div style="font-style:italic; font-size:10px;"><?php echo "Publié le ". $comment["date"]?></div>
+
+                    <?php endif;?>
+                  <?php endif;?>
+                <?php endforeach;?>
               <?php endforeach;?>
 
             <?php if(Security::isConnected()){
-             $this->addModal("com", $config, $errors, $all);} ?>
+             $this->addModal("com", $config, $errors, $comments);} ?>
 
           </div>
         <hr>

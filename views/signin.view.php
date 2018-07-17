@@ -13,31 +13,32 @@
 
                             <?php $this->addModal("form", $config ); ?>
 
-
-                            <?php if( isset( $errors ) ): ?>
+                           <?php if( isset( $errors ) ): ?>
                             <ul class="errors">
 
-                                    <?php foreach ( $errors as $error ): ?>
-                                        <li>
-                                            <div class="div-errors danger">
-                                                <p><strong> Warning ! </strong><?php echo $error;?></p>
-                                            </div>
+                                <?php foreach ( $errors as $error ): ?>
+                                    <li>
+                                        <div class="div-errors danger">
+                                            <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                        </div>
 
-                                        </li>
-                                    <?php endforeach; ?>
+                                    </li>
+                                <?php endforeach; ?>
+
                             </ul>
                             <?php endif; ?>
 
                             <?php if( isset( $success ) ): ?>
-                            <ul class="errors">
-                                <li>
-                                    <div class="div-errors success">
-                                        <p><strong> Success ! </strong><?php echo $success;?></p>
-                                    </div>
+                                <ul class="errors">
+                                    <li>
+                                        <div class="div-errors success">
+                                            <p><strong> Success ! </strong><?php echo $success;?></p>
+                                        </div>
 
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
                             <?php endif; ?>
+
 
                         </div>
                     </div>

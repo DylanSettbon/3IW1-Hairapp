@@ -11,7 +11,7 @@ define("DBUSER","root");
 define("DBHOST","localhost");
 define('DBNAME','azertyu');
 define("DBPWD","root");
-define("DBPORT","8889");
+define("DBPORT","3306");
 define("DBDRIVER","mysql");
 define('INSTALLED', true );
 define("DS", "/");
