@@ -15,7 +15,11 @@
   <header class='header'>
       <div class='container2'>
         <div class='logo'>
-          <a href='<?php echo DIRNAME;?>admin/getAdmin'>LOGO</a>
+          <a href='<?php echo DIRNAME;?>admin/getAdmin'>
+              <?php if( isset( $logo ) ): ?>
+                  <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+              <?php endif; ?>
+          </a>
         </div>
 
           <div id="burger" class="toggleAnimated" onclick="toggleAnimated(this)">

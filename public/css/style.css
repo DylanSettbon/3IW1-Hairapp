@@ -533,9 +533,8 @@ section {
 
 .header .logo {
   float: left;
-  max-height: 65px;
-  line-height: 1.9;
-  padding: 10px 0px; }
+  max-height: 60px;
+  line-height: 1.9; }
 
 .header .logo a {
   color: #FFF;
