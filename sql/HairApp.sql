@@ -17,7 +17,6 @@ CREATE TABLE appointment(
         id_user         Int ,
         id_Hairdresser  Int ,
         id_Package      Int ,
-        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -42,12 +41,13 @@ CREATE TABLE product(
 #------------------------------------------------------------
 
 CREATE TABLE category(
-        id              int (11) Auto_increment  NOT NULL ,
-        description     Varchar (250) NOT NULL ,
+        id_category              int (11) Auto_increment  NOT NULL ,
+        description_category     Varchar (250) NOT NULL ,
         id_user         Int ,
         id_CategoryType Int ,
-        status          TINYINT(1) DEFAULT 1,
-        PRIMARY KEY (id )
+        status_category          TINYINT(1) DEFAULT 1,
+        displayOrder    INT(4) NULL DEFAULT NULL,
+        PRIMARY KEY (id_category )
 )ENGINE=InnoDB;
 
 
@@ -81,7 +81,7 @@ CREATE TABLE user(
 CREATE TABLE color(
         id      int (11) Auto_increment  NOT NULL ,
         name    Varchar (50) NOT NULL ,
-        code    Integer NOT NULL ,
+        code    Varchar (7) NOT NULL ,
         id_user Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
@@ -145,7 +145,6 @@ CREATE TABLE article(
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
-
 #------------------------------------------------------------
 # Table: Package
 #------------------------------------------------------------
@@ -157,7 +156,6 @@ CREATE TABLE package(
         duration	int (5) DEFAULT 0,
         id_User     Int ,
         id_Category Int ,
-        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 

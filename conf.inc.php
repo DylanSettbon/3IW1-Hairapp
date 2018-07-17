@@ -9,7 +9,7 @@
 
 define("DBUSER","root");
 define("DBHOST","localhost");
-define('DBNAME','azertyu');
+define('DBNAME','belhair');
 define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
