@@ -9,8 +9,8 @@
 
 define("DBUSER","root");
 define("DBHOST","localhost");
-define('DBNAME','toto');
-define("DBPWD","root");
+define('DBNAME','belhair');
+define("DBPWD","");
 define("DBPORT","8889");
 define("DBDRIVER","mysql");
 define('INSTALLED', true );

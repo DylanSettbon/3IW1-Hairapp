@@ -17,19 +17,32 @@ class InstallController{
 //        }
     }
 
-    public function getInstall(){
+    public function getInstall( $params ){
 
         $view = new Views( 'install', 'install_header');
         $view->assign("current", 'install' );
         $install = new Install();
         $form = $install->configForm();
 
-        $view->assign( "config", $form);
+        if( !empty( $params['POST'] ) ){
+            $view->assign("loading", true );
+        }
+        else{
+            $view->assign( "config", $form);
+        }
+
+
 
     }
 
     public function save( $params ){
 
+        $view = new Views( 'install', 'install_header');
+        $view->assign("current", 'install' );
+        if( !empty( $params['POST'] ) ){
+            $view->assign("loading", true );
+        }
+        unset( $errors );
         /*
          * TODO:
          * 1) vérifications des champs ✓
@@ -40,10 +53,9 @@ class InstallController{
          * 8) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas ✓
          */
 
-        self::changeConfigFile( "conf.inc.php", $params['POST'] );
-
         $install = new Install();
         $user = new User();
+        $config = new Configuration();
 
         $form = $install->configForm();
 
@@ -56,73 +68,125 @@ class InstallController{
         $user->setTel( $params['POST']['tel'] );
         $user->setStatus( 3 );
 
-        $errors = Validator::validateInstall( $form, $params['POST'] );
+        $config->setEmailPwd( $_POST['application_pwd'] );
+        $config->setEmailAddress( $_POST['application_mail'] );
+        $config->setPostalAddress( $_POST['address'] );
 
-        //self::changeConfigFile( "conf.inc.php", $params['POST'] );
+        $config_params = array(
+            "email_address" => $config->getEmailAddress(),
+            "email_pwd" => $config->getEmailPwd(),
+            "postal_address" => $config->getPostalAddress()
+        );
+
+        $userParams = array(
+            "firstname" => $user->getFirstname(),
+            "lastname" => $user->getLastname(),
+            "email" => $user->getEmail(),
+            "pwd" => $user->getPwd(),
+            "token" => $user->getToken() ,
+            "tel" => $user->getTel(),
+            "changetopwd" => 0,
+            "receivePromOffer" => 0,
+            "status" => $user->getStatus(),
+            "dateInserted" => date( "Y-m-d"),
+            "dateUpdated" => date( "Y-m-d" ),
+            "lastConnection" => null,
+            "picture" => null
+        );
+
+        if( !empty( $_FILES['logo']['name'] ) ){
+            $name = "public/img/logo/";
+            $file_name = basename($_FILES['logo']['name']);
+            $size = $_FILES['logo']['size'];
+            $extension = strrchr($_FILES['logo']['name'], '.');
+
+
+            $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+
+            if(move_uploaded_file($_FILES['logo']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            {
+                $config_params['logo'] = $name.$file_name;
+            }
+            else //Sinon (la fonction renvoie FALSE).
+            {
+                echo "An error occured: no file uploaded";
+                //echo self::file_upload_error_message($_FILES['picture']['error']);
+                //echo 'Echec de l\'upload !';
+                //print_r($_FILES);
+            }
+        }
+
+        $errors = Validator::validateInstall( $form, $params['POST'] );
 
         if( empty( $errors ) ){
 
-            // Execution du fichier SQL
-            $sql = self::executeQueryFile( "sql/HairApp.sql", $params['POST']['name'] );
+              // Execution du fichier SQL
+              /*
+               * Debut de la transaction
+               * Creation de la base de données
+               */
 
-            //var_dump( $sql ); die;
-            /*
-             * Debut de la transaction
-             * Creation de la base de données
-             */
-            $install->beginTransaction();
             try{
-                for ($i=0; $i < count($sql) ; $i++) {
-                    $str = $sql[$i];
-                    if ($str != '') {
-                        $str .= ';';
-                        $install->createDatabase( $str );
-                        //execution des requetes
-                    }
+
+                $install->beginTransaction();
+
+                self::changeConfigFile( "conf.inc.php", $params['POST'] );
+                $sql = self::executeQueryFile( "sql/HairApp.sql", $params['POST']['name'] );
+
+                if( $_POST['data'] == 'on' ){
+                  $sql_insert = self::executeQueryFile( "sql/Insert.sql" );
+
+                  for ($i=0; $i < count($sql_insert) ; $i++) {
+                      $str_insert = $sql_insert[$i];
+                      if ($str_insert != '') {
+                          $str_insert .= ';';
+                          $install->createDatabase( $str_insert );
+                          //execution des requetes
+                      }
+                  }
                 }
-                $install->commit();
-            }catch ( Exception $e){
-                echo $e->getMessage();
-                $install->rollback();
-            }
+
+                  for ($i=0; $i < count($sql) ; $i++) {
+                      $str = $sql[$i];
+                      if ($str != '') {
+                          $str .= ';';
+                          $install->createDatabase( $str );
+                          //execution des requetes
+                      }
+                  }
+                  $install->commit();
+              }catch ( Exception $e){
+                  echo $e->getMessage();
+                  $install->rollback();
+              }
 
 
-            $userParams = array(
-                "firstname" => $user->getFirstname(),
-                "lastname" => $user->getLastname(),
-                "email" => $user->getEmail(),
-                "pwd" => $user->getPwd(),
-                "token" => $user->getToken() ,
-                "tel" => $user->getTel(),
-                "changetopwd" => 0,
-                "receivePromOffer" => 0,
-                "status" => $user->getStatus(),
-                "dateInserted" => date( "Y-m-d"),
-                "dateUpdated" => date( "Y-m-d" ),
-                "lastConnection" => null,
-                "picture" => null
-            );
+              $config->updateTable( $config_params );
+              $user->updateTable( $userParams );
 
-            $user->updateTable( $userParams );
+              self::setInstalled( "conf.inc.php" );
 
 
-            self::setInstalled( "conf.inc.php" );
+              $view->assign("success", "L'installation s'est déroulée avec succès ! Vous pouvez désormais commencer votre navigation sur Hairapp !");
+              $view->assign( "config", $form);
 
-        }
-        else{
-            $view = new Views( 'install', 'install_header');
-            $view->assign("current", 'install' );
-            $view->assign("errors",$errors);
-            $view->assign( "config", $form);
+          }
+          else{
 
-        }
+              $view->assign("errors",$errors);
+              $view->assign( "config", $form);
+
+          }
     }
 
-    public static function executeQueryFile( $filesql, $dbname ) {
+    public static function executeQueryFile( $filesql, $dbname = null ) {
         $query = file_get_contents( $filesql );
-        $dbname = str_replace( ' ', '_', $dbname );
-        //var_dump( $query ); die;
-        $query = str_replace( 'DB_NAME', $dbname, $query );
+
+        if( $dbname != null ){
+          $dbname = str_replace( ' ', '_', $dbname );
+          //var_dump( $query ); die;
+          $query = str_replace( 'DB_NAME', $dbname, $query );
+        }
 
         $array = explode(";\n", $query);
 

@@ -199,20 +199,18 @@ class Install extends BaseSql {
                 "2" => [
                     "input"=>[
 
-                        "mainColor"=>[
-                            "type"=>"text",
+                        "application_mail"=>[
+                            "type"=>"email",
                             "class"=>"input input_sign-in",
-                            "placeholder"=>"Couleur principale souhaitée",
+                            "placeholder"=>"Email ( utilisé pour les notifications aux utilisateurs )",
                             "required"=>true,
-                            "minString"=>2,
-                            "maxString"=>100
+                            "maxString"=>150
                         ],
-                        "secondColor"=>[
-                            "type"=>"text",
+                        "application_pwd"=>[
+                            "type"=>"password",
                             "class"=>"input input_sign-in",
-                            "placeholder"=>"Couleur secondaire souhaitée",
+                            "placeholder"=>"Mot de passe du comtpe mail",
                             "required"=>true,
-                            "minString"=>2,
                             "maxString"=>100
                         ],
                         "logo" => [
@@ -223,7 +221,7 @@ class Install extends BaseSql {
                         ],
                     ],
                     "class" => "tab",
-                    "steps" => "Etape 2 : Gestion des couleurs",
+                    "steps" => "Etape 2 : Configuration du site",
                 ],
 
                 "3" => [
@@ -249,6 +247,12 @@ class Install extends BaseSql {
                             "placeholder"=>"Durée moyenne d'un rendez-vous",
                             "required"=>true,
                             "id" => "duration"
+                        ],
+                        "address" => [
+                          "type" => "text",
+                          "class"=>"input input_sign-in",
+                          "placeholder"=>"Adresse du salon",
+                          "required"=>true,
                         ]
                     ],
                     "class" => "tab",
@@ -306,6 +310,10 @@ class Install extends BaseSql {
                             "placeholder" => "Téléphone",
                             "required" => true
                         ],
+                        "data" => [
+                          "type" => 'checkbox',
+                          "span" => "Je souhaite remplir mon site avec un jeu de données par défaut"
+                        ]
 
                     ],
                     "class" => "tab",
@@ -318,4 +326,3 @@ class Install extends BaseSql {
         ];
     }
 }
-

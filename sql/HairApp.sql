@@ -178,13 +178,13 @@ CREATE TABLE theme(
 #------------------------------------------------------------
 
 CREATE TABLE configuration(
-        id       int (11) Auto_increment  NOT NULL ,
-        admin    Varchar (50) NOT NULL ,
-        logo     Varchar (100) NOT NULL ,
-        image    Varchar (100) NOT NULL ,
-        id_User  Int ,
-        id_Color Int ,
-        PRIMARY KEY (id )
+        id_config int(11) NOT NULL AUTO_INCREMENT,
+        logo varchar(100) NOT NULL,
+        email_address varchar(150) DEFAULT NULL,
+        email_pwd varchar(60) DEFAULT NULL,
+        postal_address varchar(255) DEFAULT NULL,
+        status_configuration int(1) NOT NULL DEFAULT '1',
+        PRIMARY KEY (id_config)
 )ENGINE=InnoDB;
 
 
@@ -204,6 +204,3 @@ ALTER TABLE package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Catego
 ALTER TABLE theme ADD CONSTRAINT FK_Theme_id_user FOREIGN KEY (id_user) REFERENCES user(id);
 ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_user FOREIGN KEY (id_user) REFERENCES user(id);
 ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES color(id);
-
-INSERT INTO categoryType(type)
-VALUES  ('Article'),('Produits'),('Forfaits');

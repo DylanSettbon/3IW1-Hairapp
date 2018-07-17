@@ -1,5 +1,37 @@
 
+<style>
+    #loader span{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background-color: #3498db;
+        margin: 35px 5px;
+        opacity: 0;
+    }
 
+    #loader span:nth-child(1){
+        animation: opacitychange 1s ease-in-out infinite;
+    }
+
+    #loader span:nth-child(2){
+        animation: opacitychange 1s ease-in-out 0.33s infinite;
+    }
+
+    #loader span:nth-child(3){
+        animation: opacitychange 1s ease-in-out 0.66s infinite;
+    }
+
+    @keyframes opacitychange{
+        0%, 100%{
+            opacity: 0;
+        }
+
+        60%{
+            opacity: 1;
+        }
+    }
+</style>
 
 <div class="container">
 
@@ -11,20 +43,44 @@
     </div>
     <div class="row" id="secondPart">
         <?php $this->addModal("install", $config ); ?>
+        <div class="col-l-6 center">
+            <?php if( isset( $errors ) ): ?>
+                <ul class="errors">
 
-        <?php if( isset( $errors ) ): ?>
+                    <?php foreach ( $errors as $error ): ?>
+                        <li>
+                            <div class="div-errors danger">
+                                <p><strong> Warning ! </strong><?php echo $error;?></p>
+                            </div>
+
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+            <?php if( isset( $success ) ): ?>
             <ul class="errors">
+                <li>
+                    <div class="div-errors success">
+                        <p><strong> Success ! </strong><?php echo $success;?></p>
+                        <meta http-equiv="refresh" content="5;<?php echo DIRNAME ?>home/gethome">
+                    </div>
 
-                <?php foreach ( $errors as $error ): ?>
-                    <li>
-                        <div class="div-errors danger">
-                            <p><strong> Warning ! </strong><?php echo $error;?></p>
-                        </div>
-
-                    </li>
-                <?php endforeach; ?>
+                </li>
             </ul>
-        <?php endif; ?>
+            <?php endif; ?>
+
+            <?php if( isset( $loading ) ): ?>
+                <?php if( $loading == true ): ?>
+                    <div class="loader" id="loader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
+
     </div>
 
 </div>

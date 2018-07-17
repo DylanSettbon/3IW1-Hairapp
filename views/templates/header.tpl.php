@@ -39,8 +39,12 @@ if(!file_exists(DIRNAME."/sitemaps/".$fichierSitemaps)!==false) {
 
   <header class='header'>
       <div class='container2'>
-        <div class='logo'>
-          <a href='<?php echo DIRNAME;?>home/getHome'>LOGO</a>
+        <div>
+          <a href='<?php echo DIRNAME;?>home/getHome'>
+              <?php if( isset( $logo ) ): ?>
+                <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+              <?php endif; ?>
+          </a>
         </div>
 
           <div id="burger" class="toggleAnimated" onclick="toggleAnimated(this)">

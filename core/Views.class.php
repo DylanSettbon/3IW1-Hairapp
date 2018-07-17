@@ -52,7 +52,18 @@ class Views
             ], null, 3
         );
 
-
+        $conf = new Configuration();
+        $logo = $conf->getAllBy(
+            [
+                "status_configuration" => 1
+            ],
+            [
+                "logo"
+            ], 3
+        );
+        if( !empty( $logo ) ){
+            $this->assign("logo", $logo[0]->getLogo() );
+        }
 
         foreach ( $vues as $vue ) {
 

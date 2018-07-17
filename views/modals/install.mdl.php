@@ -40,10 +40,28 @@
 
                     <?php endif; ?>
 
-                    <?php if( isset( $_POST[$nameIpt] ) ): ?>
+                    <?php if( $paramsIpt['type'] == 'checkbox' ):?>
+                        <input
+                                type="<?php echo $paramsIpt["type"];?>"
+                                name="<?php echo $nameIpt;?>"
+                                <?php if ( isset( $paramsIpt['class'] ) ) :?>
+                                    class="<?php echo $paramsIpt['class'];?>"
+                                <?php endif; ?>
+
+                                <?php if( isset( $_POST[$nameIpt] ) ): ?>
+                                    checked
+                                <?php endif; ?>
+
+                        <?php if( isset( $paramsIpt['span'] ) ):?>
+                            <span><?php echo $paramsIpt["span"];?></span>
+                        <?php endif; ?>
+
+                    <?php endif; ?>
+
+                    <?php if( isset( $_POST[$nameIpt] ) && $paramsIpt['type'] != 'checkbox'  ): ?>
                         <?php echo "value=".$_POST[$nameIpt]; ?>
                     <?php endif; ?>
-                    >
+
 
                 </p>
 

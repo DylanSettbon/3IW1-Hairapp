@@ -220,7 +220,6 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-
         $this->update($sql_upd, $sql_params);
     }
 
@@ -380,6 +379,19 @@ class BaseSql{
     public function populate($where = []){
 
         $sql = $this->db->prepare( "SELECT * FROM user WHERE email = :email" );
+        //->fetchObject('User');
+        $sql->execute( $where );
+        $result = $sql->fetchObject('User');
+
+
+        //return objet
+        return $result;
+
+    }
+
+    public function populateconf($where = []){
+
+        $sql = $this->db->prepare( "SELECT * FROM configuration WHERE email = :email" );
         //->fetchObject('User');
         $sql->execute( $where );
         $result = $sql->fetchObject('User');
