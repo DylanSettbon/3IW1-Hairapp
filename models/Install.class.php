@@ -209,7 +209,7 @@ class Install extends BaseSql {
                         "application_pwd"=>[
                             "type"=>"password",
                             "class"=>"input input_sign-in",
-                            "placeholder"=>"Mot de passe du comtpe mail",
+                            "placeholder"=>"Mot de passe du compte mail",
                             "required"=>true,
                             "maxString"=>100
                         ],

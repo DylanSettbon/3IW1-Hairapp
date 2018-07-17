@@ -8,14 +8,25 @@
 
 ?>
 
+
 <div class='sidenav'>
+    <header class='header'>
+        <div class='logo'>
+            <a href='<?php echo DIRNAME;?>admin/getAdmin'>
+                <?php if( isset( $logo ) ): ?>
+                    <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+                <?php endif; ?>
+            </a>
+        </div>
+    </header>
     <ul>
-        <a href= '<?php echo DIRNAME;?>admin/getAdmin'>LOGO</a>
-        <li <?php if ( $this->data['current_sidebar'] == 'packages') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
+
+        <a href= '<?php echo DIRNAME;?>admin/getAdmin'></a>
+        <li <?php if ( $current_sidebar == 'packages') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
             <a href="<?php echo DIRNAME;?>admin/getPackageAdmin">Forfaits</a>
         </li>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'pages') {echo ' class="sidebar_buttons dropdown" ';} else echo ' class="sidebar_buttons dropdown"';?>>
+        <li <?php if ( $current_sidebar == 'pages') {echo ' class="sidebar_buttons dropdown" ';} else echo ' class="sidebar_buttons dropdown"';?>>
             <a >Pages &nbsp;
                 <i class='fa fa-caret-down'></i>
             </a>
@@ -26,7 +37,7 @@
 
         </div>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'color') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
+        <li <?php if ( $current_sidebar == 'color') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
             <a >Couleur &nbsp;
                 <i class='fa fa-caret-down'></i>
             </a>
@@ -37,7 +48,7 @@
             <a href='<?php echo DIRNAME;?>admin/getColorPageBtn'>Couleur secondaire</a>
         </div>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'articles') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
+        <li <?php if ( $current_sidebar == 'articles') {echo ' class="sidebar_buttons dropdown active" ';} else echo ' class="sidebar_buttons dropdown"';?>>
             <a >Articles &nbsp;
                 <i class='fa fa-caret-down'></i>
             </a>
@@ -48,11 +59,11 @@
             <a href='<?php echo DIRNAME;?>admin/getCategoryAdmin'>Categories</a>
         </div>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'comments') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
+        <li <?php if ( $current_sidebar == 'comments') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
             <a href="<?php echo DIRNAME;?>admin/getCommentAdmin">Comments</a>
         </li>
 
-        <li <?php if ( $this->data['current_sidebar'] == 'appointment') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
+        <li <?php if ( $current_sidebar == 'appointment') {echo ' class="sidebar_buttons active" ';} else echo ' class="sidebar_buttons"';?>>
             <a href="<?php echo DIRNAME;?>admin/getAppointmentAdmin">Rendez-vous</a>
         </li>
 

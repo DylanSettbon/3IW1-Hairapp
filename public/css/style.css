@@ -24,11 +24,10 @@
     clear: both; }
 
 .sidenav {
-  background-color: #637484;
+  background-color: #800000;
   margin-right: auto;
   margin-left: auto;
-  text-align: center;
-  margin-top: 20px; }
+  text-align: center; }
 
 .sidebar_buttons {
   text-align: center; }
@@ -55,7 +54,7 @@
   background-color: #b3c2d1;
   border-radius: 5px; }
 
-.sidenav a {
+.sidenav ul a {
   color: #FFF;
   display: inline-block;
   font-weight: 400;
@@ -88,7 +87,7 @@ html {
   clear: left;
   left: 0;
   padding: 1rem;
-  background-color: #637484;
+  background-color: #800000;
   color: white;
   text-align: center; }
 
@@ -110,17 +109,17 @@ html {
   overflow-x: auto; }
 
 .page {
-  color: #637484; }
+  color: #800000; }
 
 .userManagerTab tr:nth-child(even) {
   background-color: rgba(189, 189, 189, 0.2); }
 
 th {
-  color: #637484; }
+  color: #800000; }
 
 .previous a, .next-admin a {
   text-decoration: none;
-  color: #637484; }
+  color: #800000; }
 
 #civilite {
   padding: 10px; }
@@ -147,7 +146,7 @@ hr {
   margin-top: 30px; }
 
 .span {
-  color: #637484; }
+  color: #800000; }
 
 .input {
   border-radius: 5px;
@@ -159,7 +158,7 @@ hr {
   font-size: 16px; }
 
 #connecter {
-  background-color: #009CDF;
+  background-color: #778899;
   color: white;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -190,7 +189,7 @@ h3 {
   width: auto; }
 
 #valider {
-  background-color: #2F80ED;
+  background-color: #778899;
   color: white;
   margin-top: 30px;
   font-size: 16px;
@@ -244,7 +243,7 @@ h3 {
   background-color: rgba(189, 189, 189, 0.2); }
 
 .planning {
-  border-right: 2px solid #009CDF; }
+  border-right: 2px solid #778899; }
 
 #planning th {
   border: none; }
@@ -337,7 +336,7 @@ section {
   margin: 0 auto; }
 
 .btn-Valider {
-  background: #009CDF;
+  background: #778899;
   color: white;
   height: 35px;
   margin-top: 15px;
@@ -415,7 +414,7 @@ section {
     display: inline-block;
     width: 70px;
     height: 35px;
-    background-color: #009CDF;
+    background-color: #778899;
     border-radius: 16px;
     opacity: 0.5; }
   input[type="checkbox"][id^="heure"]:checked + label::before {
@@ -499,7 +498,7 @@ section {
   margin: 0 auto; }
 
 .btn-Valider {
-  background: #009CDF;
+  background: #778899;
   color: white;
   height: 35px;
   margin-top: 15px;
@@ -525,7 +524,7 @@ section {
   margin-top: 35px; }
 
 .header {
-  background: #637484;
+  background: #800000;
   padding: 0px 16px; }
 
 .header:after {
@@ -603,7 +602,7 @@ section {
   display: block !important; }
 
 .active {
-  background-color: #009CDF;
+  background-color: #778899;
   border-radius: 5px; }
 
 .logo {
@@ -611,7 +610,7 @@ section {
 
 .container2 {
   float: right;
-  background-color: #637484;
+  background-color: #800000;
   width: 100%; }
 
 .icon {
@@ -640,14 +639,13 @@ section {
     text-align: center; }
   .sidebar {
     float: left;
-    background-color: #637484;
+    background-color: #800000;
     border-top: 2px solid #333333;
     border-bottom: 2px solid #333333;
     height: 70px;
     bottom: 0;
     position: relative;
     display: table-cell;
-    margin-top: 15px;
     text-align: center; }
   .sidebar li {
     display: inline-block;
@@ -730,7 +728,7 @@ section {
   .tab-planning {
     margin-top: 60px; }
   #planning td, #planning th {
-    border-right: 2px solid #009CDF;
+    border-right: 2px solid #778899;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
@@ -738,14 +736,14 @@ section {
   .coiffeur-1 {
     background-color: #F2994A; }
   .coiffeur-2 {
-    background-color: #009CDF; }
+    background-color: #778899; }
   .coiffeur-3 {
     background-color: #27AE60; }
   .background_login {
     background-color: #E5E5E5;
     height: 100%; }
   .valider {
-    background-color: #2F80ED;
+    background-color: #778899;
     color: white;
     margin-top: 30px;
     font-size: 16px;
@@ -766,8 +764,7 @@ section {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 20px;
-    background-color: #637484;
+    background-color: #800000;
     margin-top: 0; }
   .sidenav li {
     display: block;
@@ -819,14 +816,14 @@ section {
     background-color: #E5E5E5;
     height: 100%; }
   #connecter {
-    background-color: #009CDF;
+    background-color: #778899;
     color: white;
     margin-top: 30px;
     margin-bottom: 20px;
     font-size: 16px;
     width: 35%; }
   #valider {
-    background-color: #2F80ED;
+    background-color: #778899;
     color: white;
     margin-top: 30px;
     font-size: 16px;
@@ -851,8 +848,7 @@ section {
     left: 0;
     margin-top: 0;
     overflow-x: hidden;
-    padding-top: 20px;
-    background-color: #637484; }
+    background-color: #800000; }
   .content {
     margin-left: 160px; } }
 
@@ -1042,7 +1038,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #009cdf;
+  background-color: #778899;
   text-align: center;
   cursor: pointer; }
 
@@ -1068,7 +1064,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #009CDF;
+  background-color: #778899;
   text-align: center;
   cursor: pointer;
   margin: 25px; }
@@ -1085,7 +1081,7 @@ img {
   margin-left: 35px; }
 
 .buttonUser {
-  background-color: #009CDF;
+  background-color: #778899;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1121,7 +1117,7 @@ img {
   cursor: pointer; }
 
 .buttonUserModify {
-  background-color: #009CDF;
+  background-color: #778899;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1177,7 +1173,7 @@ img {
   width: 100%; }
 
 .btnCreatePackage {
-  background-color: #009CDF;
+  background-color: #778899;
   color: white;
   height: 45px;
   width: 100%; }
@@ -1204,7 +1200,7 @@ img {
 
 [class^="createPackage"] {
   border-radius: 5px;
-  background-color: #009CDF;
+  background-color: #778899;
   text-decoration: none;
   color: white;
   width: 100%;
@@ -1270,7 +1266,7 @@ input[type=submit].btnFormCategory {
   text-decoration: none;
   width: 100%;
   text-align: center;
-  background-color: #009CDF;
+  background-color: #778899;
   color: #fff;
   padding: 5px 0;
   font-size: 20px;
@@ -1324,10 +1320,10 @@ input[type=submit].btnFormCategory {
   transition: .4s; }
 
 input:checked + .slider {
-  background-color: #009CDF; }
+  background-color: #778899; }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #009CDF; }
+  box-shadow: 0 0 1px #778899; }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -1337,7 +1333,7 @@ input:checked + .slider:before {
 @media only screen and (min-width: 1024px) {
   [class^="createPackage"] {
     padding: 5px 150px;
-    background-color: #009CDF;
+    background-color: #778899;
     color: white; }
   .createCategoryPackage {
     width: 100%; }
@@ -1478,7 +1474,7 @@ input[type="checkbox"][id="template4"] + label::before {
   height: 300px; }
 
 .updateButton {
-  background-color: #009CDF;
+  background-color: #778899;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1513,7 +1509,7 @@ input.invalid {
   display: none; }
 
 button {
-  background-color: #009CDF;
+  background-color: #778899;
   border-radius: 5px;
   color: #ffffff;
   border: none;
@@ -1544,7 +1540,7 @@ button:hover {
 
 /* Mark the steps that are finished and valid: */
 .step.finish {
-  background-color: #009CDF; }
+  background-color: #778899; }
 
 .content-on-image {
   background: rgba(0, 0, 0, 0.5);

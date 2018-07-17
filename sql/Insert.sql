@@ -22,3 +22,9 @@ INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, rece
 
 INSERT INTO configuration( logo, email_address, email_pwd, postal_address, status_configuration )
     VALUES( 'LOGO_TOCHANGE', ' EMAILADDRESS_TOCHANGE', 'EMAILPWD_TOCHANGE', ' POSTAL_TOCHANGE', 'STATUSCONFIG_TOCHANGE' );
+
+INSERT INTO color(name,code)
+VALUES ('current','#637484'),
+       ('standard','#637484'),
+       ('currentBtn','#009CDF'),
+       ('standardBtn','#009CDF');

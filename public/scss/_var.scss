@@ -5,9 +5,9 @@ $medium: 640px ;
 $large: 1024px ;
 
 
-$main_color: #637484;
+$main_color: #800000;
 $border_color: #333333;
-$button_color: #009CDF;
+$button_color: #778899;
 
 
 @mixin clearfix {
@@ -70,7 +70,7 @@ $button_color: #009CDF;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-    margin-top: 20px;
+
   }
   .sidebar_buttons{
     text-align: center;
@@ -100,7 +100,7 @@ $button_color: #009CDF;
     border-radius:5px;
   }
 
-  .sidenav a{
+  .sidenav ul a{
     color: #FFF;
     display: inline-block;
     font-weight: 400;
@@ -262,7 +262,7 @@ $button_color: #009CDF;
       bottom: 0;
       position: relative;
       display: table-cell;
-      margin-top: 15px;
+      //margin-top: 15px;
       text-align: center;
     }
 
@@ -929,7 +929,7 @@ $button_color: #009CDF;
 
 
   #valider{
-    background-color:#2F80ED;
+    background-color:$button_color;
     color:white;
     margin-top: 30px;
     font-size: 16px;
@@ -1224,7 +1224,7 @@ $button_color: #009CDF;
   }
 
   button {
-    background-color: #009CDF;
+    background-color: $button_color;
     border-radius: 5px;
     color: #ffffff;
     border: none;
@@ -1260,7 +1260,7 @@ $button_color: #009CDF;
 
   /* Mark the steps that are finished and valid: */
   .step.finish {
-    background-color: #009CDF;
+    background-color: $button_color;
   }
 
 
