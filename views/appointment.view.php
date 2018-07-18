@@ -67,7 +67,7 @@
         </section>
 
         <section id="selection-date" class="row">
-            <h2 class="title-section-rdv">Selectionnez une date</h2>
+            <h2 class="title-section-rdv">Selectionnez une date et une horaire</h2>
             <div class="container date">
 
                 <select name="jour" id="jour" class="appointmentAttr liste_deroulante">
@@ -87,7 +87,7 @@
             <ul id="appointmentHour" class="container checkbox-heure-rdv">
             </ul>
 
-            <select name="appointmentHour" id="heure" class="col-s-3 liste_deroulante">
+            <select name="cbHeure" id="heure" class="col-s-3 liste_deroulante">
                 <option selected disabled>Heure</option>
             </select>
         </section>

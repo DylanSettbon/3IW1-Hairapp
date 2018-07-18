@@ -67,5 +67,9 @@ class Security{
         }
     }
 
+    public static function setHtmlEntitiesForData($data){
+        return htmlentities($data);
+    }
+
 
 }

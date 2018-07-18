@@ -1,7 +1,7 @@
 
     <div>
         <article class="arriere_plan">
-
+            <input id="search" class="input col-l-2" placeholder="Recherchez...">
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
 
                 <div class="col-l-4">
@@ -23,6 +23,7 @@
                         <th >Supprimer en base</th>
 
                     </tr>
+                    <tbody id="searchList">
                     <?php   
                     
                             foreach ($u as $user) {
@@ -43,6 +44,7 @@
                             }
                     
                     ?>
+                    </tbody>
                     
                     <nav aria-label="navigation">
                         <tr class="page">
@@ -60,9 +62,12 @@
     </div>
 
   </main>
+    <script type="text/javascript" src="/public/js/searchBar.js"></script>
+
 
 <?php
 
 include "templates/footer.tpl.php";
 ?>
+
 
