@@ -11,14 +11,14 @@ USE HairApp;
 #------------------------------------------------------------
 
 CREATE TABLE appointment(
-        id              int (11) Auto_increment  NOT NULL ,
+        idAppointment   int (11) Auto_increment  NOT NULL ,
         dateAppointment Date NOT NULL ,
         hourAppointment Time NOT NULL ,
         id_user         Int ,
         id_Hairdresser  Int ,
         id_Package      Int ,
-        status          TINYINT(1) DEFAULT 1,
-        PRIMARY KEY (id)
+        planned          TINYINT(1) DEFAULT 1,
+        PRIMARY KEY (idAppointment)
 )ENGINE=InnoDB;
 
 

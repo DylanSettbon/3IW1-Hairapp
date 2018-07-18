@@ -46,62 +46,77 @@ class AdminController{
                 'id_Package',
                 'planned'],6);
 
+
         $arrayStatus = array("-1"=>"Utilisateur supprimé", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Administrateur");
         $data = [];
-        foreach ($users as $user) {
-            $roleLabel = array_key_exists($user->getStatus(), $arrayStatus) ? $arrayStatus[$user->getStatus()] : $user->getStatus();
-            if (isset($data['roles'][$roleLabel])) {
-                $data['roles'][$roleLabel]++;
-            } else {
-                $data['roles'][$roleLabel] = 1;
-            }
 
-            if ($user->getStatus() == '0' || $user->getStatus() == '1') {
-                $createdMonth = date("n", strtotime($user->getDateInserted()));
-                $createdYear = date("Y", strtotime($user->getDateInserted()));
+        if(!empty($users)) {
+            foreach ($users as $user) {
+                $roleLabel = array_key_exists($user->getStatus(), $arrayStatus) ? $arrayStatus[$user->getStatus()] : $user->getStatus();
+                if (isset($data['roles'][$roleLabel])) {
+                    $data['roles'][$roleLabel]++;
+                } else {
+                    $data['roles'][$roleLabel] = 1;
+                }
 
-                if (date('Y') >= $createdYear && date('n') >= $createdMonth) {
-                    if (isset($data['signin'][$createdMonth])) {
-                        $data['signin'][$createdMonth]++;
-                    } else {
-                        $data['signin'][$createdMonth] = 1;
+                if ($user->getStatus() == '0' || $user->getStatus() == '1') {
+                    $createdMonth = date("n", strtotime($user->getDateInserted()));
+                    $createdYear = date("Y", strtotime($user->getDateInserted()));
+
+                    if (date('Y') >= $createdYear && date('n') >= $createdMonth) {
+                        if (isset($data['signin'][$createdMonth])) {
+                            $data['signin'][$createdMonth]++;
+                        } else {
+                            $data['signin'][$createdMonth] = 1;
+                        }
                     }
                 }
             }
+
+            ksort($data['signin']);
+            $firstMonth = array_keys($data['signin'])[0];
+            $keys = array_keys($data['signin']);
+            $lastMonth = $keys[count(array_keys($data['signin'])) - 1];
+
+            for ($i = $firstMonth; $i <= $lastMonth; $i++) {
+                array_key_exists($i, $data['signin']) ? '' : $data['signin'][$i] = 0;
+            }
+            ksort($data['signin']);
+        }
+        else{
+            $data['signin'][0] = 0;
+            $data['roles'][0] = 0;
         }
 
-        ksort($data['signin']);
-        $firstMonth = array_keys($data['signin'])[0];
-        $keys = array_keys($data['signin']);
-        $lastMonth = $keys[count(array_keys($data['signin']))-1];
-
-        for($i = $firstMonth;$i <= $lastMonth; $i++ ){
-            array_key_exists($i,$data['signin'])?'':$data['signin'][$i] = 0;
-        }
-        ksort($data['signin']);
-
-        foreach ($appointments as $appointment) {
-            if ($appointment->getPlanned() == 1) {
-                $makingMonth = date("n", strtotime($appointment->getDateAppointment()));
-                if (isset($data['appointment'][$makingMonth])) {
-                    $data['appointment'][$makingMonth]++;
-                } else {
-                    $data['appointment'][$makingMonth] = 1;
+        if (!empty($appointments)) {
+            foreach ($appointments as $appointment) {
+                if ($appointment->getPlanned() == 1) {
+                    $makingMonth = date("n", strtotime($appointment->getDateAppointment()));
+                    if (isset($data['appointment'][$makingMonth])) {
+                        $data['appointment'][$makingMonth]++;
+                    } else {
+                        $data['appointment'][$makingMonth] = 1;
+                    }
                 }
             }
-        }
 
-        ksort($data['appointment']);
-        $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']),array_keys($data['appointment'])));
-        foreach ($data['labelLine'] as $label){
-            if (!array_key_exists($label,$data['appointment'])){
-                $data['appointment'][$label] = 0;
+            ksort($data['appointment']);
+            $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']), array_keys($data['appointment'])));
+            foreach ($data['labelLine'] as $label) {
+                if (!array_key_exists($label, $data['appointment'])) {
+                    $data['appointment'][$label] = 0;
+                }
+                if (!array_key_exists($label, $data['signin'])) {
+                    $data['signin'][$label] = 0;
+                }
             }
-            if (!array_key_exists($label,$data['signin'])){
-                $data['signin'][$label] = 0;
-            }
+            ksort($data['appointment']);
         }
-        ksort($data['appointment']);
+        else{
+            $data['appointment'][0] = 0;
+            $data['labelLine'] = 0;
+
+        }
 
         echo(json_encode($data));
         return true;
@@ -222,7 +237,7 @@ class AdminController{
                                                             'CONCAT(u1.firstname," ",u1.lastname) as id_user',
                                                             'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
                                                             'p.description as id_Package',
-                                                            'planned'],$tab,$inner);
+                                                            'planned'],$tab,$inner,null);
 
         foreach ($appointments as $key => $appointment){
             if($appointment->getPlanned()!= 1){
@@ -372,13 +387,12 @@ class AdminController{
                     $appointment->setIdHairdresser($_POST['hairdresser']);
                     $appointment->setIdPackage($_POST['package']);
                     $appointment->setIdUser($_POST['user']);
-                    $appointment->updateTable(['dateAppointment' => $appointment->getDateAppointment(),
+                    $appointment->updateTable([
+                        'dateAppointment' => $appointment->getDateAppointment(),
                         'hourAppointment' => $appointment->getHourAppointment(),
-                        'id_User' => $appointment->getIdUser(),
+                        'id_user' => $appointment->getIdUser(),
                         'id_Hairdresser' => $appointment->getIdHairdresser(),
-                        'id_Package' => $appointment->getIdPackage(),
-                        'planned' => 1]);
-
+                        'id_Package' => $appointment->getIdPackage()]);
                     $idUser = $appointment->getIdUser();
                     $user = new User();
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();

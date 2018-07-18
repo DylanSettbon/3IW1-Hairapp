@@ -209,7 +209,6 @@ class BaseSql{
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
-
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
@@ -342,8 +341,9 @@ class BaseSql{
              }
             if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
+                 ' FROM '.$from.' WHERE '
                  .$where_type.' '. $options);
+
 
              }else {
              $sql = $this->db->prepare('SELECT ' .$select.
@@ -351,12 +351,7 @@ class BaseSql{
                  .$where_type);
             }
 
-             //$sql->execute($sql_params);
-             if(!$sql->execute($sql_params)){
-                 echo '<pre>'; print_r($sql->errorInfo()); echo '</pre>';
-             };
-
-
+             $sql->execute($sql_params);
          }
          else{
              if( isset( $inner['inner_table']) ){
