@@ -306,6 +306,9 @@ label[for="coiffeurTous"] {
 label[for="coiffeurTous"] span {
   font-size: 20px; }
 
+input[type="checkbox"][id^="coiffeur"] + label::before {
+  opacity: 0.5; }
+
 input[type="checkbox"][id^="coiffeur"]:checked + label::before {
   border: solid black 2px;
   font-size: 10px;
@@ -427,8 +430,7 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/salon coiffure.jpeg");
-  height: 0; }
+  background-image: url("../img/salon coiffure.jpeg"); }
 
 #main-art {
   background-color: white;
@@ -832,7 +834,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; }
+    margin-top: 10%; }
   .sidenav li {
     display: block;
     padding: 10px 0px; }
@@ -856,9 +858,6 @@ section {
   border-radius: 5px;
   display: inline-block;
   margin-bottom: 10px; }
-
-.article-accueil:last-child {
-  margin-bottom: 70px; }
 
 .img-art {
   display: inline;

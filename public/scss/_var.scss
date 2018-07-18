@@ -197,7 +197,7 @@ $button_color: #009CDF;
     display: block !important;
   }
   .active{
-    background-color:#009CDF;
+    background-color:$button_color;
     border-radius:5px;
   }
 
@@ -282,7 +282,7 @@ $button_color: #009CDF;
     clear: left;
     left: 0;
     padding: 1rem;
-    background-color: #637484;
+    background-color: $main_color;
     color:white;
     text-align: center;
 
@@ -312,7 +312,7 @@ $button_color: #009CDF;
   }
 
   .planning{
-    border-right: 2px solid #009CDF;
+    border-right: 2px solid $button_color;
   }
 
   #planning th{
@@ -352,7 +352,7 @@ $button_color: #009CDF;
   /* RENDEZ VOUS*/
 
 
-  
+
   #body-rdv {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
@@ -391,7 +391,7 @@ $button_color: #009CDF;
   input[type="checkbox"][id^="coiffeur"] + label::before {
     content: "";
     display: inline-block;
-    width: 80px;  
+    width: 80px;
     height: 80px;
     background-image: url("../img/hommecoiffure.jpg");
     background-size: cover;
@@ -480,8 +480,8 @@ $button_color: #009CDF;
 
   #choix-forfait a{
     margin-top:10px;
-    text-decoration:none; 
-  } 
+    text-decoration:none;
+  }
 
   #choix-coiffeur,#choix-forfait  {
     margin-top: 35px;
@@ -501,14 +501,13 @@ $button_color: #009CDF;
 
 }
 @mixin article {
-  
+
   $imgArt1 : "../img/journal.jpeg";
 
-  
+
   #body-art {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
-    height: 0;
     //object-fit: cover;
     //background-repeat: no-repeat;
   }
@@ -544,7 +543,7 @@ $button_color: #009CDF;
   input[type="checkbox"][id^="art"] + label::before {
     content: "";
     display: inline-block;
-    width: 80px;  
+    width: 80px;
     height: 80px;
     background-image: url($imgArt1);
     background-size: cover;
@@ -621,7 +620,7 @@ $button_color: #009CDF;
    .liste-art li {
     display: inline-block;
   }
-  
+
   #choix-art  {
     margin-top: 35px;
   }
@@ -632,7 +631,7 @@ $button_color: #009CDF;
 @mixin genericClass{
   .updateButton
   {
-    background-color: #009cdf;
+    background-color: $button_color;
     border-radius: 30px;
     color: white;
     text-align: center;
@@ -656,7 +655,7 @@ $button_color: #009CDF;
 }
 
 
-@mixin responsive-rdv{ 
+@mixin responsive-rdv{
   @media only screen and (min-width: 1024px) {
     #title-rdv {
     //font-size: 28px;
@@ -682,7 +681,7 @@ $button_color: #009CDF;
     #heure {
     display: none;
     }
-    
+
     .container.checkbox-heure-rdv {
     display: block;
     width:40%;
@@ -692,15 +691,15 @@ $button_color: #009CDF;
     width: 120px;
     height: 120px;
     }
-    
+
     .nom-coiffeur {
     font-weight: bold;
     }
-    
+
     .liste-heure-rdv{
       display:none;
     }
-    
+
     input[type="checkbox"][id^="heure"] {
       display: none;
     }
@@ -710,7 +709,7 @@ $button_color: #009CDF;
       display: inline-block;
       width: 70px;
       height: 35px;
-      background-color: #009CDF;
+      background-color: $button_color;
       border-radius: 16px;
       opacity: 0.5;
 
@@ -720,11 +719,11 @@ $button_color: #009CDF;
       font-size: 10px;
       opacity: 1;
     }
-    
+
     label[for^="heure"] {
       position: relative;
     }
-    
+
     .heure{
       position: absolute;
       left: -5%;
@@ -733,11 +732,11 @@ $button_color: #009CDF;
       width:100%;
       font-weight: bold;
     }
-    
+
     .container.date {
     width: 52%;
     }
-  } 
+  }
 }
 
 @mixin forfaits{
@@ -970,7 +969,7 @@ $button_color: #009CDF;
   }
 
   .btnCreatePackage {
-    background-color: #009CDF;
+    background-color: $button_color;
     color: white;
     height: 45px;
     width: 100%; }
@@ -998,7 +997,7 @@ $button_color: #009CDF;
 
   [class^="createPackage"] {
     border-radius:5px;
-    background-color: #009CDF;
+    background-color: $button_color;
     text-decoration:none;
     color: white;
     width: 100%;
@@ -1065,7 +1064,7 @@ $button_color: #009CDF;
     text-decoration: none;
     width: 100%;
     text-align: center;
-    background-color: #009CDF;
+    background-color: $button_color;
     color: #fff;
     padding: 5px 0;
     font-size: 20px;
@@ -1124,11 +1123,11 @@ $button_color: #009CDF;
   }
 
   input:checked + .slider {
-    background-color: #009cdf;
+    background-color: $button_color;
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px #009cdf;
+    box-shadow: 0 0 1px $button_color;
   }
 
   input:checked + .slider:before {
@@ -1141,7 +1140,7 @@ $button_color: #009CDF;
   @media only screen and (min-width: 1024px) {
     [class^="createPackage"] {
       padding: 5px 150px;
-      background-color: #009CDF;
+      background-color: $button_color;
       color: white;}
 
     .createCategoryPackage {
