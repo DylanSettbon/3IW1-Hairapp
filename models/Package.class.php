@@ -116,7 +116,7 @@ class Package extends BaseSql {
     public function formAddPackageForPackageAdmin()
     {
         return [
-            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/savePackage"],
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "admin/savePackage"],
             "h2" => [
                 "class" => "categoryTitleForm",
                 "value" => "Ajouter un forfait à "
@@ -161,7 +161,7 @@ class Package extends BaseSql {
     public function formUpdatePackageForPackageAdmin()
     {
         return [
-            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/savePackage"],
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "admin/savePackage"],
             "h2" => [
                 "class" => "categoryTitleForm",
                 "value" => "Modifier un forfait"

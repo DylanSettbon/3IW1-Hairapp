@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 class AdminController{
 
-    public function getDashboard(){
+    public function getAdmin(){
         $user = new User();
         $package = new Package();
         $appointment = new Appointment();
@@ -122,6 +122,7 @@ class AdminController{
         return true;
     }
 
+    /*
     public function getAdmin(){
         $week = self::getWeek();
         $extremums = self::getExtemum();
@@ -151,6 +152,7 @@ class AdminController{
         $v->assign("appointments", $appointments );
         $v->assign("week", $week );
     }
+    */
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
@@ -176,7 +178,7 @@ class AdminController{
             $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
             $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
             $category->setDisplayOrder($displayOrder);
-            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status_category' => 1], ['id_category', 'id_CategoryType'], 3);
             if (!isset($_POST['categoryId'])) {
                 $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
                 if (empty($errors)) {
@@ -209,7 +211,7 @@ class AdminController{
             else {
                 $category->setId($_POST['categoryId']);
                 if (!empty($oldCategory[0])) {
-                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $currentCategory = $category->getAllBy(['id_category' => $category->getId()],null,3)[0];
                     $oldCategory = $oldCategory[0];
                     $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
                     $oldCategory->updateTable(
@@ -233,6 +235,7 @@ class AdminController{
         $category = new Category(3);
         $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
+
         $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
         $v->assign("config", $form );
@@ -405,9 +408,9 @@ class AdminController{
         $category = new Category(3);
         $category->setId($params['URL'][0]);
         $category->updateTable(
-            ["status" => 0],
-            ["id" => $category->getId()]);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+            ["status_category" => 0],
+            ["id_category" => $category->getId()]);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         if (!empty($categories)){
             $categories = Category::getCategoriesSortedByOrder($categories);
             foreach($categories as $key=>$category){
@@ -437,13 +440,12 @@ class AdminController{
         $packages = $package->getAssociativeArrayPackage();
 
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
 
         $hairdresser = new Hairdresser();
         $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
 
         $appointment = new Appointment();
-        //Selection de tous les coiffeurs et des forfaits
         $hours = $appointment->getAllAvailableTimeRange();
 
         if (isset($params['URL'][0])){
@@ -473,10 +475,12 @@ class AdminController{
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
             }
+            $v->assign('mode','update');
         }
         else{
                 $user = new User();
                 $users = $user->getAllBy(['status' => '1'],null,3);
+                $v->assign('mode','add');
                 $v->assign("users",$users);
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
@@ -940,7 +944,7 @@ class AdminController{
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
         $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name ,image, dateparution , description , id_Category"], 2);
-        $array=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
+        $array=$category->getAllBy(["id_CategoryType"=>"1"],["id_category,description_category"],2);
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
        // $v->assign( "a", $a);
@@ -1167,7 +1171,7 @@ class AdminController{
     public function modifyCategory($params){
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
-        $a= $category->getAllBy(["id"=>$params['URL'][0]],["id_category, description_category"], 2);
+        $a= $category->getAllBy(["id_category"=>$params['URL'][0]],["id_category, description_category"], 2);
         $v = new Views( "modifyCategory", "admin_header" );
         $v->assign( "a", $a);
 

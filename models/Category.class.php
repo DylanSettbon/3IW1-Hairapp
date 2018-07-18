@@ -105,7 +105,7 @@ class Category extends BaseSql
 
     public function setDisplayOrder($displayOrder)
     {
-        $countCategory = $this->countTable(null,['status' => '1','id_CategoryType' => $this->getIdCategoryType()]);
+        $countCategory = $this->countTable(null,['status_category' => '1','id_CategoryType' => $this->getIdCategoryType()]);
         $displayOrder = $displayOrder > $countCategory ? $countCategory +1 : $displayOrder;
         $displayOrder = $displayOrder < 1 ? 1 : $displayOrder;
         $this->displayOrder = $displayOrder;
@@ -197,7 +197,7 @@ class Category extends BaseSql
     public function formAddCategoryForPackageAdmin()
     {
         return [
-            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/saveCategoryPackage"],
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "admin/saveCategoryPackage"],
             "h2" => [
                 "value" => "Ajouter une catégorie"
             ],
@@ -231,7 +231,7 @@ class Category extends BaseSql
     public function formUpdateCategoryForPackageAdmin()
     {
         return [
-            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "/admin/saveCategoryPackage"],
+            "config" => ["class" => "formPackage createCategoryPackage", "method" => "POST", "action" => "admin/saveCategoryPackage"],
             "h2" => [
                 "value" => "Modifier le nom de la catégorie"
             ],

@@ -311,9 +311,6 @@ label[for="coiffeurTous"] {
 label[for="coiffeurTous"] span {
   font-size: 20px; }
 
-input[type="checkbox"][id^="coiffeur"] + label::before {
-  opacity: 0.5; }
-
 input[type="checkbox"][id^="coiffeur"]:checked + label::before {
   border: solid black 2px;
   font-size: 10px;
@@ -866,12 +863,9 @@ section {
   height: 100%;
   width: 100%; }
 
-<<<<<<< HEAD
-=======
 .article-accueil:last-child {
   margin-bottom: 2vh; }
 
->>>>>>> master
 .img-art {
   display: inline;
   padding: 5px;
@@ -1472,17 +1466,10 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
 
-<<<<<<< HEAD
-.success {
-  background-color: #ddffdd;
-  border-left: 6px solid #4CAF50; }
-
 .information {
   background-color: #B1BBC4;
   border-left: 6px solid #637484; }
 
-=======
->>>>>>> master
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px; }
@@ -1497,6 +1484,21 @@ input[type="checkbox"][id="template4"] + label::before {
 .hr {
   width: 1px;
   height: 300px; }
+
+#search {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  width: 175px;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  margin: 25px; }
+
+/* When the input field gets focus, change its width to 100% */
+#search:focus {
+  width: 60%; }
 
 .updateButton {
   background-color: #009CDF;

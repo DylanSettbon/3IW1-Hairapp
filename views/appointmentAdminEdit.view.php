@@ -27,6 +27,18 @@
         <?php endforeach;?>
     <?php endif; ?>
 
+    <?php if(empty($users) && $mode == 'add'):?>
+        <ul class="errors">
+            <li>
+                <div class="div-errors information">
+                    <p><strong>Aucun utilisateur enregistrès</strong>
+                        <br><br>Pour pouvoir enregistrer un rendez-vous, il vous faut avoir des utilisateurs enregistrés.
+                        <br>Vous pouvez en enregistrer depuis <a href="/admin/getUserAdmin">ici</a></p>
+                </div>
+            </li>
+        </ul>
+    <?php else:?>
+
     <form method='post' action='/admin/saveAppointment<?php echo isset($currentAppointment)? '/'.$currentAppointment->getId():'';?>'>
         <section id="choix-coiffeur" class="row">
                 <select name="hairdresser" id="hairdresser" class="appointmentAttr col-s-12 liste_deroulante">
@@ -62,16 +74,14 @@
             </select>
         </section>
 
-        <?php if(!empty($users)):?>
-            <section id="choix-coiffeur" class="row">
-                <select name="user" id="user" class="appointmentAttr col-s-12 liste_deroulante">
-                    <option selected disabled>Choisir un utilisateur</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value='<?php echo $user->getId() ?>'><?php echo Security::setHtmlEntitiesForData($user->getFullName());?></option>
-                    <?php endforeach;?>
-                </select>
-            </section>
-        <? endif; ?>
+        <section id="choix-coiffeur" class="row">
+            <select name="user" id="user" class="appointmentAttr col-s-12 liste_deroulante">
+                <option selected disabled>Choisir un utilisateur</option>
+                <?php foreach ($users as $user): ?>
+                    <option value='<?php echo $user->getId() ?>'><?php echo Security::setHtmlEntitiesForData($user->getFullName());?></option>
+                <?php endforeach;?>
+            </select>
+        </section>
 
         <section id="selection-date" class="row">
             <div class="container date">
@@ -98,6 +108,7 @@
             </div>
         <input class="btn-Valider col-s-12 col-l-12" type="submit" value="Valider" name="btn-Valider">
     </form>
+    <?php endif; ?>
 </main>
 </body>
 
