@@ -398,7 +398,7 @@ section {
     display: none; }
   .container.checkbox-heure-rdv {
     display: block;
-    width: 40%; }
+    width: 48%; }
   input[type="checkbox"][id^="coiffeur"] + label::before {
     width: 120px;
     height: 120px; }

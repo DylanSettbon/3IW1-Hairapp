@@ -16,6 +16,7 @@ class PackageController{
 
         $categories = Category::getCategoriesWithPackage($categories);
         $categories = empty($categories)?  $categories : Category::getCategoriesSortedByOrder($categories);
+  
 
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();

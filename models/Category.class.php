@@ -130,7 +130,7 @@ class Category extends BaseSql
     {
         foreach ($categories as $i => $category) {
             $package = new Package();
-            $packages = $package->getAllBy(['id_Category' => $category->getId()], null, 2);
+            $packages = $package->getAllBy(['id_Category' => $category->getId(),'status' => 1], null, 3);
             if (empty($packages)) {
                 unset($categories[$i]);
             }

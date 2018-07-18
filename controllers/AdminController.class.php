@@ -416,7 +416,7 @@ class AdminController{
             foreach($categories as $key=>$category){
                 $category->updateTable(
                     ['displayOrder' => $key +1],
-                    ['id' => $category->getId()]
+                    ['id_category' => $category->getId()]
                 );
             }
         }
