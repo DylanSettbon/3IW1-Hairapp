@@ -23,28 +23,24 @@
                         <th >Supprimer en base</th>
 
                     </tr>
+
                     <tbody id="searchList">
-                    <?php   
-                    
-                            foreach ($u as $user) {
+
+                    <?php foreach ($u as $user) : ?>
+                                 <tr>
+                                    <td> <?php echo $user->getFirstname().' '.$user->getLastname(); ?>
+                                    </td>
+                                    <td><?php echo $user->getEmail(); ?></td>
+                                    <td><?php echo $user->getTel(); ?></td>
+                                    <td> <?php echo $arrayStatus[$user->getStatus()]; ?></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/modifyUser/". $user->getId(); ?>" class='buttonUserModify'>Modifier</a></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/deleteUser/".$user->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
+                                    <td><a href="<?php echo DIRNAME . "admin/delete/".$user->getId(); ?>" class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
+                                </tr>
 
                                 
-                                echo "
-                                 <tr>
-                                    <td> ".  $user->getFirstname() . " " . $user->getLastname() ."
-                                    </td>
-                                    <td>". $user->getEmail() . "</td>
-                                    <td>". $user->getTel() . "</td>
-                                    <td> ". $arrayStatus[$user->getStatus()] ."</td>
-                                    <td><a href='modifyUser?id=" . $user->getId() ."' class='buttonUserModify'>Modifier</a></td>
-                                    <td><a href='deleteUser?id=" . $user->getId() ."' class='buttonUserDelete'>Supprimer</a></td>
-                                    <td><a href='delete?id=" . $user->getId() ."' class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
-                                </tr>
-                                ";
-                            }
-                    
-                    ?>
-                    </tbody>
+                    <?php endforeach; ?>
+
                     
                     <nav aria-label="navigation">
                         <tr class="page">

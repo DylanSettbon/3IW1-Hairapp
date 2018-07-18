@@ -19,6 +19,7 @@ CREATE TABLE appointment(
         id_Package      Int ,
         planned          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (idAppointment)
+
 )ENGINE=InnoDB;
 
 
@@ -42,13 +43,13 @@ CREATE TABLE product(
 #------------------------------------------------------------
 
 CREATE TABLE category(
-        id              int (11) Auto_increment  NOT NULL ,
-        description     Varchar (250) NOT NULL ,
+        id_category              int (11) Auto_increment  NOT NULL ,
+        description_category     Varchar (250) NOT NULL ,
         id_user         Int ,
         id_CategoryType Int ,
-        status          TINYINT(1) DEFAULT 1,
+        status_category          TINYINT(1) DEFAULT 1,
         displayOrder    INT(4) NULL DEFAULT NULL,
-        PRIMARY KEY (id )
+        PRIMARY KEY (id_category )
 )ENGINE=InnoDB;
 
 
@@ -146,7 +147,6 @@ CREATE TABLE article(
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
-
 #------------------------------------------------------------
 # Table: Package
 #------------------------------------------------------------
@@ -158,7 +158,6 @@ CREATE TABLE package(
         duration	int (5) DEFAULT 0,
         id_User     Int ,
         id_Category Int ,
-        status          TINYINT(1) DEFAULT 1,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -207,4 +206,6 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_user FOREIGN KEY (i
 ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_id_Color FOREIGN KEY (id_Color) REFERENCES color(id);
 
 INSERT INTO categoryType(type)
-VALUES  ('Article'),('Produits'),('Forfaits');
+VALUES  ('Article'),
+		    ('Produits'),
+		    ('Forfaits');

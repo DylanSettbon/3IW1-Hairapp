@@ -310,7 +310,12 @@ div [class *= "col-"] {
   //margin:5px;
   //margin-left: auto;
   margin-bottom: 10px ;
+  height:100%;
+  width:100%;
   //margin-right: auto;
+}
+.article-accueil:last-child{
+  margin-bottom: 2vh;
 }
 
 .img-art{
@@ -466,6 +471,23 @@ text-align:center;}
   background-color: rgba(0, 156, 223,1);
   text-align: center;
   cursor: pointer;
+}
+
+.button-title{
+  border: none;
+  outline: 0;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 3px 10px;
+  color: white;
+  background-color: rgba(0, 156, 223,1);
+  text-align: center;
+  cursor: pointer;
+  margin:1vh 1vw;
+  float:right;
+
+ 
 }
 
 .btnForfait

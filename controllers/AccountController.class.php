@@ -8,7 +8,7 @@
 
 class AccountController{
 
-    public function getAccount(){
+    public function getAccount($errors = null){
 
         $user = new User();
         $form = $user->AccountForm();
@@ -69,6 +69,9 @@ class AccountController{
         $v->assign("config",$form);
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
+        if (count($errors)!=3){
+              $v->assign("errors_account",$errors); 
+        }
     }
     
     public function getChangeToPwd(){
@@ -77,6 +80,55 @@ class AccountController{
         $v = new Views( "changetopwd", "header" );
         $v->assign( "current", "login" );
         $v->assign("config",$form);
+    }
+
+   public function savePwd( $params ){
+
+        $user = new User();
+        $form = $user->ChangePwdForm();
+
+        if(!empty($params["POST"])) {
+            //Verification des saisies
+
+            $errors = Validator::validate($form, $params["POST"]);
+            //var_dump( $errors ); die;
+            if( empty( $errors ) ){
+                
+                $account = $user->populate( ['email' => $_SESSION['email'] ] );
+
+                if( empty( $account) ){
+
+                    $errors[] = "L'utilisateur n'existe pas.";
+                }
+                else{
+                    if (password_verify( $_POST['pwd'], $account->getPwd() ) == false ){
+
+                    $errors[] = "Mot de passe incorrect"; 
+                }
+             }   
+             if  (empty( $errors)){
+
+                $user->setPwd($_POST['pwdnew']);
+
+                $params = array(
+                    "id" => $account->getId(),
+                    "pwd" => $user->getPwd(),
+                );
+
+                $user->updateTable( $params, ["id"=>$account->getId()]);
+
+                header("Location: ".DIRNAME."home/getHome");
+
+            } else{
+                
+             $this->getAccount($errors);
+            }
+        }
+            else{
+             $this->getAccount($errors);
+            }
+
+        }
     }
 
     public function Validate( $params ){

@@ -7,11 +7,11 @@
  */
 class Category extends BaseSql
 {
-    protected $id = null;
-    protected $description;
+    protected $id_category = null;
+    protected $description_category;
     protected $id_User;
     protected $id_CategoryType;
-    protected $status;
+    protected $status_category;
     protected $displayOrder;
 
     /**
@@ -29,23 +29,23 @@ class Category extends BaseSql
 
     public function getId()
     {
-        return $this->id;
+        return $this->id_category;
     }
 
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id_category = $id;
     }
 
 
     public function getDescription()
     {
-        return $this->description;
+        return $this->description_category;
     }
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description_category = $description;
     }
 
 
@@ -72,12 +72,30 @@ class Category extends BaseSql
 
     public function getStatus()
     {
-        return $this->status;
+        return $this->status_category;
     }
 
     public function setStatus($id_Status)
     {
-        $this->status = $id_Status;
+        $this->status_category = $id_Status;
+    }
+
+
+    public function checkIfCategoryDescriptionExistsAndNotNull($status = null){
+        if($this->description_category == ""){return false;}
+        //Status = 0, les categorie sont inactif
+        //Status = 1, les categoris actifs
+        //Status = 2, Toutes les categories;
+
+        if($status == 0){
+            return $this->countTable('Category',['description' => $this->description_category,'status' => $status]) != 0 ? true : false;
+        }
+        else if($status == 1){
+            return $this->countTable('Category',['description' => $this->description_category,'status' => '1']) != 0 ? true : false;
+        }
+        else if($status == 2) {
+            return $this->countTable('Category', ['description' => $this->description_category]) > 0 ? true : false;
+        }
     }
 
     public function getDisplayOrder()
@@ -99,11 +117,12 @@ class Category extends BaseSql
         //Status = 1, les categoris actifs
         //Status = 2, Toutes les categories;
         if ($status == 0) {
-            return $this->countTable(null,['description' => $this->description, 'status' => $status,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category, 'status_category' => $status,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 1) {
-            return $this->countTable(null,['description' => $this->description, 'status' => '1','id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category, 'status_category' => '1','id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
         } else if ($status == 2) {
-            return $this->countTable(null,['description' => $this->description,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+            return $this->countTable(null,['description_category' => $this->description_category,'id_CategoryType' => $this->getIdCategoryType()]) > 0 ? true : false;
+
         }
     }
 

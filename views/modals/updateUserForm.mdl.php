@@ -1,4 +1,4 @@
-<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>">
+<form method="<?php echo $config["config"]["method"]?>" action="<?php echo DIRNAME. $config["config"]["action"]?>">
 
 
     <?php foreach ($config["input"] as $name => $params):?>

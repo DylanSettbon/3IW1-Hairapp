@@ -289,7 +289,11 @@ $button_color: #009CDF;
   }
 }
 
-
+#titre-article{
+  margin:0;
+  width:100%;
+  text-align:center;
+}
 
 
 
@@ -350,8 +354,6 @@ $button_color: #009CDF;
 
 @mixin rendezvous {
   /* RENDEZ VOUS*/
-
-
 
   #body-rdv {
     //background-color: #FFFFFF;

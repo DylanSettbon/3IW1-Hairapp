@@ -63,6 +63,7 @@ class LoginController {
                 //var_dump( $_POST ); die;
                 $user->updateTable( $params, ["id" => $userInformations->getId()] );
                  $u=$user->getAllBy(["id" => $userInformations->getId()] , ["changetopwd"], 2);
+
                 Security::setSession($userInformations);
                  if ($u[0]->getChangeToPwd() == 1 ){
                    header("Location: " . DIRNAME . "account/getChangeToPwd?id=". $userInformations->getId());

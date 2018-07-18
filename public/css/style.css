@@ -1,5 +1,10 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto:300i,400");
+#titre-article {
+  margin: 0;
+  width: 100%;
+  text-align: center; }
+
 * {
   box-sizing: border-box; }
 
@@ -753,7 +758,7 @@ section {
     color: rgba(0, 0, 0, 0.3); }
   .sidebar_buttons {
     text-align: center;
-    margin-top: 50%; }
+    margin-top: 10%; }
   .sidenav {
     height: 100%;
     width: 160px;
@@ -857,8 +862,16 @@ section {
   border: 1px solid rgba(0, 156, 223, 0.2);
   border-radius: 5px;
   display: inline-block;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  height: 100%;
+  width: 100%; }
 
+<<<<<<< HEAD
+=======
+.article-accueil:last-child {
+  margin-bottom: 2vh; }
+
+>>>>>>> master
 .img-art {
   display: inline;
   padding: 5px;
@@ -1037,6 +1050,20 @@ img {
   text-align: center;
   cursor: pointer; }
 
+.button-title {
+  border: none;
+  outline: 0;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 3px 10px;
+  color: white;
+  background-color: #009cdf;
+  text-align: center;
+  cursor: pointer;
+  margin: 1vh 1vw;
+  float: right; }
+
 .btnForfait {
   border: none;
   outline: 0;
@@ -1045,7 +1072,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #009cdf;
+  background-color: #009CDF;
   text-align: center;
   cursor: pointer;
   margin: 25px; }
@@ -1062,7 +1089,7 @@ img {
   margin-left: 35px; }
 
 .buttonUser {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1098,7 +1125,7 @@ img {
   cursor: pointer; }
 
 .buttonUserModify {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1307,10 +1334,10 @@ input[type=submit].btnFormCategory {
   transition: .4s; }
 
 input:checked + .slider {
-  background-color: #009cdf; }
+  background-color: #009CDF; }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #009cdf; }
+  box-shadow: 0 0 1px #009CDF; }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -1445,6 +1472,7 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
 
+<<<<<<< HEAD
 .success {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
@@ -1453,6 +1481,8 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #B1BBC4;
   border-left: 6px solid #637484; }
 
+=======
+>>>>>>> master
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px; }
@@ -1468,27 +1498,8 @@ input[type="checkbox"][id="template4"] + label::before {
   width: 1px;
   height: 300px; }
 
-#search {
-  margin-top: 1%;
-  margin-left: 1%;
-  width: 180px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px;
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out; }
-
-/* When the input field gets focus, change its width to 100% */
-#search:focus {
-  width: 50%; }
-
 .updateButton {
-  background-color: #009cdf;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;

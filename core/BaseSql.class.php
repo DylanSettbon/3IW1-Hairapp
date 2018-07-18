@@ -182,10 +182,10 @@ class BaseSql{
 
 
     /**
-     * @param $table
      * @param $fields
      * @param $fields_primary_key
      * @param array $options
+     * @internal param $table
      */
     public function updateTable($fields, $fields_primary_key = null , $options=array()) {
         $res = null;
@@ -311,7 +311,8 @@ class BaseSql{
 
              if( isset( $inner['inner_table']) ){
                  $bind_inner = $this->bindParams($inner);
-                 $from = $this->table . $bind_inner['inner'];
+                 $firstTable = substr( $this->table, 0, 1);
+                 $from = $this->table.' '.$firstTable . $bind_inner['inner'];
              }
              else{
                  $from = $this->table;
@@ -339,6 +340,7 @@ class BaseSql{
                  $sql_params[$field] = implode(',',$sql_params[$field]);
                  $where_type = $bind['in'];
              }
+
             if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$from.' WHERE '
