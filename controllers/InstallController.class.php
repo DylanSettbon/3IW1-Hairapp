@@ -83,6 +83,7 @@ class InstallController{
                * Creation de la base de données
                */
 
+
             try{
 
                 $install->beginTransaction();
@@ -106,7 +107,6 @@ class InstallController{
                         if ($str_insert != '') {
                             $str_insert .= ';';
                             $str_insert = self::insertUserData( $str_insert, $params );
-                            //var_dump( $str_insert );
                             $install->createDatabase( $str_insert );
                             //execution des requetes
                         }
@@ -141,7 +141,7 @@ class InstallController{
           $query = str_replace( 'DB_NAME', $dbname, $query );
         }
 
-        $array = explode(";\n", $query);
+        $array = explode(";", $query);
 
         return $array;
     }
@@ -187,6 +187,9 @@ class InstallController{
         $config->setInstagramLink( $params['POST']['instagram'] );
         $config->setPinterestLink( $params['POST']['pinterest'] );
 
+        /*
+         * update des valeurs du user
+         */
         $query = str_replace( "FN_TOCHANGE", $user->getFirstname(), $query );
         $query = str_replace( "LN_TOCHANGE", $user->getLastname(), $query );
         $query = str_replace( "MAIL_TOCHANGE", $user->getEmail(), $query );
@@ -197,6 +200,9 @@ class InstallController{
         $query = str_replace( "DATE_TOCHANGE", date( "Y-m-d"), $query );
 
 
+        /*
+         * Update des valeurs de configuration
+         */
         $query = str_replace( "LOGO_TOCHANGE", $params['POST']['logo'], $query );
         $query = str_replace( "EMAILADDRESS_TOCHANGE", $config->getEmailAddress(), $query );
         $query = str_replace( "EMAILPWD_TO_CHANGE", $config->getEmailPwd(), $query );
@@ -207,6 +213,25 @@ class InstallController{
         $query = str_replace( "INSTAGRAM", $config->getInstagramLink(), $query );
         $query = str_replace( "PINTEREST", $config->getPinterestLink(), $query );
 
+
+        /*
+         * update données par défaut
+         */
+
+        $dateYm = date("Ym" );
+        $day = date("d" );
+        $randDay = rand( $day, ($day + 5) );
+
+        $pwd = "azerty1";
+        $hashed = password_hash($pwd, PASSWORD_DEFAULT);
+
+        $randHour = rand( $params['POST']['opening'], $params['POST']['closing'] );
+
+        $query = str_replace( "GENERATE_PWD", $hashed , $query );
+        $query = str_replace( "DATE", date( "Y-m-d"), $query );
+        $query = str_replace( "DATE_RDV", $dateYm.$randDay, $query );
+        $query = str_replace( "HOUR_RDV", $randHour."0000", $query );
+    //var_dump( $query ); die;
         return $query;
 
 

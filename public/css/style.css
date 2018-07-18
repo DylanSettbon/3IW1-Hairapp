@@ -86,43 +86,37 @@ html {
   bottom: 0;
   clear: left;
   left: 0;
-  padding: 0.3rem;
+  padding: 0.5rem;
   background-color: #800000;
   color: white;
   text-align: right; }
 
-.fa {
+.social > .fa {
   padding: 15px;
   text-align: center;
   text-decoration: none;
   border-radius: 5px;
   width: 50px;
-  margin-left: 15px;
-}
+  margin-left: 15px; }
 
-.fa:hover {
-  opacity: 0.7;
-}
+.social > .fa:hover {
+  opacity: 0.7; }
 
 .fa-facebook {
   background: #3B5998;
-  color: white;
-}
+  color: white; }
 
 .fa-instagram {
   background: #125688;
-  color: white;
-}
+  color: white; }
 
 .fa-pinterest {
   background: #cb2027;
-  color: white;
-}
+  color: white; }
 
 .fa-twitter {
   background: #55ACEE;
-  color: white;
-}
+  color: white; }
 
 .container {
   width: 100%;

@@ -10,3 +10,6 @@ public/.DS_Store
 Public/img/U_p_p/
 
 conf\.inc\.php
+
+sitemaps/
+node_modules/.bin/har-validator

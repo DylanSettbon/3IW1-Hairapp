@@ -1,15 +1,22 @@
-/*INSERT INTO user(firstname,lastname,email,pwd,token,status)
-VALUES ('test1','test1','test1@hotmail.fr','123','123',2),
-       ('test2','test2','test2@hotmail.fr','123','123',2),
-       ('test3','test3','test3@hotmail.fr','133','133',2),
-       ('test4','test4','test4@hotmail.fr','144','144',2),
-      ('test5','test5','test5@hotmail.fr','155','155',2);
+INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Luc','Dupuis','ld@hotmail.fr','GENERATE_PWD','asfd177c6d', null, 0, 0, 2, 'DATE', 'DATE', null, null );
 
-INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package)
-VALUES (20180619,143000,22,3,1),
-      (20180619,163000,22,3,1),
-      (20180623,18000,22,3,1),
-      (20180623,141500,22,3,1);*/
+INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Thomas','Rambla','tr@hotmail.fr','GENERATE_PWD','46f6577f9s',null, 0, 0, 2, 'DATE', 'DATE', null, null );
+
+  INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Blandine','Delhoume','ef@hotmail.fr','GENERATE_PWD','49fsd77h6',null, 0, 0, 1, 'DATE', 'DATE', null, null );
+
+  INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Manon','Delhoume','md@hotmail.fr','GENERATE_PWD','14fd177c9d',null, 0, 0, 2, 'DATE', 'DATE', null, null );
+
+  INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Guillaume','Delamare','sm@hotmail.fr','GENERATE_PWD','pffd177e9d',null, 0, 0, 1, 'DATE', 'DATE', null, null );
+
+
+INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package,planned) VALUES ('DATE_RDV','HOUR_RDV',3,1,1, 1);
+
+INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package,planned) VALUES ('DATE_RDV','HOUR_RDV',5,2,1, 1);
+
+INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package,planned) VALUES ('DATE_RDV','HOUR_RDV',3,1,1, 1);
+
+INSERT INTO Appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package,planned) VALUES ('DATE_RDV','HOUR_RDV',5,4,1, 1);
+
 
       INSERT INTO categoryType(type)
       VALUES  ('Article'),('Produits'),('Forfaits');
