@@ -8,3 +8,5 @@ node_modules/
 node_modules/.DS_Store
 public/.DS_Store
 Public/img/U_p_p/
+
+conf\.inc\.php

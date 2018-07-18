@@ -14,6 +14,10 @@ class Configuration extends BaseSql
     private $email_pwd;
     private $postal_address;
     private $status_configuration;
+    private $facebook_link;
+    private $twitter_link;
+    private $instagram_link;
+    private $pinterest_link;
 
     public function __construct()
     {
@@ -114,6 +118,70 @@ class Configuration extends BaseSql
     public function setStatusConfiguration($status_configuration)
     {
         $this->status_configuration = $status_configuration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebookLink()
+    {
+        return $this->facebook_link;
+    }
+
+    /**
+     * @param mixed $facebook_link
+     */
+    public function setFacebookLink($facebook_link)
+    {
+        $this->facebook_link = $facebook_link;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwitterLink()
+    {
+        return $this->twitter_link;
+    }
+
+    /**
+     * @param mixed $twitter_link
+     */
+    public function setTwitterLink($twitter_link)
+    {
+        $this->twitter_link = $twitter_link;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstagramLink()
+    {
+        return $this->instagram_link;
+    }
+
+    /**
+     * @param mixed $instagram_link
+     */
+    public function setInstagramLink($instagram_link)
+    {
+        $this->instagram_link = $instagram_link;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPinterestLink()
+    {
+        return $this->pinterest_link;
+    }
+
+    /**
+     * @param mixed $pinterest_link
+     */
+    public function setPinterestLink($pinterest_link)
+    {
+        $this->pinterest_link = $pinterest_link;
     }
 
 

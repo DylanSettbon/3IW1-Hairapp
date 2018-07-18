@@ -10,7 +10,7 @@
 define("DBUSER","root");
 define("DBHOST","localhost");
 define('DBNAME','belhair');
-define("DBPWD","root");
+define("DBPWD","");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
 define('INSTALLED', true );

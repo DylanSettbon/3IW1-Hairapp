@@ -63,9 +63,10 @@
                     <?php endif; ?>
 
 
-                </p>
+
 
             <?php endforeach; ?>
+                </p>
         </div>
     <?php endforeach; ?>
 

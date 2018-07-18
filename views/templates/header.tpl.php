@@ -26,6 +26,7 @@ if(!file_exists(DIRNAME."/sitemaps/".$fichierSitemaps)!==false) {
     <meta name="robots" content="index, nofollow">
     <meta name="language" content="french">
   <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Hair'App : Le site à votre image.</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
@@ -41,7 +42,7 @@ if(!file_exists(DIRNAME."/sitemaps/".$fichierSitemaps)!==false) {
       <div class='container2'>
         <div>
           <a href='<?php echo DIRNAME;?>home/getHome'>
-              <?php if( isset( $logo ) ): ?>
+              <?php if( !empty( $logo ) ): ?>
                 <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
               <?php endif; ?>
           </a>

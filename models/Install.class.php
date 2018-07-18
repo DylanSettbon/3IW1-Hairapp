@@ -219,6 +219,27 @@ class Install extends BaseSql {
                             'id' => 'logo',
                             "placeholder" => "Logo du site"
                         ],
+
+                        "facebook" => [
+                            "type" => "text",
+                            "class"=>"input input_sign-in",
+                            "placeholder"=>"Lien de votre compte Facebook",
+                        ],
+                        "twitter" => [
+                            "type" => "text",
+                            "class"=>"input input_sign-in",
+                            "placeholder"=>"Lien de votre compte Twitter",
+                        ],
+                        "instagram" => [
+                            "type" => "text",
+                            "class"=>"input input_sign-in",
+                            "placeholder"=>"Lien de votre compte Instagram",
+                        ],
+                        "pinterest" => [
+                            "type" => "text",
+                            "class"=>"input input_sign-in",
+                            "placeholder"=>"Lien de votre compte Pinterest",
+                        ]
                     ],
                     "class" => "tab",
                     "steps" => "Etape 2 : Configuration du site",

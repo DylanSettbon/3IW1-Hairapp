@@ -176,13 +176,17 @@ CREATE TABLE theme(
 #------------------------------------------------------------
 
 CREATE TABLE configuration(
-        id       int (11) Auto_increment  NOT NULL ,
-        admin    Varchar (50) NOT NULL ,
-        logo     Varchar (100) NOT NULL ,
-        image    Varchar (100) NOT NULL ,
-        id_User  Int ,
-        id_Color Int ,
-        PRIMARY KEY (id )
+        id_config int(11) NOT NULL AUTO_INCREMENT,
+        logo varchar(100) NOT NULL,
+        email_address varchar(150) DEFAULT NULL,
+        email_pwd varchar(60) DEFAULT NULL,
+        postal_address varchar(255) DEFAULT NULL,
+        status_configuration int(1) NOT NULL DEFAULT '1',
+        facebook_link VARCHAR(150) DEFAULT NULL,
+        twitter_link VARCHAR(150) DEFAULT NULL,
+        instagram_link VARCHAR(150) DEFAULT NULL,
+        pinterest_link VARCHAR(150) DEFAULT NULL,
+        PRIMARY KEY (id_config)
 )ENGINE=InnoDB;
 
 

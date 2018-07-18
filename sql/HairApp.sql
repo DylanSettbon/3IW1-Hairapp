@@ -182,6 +182,10 @@ CREATE TABLE configuration(
         email_pwd varchar(60) DEFAULT NULL,
         postal_address varchar(255) DEFAULT NULL,
         status_configuration int(1) NOT NULL DEFAULT '1',
+        facebook_link VARCHAR(150) DEFAULT NULL,
+        twitter_link VARCHAR(150) DEFAULT NULL,
+        instagram_link VARCHAR(150) DEFAULT NULL,
+        pinterest_link VARCHAR(150) DEFAULT NULL,
         PRIMARY KEY (id_config)
 )ENGINE=InnoDB;
 

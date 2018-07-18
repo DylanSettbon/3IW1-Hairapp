@@ -90,8 +90,6 @@ class InstallController{
                 self::changeConfigFile( "conf.inc.php", $params['POST'] );
                 $sql = self::executeQueryFile( "sql/HairApp.sql", $params['POST']['name'] );
 
-
-
                 for ($i=0; $i < count($sql) ; $i++) {
                    $str = $sql[$i];
                    if ($str != '') {
@@ -108,33 +106,30 @@ class InstallController{
                         if ($str_insert != '') {
                             $str_insert .= ';';
                             $str_insert = self::insertUserData( $str_insert, $params );
+                            //var_dump( $str_insert );
                             $install->createDatabase( $str_insert );
                             //execution des requetes
                         }
                     }
-                    //var_dump( "yes" ); die;
+                   // var_dump( "yes" );die;
                 }
-                  $install->commit();
+
+                $install->commit();
+
               }catch ( Exception $e){
                   echo $e->getMessage();
                   $install->rollback();
               }
-
+            self::setInstalled( "conf.inc.php" );
+            $view->assign("success", "L'installation s'est déroulée avec succès ! Vous pouvez désormais commencer votre navigation sur Hairapp !");
+            $view->assign( "config", $form);
           }
           else{
-
               $view->assign("errors",$errors);
               $view->assign( "config", $form);
-
           }
 
 
-        //self::insertUserData( $params );
-        self::setInstalled( "conf.inc.php" );
-
-
-        $view->assign("success", "L'installation s'est déroulée avec succès ! Vous pouvez désormais commencer votre navigation sur Hairapp !");
-        $view->assign( "config", $form);
     }
 
     public static function executeQueryFile( $filesql, $dbname = null ) {
@@ -157,8 +152,6 @@ class InstallController{
 
         $bddname = str_replace( ' ', '_', $vars['name'] );
         $content = str_replace( "define('DBNAME','')", "define('DBNAME','".$bddname."')", $content );
-        //$content = str_replace( "define('INSTALLED', false )", "define('INSTALLED', true )", $content );
-
         $content = str_replace( "define('OPENING_HOUR','')", "define('OPENING_HOUR','".$vars['opening']."')", $content );
         $content = str_replace( "define('CLOSING_HOUR','')", "define('CLOSING_HOUR','".$vars['closing']."')", $content );
         $content = str_replace( "define('DURATION','')", "define('DURATION','".$vars['duration']."')", $content );
@@ -189,6 +182,10 @@ class InstallController{
         $config->setEmailPwd( $params['POST']['application_pwd'] );
         $config->setEmailAddress( $params['POST']['application_mail'] );
         $config->setPostalAddress( $params['POST']['address'] );
+        $config->setFacebookLink( $params['POST']['facebook'] );
+        $config->setTwitterLink( $params['POST']['twitter'] );
+        $config->setInstagramLink( $params['POST']['instagram'] );
+        $config->setPinterestLink( $params['POST']['pinterest'] );
 
         $query = str_replace( "FN_TOCHANGE", $user->getFirstname(), $query );
         $query = str_replace( "LN_TOCHANGE", $user->getLastname(), $query );
@@ -202,9 +199,13 @@ class InstallController{
 
         $query = str_replace( "LOGO_TOCHANGE", $params['POST']['logo'], $query );
         $query = str_replace( "EMAILADDRESS_TOCHANGE", $config->getEmailAddress(), $query );
-        $query = str_replace( "EMAILPWD_TOCHANGE", $config->getEmailPwd(), $query );
+        $query = str_replace( "EMAILPWD_TO_CHANGE", $config->getEmailPwd(), $query );
         $query = str_replace( "POSTAL_TOCHANGE", $config->getPostalAddress(), $query );
         $query = str_replace( "STATUSCONFIG_TOCHANGE", 1, $query );
+        $query = str_replace( "FACEBOOK", $config->getFacebookLink(), $query );
+        $query = str_replace( "TWITTER", $config->getTwitterLink(), $query );
+        $query = str_replace( "INSTAGRAM", $config->getInstagramLink(), $query );
+        $query = str_replace( "PINTEREST", $config->getPinterestLink(), $query );
 
         return $query;
 
