@@ -144,8 +144,8 @@ class Appointment extends BaseSql{
          * Retourne un tableau avec comme clé l'heure de fin de rendez-vous et en valeur le temps restant jusqu'au prochain début de rendez-vous
          */
         //TO DO : ouverture salon
-        $opening = '08:00:00';
-        $closing = '18:30:00';
+        $opening = OPENING_HOUR;
+        $closing = CLOSING_HOUR;
         $timeRange = [];
 
         sort($hours);
@@ -166,13 +166,14 @@ class Appointment extends BaseSql{
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
          */
         //TO DO : ouverture salon
-        $opening = '08:00';
-        $closing = '18:30';
+        $opening = OPENING_HOUR;
+        $closing = CLOSING_HOUR;
         $timeRange = [];
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
-        $timeOut = 10;
+        //timeOut = temps proposé minimum pour un rendez-vous
+        $timeOut = DURATION;
         do {
             $add += $timeOut;
             //Remplacer par un temps moyen de rendez-vous

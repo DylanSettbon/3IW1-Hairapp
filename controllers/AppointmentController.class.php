@@ -33,7 +33,6 @@ class AppointmentController{
             $month = $_POST['mois'] < 10 ? '0' . $_POST['mois'] : $_POST['mois'];
             $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
             $date = $_POST['annee'] . $month . $day;
-            //s'occuper de la gestion de coiffeur = all
             if($_POST['hairdresser'] == 'all'){
 
                 $hairdresser = new Hairdresser();
@@ -59,9 +58,8 @@ class AppointmentController{
             ]);
 
             $success = ['success' => 'Votre rendez-vous a bien été pris'];
-
-            $object = 'Confirmation de votre rendez-vous le '.$appointment->getFormatedDateAppointment();
             $appointment->sendAddAppointmentMail([$_SESSION['email']]);
+
             return $this->getAppointment($success);
             }
         }

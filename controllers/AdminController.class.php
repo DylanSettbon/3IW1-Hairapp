@@ -2,14 +2,14 @@
 use PHPMailer\PHPMailer\PHPMailer;
 class AdminController{
 
-    public function getDashboard(){
+    public function getAdmin(){
         $user = new User();
         $package = new Package();
         $appointment = new Appointment();
         $max = ['max_to' => date('Y-m-d')];
         $min = ['min_to' => (new DateTime('-1 day'))->format('Y-m-d')];
 
-        var_dump($user->getAllBy(['id' => ['1','2','3']],null,8));
+        //echo '<pre>'; print_r($user->getAllBy(['id' => ['1','2','3']],null,8)); echo '</pre>'; ;
 
         $countUser = $user->countTable();
         $avgPackage= $package->getAllBy(null,['AVG(price) as price','AVG(duration) as duration'],3)[0];
@@ -27,6 +27,102 @@ class AdminController{
         $v->assign("current", 'dashboard');
     }
 
+    /**
+     * @return bool
+     */
+    public function ajaxGetDashboardData(){
+        $user = new User();
+        $appointment = new Appointment();
+        $users = $user->getAllBy(null,null,3);
+
+        $where = ['min_to' => date('Y-m-d')];
+        $appointments = $appointment->getAllBy($where,
+            [
+                'dateAppointment',
+                'idAppointment',
+                'hourAppointment',
+                'id_user',
+                'id_Hairdresser',
+                'id_Package',
+                'planned'],6);
+
+
+        $arrayStatus = array("-1"=>"Utilisateur supprimé", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Administrateur");
+        $data = [];
+
+        if(!empty($users)) {
+            foreach ($users as $user) {
+                $roleLabel = array_key_exists($user->getStatus(), $arrayStatus) ? $arrayStatus[$user->getStatus()] : $user->getStatus();
+                if (isset($data['roles'][$roleLabel])) {
+                    $data['roles'][$roleLabel]++;
+                } else {
+                    $data['roles'][$roleLabel] = 1;
+                }
+
+                if ($user->getStatus() == '0' || $user->getStatus() == '1') {
+                    $createdMonth = date("n", strtotime($user->getDateInserted()));
+                    $createdYear = date("Y", strtotime($user->getDateInserted()));
+
+                    if (date('Y') >= $createdYear && date('n') >= $createdMonth) {
+                        if (isset($data['signin'][$createdMonth])) {
+                            $data['signin'][$createdMonth]++;
+                        } else {
+                            $data['signin'][$createdMonth] = 1;
+                        }
+                    }
+                }
+            }
+
+            ksort($data['signin']);
+            $firstMonth = array_keys($data['signin'])[0];
+            $keys = array_keys($data['signin']);
+            $lastMonth = $keys[count(array_keys($data['signin'])) - 1];
+
+            for ($i = $firstMonth; $i <= $lastMonth; $i++) {
+                array_key_exists($i, $data['signin']) ? '' : $data['signin'][$i] = 0;
+            }
+            ksort($data['signin']);
+        }
+        else{
+            $data['signin'][0] = 0;
+            $data['roles'][0] = 0;
+        }
+
+        if (!empty($appointments)) {
+            foreach ($appointments as $appointment) {
+                if ($appointment->getPlanned() == 1) {
+                    $makingMonth = date("n", strtotime($appointment->getDateAppointment()));
+                    if (isset($data['appointment'][$makingMonth])) {
+                        $data['appointment'][$makingMonth]++;
+                    } else {
+                        $data['appointment'][$makingMonth] = 1;
+                    }
+                }
+            }
+
+            ksort($data['appointment']);
+            $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']), array_keys($data['appointment'])));
+            foreach ($data['labelLine'] as $label) {
+                if (!array_key_exists($label, $data['appointment'])) {
+                    $data['appointment'][$label] = 0;
+                }
+                if (!array_key_exists($label, $data['signin'])) {
+                    $data['signin'][$label] = 0;
+                }
+            }
+            ksort($data['appointment']);
+        }
+        else{
+            $data['appointment'][0] = 0;
+            $data['labelLine'] = 0;
+
+        }
+
+        echo(json_encode($data));
+        return true;
+    }
+
+    /*
     public function getAdmin(){
         $week = self::getWeek();
         $extremums = self::getExtemum();
@@ -56,6 +152,7 @@ class AdminController{
         $v->assign("appointments", $appointments );
         $v->assign("week", $week );
     }
+    */
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
@@ -81,7 +178,7 @@ class AdminController{
             $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
             $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
             $category->setDisplayOrder($displayOrder);
-            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status_category' => 1], ['id_category', 'id_CategoryType'], 3);
             if (!isset($_POST['categoryId'])) {
                 $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
                 if (empty($errors)) {
@@ -114,7 +211,7 @@ class AdminController{
             else {
                 $category->setId($_POST['categoryId']);
                 if (!empty($oldCategory[0])) {
-                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $currentCategory = $category->getAllBy(['id_category' => $category->getId()],null,3)[0];
                     $oldCategory = $oldCategory[0];
                     $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
                     $oldCategory->updateTable(
@@ -138,6 +235,7 @@ class AdminController{
         $category = new Category(3);
         $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
+
         $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
         $v->assign("config", $form );
@@ -161,28 +259,54 @@ class AdminController{
         }
     }
 
-    public function getAppointmentAdmin(){
-        //Faire un appel ajax sur une case:
-        // Si elle est cocher afficher tous les rdv
+    public function getAppointmentAdmin($params){
         $v = new Views( 'appointmentAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'appointment');
+        $v->assign("filter",isset($params['URL'][0])?$params['URL'][0]:'');
 
         $max = ['max_to' => date('Y-m-d')];
+        $min = ['min_to' => date('Y-m-d')];
+
+        if (isset($params['URL'][0])){
+            switch($params['URL'][0]){
+                case 'past':
+                    $filter = 'min_to';
+                    $tab = 6;
+                    break;
+                default:
+                    $filter = 'max_to';
+                    $tab = 7;
+            }
+        }
+        else{
+            $filter = 'max_to';
+            $tab = 7;
+        }
+
+        $where = [$filter => date('Y-m-d')];
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy($max,[
+
+        $appointments = $appointment->getAllBy($where,[
                                                             'dateAppointment',
                                                             'idAppointment',
                                                             'hourAppointment',
                                                             'CONCAT(u1.firstname," ",u1.lastname) as id_user',
                                                             'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
                                                             'p.description as id_Package',
-                                                            'planned'],7,$inner);
+                                                            'planned'],$tab,$inner,null);
+
+        foreach ($appointments as $key => $appointment){
+            if($appointment->getPlanned()!= 1){
+                unset($appointments[$key]);
+            }
+        }
+        $appointments = array_values($appointments);
 
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
@@ -198,7 +322,7 @@ class AdminController{
             $package->setIdCategory($_POST['categoryId']);
             $package->setIdUser($_SESSION['id']);
             if ($package->checkIfPackageExists()) {
-                $errors = ['errors' =>'Ce forfait existe déja pour cette catégorie'];
+                $errors['errors'][] = 'Ce forfait existe déja pour cette catégorie';
             }
             else{
                     if (!isset($_POST['packageId'])) {
@@ -229,9 +353,8 @@ class AdminController{
         if ($params['POST']['btn-Valider']) {
             $appointment = new Appointment();
             $month = $_POST['mois']<10 ? '0' . $_POST['mois'] : $_POST['mois'];
-            $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
+            $day = $_POST['jour']<10 ? '0' . $_POST['jour'] : $_POST['jour'];
             $date = $_POST['annee'] . $month . $day;
-
 
             if (isset($params['URL'][0])) {
                 $appointment->setId($params['URL'][0]);
@@ -253,7 +376,7 @@ class AdminController{
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
                     $current->sendUpdateAppointmentMail($appointment,[$mailUser]);
                 }
-                $this->getAppointmentAdmin();
+                $this->getAppointmentAdmin($params);
             } else {
                 $errors = ['errors' => Validator::checkAvailableAppointment()];
                 if(!empty($errors['errors'])) {
@@ -265,16 +388,17 @@ class AdminController{
                     $appointment->setIdHairdresser($_POST['hairdresser']);
                     $appointment->setIdPackage($_POST['package']);
                     $appointment->setIdUser($_POST['user']);
-                    $appointment->updateTable(['dateAppointment' => $appointment->getDateAppointment(),
+                    $appointment->updateTable([
+                        'dateAppointment' => $appointment->getDateAppointment(),
                         'hourAppointment' => $appointment->getHourAppointment(),
-                        'id_User' => $appointment->getIdUser(),
+                        'id_user' => $appointment->getIdUser(),
                         'id_Hairdresser' => $appointment->getIdHairdresser(),
                         'id_Package' => $appointment->getIdPackage()]);
                     $idUser = $appointment->getIdUser();
                     $user = new User();
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
                     $appointment->sendAddAppointmentMail([$mailUser]);
-                    $this->getAppointmentAdmin();
+                    $this->getAppointmentAdmin($params);
                 }
             }
         }
@@ -284,15 +408,15 @@ class AdminController{
         $category = new Category(3);
         $category->setId($params['URL'][0]);
         $category->updateTable(
-            ["status" => 0],
-            ["id" => $category->getId()]);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+            ["status_category" => 0],
+            ["id_category" => $category->getId()]);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         if (!empty($categories)){
             $categories = Category::getCategoriesSortedByOrder($categories);
             foreach($categories as $key=>$category){
                 $category->updateTable(
                     ['displayOrder' => $key +1],
-                    ['id' => $category->getId()]
+                    ['id_category' => $category->getId()]
                 );
             }
         }
@@ -316,13 +440,12 @@ class AdminController{
         $packages = $package->getAssociativeArrayPackage();
 
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
 
         $hairdresser = new Hairdresser();
         $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
 
         $appointment = new Appointment();
-        //Selection de tous les coiffeurs et des forfaits
         $hours = $appointment->getAllAvailableTimeRange();
 
         if (isset($params['URL'][0])){
@@ -352,10 +475,12 @@ class AdminController{
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
             }
+            $v->assign('mode','update');
         }
         else{
                 $user = new User();
                 $users = $user->getAllBy(['status' => '1'],null,3);
+                $v->assign('mode','add');
                 $v->assign("users",$users);
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
@@ -383,7 +508,7 @@ class AdminController{
             ['planned' => 0],
             ['idAppointment' => $params['URL'][0]]
         );
-        $this->getAppointmentAdmin();
+        $this->getAppointmentAdmin($params);
     }
 
     //ADMIN : PAGES
@@ -819,7 +944,7 @@ class AdminController{
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
         $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name ,image, dateparution , description , id_Category"], 2);
-        $array=$category->getAllBy(["id_CategoryType"=>"1"],["id,description"],2);
+        $array=$category->getAllBy(["id_CategoryType"=>"1"],["id_category,description_category"],2);
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
        // $v->assign( "a", $a);
@@ -1046,7 +1171,7 @@ class AdminController{
     public function modifyCategory($params){
         $category = new Category();
         //$a = $category->getUpdate("id = ".$_GET['id']."", 2, "id, description");
-        $a= $category->getAllBy(["id"=>$params['URL'][0]],["id_category, description_category"], 2);
+        $a= $category->getAllBy(["id_category"=>$params['URL'][0]],["id_category, description_category"], 2);
         $v = new Views( "modifyCategory", "admin_header" );
         $v->assign( "a", $a);
 

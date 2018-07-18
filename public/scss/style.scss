@@ -314,7 +314,6 @@ div [class *= "col-"] {
   width:100%;
   //margin-right: auto;
 }
-
 .article-accueil:last-child{
   margin-bottom: 2vh;
 }
@@ -574,11 +573,18 @@ text-align:center;}
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 4px 20px;
     padding:10px;
     cursor: pointer;
     float:right;
   margin-bottom: 60px;
+}
+
+.buttonSecondary{
+  background-color: #B1BBC4;
+  border-radius: 5px;
+  float: right;
+  margin:15px;
 }
 
 .addPageRadio{
@@ -734,6 +740,11 @@ input[type="checkbox"][id="template4"] + label::before{
   border-left: 6px solid #4CAF50;
 }
 
+.information{
+  background-color: #B1BBC4;
+  border-left: 6px solid #637484;
+}
+
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px;
@@ -752,7 +763,25 @@ input[type="checkbox"][id="template4"] + label::before{
   width : 1px;
   height : 300px;
 }
+#search {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  width:175px;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  margin:25px;
+}
+
+/* When the input field gets focus, change its width to 100% */
+#search:focus {
+  width: 60%;
+}
 
 @include genericClass;
 
 @include install;
+
+@include dashboard;

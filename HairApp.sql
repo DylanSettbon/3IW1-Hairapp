@@ -11,6 +11,7 @@ USE HairApp;
 #------------------------------------------------------------
 
 CREATE TABLE appointment(
+
   idAppointment   int (11) Auto_increment  NOT NULL ,
   dateAppointment Date NOT NULL ,
   hourAppointment Time NOT NULL ,
@@ -19,6 +20,7 @@ CREATE TABLE appointment(
   id_Package      Int ,
   planned         TINYINT(1) DEFAULT 1,
   PRIMARY KEY (idAppointment)
+
 )ENGINE=InnoDB;
 
 
@@ -151,14 +153,16 @@ CREATE TABLE article(
 #------------------------------------------------------------
 
 CREATE TABLE package(
-  id          int (11) Auto_increment  NOT NULL ,
-  description Varchar (250) NOT NULL ,
-  price       Float NOT NULL ,
-  duration	int (5) DEFAULT 0,
-  id_User     Int ,
-  id_Category Int ,
-  status          TINYINT(1) DEFAULT 1,
-  PRIMARY KEY (id )
+
+        id          int (11) Auto_increment  NOT NULL ,
+        description Varchar (250) NOT NULL ,
+        price       Float NOT NULL ,
+        duration	int (5) DEFAULT 0,
+        id_User     Int ,
+        id_Category Int ,
+        status      TINYINT(1) NOT NULL DEFAULT 1,
+        PRIMARY KEY (id )
+
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------

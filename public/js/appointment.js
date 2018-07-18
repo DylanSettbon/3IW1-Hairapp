@@ -82,7 +82,7 @@ $('.appointmentAttr,:checkbox').change(function(){
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
     $.ajax({
         type: 'POST',
-        url: 'ajaxGetAvailableSchedule',
+        url: '/appointment/ajaxGetAvailableSchedule',
         datatype: "json",
         data: { day: day,
                 month:month,
