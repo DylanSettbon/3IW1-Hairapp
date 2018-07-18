@@ -16,7 +16,7 @@
     </div>
 
 
-    <?php $this->addModal('planning', null, null, array( 'week' => $week, 'appointments' => $appointments) )?>
+    <?php $this->addModal('planning', null, null, array( 'week' => $week, 'appointments' => $appointments, "hairdressers" => $hairdressers) )?>
 
 
 </div>

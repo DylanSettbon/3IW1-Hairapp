@@ -7,38 +7,34 @@
  */
 $week = $vars['week'];
 $appointments = $vars['appointments'];
+$hairdressers = $vars['hairdressers'];
+
+$hairdresser_class = [];
+
+$haidresserCounter = 1;
 
 ?>
 <div class="row">
-    <!--<aside class="col-l-12 col-s-12 col-m-12 center">-->
 
-        <button class="col-l-2 col-s-3 col-m-9 center hairdresser1 button" onclick="hairdresser(1)">Coiffeur 1</button>
-        &nbsp;
-        <button class="col-l-2 col-s-3 col-m-9 center hairdresser2 button" onclick="hairdresser(2)">Coiffeur 2</button>
-        &nbsp;
-        <button class="col-l-2 col-s-3 col-m-9 center hairdresser3 button" onclick="hairdresser(3)">
-            Coiffeur 3
-        </button>
-        &nbsp;
-        <button class="col-l-2 col-s-3 col-m-9 center all button" onclick="hairdresser('all')">
-            Tous
-        </button>
-        &nbsp;
-    <!--</aside>-->
+    <?php foreach ( $hairdressers as $hairdresser ): ?>
+
+    <button class="col-l-2 col-s-3 col-m-9 center <?php echo "hairdresser".$haidresserCounter; ?> button"
+            onclick="hairdresser(<?php echo $haidresserCounter; ?>)">
+        <?php echo $hairdresser->getFirstname();  ?>
+        <?php $hairdresser_class[$hairdresser->getId()] = "coiffeur-".$haidresserCounter ; ?>
+        <?php $haidresserCounter += 1; ?>
+    </button>
+    &nbsp;
+
+    <?php endforeach; ?>
+
+    <button class="col-l-2 col-s-3 col-m-9 center all button" onclick="hairdresser('all')">Tous</button>
+
 </div>
 &nbsp;
 <div class="row">
     <article class="col-l-12 col-s-12 col-m-12 center">
         <div style="overflow-x: auto">
-            <!--
-
-            - sortir les heures du tableau
-            - pour le planning par coiffeur on affiche le nom du client
-            - lorsque "tous" est coché, on split la colone du jour en 3 ( ou nombre de coiffeur )
-                et on colorie seulement la case en fonction de si le coiffeur a un rdv ou pas
-                opt "draggable = true" permet de drag les elements ailleurs
-
-            -->
             <table class="col-l-2 col-s-2 center" id="planning">
                 <th>Horaires</th>
                 <?php for( $i = 9; $i < 19; $i += 0.5 ): ?>
@@ -82,7 +78,14 @@ $appointments = $vars['appointments'];
 
                                     <?php if ( $appointment->getHourAppointment() == $time .":00" && $appointment->getDateAppointment() == $date ): ?>
                                         <tr>
-                                            <td class="coiffeur-<?php echo $appointment->getIdHairdresser(); ?>">
+                                            <td
+
+                                            <?php foreach ( $hairdresser_class as $hairdresser => $value ): ?>
+
+                                                <?php if ( $appointment->getIdHairdresser()  == $hairdresser ): ?>
+                                                    class="<?php echo $value; ?>">
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
                                                 <span> <?php echo $appointment->getFirstname(); ?></span>
                                             </td>
                                         </tr>
@@ -100,7 +103,12 @@ $appointments = $vars['appointments'];
                                     <?php if ( $appointment->getHourAppointment() == $k .":00:00" && $appointment->getDateAppointment() == $date ): ?>
 
                                         <tr>
-                                            <td class="coiffeur-<?php echo $appointment->getIdHairdresser(); ?>">
+                                            <td
+                                                <?php foreach ( $hairdresser_class as $hairdresser => $value ): ?>
+                                                    <?php if ( $appointment->getIdHairdresser()  == $hairdresser ): ?>
+                                                        class="<?php echo $value; ?>">
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                                 <span> <?php echo $appointment->getFirstname(); ?></span>
                                             </td>
                                         </tr>

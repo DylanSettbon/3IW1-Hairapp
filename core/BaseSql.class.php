@@ -79,13 +79,16 @@ class BaseSql{
         $tmp5 = array();
 
         foreach($params as $key => $value) {
-            $tmp1[] = ':'.$key;
-            $tmp2[] = $key.'=:'.$key;
-            $tmp4[] = $key.' <> :'.$key;
-            $tmp5[] = $key.' IN :'.$key;
-            if(!in_array($key, $params_remove)) {
-                $tmp3[] = $key.'=:'.$key;
+            if( $key != 'max_to' ){
+                $tmp1[] = ':'.$key;
+                $tmp2[] = $key.'=:'.$key;
+                $tmp4[] = $key.' <> :'.$key;
+                $tmp5[] = $key.' IN :'.$key;
+                if(!in_array($key, $params_remove)) {
+                    $tmp3[] = $key.'=:'.$key;
+                }
             }
+
         }
 
         if( isset( $params['min'] ) && isset( $params['max'] )  ){
@@ -96,7 +99,7 @@ class BaseSql{
             $result['min_to'] = " <= '" . $params['min_to'] . "'";
         }
         if( isset( $params['max_to'] )   ){
-            $result['max_to'] = " >= '" . $params['max_to']. "'";
+            $result['max_to'] = " >= :max_to";
         }
 
         if( isset( $params['inner_table']) && isset( $params['inner_table']) && isset($params['inner_column']) ){
@@ -343,7 +346,7 @@ class BaseSql{
                  $where_type = $columns[0] . $bind['min_to'];
              }
              elseif ( $tab == 7 ){
-                 $where_type = $columns[0] . $bind['max_to'];
+                 $where_type = $columns[0] . $bind['max_to'] . " AND " . $bind['bind_primary_key'] ;
              }
              elseif ($tab = 8){
                  $field =  array_keys($sql_params)[0];
@@ -361,7 +364,6 @@ class BaseSql{
                  ' FROM '.$from.' WHERE '
                  .$where_type);
             }
-            
              $sql->execute($sql_params);
 
          }
@@ -382,6 +384,7 @@ class BaseSql{
                  ' FROM '.$this->table
              );
              }
+
              $sql->execute();
          }
 

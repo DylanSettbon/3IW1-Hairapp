@@ -9,7 +9,7 @@
 class PlanningController{
 
 
-    public function getPlanning(){
+    public function getPlanning($params){
 
         /*
          *
@@ -22,6 +22,9 @@ class PlanningController{
         $extremums = self::getExtemum();
 
         $planning = new Appointment();
+        $user = new User();
+
+        $haidressers = $user->getAllBy( ["status" => 2] , null, 2);
 
         $between = [
             //"dateAppointment >= :min AND dateAppointment <= :max ",
@@ -31,21 +34,25 @@ class PlanningController{
 
         $inner = array(
             'inner_table' => ['user u'],
-            'inner_column' => ['id_User'],
+            'inner_column' => ['id_user'],
             'inner_ref_to' => ['u.id']
         );
 
 
-        $appointments = $planning->getAllBy( null,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 3, $inner);
+        $appointments = $planning->getAllBy( $between,
+            ['dateAppointment', 'hourAppointment', 'id_user', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 5, $inner);
 
+        if( isset( $params['GET']["h"] ) ){
+            if( $params['GET']['h'] == 'admin' ){
+                $v = new Views( "planning", "admin_header" );
+            }
 
-        if( $_GET["h"] == 'admin' ){
-            $v = new Views( "planning", "admin_header" );
         }
         else{
             $v = new Views( "planning", "header" );
         }
+
+        $v->assign("hairdressers", $haidressers );
         $v->assign("current", 'planning');
         $v->assign("appointments", $appointments );
         $v->assign("week", $week );

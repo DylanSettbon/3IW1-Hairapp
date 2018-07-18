@@ -7,6 +7,8 @@ class Appointment extends BaseSql{
     private $id_Package;
     private $id_Hairdresser;
     private $planned;
+    private $firstname;
+    private $lastname;
 
     /**
      * @return null
@@ -263,4 +265,54 @@ class Appointment extends BaseSql{
         $mail = new Mail($customerMail,'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
         $mail->send();
     }
+
+    /**
+     * @return null
+     */
+    public function getIdAppointment()
+    {
+        return $this->idAppointment;
+    }
+
+    /**
+     * @param null $idAppointment
+     */
+    public function setIdAppointment($idAppointment)
+    {
+        $this->idAppointment = $idAppointment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+
 }

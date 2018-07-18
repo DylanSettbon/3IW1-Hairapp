@@ -99,6 +99,20 @@ class InstallController{
                        //execution des requetes
                    }
                 }
+
+                $sql_insert_users = self::executeQueryFile( "sql/Insert_userData.sql" );
+
+                for ($i=0; $i < count($sql_insert_users) ; $i++) {
+                    $str_insert_users = $sql_insert_users[$i];
+                    if ($str_insert_users != '') {
+                        $str_insert_users .= ';';
+                        $str_insert_users = self::insertUserData( $str_insert_users, $params );
+                        $install->createDatabase( $str_insert_users );
+                        //execution des requetes
+                    }
+                }
+
+
                 if( $_POST['data'] == 'on' ){
                     $sql_insert = self::executeQueryFile( "sql/Insert.sql" );
 
@@ -111,7 +125,6 @@ class InstallController{
                             //execution des requetes
                         }
                     }
-                   // var_dump( "yes" );die;
                 }
 
                 $install->commit();
@@ -225,7 +238,10 @@ class InstallController{
         $pwd = "azerty1";
         $hashed = password_hash($pwd, PASSWORD_DEFAULT);
 
-        $randHour = rand( $params['POST']['opening'], $params['POST']['closing'] );
+        $opening = str_replace(':', '', $params['POST']['opening'] );
+        $closing = str_replace(':', '', $params['POST']['closing'] );
+
+        $randHour = rand( $opening, $closing );
 
         $query = str_replace( "GENERATE_PWD", $hashed , $query );
         $query = str_replace( "DATE", date( "Y-m-d"), $query );

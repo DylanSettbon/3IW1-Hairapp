@@ -18,7 +18,7 @@
             <span>
                 <h3 class='titre-article'><?php echo $article->getName(); ?></h3>
                 <p class='content-art'>
-                  <img class='' src='/public/img/quote.svg'/><?php echo $article->getMiniDescription(); ?> </p>
+                  <img src="<?php echo DIRNAME . "public/img/quote.svg"; ?>"/><?php echo $article->getMiniDescription(); ?> </p>
             </span>
             <a class='button-title' href="<?php echo DIRNAME; ?>article/getArticle/<?php echo $article->getId(); ?>">Voir plus...</a>
 

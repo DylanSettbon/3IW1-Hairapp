@@ -30,7 +30,7 @@ class AccountController{
         $appointment = new Appointment();
 
         $where = [
-            "id_User" => $_SESSION['id'],
+            "id_user" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
             'planned'=> 1
         ];
@@ -43,7 +43,7 @@ class AccountController{
 
         $appointments = $appointment->getAllBy(
             $where,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
+            ['dateAppointment', 'hourAppointment', 'id_user', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
 
         $v->assign("account", $infos);
 
