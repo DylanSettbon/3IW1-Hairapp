@@ -33,7 +33,7 @@
                       <a href="<?php echo DIRNAME;?>admin/getUserAdmin">Gestion des utilisateurs</a>
                   </li>
                   <li <?php if ( $current == 'content') {echo ' class="li-navbar active" ';} else echo ' class="li-navbar"';?>>
-                      <a href="<?php echo DIRNAME;?>admin/getPackageAdmin">Gestion du contenu</a>
+                      <a href="<?php echo DIRNAME;?>admin/getTemplateAdmin">Gestion du contenu</a>
                   </li>
                   <?php if ( Security::isConnected() && ( Security::isCoiffeur() || Security::isAdmin() ) ): ?>
                       <li <?php if ($current == 'planning'): echo ' class="li-navbar active" '; else: echo ' class="li-navbar"'; endif; ?> >
