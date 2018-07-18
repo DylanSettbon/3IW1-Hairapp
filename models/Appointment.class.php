@@ -170,6 +170,7 @@ class Appointment extends BaseSql{
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
+        //timeOut = temps proposé minimum pour un rendez-vous
         $timeOut = 10;
         do {
             $add += $timeOut;

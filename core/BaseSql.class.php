@@ -48,7 +48,7 @@ class BaseSql{
 
         $query = $this->db->prepare( $statement );
 
-        $query->execute( $params );
+        $query->execute( $params);
     }
 
     public function generateToken( $email ){
@@ -73,7 +73,7 @@ class BaseSql{
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
             $tmp4[] = $key.' <> :'.$key;
-            $tmp5[] = $key.' IN :'.$key;
+            $tmp5[] = $key.' IN (:'.$key.')';
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
@@ -215,7 +215,6 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-
         $this->update($sql_upd, $sql_params);
     }
 
@@ -338,7 +337,7 @@ class BaseSql{
              }
              elseif ($tab = 8){
                  $field =  array_keys($sql_params)[0];
-                 $sql_params[$field] = '('.implode(',',$sql_params[$field]).')';
+                 $sql_params[$field] = implode(',',$sql_params[$field]);
                  $where_type = $bind['in'];
              }
             if ($options != null){
@@ -351,7 +350,12 @@ class BaseSql{
                  ' FROM '.$from.' WHERE '
                  .$where_type);
             }
-             $sql->execute($sql_params);
+
+             //$sql->execute($sql_params);
+             if(!$sql->execute($sql_params)){
+                 echo '<pre>'; print_r($sql->errorInfo()); echo '</pre>';
+             };
+
 
          }
          else{
