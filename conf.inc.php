@@ -8,9 +8,9 @@
 
 
 define("DBUSER","root");
-define("DBHOST","database");
+define("DBHOST","localhost");
 define("DBNAME","HairApp");
-define("DBPWD","password");
+define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
 

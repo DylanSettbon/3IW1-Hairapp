@@ -35,18 +35,19 @@
 
                 <?php $this->addModal("form", $config, [], $account ); ?>
 
-                <ul class="errors">
-                    <?php if( isset( $errors ) ): ?>
-                        <?php foreach ( $errors as $error ): ?>
-                            <li>
-                                <div class="div-errors danger">
-                                    <p><strong> Warning ! </strong><?php echo $error;?></p>
-                                </div>
+                <?php if( isset( $errors ) ): ?>
+                    <ul class="errors">
+                        
+                            <?php foreach ( $errors as $error ): ?>
+                                <li>
+                                    <div class="div-errors danger">
+                                        <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                    </div>
 
-                            </li>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </ul>
+                                </li>
+                            <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
             </div>
 
@@ -61,7 +62,21 @@
             <div class="col-l-6 center">
                 <h2> Changer votre mot de passe :</h2>
                 <?php $this->addModal("form", $config_pwd, [], $account ); ?>
+                <?php if( isset( $errors_account ) ): ?>
+                    <ul class="errors">
+                        
+                            <?php foreach ( $errors_account as $error_account ): ?>
+                                <li>
+                                    <div class="div-errors danger">
+                                        <p><strong> Warning ! </strong><?php echo $error_account;?></p>
+                                    </div>
+
+                                </li>
+                            <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
+             
         </div>
         &nbsp;
         <div class="row">

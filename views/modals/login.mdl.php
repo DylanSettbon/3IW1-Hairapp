@@ -25,7 +25,7 @@
             <?php echo (isset($params["required"]))?"required='required'":"";?>
             <?php echo (isset($params["hidden"]))?"hidden":"";?>
 
-            <?php if ($name == 'referer'): ?>
+            <?php if ( isset( $params['referer'] ) ): ?>
                 value="<?php echo parse_url($_SERVER["HTTP_REFERER"])["path"]?>"
             <?php endif;?>
         >

@@ -1,4 +1,4 @@
-<form method="<?php echo $config["config"]["method"]?>" action="<?php echo $config["config"]["action"]?>" class="<?php echo $config["config"]["class"]; ?>">
+<form method="<?php echo $config["config"]["method"]?>" action="<?php echo DIRNAME.$config["config"]["action"]?>" class="<?php echo $config["config"]["class"]; ?>">
 
     <h2 <?php echo isset($config["h2"]["class"])?'class="'.$config["h2"]["class"] .'"':''; ?>><?php echo $config["h2"]["value"]?></h2>
 

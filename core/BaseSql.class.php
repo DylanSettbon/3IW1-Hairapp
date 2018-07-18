@@ -48,7 +48,7 @@ class BaseSql{
 
         $query = $this->db->prepare( $statement );
 
-        $query->execute( $params );
+        $query->execute( $params);
     }
 
     public function generateToken( $email ){
@@ -73,7 +73,7 @@ class BaseSql{
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
             $tmp4[] = $key.' <> :'.$key;
-            $tmp5[] = $key.' IN :'.$key;
+            $tmp5[] = $key.' IN (:'.$key.')';
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
@@ -182,10 +182,10 @@ class BaseSql{
 
 
     /**
-     * @param $table
      * @param $fields
      * @param $fields_primary_key
      * @param array $options
+     * @internal param $table
      */
     public function updateTable($fields, $fields_primary_key = null , $options=array()) {
         $res = null;
@@ -209,13 +209,11 @@ class BaseSql{
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
-
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-
         $this->update($sql_upd, $sql_params);
     }
 
@@ -313,7 +311,8 @@ class BaseSql{
 
              if( isset( $inner['inner_table']) ){
                  $bind_inner = $this->bindParams($inner);
-                 $from = $this->table . $bind_inner['inner'];
+                 $firstTable = substr( $this->table, 0, 1);
+                 $from = $this->table.' '.$firstTable . $bind_inner['inner'];
              }
              else{
                  $from = $this->table;
@@ -338,21 +337,23 @@ class BaseSql{
              }
              elseif ($tab = 8){
                  $field =  array_keys($sql_params)[0];
-                 $sql_params[$field] = '('.implode(',',$sql_params[$field]).')';
+                 $sql_params[$field] = implode(',',$sql_params[$field]);
                  $where_type = $bind['in'];
              }
+
             if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
+                 ' FROM '.$from.' WHERE '
                  .$where_type.' '. $options);
+
 
              }else {
              $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$from.' WHERE '
                  .$where_type);
             }
-             $sql->execute($sql_params);
 
+             $sql->execute($sql_params);
          }
          else{
              if( isset( $inner['inner_table']) ){
