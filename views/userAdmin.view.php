@@ -1,7 +1,7 @@
 
     <div>
         <article class="arriere_plan">
-
+            <input id="search" class="input col-l-2" placeholder="Recherchez...">
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
 
                 <div class="col-l-4">
@@ -23,9 +23,10 @@
                         <th >Supprimer en base</th>
 
                     </tr>
-                    <?php foreach ($u as $user) : ?>
 
-                                
+                    <tbody id="searchList">
+
+                    <?php foreach ($u as $user) : ?>
                                  <tr>
                                     <td> <?php echo $user->getFirstname().' '.$user->getLastname(); ?>
                                     </td>
@@ -36,8 +37,10 @@
                                     <td><a href="<?php echo DIRNAME . "admin/deleteUser/".$user->getId(); ?>" class='buttonUserDelete'>Supprimer</a></td>
                                     <td><a href="<?php echo DIRNAME . "admin/delete/".$user->getId(); ?>" class='buttonUserDeleteBd'>Droit a l'oubli</a></td>
                                 </tr>
+
                                 
-                            <?php endforeach; ?>
+                    <?php endforeach; ?>
+
                     
                     <nav aria-label="navigation">
                         <tr class="page">
@@ -55,9 +58,12 @@
     </div>
 
   </main>
+    <script type="text/javascript" src="/public/js/searchBar.js"></script>
+
 
 <?php
 
 include "templates/footer.tpl.php";
 ?>
+
 

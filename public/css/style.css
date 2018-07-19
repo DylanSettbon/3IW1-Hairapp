@@ -296,9 +296,9 @@ input[type="checkbox"][id^="coiffeur"] + label::before {
   display: inline-block;
   width: 80px;
   height: 80px;
-  background-image: url("../img/hommecoiffure.jpg");
   background-size: cover;
-  border-radius: 12px; }
+  border-radius: 12px;
+  opacity: 0.5; }
 
 #coiffeurTous + label::before {
   background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0)); }
@@ -309,9 +309,6 @@ label[for="coiffeurTous"] {
 
 label[for="coiffeurTous"] span {
   font-size: 20px; }
-
-input[type="checkbox"][id^="coiffeur"] + label::before {
-  opacity: 0.5; }
 
 input[type="checkbox"][id^="coiffeur"]:checked + label::before {
   border: solid black 2px;
@@ -400,7 +397,7 @@ section {
     display: none; }
   .container.checkbox-heure-rdv {
     display: block;
-    width: 40%; }
+    width: 48%; }
   input[type="checkbox"][id^="coiffeur"] + label::before {
     width: 120px;
     height: 120px; }
@@ -1104,11 +1101,17 @@ img {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 4px 20px;
   padding: 10px;
   cursor: pointer;
   float: right;
   margin-bottom: 60px; }
+
+.buttonSecondary {
+  background-color: #B1BBC4;
+  border-radius: 5px;
+  float: right;
+  margin: 15px; }
 
 .addPageRadio {
   margin-top: 20px;
@@ -1426,6 +1429,10 @@ input[type="checkbox"][id="template4"] + label::before {
   background-color: #ddffdd;
   border-left: 6px solid #4CAF50; }
 
+.information {
+  background-color: #B1BBC4;
+  border-left: 6px solid #637484; }
+
 .div-errors {
   margin-bottom: 15px;
   padding: 4px 12px; }
@@ -1440,6 +1447,7 @@ input[type="checkbox"][id="template4"] + label::before {
 .hr {
   width: 1px;
   height: 300px; }
+
 
 .row > .column-articles {
   padding: 8px; }
@@ -1471,6 +1479,40 @@ input[type="checkbox"][id="template4"] + label::before {
 #body-errors {
   background-image: url("../img/erreur.png"); }
 
+#search {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  width: 175px;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  margin: 25px; }
+
+/* When the input field gets focus, change its width to 100% */
+#search:focus {
+  width: 60%; }
+
+.comment {
+  position: relative;
+  max-width: 300px;
+  height: auto;
+  margin: 10px 10px;
+  padding: 5px;
+  background-color: #d8e7ff;
+  border: 1px solid #ccc; }
+
+.comment-content {
+  margin: 4px;
+  font-size: 14px;
+  overflow-wrap: break-word; }
+
+.comment-date {
+  font-style: italic;
+  font-size: 10px; }
+
+
 .updateButton {
   background-color: #009CDF;
   border-radius: 30px;
@@ -1490,3 +1532,42 @@ input[type="checkbox"][id="template4"] + label::before {
   display: inline-block;
   font-size: 16px;
   cursor: pointer; }
+
+.stat {
+  height: 50%; }
+
+.statValue {
+  font-size: 20px;
+  font-weight: bold; }
+
+.statCard {
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  text-align: center;
+  background-color: #f2f2f2;
+  height: 95px;
+  margin-bottom: 20px; }
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  text-align: center;
+  background-color: #f2f2f2;
+  height: 475px;
+  margin-top: 35px;
+  margin-bottom: 50px; }
+
+.card:hover, .statCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); }
+
+.titleCard {
+  margin-bottom: 0px; }
+
+@media only screen and (min-width: 1024px) {
+  .line, .pie {
+    margin-left: 17%; }
+  .card {
+    margin: 20px;
+    margin-top: 37px;
+    margin-bottom: 75px; } }

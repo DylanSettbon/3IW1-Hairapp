@@ -27,6 +27,18 @@
         <?php endforeach;?>
     <?php endif; ?>
 
+    <?php if(empty($users) && $mode == 'add'):?>
+        <ul class="errors">
+            <li>
+                <div class="div-errors information">
+                    <p><strong>Aucun utilisateur enregistrès</strong>
+                        <br><br>Pour pouvoir enregistrer un rendez-vous, il vous faut avoir des utilisateurs enregistrés.
+                        <br>Vous pouvez en enregistrer depuis <a href="/admin/getUserAdmin">ici</a></p>
+                </div>
+            </li>
+        </ul>
+    <?php else:?>
+
     <form method='post' action='/admin/saveAppointment<?php echo isset($currentAppointment)? '/'.$currentAppointment->getId():'';?>'>
         <section id="choix-coiffeur" class="row">
                 <select name="hairdresser" id="hairdresser" class="appointmentAttr col-s-12 liste_deroulante">
@@ -34,10 +46,10 @@
                         <?php foreach ($hairdressers as $hairdresser): ?>
                             <?php if (isset($currentAppointment)): ?>
                                 <?php if($currentAppointment->getIdHairdresser() != $hairdresser->getFullName()):?>
-                                    <option value='<?php echo $hairdresser->getId() ?>'><?php echo $hairdresser->getFullName();?></option>
+                                    <option value='<?php echo $hairdresser->getId() ?>'><?php echo Security::setHtmlEntitiesForData($hairdresser->getFullName());?></option>
                                 <?php endif; ?>
                             <?php else: ?>
-                                <option value='<?php echo $hairdresser->getId() ?>'><?php echo $hairdresser->getFullName();?></option>
+                                <option value='<?php echo $hairdresser->getId() ?>'><?php echo Security::setHtmlEntitiesForData($hairdresser->getFullName());?></option>
                             <?php endif;?>
                         <?php endforeach;?>
                 </select>
@@ -51,10 +63,10 @@
                             <?php foreach($packages[$category->getId()]  as $package): ?>
                                 <?php if (isset($currentAppointment)): ?>
                                     <?php if ($package->getDescription() != $currentAppointment->getIdPackage()): ?>
-                                        <option value="<?php echo $package->getId()?>"> <?php echo $package->getDescription();?> </option>
+                                        <option value="<?php echo $package->getId()?>"> <?php echo Security::setHtmlEntitiesForData($package->getDescription());?> </option>
                                     <?php endif;?>
                                 <?php else:?>
-                                        <option value="<?php echo $package->getId()?>"> <?php echo $package->getDescription();?> </option>
+                                        <option value="<?php echo $package->getId()?>"> <?php echo Security::setHtmlEntitiesForData($package->getDescription());?> </option>
                                 <?php endif; ?>
                         <?php endforeach; ?>
                     </optgroup>
@@ -63,25 +75,24 @@
         </section>
 
         <?php if(!empty($users)):?>
-            <section id="choix-coiffeur" class="row">
-                <select name="user" id="user" class="appointmentAttr col-s-12 liste_deroulante">
-                    <option selected disabled>Choisir un utilisateur</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value='<?php echo $user->getId() ?>'><?php echo $user->getFullName();?></option>
-                    <?php endforeach;?>
-                </select>
-            </section>
-        <? endif; ?>
+        <section id="choix-coiffeur" class="row">
+            <select name="user" id="user" class="appointmentAttr col-s-12 liste_deroulante">
+                <option selected disabled>Choisir un utilisateur</option>
+                <?php foreach ($users as $user): ?>
+                    <option value='<?php echo $user->getId() ?>'><?php echo Security::setHtmlEntitiesForData($user->getFullName());?></option>
+                <?php endforeach;?>
+            </select>
+        </section>
+        <?php endif; ?>
 
         <section id="selection-date" class="row">
             <div class="container date">
                 <select name="jour" id="jour" class="appointmentAttr liste_deroulante">
-                    <option selected><?php echo isset($day) ? $day: '';?></option>
-
+                    <option selected value="<?php echo isset($day) ? $day: date('j');?>"><?php echo isset($day) ? $day < 10 ? '0'.$day : $day: date('d');?></option>
                 </select>
 
                 <select name="mois" id="mois" class="appointmentAttr liste_deroulante">
-                    <option selected><?php echo isset($month) ? $month: ''; ?></option>
+                    <option selected value="<?php echo isset($month) ? $month: date('n');; ?>"><?php echo isset($month) ? $month < 10 ? '0'.$month : $month : date('m');; ?></option>
                 </select>
 
                 <select name="annee" id="annee" class="appointmentAttr liste_deroulante">
@@ -89,16 +100,16 @@
                     <option value="<?php echo date("Y") +1;?>"><?php echo date("Y") +1;?></option>
                 </select>
 
-                 <select name="appointmentHour" id="appointmentHour" class="appointmentAttr-3 liste_deroulante" style="margin-left: 40px;">
+                 <select name="selectHour" id="appointmentHour" class="appointmentAttr-3 liste_deroulante" style="margin-left: 40px;">
                     <option selected disabled><?php echo isset($currentAppointment)? substr($currentAppointment->getHourAppointment(),0,5):'Heure';?></option>
                      <?php foreach ($hours as $hour): ?>
                         <option value='<?php echo $hour ?>'><?php echo $hour?></option>
                      <?php endforeach;?>
                  </select>
-
             </div>
         <input class="btn-Valider col-s-12 col-l-12" type="submit" value="Valider" name="btn-Valider">
     </form>
+    <?php endif; ?>
 </main>
 </body>
 

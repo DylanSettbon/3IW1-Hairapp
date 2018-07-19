@@ -36,7 +36,7 @@ function refreshDay(lastMonthDay){
 function showMonths(start){
     for(i = start; i<=12;i++){
         month = i<10? '0'+i : i;
-        if(month != $('#mois').find(":selected").val()) {
+        if(month != $('#mois').find(":selected").text()) {
             $('#mois').append('<option value=' + i + '>' + month + '</option>');
         }
     }
@@ -45,7 +45,7 @@ function showMonths(start){
 function showDays(end,start=1){
     for(i = start; i<=end;i++){
         day = i<10? '0'+i : i;
-        if(day != $('#jour').find(":selected").val()) {
+        if(day != $('#jour').find(":selected").text()) {
             $('#jour').append('<option value=' + i + '>' + i + '</option>');
         }
     }

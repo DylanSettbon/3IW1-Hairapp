@@ -254,7 +254,7 @@ class Validator
         if(!isset($_POST['package'])){
             $errors[] = 'Aucun forfait selectioné';
         }
-        if(!isset($_POST['cbHeure']) && !isset($_POST['appointmentHour'])){
+        if(!isset($_POST['selectHour']) && !isset($_POST['cbHeure'])){
             $errors[] = 'Aucune horaires selectionée';
         }
         else{
@@ -268,11 +268,11 @@ class Validator
         }
 
         if(empty($errors)){
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['selectHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
                 $errors[] = 'Ce creneau horaire n\'est pas disponible';
             }
 
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' =>isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['selectHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
                 $errors[] = 'Vous avez déja un rendez-vous pour cette date et ce créneau horaire';
             }
 

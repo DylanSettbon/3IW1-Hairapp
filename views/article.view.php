@@ -36,11 +36,9 @@
                     <?php if($comment["id_user"]==$user["id"]):?>
 
                     <!-- <div style="border: 1.5px groove #e6e6e6; border-radius:5px;"><?php echo $item["idUser"];?> -->
-                      <div style="position: relative;max-width: 300px;height: auto;margin: 10px 10px;padding: 2px;background-color: #DADADA;
-                                border-radius: 3px;border: 5px solid #ccc;"><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
-                      <br>
-                      <div style="margin:4px;font-size:14px;"><?php echo $comment["content"];?></div></div>
-                      <div style="font-style:italic; font-size:10px;"><?php echo "Publié le ". $comment["date"]?></div>
+                      <div class="comment" ><?php echo $user["firstname"]." ".$user["lastname"]." a dit :"; ?>
+                      <p class="comment-content" ><?php echo $comment["content"];?></p>
+                      <div class="comment-date" ><?php echo "Publié le ". $comment["date"]?></div></div>
 
                     <?php endif;?>
                   <?php endif;?>

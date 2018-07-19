@@ -2,31 +2,123 @@
 
 class AdminController{
 
-    public function getDashboard(){
+    public function getAdmin(){
         $user = new User();
         $package = new Package();
         $appointment = new Appointment();
-        $max = ['max_to' => date('Y-m-d')];
-        $min = ['min_to' => (new DateTime('-1 day'))->format('Y-m-d')];
-
-        var_dump($user->getAllBy(['id' => ['1','2','3']],null,8));
 
         $countUser = $user->countTable();
         $avgPackage= $package->getAllBy(null,['AVG(price) as price','AVG(duration) as duration'],3)[0];
         $avgPrice = round($avgPackage->getPrice(),2);
         $avgDuration = round($avgPackage->getDuration(),2);
-        $futurAppointment = count($appointment->getAllBy($max,['dateAppointment','planned' => 1],7));
-        $pastAppointment = count($appointment->getAllBy($min,['dateAppointment','planned' => 1],6));
-        $nowAppointment = $appointment->countTable(null,['dateAppointment' => date('Y-m-d'),'planned' => 1]);
+
+        $appointments = $appointment->getAllBy(['planned' => 1],['dateAppointment'],3);
+        $futurAppointment = 0;
+        $pastAppointment = 0;
+        foreach ($appointments as $appointment){
+            $futurAppointment = $appointment->getDateAppointment() >= date('Y-m-d')? $futurAppointment +1 : $futurAppointment;
+            $pastAppointment = $appointment->getDateAppointment() < date('Y-m-d')? $pastAppointment +1 : $pastAppointment;;
+        }
 
         $v = new Views( "dashboard", "admin_header" );
-        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'nowAppointment' => $nowAppointment,'futurAppointment' => $futurAppointment]);
+        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'futurAppointment' => $futurAppointment]);
         $v->assign('countUser',$countUser);
         $v->assign('avgPackagePrice',$avgPrice);
         $v->assign('avgPackageDuration',$avgDuration);
         $v->assign("current", 'dashboard');
     }
 
+    /**
+     * @return bool
+     */
+    public function ajaxGetDashboardData(){
+        $user = new User();
+        $appointment = new Appointment();
+        $users = $user->getAllBy(null,null,3);
+        $appointments = $appointment->getAllBy(['planned' => 1],['took'],3);
+
+        $arrayStatus = array("-1"=>"Utilisateur supprimé", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Administrateur");
+        $data = [];
+
+        if(!empty($users)) {
+            foreach ($users as $user) {
+                $roleLabel = array_key_exists($user->getStatus(), $arrayStatus) ? $arrayStatus[$user->getStatus()] : $user->getStatus();
+                if (isset($data['roles'][$roleLabel])) {
+                    $data['roles'][$roleLabel]++;
+                } else {
+                    $data['roles'][$roleLabel] = 1;
+                }
+
+                if ($user->getStatus() == '0' || $user->getStatus() == '1') {
+                    $createdMonth = date("n", strtotime($user->getDateInserted()));
+                    $createdYear = date("Y", strtotime($user->getDateInserted()));
+
+                    if (date('Y') >= $createdYear && date('n') >= $createdMonth) {
+                        if (isset($data['signin'][$createdMonth])) {
+                            $data['signin'][$createdMonth]++;
+                        } else {
+                            $data['signin'][$createdMonth] = 1;
+                        }
+                    }
+                }
+            }
+            if(!empty($data['signin'])) {
+                ksort($data['signin']);
+                $firstMonth = array_keys($data['signin'])[0];
+                $keys = array_keys($data['signin']);
+                $lastMonth = $keys[count(array_keys($data['signin'])) - 1];
+
+
+                for ($i = $firstMonth; $i <= $lastMonth; $i++) {
+                    array_key_exists($i, $data['signin']) ? '' : $data['signin'][$i] = 0;
+                }
+                ksort($data['signin']);
+            }
+        }
+        else{
+            $data['signin'] = 0;
+            $data['roles'] = 0;
+        }
+
+        if (!empty($appointments)) {
+            foreach ($appointments as $appointment) {
+                    $makingMonth = date("n", strtotime($appointment->getTook()));
+                    if (isset($data['appointment'][$makingMonth])) {
+                        $data['appointment'][$makingMonth]++;
+                    } else {
+                        $data['appointment'][$makingMonth] = 1;
+                    }
+            }
+
+            ksort($data['appointment']);
+
+
+            if (is_array($data['signin'])) {
+                $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']), array_keys($data['appointment'])));
+            }
+            else
+                $data['labelLine'] = array_unique(array_keys($data['appointment']));
+            foreach ($data['labelLine'] as $label) {
+                if (!array_key_exists($label, $data['appointment'])) {
+                    $data['appointment'][$label] = 0;
+                }
+                if (!array_key_exists($label, $data['signin'])) {
+                    $data['signin'][$label] = 0;
+                }
+            }
+            ksort($data['appointment']);
+        }
+        else{
+            $data['appointment'] = 0;
+            $data['labelLine'] = 0;
+
+        }
+
+        echo(json_encode($data));
+        return true;
+    }
+
+    /*
     public function getAdmin(){
         $week = self::getWeek();
         $extremums = self::getExtemum();
@@ -56,6 +148,7 @@ class AdminController{
         $v->assign("appointments", $appointments );
         $v->assign("week", $week );
     }
+    */
 
     public function getUserAdmin(){
         $v = new Views( "userAdmin", "admin_header" );
@@ -81,7 +174,7 @@ class AdminController{
             $displayOrder = empty($_POST['categoryOrder']) ? 9999 : $_POST['categoryOrder'];
             $errors = Validator::checkAvailableCategoryOrderForPackageAdmin($displayOrder);
             $category->setDisplayOrder($displayOrder);
-            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status' => 1], ['id', 'id_CategoryType'], 3);
+            $oldCategory = $category->getAllBy(['displayOrder' => $category->getDisplayOrder(), 'id_CategoryType' => $category->getIdCategoryType(), 'status_category' => 1], ['id_category', 'id_CategoryType'], 3);
             if (!isset($_POST['categoryId'])) {
                 $errors = Validator::checkAvailableCategoryForPackageAdmin($category);
                 if (empty($errors)) {
@@ -114,7 +207,7 @@ class AdminController{
             else {
                 $category->setId($_POST['categoryId']);
                 if (!empty($oldCategory[0])) {
-                    $currentCategory = $category->getAllBy(['id' => $category->getId()],null,3)[0];
+                    $currentCategory = $category->getAllBy(['id_category' => $category->getId()],null,3)[0];
                     $oldCategory = $oldCategory[0];
                     $oldCategory->setDisplayOrder($currentCategory->getDisplayOrder());
                     $oldCategory->updateTable(
@@ -138,6 +231,7 @@ class AdminController{
         $category = new Category(3);
         $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = empty($categories)? $categories : Category::getCategoriesSortedByOrder($categories);
+
         $form = $category->formAddCategoryForPackageAdmin();
         $v->assign("categories", $categories);
         $v->assign("config", $form );
@@ -161,28 +255,71 @@ class AdminController{
         }
     }
 
-    public function getAppointmentAdmin(){
-        //Faire un appel ajax sur une case:
-        // Si elle est cocher afficher tous les rdv
+    public function getAppointmentAdmin($params){
         $v = new Views( 'appointmentAdmin', "admin_header" );
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'appointment');
+        $v->assign("filter",isset($params['URL'][0])?$params['URL'][0]:'');
+        $hour = date('H:i');
+        $date = date('Y-m-d');
 
         $max = ['max_to' => date('Y-m-d')];
+        $min = ['min_to' => date('Y-m-d')];
+
+        if (isset($params['URL'][0])){
+            switch($params['URL'][0]){
+                case 'past':
+                    $filter = 'min_to';
+                    $tab = 6;
+                    break;
+                default:
+                    $filter = 'max_to';
+                    $tab = 7;
+            }
+        }
+        else{
+            $filter = 'max_to';
+            $tab = 7;
+        }
+
+        $where = [$filter => $date];
+
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
                   'inner_column' => ['id_User','id_Hairdresser','id_Package'],
                   'inner_ref_to' => ['u1.id','u2.id','p.id']];
 
-        $appointments = $appointment->getAllBy($max,[
+
+        $appointments = $appointment->getAllBy($where,[
                                                             'dateAppointment',
                                                             'idAppointment',
                                                             'hourAppointment',
-                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_user',
-                                                            'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                                                            'CONCAT(u1.lastname," ", u1.firstname) as id_user',
+                                                            'CONCAT(u2.lastname," ",u2.firstname) as id_Hairdresser',
                                                             'p.description as id_Package',
-                                                            'planned'],7,$inner);
+                                                            'planned'],$tab,$inner,null);
+
+
+        foreach ($appointments as $key => $appointment) {
+            if ($appointment->getPlanned() != 1) {
+                unset($appointments[$key]);
+            }
+
+            if (isset($params['URL'][0])){
+                if($params['URL'][0] == 'past'){
+                    if ($appointment->getDateAppointment() == $date && $appointment->getHourAppointment() >= $hour){
+                        unset($appointments[$key]);
+                    }
+                }
+                else{
+                    if ($appointment->getDateAppointment() == $date && $appointment->getHourAppointment() < $hour){
+                        unset($appointments[$key]);
+                    }
+                }
+            }
+        }
+        $appointments = array_values($appointments);
 
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
@@ -198,7 +335,7 @@ class AdminController{
             $package->setIdCategory($_POST['categoryId']);
             $package->setIdUser($_SESSION['id']);
             if ($package->checkIfPackageExists()) {
-                $errors = ['errors' =>'Ce forfait existe déja pour cette catégorie'];
+                $errors['errors'][] = 'Ce forfait existe déja pour cette catégorie';
             }
             else{
                     if (!isset($_POST['packageId'])) {
@@ -229,9 +366,8 @@ class AdminController{
         if ($params['POST']['btn-Valider']) {
             $appointment = new Appointment();
             $month = $_POST['mois']<10 ? '0' . $_POST['mois'] : $_POST['mois'];
-            $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
+            $day = $_POST['jour']<10 ? '0' . $_POST['jour'] : $_POST['jour'];
             $date = $_POST['annee'] . $month . $day;
-
 
             if (isset($params['URL'][0])) {
                 $appointment->setId($params['URL'][0]);
@@ -253,28 +389,30 @@ class AdminController{
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
                     $current->sendUpdateAppointmentMail($appointment,[$mailUser]);
                 }
-                $this->getAppointmentAdmin();
+                $this->getAppointmentAdmin($params);
             } else {
                 $errors = ['errors' => Validator::checkAvailableAppointment()];
                 if(!empty($errors['errors'])) {
                     $this->updateAppointment($params,$errors);
                 }
                 else {
-                    $appointment->setHourAppointment($_POST['appointmentHour']);
+                    $appointment->setHourAppointment($_POST['selectHour']);
                     $appointment->setDateAppointment($date);
                     $appointment->setIdHairdresser($_POST['hairdresser']);
                     $appointment->setIdPackage($_POST['package']);
                     $appointment->setIdUser($_POST['user']);
-                    $appointment->updateTable(['dateAppointment' => $appointment->getDateAppointment(),
+                    $appointment->updateTable([
+                        'dateAppointment' => $appointment->getDateAppointment(),
                         'hourAppointment' => $appointment->getHourAppointment(),
-                        'id_User' => $appointment->getIdUser(),
+                        'id_user' => $appointment->getIdUser(),
                         'id_Hairdresser' => $appointment->getIdHairdresser(),
-                        'id_Package' => $appointment->getIdPackage()]);
+                        'id_Package' => $appointment->getIdPackage(),
+                        'took' => date('Ymd')]);
                     $idUser = $appointment->getIdUser();
                     $user = new User();
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
                     $appointment->sendAddAppointmentMail([$mailUser]);
-                    $this->getAppointmentAdmin();
+                    $this->getAppointmentAdmin($params);
                 }
             }
         }
@@ -284,15 +422,15 @@ class AdminController{
         $category = new Category(3);
         $category->setId($params['URL'][0]);
         $category->updateTable(
-            ["status" => 0],
-            ["id" => $category->getId()]);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+            ["status_category" => 0],
+            ["id_category" => $category->getId()]);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         if (!empty($categories)){
             $categories = Category::getCategoriesSortedByOrder($categories);
             foreach($categories as $key=>$category){
                 $category->updateTable(
                     ['displayOrder' => $key +1],
-                    ['id' => $category->getId()]
+                    ['id_category' => $category->getId()]
                 );
             }
         }
@@ -316,13 +454,12 @@ class AdminController{
         $packages = $package->getAssociativeArrayPackage();
 
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
 
         $hairdresser = new Hairdresser();
         $hairdressers = $hairdresser->getAllBy(['status' => '2'],null,3);
 
         $appointment = new Appointment();
-        //Selection de tous les coiffeurs et des forfaits
         $hours = $appointment->getAllAvailableTimeRange();
 
         if (isset($params['URL'][0])){
@@ -334,8 +471,8 @@ class AdminController{
                 'idAppointment',
                 'dateAppointment',
                 'hourAppointment',
-                'CONCAT(u1.firstname," ",u1.lastname) as id_user',
-                'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                'CONCAT(u1.lastname," ", u1.firstname) as id_user',
+                'CONCAT(u2.lastname," ",u2.firstname) as id_Hairdresser',
                 'p.description as id_Package'],3,$inner);
 
             if(!empty($currentAppointment)){
@@ -352,10 +489,12 @@ class AdminController{
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
             }
+            $v->assign('mode','update');
         }
         else{
                 $user = new User();
                 $users = $user->getAllBy(['status' => '1'],null,3);
+                $v->assign('mode','add');
                 $v->assign("users",$users);
                 $v->assign("titleEdit", 'Ajout d\'un rendez-vous');
                 $v->assign("hours",$hours);
@@ -383,7 +522,7 @@ class AdminController{
             ['planned' => 0],
             ['idAppointment' => $params['URL'][0]]
         );
-        $this->getAppointmentAdmin();
+        $this->getAppointmentAdmin($params);
     }
 
     //ADMIN : PAGES
@@ -802,7 +941,9 @@ class AdminController{
         //$a = $article->getUpdate("id = ".$_GET['id']."", 2, "id, name , dateparution , description, id_Category ");
         //$b = $category->getUpdate(" ", 2, "id, description");
         $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name ,image, dateparution , description , id_Category"], 2);
+
         $array=$category->getAllBy(["status_category"=>"-1"],["id_category,description_category, id_CategoryType"],4,""," HAVING id_CategoryType = 1");
+
         $v = new Views( "modifyArticleAdmin", "admin_header" );
         $v->assign("current", 'users');
        // $v->assign( "a", $a);
@@ -1175,15 +1316,23 @@ class AdminController{
     // COMMENTAIRES
 
         public function getCommentAdmin(){
-                $v = new Views( "commentAdmin", "admin_header" );
-                $v->assign("current", 'content');
-                $v->assign("current_sidebar", 'comments');
-                $comment = new Comment();
-                $user = new User();
+            $v = new Views( "commentAdmin", "admin_header" );
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'comments');
+            $comment = new Comment();
+            $user = new User();
+            $article = new Article();
+            $articles = $article->select("article ORDER BY dateparution DESC");
+            $idArticle = $_GET['article'];
+            if($idArticle){
+                $comments = $comment->select("comment WHERE id_Article = '". $idArticle ."'ORDER BY date DESC");
+            }else{
                 $comments = $comment->select("comment ORDER BY date DESC");
-                $u = $user->select("user");
-                $v->assign("comments", $comments);
-                $v->assign("u", $u);
+            }
+            $u = $user->select("user");
+            $v->assign("comments", $comments);
+            $v->assign("u", $u);
+            $v->assign("articles", $articles);
                 //$u= $comment->getAllBy(["status" => "1"] , ["id, na , lastname , email , status , tel"], 4);
             }
         public function declineComment(){
@@ -1308,5 +1457,265 @@ class AdminController{
                 $this->getColorPageBtn();
             }
 
+        //templating
+        public function getTemplateAdmin(){
+            $v = new Views( 'templateAdmin', "admin_header" );
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'template');
+        }
 
+        public function pictureFirstChange(){
+            if (empty($_FILES['newFirstPicture']['name'])){
+                //Msg d'erreur ou autre
+            }
+            else{
+                $targetDir = "public/img/";
+                $fileName = basename($_FILES['newFirstPicture']['name']);
+                $size = $_FILES['newFirstPicture']['size'];
+                $extension = strrchr($_FILES['newFirstPicture']['name'], '.');
+                $fileName = strtr($fileName, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                //$fileName = str_replace(' ', '_', $fileName);
+                
+                if(move_uploaded_file($_FILES['newFirstPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                {
+                    $picture = new Color();
+                    $current = $picture->getUpdate("code LIKE 'nFirst'", 2, "name");
+                    $currentPicture = $current[0]->getName();
+                    $newPicture = $fileName;
+                    $change = "../public/img/". $currentPicture;
+                    $to = "../public/img/". $newPicture;
+
+
+                    $path = './views/templateAdmin.view.php';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+
+                    $secondPath = './views/index.view.php';
+                    $secondContent = file_get_contents($secondPath);
+                    $secondContentReplace = str_replace($change, $to, $secondContent);
+                    file_put_contents($secondPath, $secondContentReplace);
+
+                    $picture->getUpdate("code LIKE 'nFirst'", 1, "name = '". $newPicture ."'");
+                }
+            }
+            $this->getTemplateAdmin();
+        }
+        public function pictureFirstStandard(){
+            
+            $picture = new Color();
+            $current = $picture->getUpdate("code LIKE 'nFirst'", 2, "name");
+            $currentPicture = $current[0]->getName();
+            
+            $standard = $picture->getUpdate("code LIKE 'first'", 2, "name");
+            $standardPicture = $standard[0]->getName();
+            $change = "../public/img/". $currentPicture;
+            $to = "../public/img/". $standardPicture;
+
+            $path = './views/templateAdmin.view.php';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+
+            $secondPath = './views/index.view.php';
+            $secondContent = file_get_contents($secondPath);
+            $secondContentReplace = str_replace($change, $to, $secondContent);
+            file_put_contents($secondPath, $secondContentReplace);
+
+            $picture->getUpdate("code LIKE 'nFirst'", 1, "name = '". $standardPicture ."'");
+            $this->getTemplateAdmin();
+        }
+
+        public function pictureSecondChange(){
+            if (empty($_FILES['newSecondPicture']['name'])){
+                //Msg d'erreur ou autre
+            }
+            else{
+                $targetDir = "public/img/";
+                $fileName = basename($_FILES['newSecondPicture']['name']);
+                $size = $_FILES['newSecondPicture']['size'];
+                $extension = strrchr($_FILES['newSecondPicture']['name'], '.');
+                $fileName = strtr($fileName, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                //$fileName = str_replace(' ', '_', $fileName);
+                
+                if(move_uploaded_file($_FILES['newSecondPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                {
+                    $picture = new Color();
+                    $current = $picture->getUpdate("code LIKE 'nSecond'", 2, "name");
+                    $currentPicture = $current[0]->getName();
+                    $newPicture = $fileName;
+                    $change = "../public/img/". $currentPicture;
+                    $to = "../public/img/". $newPicture;
+
+
+                    $path = './views/templateAdmin.view.php';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+
+                    $secondPath = './views/index.view.php';
+                    $secondContent = file_get_contents($secondPath);
+                    $secondContentReplace = str_replace($change, $to, $secondContent);
+                    file_put_contents($secondPath, $secondContentReplace);
+
+                    $picture->getUpdate("code LIKE 'nSecond'", 1, "name = '". $newPicture ."'");
+                }
+            }
+            $this->getTemplateAdmin();
+        }
+        public function pictureSecondStandard(){
+            
+            $picture = new Color();
+            $current = $picture->getUpdate("code LIKE 'nSecond'", 2, "name");
+            $currentPicture = $current[0]->getName();
+            
+            $standard = $picture->getUpdate("code LIKE 'second'", 2, "name");
+            $standardPicture = $standard[0]->getName();
+            $change = "../public/img/". $currentPicture;
+            $to = "../public/img/". $standardPicture;
+
+            $path = './views/templateAdmin.view.php';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+
+            $secondPath = './views/index.view.php';
+            $secondContent = file_get_contents($secondPath);
+            $secondContentReplace = str_replace($change, $to, $secondContent);
+            file_put_contents($secondPath, $secondContentReplace);
+
+            $picture->getUpdate("code LIKE 'nSecond'", 1, "name = '". $standardPicture ."'");
+            $this->getTemplateAdmin();
+        }
+        public function pictureThirdChange(){
+            if (empty($_FILES['newThirdPicture']['name'])){
+                //Msg d'erreur ou autre
+            }
+            else{
+                $targetDir = "public/img/";
+                $fileName = basename($_FILES['newThirdPicture']['name']);
+                $size = $_FILES['newThirdPicture']['size'];
+                $extension = strrchr($_FILES['newThirdPicture']['name'], '.');
+                $fileName = strtr($fileName, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                //$fileName = str_replace(' ', '_', $fileName);
+                
+                if(move_uploaded_file($_FILES['newThirdPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                {
+                    $picture = new Color();
+                    $current = $picture->getUpdate("code LIKE 'nThird'", 2, "name");
+                    $currentPicture = $current[0]->getName();
+                    $newPicture = $fileName;
+                    $change = "../public/img/". $currentPicture;
+                    $to = "../public/img/". $newPicture;
+
+
+                    $path = './views/templateAdmin.view.php';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+
+                    $secondPath = './views/index.view.php';
+                    $secondContent = file_get_contents($secondPath);
+                    $secondContentReplace = str_replace($change, $to, $secondContent);
+                    file_put_contents($secondPath, $secondContentReplace);
+
+                    $picture->getUpdate("code LIKE 'nThird'", 1, "name = '". $newPicture ."'");
+                }
+            }
+            $this->getTemplateAdmin();
+        }
+        public function pictureThirdStandard(){
+            
+            $picture = new Color();
+            $current = $picture->getUpdate("code LIKE 'nThird'", 2, "name");
+            $currentPicture = $current[0]->getName();
+            
+            $standard = $picture->getUpdate("code LIKE 'third'", 2, "name");
+            $standardPicture = $standard[0]->getName();
+            $change = "../public/img/". $currentPicture;
+            $to = "../public/img/". $standardPicture;
+
+            $path = './views/templateAdmin.view.php';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+
+            $secondPath = './views/index.view.php';
+            $secondContent = file_get_contents($secondPath);
+            $secondContentReplace = str_replace($change, $to, $secondContent);
+            file_put_contents($secondPath, $secondContentReplace);
+
+            $picture->getUpdate("code LIKE 'nThird'", 1, "name = '". $standardPicture ."'");
+            $this->getTemplateAdmin();
+        }
+
+        public function pictureAccChange(){
+            if (empty($_FILES['newAccPicture']['name'])){
+                //Msg d'erreur ou autre
+            }
+            else{
+                $targetDir = "public/img/";
+                $fileName = basename($_FILES['newAccPicture']['name']);
+                $size = $_FILES['newAccPicture']['size'];
+                $extension = strrchr($_FILES['newAccPicture']['name'], '.');
+                $fileName = strtr($fileName, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                //$fileName = str_replace(' ', '_', $fileName);
+                
+                if(move_uploaded_file($_FILES['newAccPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                {
+                    $picture = new Color();
+                    $current = $picture->getUpdate("code LIKE 'nFond'", 2, "name");
+                    $currentPicture = $current[0]->getName();
+                    $newPicture = $fileName;
+
+                    $change = "../public/img/". $currentPicture;
+                    $to = "../public/img/". $newPicture;
+
+                    $path = './views/templateAdmin.view.php';
+                    $content = file_get_contents($path);
+                    $contentReplace = str_replace($change, $to, $content);
+                    file_put_contents($path, $contentReplace);
+
+                    $secondChange = "background-image: url(\"../img/". $currentPicture ."\");";
+                    $secondTo = "background-image: url(\"../img/". $newPicture ."\");";
+
+                    $secondPath = './public/scss/_var.scss';
+                    $secondContent = file_get_contents($secondPath);
+                    $secondContentReplace = str_replace($secondChange, $secondTo, $secondContent);
+                    file_put_contents($secondPath, $secondContentReplace);
+
+                    $picture->getUpdate("code LIKE 'nFond'", 1, "name = '". $newPicture ."'");
+                    sleep(1);
+                }
+            }
+            $this->getTemplateAdmin();
+        }
+        public function pictureAccStandard(){
+            
+            $picture = new Color();
+            $current = $picture->getUpdate("code LIKE 'nFond'", 2, "name");
+            $currentPicture = $current[0]->getName();
+            
+            $standard = $picture->getUpdate("code LIKE 'fond'", 2, "name");
+            $standardPicture = $standard[0]->getName();
+            $change = "../public/img/". $currentPicture;
+            $to = "../public/img/". $standardPicture;
+
+            $path = './views/templateAdmin.view.php';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+
+            $secondChange = "background-image: url(\"../img/". $currentPicture ."\");";
+            $secondTo = "background-image: url(\"../img/". $standardPicture ."\");";
+
+            $secondPath = './public/scss/_var.scss';
+            $secondContent = file_get_contents($secondPath);
+            $secondContentReplace = str_replace($secondChange, $secondTo, $secondContent);
+            file_put_contents($secondPath, $secondContentReplace);
+
+            $picture->getUpdate("code LIKE 'nFond'", 1, "name = '". $standardPicture ."'");
+            sleep(1);
+            $this->getTemplateAdmin();
+        }
 }

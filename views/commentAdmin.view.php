@@ -43,7 +43,12 @@ include "templates/sidebar.view.php";
                                  <tr>
                                     <td><?php echo $user["firstname"]." ".$user["lastname"] ?>
                                     </td>
-                                    <td><?php echo $comment["content"];?></td>
+                                    <td>
+                                    <?php echo $content = substr($comment["content"], 0, 40);?>
+                                    <?php if(strlen($comment["content"])>40):?>
+                                        [...]
+                                    <?php endif;?>
+                                    </td>
                                     <td><?php echo $comment["statut"];?></td>
                                     <td><?php echo $comment["date"];?></td>
                                     <?php if($comment["statut"]==1):?>

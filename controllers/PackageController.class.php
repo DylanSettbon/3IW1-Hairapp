@@ -12,11 +12,11 @@ class PackageController{
 
         $v = new Views( "package", "header" );
         $category = new Category(3);
-        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(),'status' => '1'],null,3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(),'status_category' => '1'],null,3);
 
-        Category::getCategoriesSortedByOrder($categories);
         $categories = Category::getCategoriesWithPackage($categories);
         $categories = empty($categories)?  $categories : Category::getCategoriesSortedByOrder($categories);
+  
 
         $package =  new Package();
         $packages = $package->getAssociativeArrayPackage();

@@ -12,12 +12,12 @@
             <?php foreach($categories as $i=>$category):?>
                 <?php if ($i % 2 == 0):?>
                         <div class="categorie1 container">
-                                <h2 class="title-categorie"><?php echo $category->getDescription();?></h2>
+                                <h2 class="title-categorie"><?php echo Security::setHtmlEntitiesForData($category->getDescription());?></h2>
                         <?php foreach ($packages[$category->getId()] as $package):?>
                             <div class="row">
-                                <p class="description"><?php echo $package->getDescription(); ?></p>
-                                <p class="prix"><?php echo $package->getPrice(); ?> €</p>
-                                <p class="duree"><?php echo $package->getTextDuration(); ?></p>
+                                <p class="description"><?php echo Security::setHtmlEntitiesForData($package->getDescription()); ?></p>
+                                <p class="prix"><?php echo Security::setHtmlEntitiesForData($package->getPrice()); ?> €</p>
+                                <p class="duree"><?php echo Security::setHtmlEntitiesForData($package->getTextDuration()); ?></p>
                             </div>
                         <?php endforeach; ?>
                             <div class="row">
@@ -34,12 +34,12 @@
             <?php foreach($categories as $i=>$category):?>
                 <?php if ($i % 2 != 0):?>
                     <div class="categorie container">
-                        <h2 class="title-categorie"><?php echo $category->getDescription();?></h2>
+                        <h2 class="title-categorie"><?php echo Security::setHtmlEntitiesForData($category->getDescription());?></h2>
                         <?php foreach ($packages[$category->getId()] as $package):?>
                             <div class="row">
-                                <p class="description"><?php echo $package->getDescription(); ?></p>
-                                <p class="prix"><?php echo $package->getPrice(); ?> €</p>
-                                <p class="duree"><?php echo $package->getTextDuration(); ?></p>
+                                <p class="description"><?php echo Security::setHtmlEntitiesForData($package->getDescription()); ?></p>
+                                <p class="prix"><?php echo Security::setHtmlEntitiesForData($package->getPrice()); ?> €</p>
+                                <p class="duree"><?php echo Security::setHtmlEntitiesForData($package->getTextDuration()); ?></p>
                             </div>
                         <?php endforeach; ?>
                         <div class="row">
