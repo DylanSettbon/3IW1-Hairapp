@@ -70,12 +70,15 @@ class AccountController{
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
 
-        if (count($errors)!=3 && $isFromForm == 1 ){
-            $v->assign("errors",$errors);
+        if( $errors != null ){
+            if (count($errors)!=3 && $isFromForm == 1 ){
+                $v->assign("errors",$errors);
+            }
+            elseif ( count($errors)!=3 && $isFromForm == 2 ){
+                $v->assign("errors_account",$errors);
+            }
         }
-        elseif ( count($errors)!=3 && $isFromForm == 2 ){
-            $v->assign("errors_account",$errors);
-        }
+
     }
     
     public function getChangeToPwd(){

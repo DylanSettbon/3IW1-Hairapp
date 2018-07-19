@@ -1,6 +1,6 @@
 $.ajax({
     type: 'POST',
-    url: '/admin/ajaxGetDashboardData',
+    url: 'ajaxGetDashboardData',
     datatype: "json",
     success: function(response){
         data = JSON.parse(response)

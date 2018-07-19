@@ -24,7 +24,7 @@
     clear: both; }
 
 .sidenav {
-  background-color: #800000;
+  background-color: #8B0000;
   margin-right: auto;
   margin-left: auto;
   text-align: center; }
@@ -87,7 +87,7 @@ html {
   clear: left;
   left: 0;
   padding: 0.5rem;
-  background-color: #800000;
+  background-color: #8B0000;
   color: white;
   text-align: right; }
 
@@ -136,17 +136,17 @@ html {
   overflow-x: auto; }
 
 .page {
-  color: #800000; }
+  color: #8B0000; }
 
 .userManagerTab tr:nth-child(even) {
   background-color: rgba(189, 189, 189, 0.2); }
 
 th {
-  color: #800000; }
+  color: #8B0000; }
 
 .previous a, .next-admin a {
   text-decoration: none;
-  color: #800000; }
+  color: #8B0000; }
 
 #civilite {
   padding: 10px; }
@@ -173,7 +173,7 @@ hr {
   margin-top: 30px; }
 
 .span {
-  color: #800000; }
+  color: #8B0000; }
 
 .input {
   border-radius: 5px;
@@ -549,7 +549,7 @@ section {
   margin-top: 35px; }
 
 .header {
-  background: #800000;
+  background: #8B0000;
   padding: 0px 16px; }
 
 .header:after {
@@ -635,7 +635,7 @@ section {
 
 .container2 {
   float: right;
-  background-color: #800000;
+  background-color: #8B0000;
   width: 100%; }
 
 .icon {
@@ -664,7 +664,7 @@ section {
     text-align: center; }
   .sidebar {
     float: left;
-    background-color: #800000;
+    background-color: #8B0000;
     border-top: 2px solid #333333;
     border-bottom: 2px solid #333333;
     height: 70px;
@@ -789,7 +789,7 @@ section {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    background-color: #800000;
+    background-color: #8B0000;
     margin-top: 0; }
   .sidenav li {
     display: block;
@@ -873,7 +873,7 @@ section {
     left: 0;
     margin-top: 0;
     overflow-x: hidden;
-    background-color: #800000; }
+    background-color: #8B0000; }
   .content {
     margin-left: 160px; } }
 

@@ -41,8 +41,9 @@
                 <?php endforeach;?>
               <?php endforeach;?>
 
-            <?php if(Security::isConnected()){
-             $this->addModal("com", $config, $errors, $comments);} ?>
+            <?php if(Security::isConnected()):
+             $this->addModal("com", $config, $errors, $comments);
+            endif;?>
 
           </div>
         <hr>

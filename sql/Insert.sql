@@ -35,9 +35,8 @@ INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,i
 
 INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',4,5,1, 'DATE');
 
-INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES
-  ('Gel', 'Promotion du 15Juillet', 'DATE', ' Promotion du 15Jui', NULL, 1, 2),
-  ('Star au salon', 'Une celebrite est venu nous rendre visite', 'DATE', 'Une celebrite est v', NULL, 1, 1),
-  ('Nouvelle brosse', 'La nouvelle brosse Elypse \r\nutilisée par les plus grands experts !', 'DATE', 'La nouvelle brosse ', NULL, 1, 3),
-  ('Seche cheveux', 'Seche cheveux pour cheveux long', 'DATE', 'Seche cheveux pour ', NULL, 1, 2),
-  ('Couleur ', 'Le Lorem Ipsum est simplement du faux texte employ&eacute; dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann&eacute;es 1500, quand un imprimeur anonyme assembla ensemble', 'DATE', ' Le Lorem Ipsum est', NULL, 1, 2)
+INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES ('Gel', 'Promotion du 15Juillet', 'DATE', ' Promotion du 15Jui', NULL, 1, 2);
+INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES ('Star au salon', 'Une celebrite est venu nous rendre visite', 'DATE', 'Une celebrite est v', NULL, 1, 1);
+INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES('Nouvelle brosse', 'La nouvelle brosse Elypse \r\nutilisée par les plus grands experts !', 'DATE', 'La nouvelle brosse ', NULL, 1, 3);
+INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES('Seche cheveux', 'Seche cheveux pour cheveux long', 'DATE', 'Seche cheveux pour ', NULL, 1, 2);
+INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES('Couleur ', 'Le Lorem Ipsum est simplement du faux texte employ&eacute; dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les ann&eacute;es 1500, quand un imprimeur anonyme assembla ensemble', 'DATE', ' Le Lorem Ipsum est', NULL, 1, 2)

@@ -586,7 +586,7 @@ class AdminController{
 
     //Partie de gestion des users
     public function modifyUser($params){
-        
+
         $user = new User();
         $a = $params['URL'][0];
         $array= array("0"=> "Utilisateur non actif", "1"=>"Utilisateur actif","2"=>"Coiffeur","3"=>"Admin");
@@ -714,7 +714,7 @@ class AdminController{
 
 
 
-    } 
+    }
 
     public function deleteUser($params){
         $user = new User();
@@ -976,11 +976,11 @@ class AdminController{
         $params = array(
             "name" => $article->getName(),
             "dateparution" => $article->getDateParution() ,
-            "description" =>  $article->getDescription()      
+            "description" =>  $article->getDescription()
         );
                 //$article->setImage(htmlentities($_POST['picture']));
         if( !empty( $_FILES['picture']['name'] ) ){
-            
+
             $name = "public/img/a_p/"; // changer le répertoire
             $file_name = basename($_FILES['picture']['name']);
             $size = $_FILES['picture']['size'];
@@ -1014,7 +1014,7 @@ class AdminController{
 
 
         //$article->getUpdate("id = ".$article->getId()."", 1, "name = '".$article->getName()."', dateparution = '".$article->getDateParution().  "', description = '".$article->getDescription()."', image = '".$article->getImage()."', id_Category = ".$article->getCategory()." ");
-        
+
         $article->updateTable($params,["id"=>$article->getId()]);
         $this->getArticleAdmin();
 
@@ -1031,7 +1031,7 @@ class AdminController{
     }
 
     public function parutionArticle($params){
-       
+
 
         $article = new Article();
         $a=$article->getAllBy(["id" => $params['URL'][0]] , ["id, name , dateparution , description , id_Category, status"], 2);
@@ -1198,7 +1198,7 @@ class AdminController{
         $this->getCategoryAdmin();
 
 
-    } 
+    }
     public function deleteCategory($params){
         $category = new Category();
         $a = $params['URL'][0];
@@ -1285,16 +1285,28 @@ class AdminController{
     // COMMENTAIRES
 
         public function getCommentAdmin(){
-                $v = new Views( "commentAdmin", "admin_header" );
-                $v->assign("current", 'content');
-                $v->assign("current_sidebar", 'comments');
-                $comment = new Comment();
-                $user = new User();
-                $comments = $comment->select("comment ORDER BY date DESC");
-                $u = $user->select("user");
-                $v->assign("comments", $comments);
-                $v->assign("u", $u);
-                //$u= $comment->getAllBy(["status" => "1"] , ["id, na , lastname , email , status , tel"], 4);
+            $v = new Views( "commentAdmin", "admin_header" );
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'comments');
+            $comment = new Comment();
+            $user = new User();
+            $article = new Article();
+            $articles = $article->select("article ORDER BY dateparution DESC");
+
+            $idArticle = $_GET['article'];
+
+            if($idArticle){
+                $comments = $comment->select("comment WHERE id_Article = '". $idArticle ."'ORDER BY date DESC");
+            }else{
+               $comments = $comment->select("comment ORDER BY date DESC");
+            }
+//
+            $v->assign("comments", $comments);
+            $v->assign("articles", $articles);
+            $u = $user->select("user");
+
+            $v->assign("u", $u);
+
             }
         public function declineComment(){
                 $comment = new Comment();
@@ -1337,7 +1349,7 @@ class AdminController{
                     $newColor = ($_POST['customColor']);
                     $change = "main_color: ". $currentColor .";";
                     $to = "main_color: ". $newColor .";";
-                    $path = './public/scss/_var.scss';
+                    $path = 'public/scss/_var.scss';
                     $content = file_get_contents($path);
                     $contentReplace = str_replace($change, $to, $content);
                     file_put_contents($path, $contentReplace);
@@ -1358,7 +1370,7 @@ class AdminController{
                 $standardColor = $standard[0]->getCode();
                 $change = "main_color: ". $currentColor .";";
                 $to = "main_color: ". $standardColor .";";
-                $path = './public/scss/_var.scss';
+                $path = 'public/scss/_var.scss';
                 $content = file_get_contents($path);
                 $contentReplace = str_replace($change, $to, $content);
                 file_put_contents($path, $contentReplace);
@@ -1389,9 +1401,10 @@ class AdminController{
                     $newColor = ($_POST['customColor']);
                     $change = "button_color: ". $currentColor .";";
                     $to = "button_color: ". $newColor .";";
-                    $path = './public/scss/_var.scss';
+                    $path = 'public/scss/_var.scss';
                     $content = file_get_contents($path);
                     $contentReplace = str_replace($change, $to, $content);
+               // var_dump( $content ); die;
                     file_put_contents($path, $contentReplace);
                     $color->getUpdate("name LIKE 'currentBtn'", 1, "code = '". $newColor ."'");
                     }
@@ -1409,7 +1422,7 @@ class AdminController{
                 $standardColor = $standard[0]->getCode();
                 $change = "button_color: ". $currentColor .";";
                 $to = "button_color: ". $standardColor .";";
-                $path = './public/scss/_var.scss';
+                $path = 'public/scss/_var.scss';
                 $content = file_get_contents($path);
                 $contentReplace = str_replace($change, $to, $content);
                 file_put_contents($path, $contentReplace);
