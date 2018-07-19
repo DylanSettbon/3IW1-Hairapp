@@ -112,5 +112,5 @@
 </main>
 </body>
 
-<script type="text/javascript" src="/public/js/appointmentAdmin.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME ."public/js/appointmentAdmin.js"; ?>" ></script>
 </html>

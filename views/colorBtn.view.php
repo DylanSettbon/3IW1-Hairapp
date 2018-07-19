@@ -38,7 +38,7 @@ Choisir sa propre couleur :
     </div>
     <?php //include 'templates/footer.tpl.php' ?>
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-    <script type="text/javascript" src="../public/js/color.js"></script>
+    <script type="text/javascript" src="<?php echo DIRNAME."public/js/color.js";?>"></script>
 
 
     </main>

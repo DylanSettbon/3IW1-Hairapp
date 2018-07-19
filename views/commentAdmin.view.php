@@ -70,4 +70,4 @@ include "templates/sidebar.view.php";
     </div>
 
   </main>
-<script src="../public/js/comment.js"></script>
+<script src="<?php echo DIRNAME."public/js/comment.js";?>"></script>

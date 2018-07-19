@@ -52,6 +52,30 @@ class PlanningController{
             $v = new Views( "planning", "header" );
         }
 
+
+
+        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', OPENING_HOUR ) ){
+
+                $opening = (int)str_replace( ':00', '', OPENING_HOUR);
+
+        }
+        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', OPENING_HOUR )  ){
+            $opening = (float)str_replace( ':30', '.5', OPENING_HOUR);
+        }
+
+        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', CLOSING_HOUR ) ){
+
+            $closing = (int)str_replace( ':00', '', CLOSING_HOUR);
+
+        }
+        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', CLOSING_HOUR )  ){
+            $closing = (float)str_replace( ':30', '.5', CLOSING_HOUR);
+        }
+
+
+        $v->assign("opening", $opening );
+        $v->assign("closing", $closing );
+
         $v->assign("hairdressers", $haidressers );
         $v->assign("current", 'planning');
         $v->assign("appointments", $appointments );

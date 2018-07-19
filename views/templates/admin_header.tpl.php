@@ -7,7 +7,7 @@
   <title>Hair'App : Le site à votre image.</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-    <script type="text/javascript" src="../public/js/index.js"></script>
+    <script type="text/javascript" src="<?php echo DIRNAME."public/js/index.js";?>"></script>
 </head>
 
 <body>

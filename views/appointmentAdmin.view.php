@@ -62,5 +62,5 @@ include "templates/sidebar.view.php";
 </div>
 </main>
 
-<script type="text/javascript" src="/public/js/searchBar.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME."public/js/searchBar.js" ;?>"></script>
 

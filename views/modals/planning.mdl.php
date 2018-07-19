@@ -8,6 +8,8 @@
 $week = $vars['week'];
 $appointments = $vars['appointments'];
 $hairdressers = $vars['hairdressers'];
+$opening = $vars['opening'];
+$closing = $vars['closing'];
 
 $hairdresser_class = [];
 
@@ -37,7 +39,7 @@ $haidresserCounter = 1;
         <div style="overflow-x: auto">
             <table class="col-l-2 col-s-2 center" id="planning">
                 <th>Horaires</th>
-                <?php for( $i = 9; $i < 19; $i += 0.5 ): ?>
+                <?php for( $i = $opening; $i <= $closing; $i = $i + 0.5 ): ?>
 
                     <?php if( preg_match( '#[0-9]{1,2}[.]#', $i) ): ?>
                         <tr>
@@ -66,12 +68,12 @@ $haidresserCounter = 1;
                     <?php
                         //TODO: changer les valeurs de i par les valeurs ouverture/fermeture choisies à l'install
                     ?>
-                    <?php for( $i = 9; $i < 19; $i += 0.5 ): ?>
+                    <?php for( $i = $opening; $i <= $closing; $i += 0.5 ): ?>
                         <?php $exist = 0; ?>
 
                         <?php if( preg_match( '#[0-9]{1,2}[.]#', $i) ): ?>
 
-                            <?php $i < 10? $k = "0".$i: $k = $i;?>
+                            <?php $i < 10? $k = $i: $k = $i;?>
                             <?php $time = str_replace( '.5', ':30', $k);?>
 
                                 <?php foreach ( $appointments as $appointment  ): ?>
@@ -96,7 +98,7 @@ $haidresserCounter = 1;
 
                         <?php else: ?>
 
-                            <?php $i < 10?$k = "0". $i: $k = $i; ?>
+                            <?php $i < 10?$k = $i: $k = $i; ?>
 
                                 <?php foreach ( $appointments as $appointment  ): ?>
 

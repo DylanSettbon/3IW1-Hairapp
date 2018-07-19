@@ -54,7 +54,7 @@
 </body>
 
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-<script src="../public/js/index.js"></script>
+<script src="<?php echo DIRNAME ."public/js/index.js"; ?>"></script>
 <?php include "templates/footer.tpl.php"; ?>
 </html>
 

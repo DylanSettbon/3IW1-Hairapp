@@ -8,7 +8,7 @@
 
 class AccountController{
 
-    public function getAccount($errors = null){
+    public function getAccount($errors = null, $isFromForm = null){
 
         $user = new User();
         $form = $user->AccountForm();
@@ -69,8 +69,12 @@ class AccountController{
         $v->assign("config",$form);
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
-        if (count($errors)!=3){
-              $v->assign("errors_account",$errors); 
+
+        if (count($errors)!=3 && $isFromForm == 1 ){
+            $v->assign("errors",$errors);
+        }
+        elseif ( count($errors)!=3 && $isFromForm == 2 ){
+            $v->assign("errors_account",$errors);
         }
     }
     
@@ -121,11 +125,11 @@ class AccountController{
 
             } else{
                 
-             $this->getAccount($errors);
+             $this->getAccount($errors, 2);
             }
         }
             else{
-             $this->getAccount($errors);
+             $this->getAccount($errors, 2);
             }
 
         }
@@ -209,11 +213,14 @@ class AccountController{
             self::getAccount();
 
         }else{
-            $v = new Views( "account", "header" );
-            $v->assign( "current", "account" );
-            $v->assign( "account", $_POST );
-            $v->assign("config",$form);
-            $v->assign("errors",$errors);
+
+            self::getAccount( $errors, 1 );
+            //$v = new Views( "account", "header" );
+            //$v->assign( "current", "account" );
+            //$v->assign( "account", $_POST );
+            //$v->assign("config",$form);
+
+            //$v->assign("errors",$errors);
         }
 
 

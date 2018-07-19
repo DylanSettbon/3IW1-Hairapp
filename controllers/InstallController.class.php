@@ -238,16 +238,21 @@ class InstallController{
         $pwd = "azerty1";
         $hashed = password_hash($pwd, PASSWORD_DEFAULT);
 
-        $opening = str_replace(':', '', $params['POST']['opening'] );
-        $closing = str_replace(':', '', $params['POST']['closing'] );
+        //$opening =
+        $opening = substr( str_replace(':', '', $params['POST']['opening'] ), 0, 2 );
+        $closing = substr( str_replace(':', '', $params['POST']['closing'] ), 0, 2 );
 
         $randHour = rand( $opening, $closing );
 
+        if( $randHour < 10 ){
+            $randHour = "0".$randHour;
+        }
+
         $query = str_replace( "GENERATE_PWD", $hashed , $query );
         $query = str_replace( "DATE", date( "Y-m-d"), $query );
-        $query = str_replace( "DATE_RDV", $dateYm.$randDay, $query );
+        $query = str_replace( "DAY_RDV", $dateYm.$randDay, $query );
         $query = str_replace( "HOUR_RDV", $randHour."0000", $query );
-    //var_dump( $query ); die;
+
         return $query;
 
 

@@ -98,7 +98,7 @@
                     <img alt="barber" class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
                 </span>
            
-        <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>
+        <a href="<?php echo DIRNAME ."package/getPackage";?>" class="btnForfait col-l-10">Cliquez ici</a>
     </section>
 
     
@@ -117,4 +117,4 @@
 </main>
 </body>
 
-<script src="../public/js/home.js"></script>
+<script src="<?php echo DIRNAME . "public/js/home.js";?> "></script>
