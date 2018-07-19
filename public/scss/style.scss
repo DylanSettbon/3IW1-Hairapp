@@ -753,4 +753,48 @@ input[type="checkbox"][id="template4"] + label::before{
   height : 300px;
 }
 
+//Articles  
+.row > .column-articles {
+    padding: 8px;
+}
+
+
+.column-articles {
+    display: none; 
+}
+
+.content-articles {
+    background-color: white;
+    padding: 10px;
+}
+
+.show {
+  display: block;
+}
+
+.btn-articles {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.btnbtn-articles:hover {
+  background-color: #ddd;
+}
+
+.btn-articles {
+  background-color: #666;
+  color: white;
+}
+
+//Erreur
+#body-errors {
+    //background-color: #FFFFFF;
+    background-image: url("../img/erreur.png");
+    //object-fit: cover;
+    //background-repeat: no-repeat;
+  }
+
 @include genericClass;

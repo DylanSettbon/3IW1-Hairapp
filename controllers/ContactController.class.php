@@ -1,8 +1,5 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-
-
 class ContactController{
 
     public function getContact($options = null){
@@ -29,31 +26,21 @@ class ContactController{
         $message->setLastname(htmlentities($_POST['nom']));
         $message->setEmail(htmlentities($_POST['email']));
         $message->setObjet(htmlentities( $_POST['objet'] ));
-        $message->setMessage(htmlentities( $_POST['message'] ));
+        $message->setMessage( $_POST['message'] );
         $users = new User();
         $users = $users->getAllBy(["status" => 3], ["id, email, status"], 2);
-        
-        //echo $adressAdmin;
-   require("vendor/autoload.php");
+        $i=0;
+        foreach ($users as $user):
+            $to[$i] = $user->getEmail();
+            $i++;
+        endforeach;
 
-                $mail = new PHPMailer();
-                foreach ($users as $user) :
-                $mail->AddAddress($user->getEmail());
-                endforeach;
-
-                $mail->IsSMTP(); // enable SMTP
-                $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
-                $mail->SMTPAuth = true;  // authentication enabled
-                $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-                $mail->Host = 'smtp.gmail.com';
-                $mail->Port = 465; //25 ou 465
-                $mail->Username = 'notifications.hairapp@gmail.com';
-                $mail->Password = 'zKXJKrMeGMH9';
-                $mail->From =$message->getEmail() ;
-                $mail->AddReplyTo($message->getEmail());
-                $mail->FromName = $message->getLastName();
-                $mail->Subject = $message->getObjet();
-                $mail->Body =  'Message: '.$message->getMessage();
+                $from =$message->getEmail() ;
+                $replyTo= [$message->getEmail()];
+                $fromName = $message->getLastName();
+                $object = $message->getObjet();
+                $body =  'Message: '.$message->getMessage();
+                $mail = new Mail($to, $from, $fromName, $object, $body, $replyTo, '', true);
                 if(!$mail->Send()) {
 
                 } else {

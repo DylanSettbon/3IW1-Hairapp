@@ -171,7 +171,7 @@ class Category extends BaseSql
     {
 
         return [
-            "config" => ["method" => "POST", "action" => "modifyAdminCategory", "submit" => "Enregistrer"],
+            "config" => ["method" => "POST", "action" => "admin/modifyAdminCategory", "submit" => "Enregistrer"],
             "input" => [
                 "id" => [
                     "type" => "hidden",

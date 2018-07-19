@@ -16,16 +16,23 @@ class ArticleController  extends BaseSql {
         $article = new Article();
         $cat=$params['URL'][0];
         $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
-
-#Voir sur internet pour recuperer hauter et largeur de l'image
-
-        # definir une hauteur max et largeur max
-        # si largeur image > Largeur_max => $v->assign( "oversize", "1" );
-        # $ratio = hauteur de l'image divisé par hauteur MAX => 1.25
-        # tu dois te retrouver avce ratio = 75%
-        # $v->assign( "ratio", $ratio );
+        $month = array(
+                    "01" => 'Janvier',
+                    "02" => 'Février',
+                    "03" => 'Mars',
+                    "04" => 'Avril',
+                    "05" => 'Mai',
+                    "06" => 'Juin',
+                    "07" => 'Juillet',
+                    "08" => 'Août',
+                    "09" => 'Septembre',
+                    "10" => 'Octobre',
+                    "11" => 'Novembre',
+                    "12" => 'Décembre'
+                );
 
         $v->assign( "article", $u[0] );
+        $v->assign("month", $month);
     }
 
     public function addComment($params){

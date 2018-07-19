@@ -23,7 +23,22 @@
                             </li>
                         <?php endforeach; ?>
                     <?php endif; ?>
+                    <?php if( isset( $errorsUnique ) ): ?>
+                        
+                        <?php foreach ( $errorsUnique as $errorU ): ?>
+                            <li>
+                                <div class="div-errors danger">
+                                    <p><strong> Warning ! </strong><?php echo $errorU;?></p>
+                                </div>
+
+                            </li>
+                        <?php endforeach; ?>
+                        
+                    <?php endif; ?>
                 </ul>
+
+                    
+                
                         </div>
                     </div>
                 </div>

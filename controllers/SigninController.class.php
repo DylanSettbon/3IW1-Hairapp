@@ -37,6 +37,10 @@ class SigninController{
             if( !Security::checkMailExist( $_POST['email'] ) ){
                 $errors[] = "Cet email est déjà utilisé.";
             }
+
+            if( !Security::checkTelExist( $_POST['tel'] ) ){
+                $errors[] = "Ce numéro est déjà utilisé.";
+            }
             //var_dump( $errors ); die;
             if( empty( $errors ) ){
                 $user->setFirstname($_POST['prenom']);

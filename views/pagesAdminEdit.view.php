@@ -18,7 +18,7 @@ include "templates/sidebar.view.php";
                     </div>
 
                     <div class="col-l-6" style="text-align: right">
-                        <p><a href="getPagesAdmin">Retour</a></p>
+                        <p><a href="<?php echo DIRNAME." getPagesAdmin"; ?>">Retour</a></p>
                     </div>
                 </div>
             </div>
