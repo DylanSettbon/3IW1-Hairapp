@@ -34,18 +34,7 @@ class AdminController{
         $user = new User();
         $appointment = new Appointment();
         $users = $user->getAllBy(null,null,3);
-
-        $where = ['min_to' => date('Y-m-d')];
-        $appointments = $appointment->getAllBy($where,
-            [
-                'dateAppointment',
-                'idAppointment',
-                'hourAppointment',
-                'id_user',
-                'id_Hairdresser',
-                'id_Package',
-                'planned'],6);
-
+        $appointments = $appointment->getAllBy(['planned' => 1],['took'],3);
 
         $arrayStatus = array("-1"=>"Utilisateur supprimé", "0"=> "Utilisateur non actif", "1"=> "Utilisateur actif", "2"=>"Coiffeur","3"=>"Administrateur");
         $data = [];
@@ -90,14 +79,12 @@ class AdminController{
 
         if (!empty($appointments)) {
             foreach ($appointments as $appointment) {
-                if ($appointment->getPlanned() == 1) {
-                    $makingMonth = date("n", strtotime($appointment->getDateAppointment()));
+                    $makingMonth = date("n", strtotime($appointment->getTook()));
                     if (isset($data['appointment'][$makingMonth])) {
                         $data['appointment'][$makingMonth]++;
                     } else {
                         $data['appointment'][$makingMonth] = 1;
                     }
-                }
             }
 
             ksort($data['appointment']);
@@ -393,7 +380,8 @@ class AdminController{
                         'hourAppointment' => $appointment->getHourAppointment(),
                         'id_user' => $appointment->getIdUser(),
                         'id_Hairdresser' => $appointment->getIdHairdresser(),
-                        'id_Package' => $appointment->getIdPackage()]);
+                        'id_Package' => $appointment->getIdPackage(),
+                        'took' => date('Ymd')]);
                     $idUser = $appointment->getIdUser();
                     $user = new User();
                     $mailUser = $user->getAllBy(['id' => $idUser], ['email'], 3)[0]->getEmail();
