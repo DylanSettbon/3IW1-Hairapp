@@ -54,6 +54,7 @@
            </textarea>
            
     <?php endforeach;?>
+     &nbsp
 
     <?php foreach ($config["select"] as $name => $params):?>
     		<select

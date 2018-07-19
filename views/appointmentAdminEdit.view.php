@@ -100,13 +100,12 @@
                     <option value="<?php echo date("Y") +1;?>"><?php echo date("Y") +1;?></option>
                 </select>
 
-                 <select name="appointmentHour" id="appointmentHour" class="appointmentAttr-3 liste_deroulante" style="margin-left: 40px;">
+                 <select name="selectHour" id="appointmentHour" class="appointmentAttr-3 liste_deroulante" style="margin-left: 40px;">
                     <option selected disabled><?php echo isset($currentAppointment)? substr($currentAppointment->getHourAppointment(),0,5):'Heure';?></option>
                      <?php foreach ($hours as $hour): ?>
                         <option value='<?php echo $hour ?>'><?php echo $hour?></option>
                      <?php endforeach;?>
                  </select>
-
             </div>
         <input class="btn-Valider col-s-12 col-l-12" type="submit" value="Valider" name="btn-Valider">
     </form>

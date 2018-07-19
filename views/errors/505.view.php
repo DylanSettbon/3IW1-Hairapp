@@ -5,5 +5,13 @@
  * Date: 05/04/2018
  * Time: 19:21
  */
+?>
 
-echo "error 505";
+<div id="body-errors" class="container">
+    <div class="col-l-12 center">
+        <h1>Érreur 504</h1>
+        <p class='text-center'>Version HTTP non supportée.</p>
+        <p class='text-center'>Cliquez <a href='<?php echo DIRNAME ?>home/getHome'>ici</a> pour retourner sur la page principal.</p>
+<meta http-equiv="refresh" content="5;<?php echo DIRNAME ?>home/getHome">
+    </div>
+</div>

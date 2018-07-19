@@ -38,8 +38,22 @@ class Hairdresser extends User  {
         }
 
         //Creer un tableau des rendez-vous de la journée
+
         $timesRange = $appointment->getAvailableTimeBetweenAppointment($appointmentHours);
 
+        $timeOut = DURATION > $duration ? $duration : DURATION;
+        foreach ($timesRange as $hour=>$availableTime){
+            $cpt = $availableTime;
+            $add = 0;
+            if ($availableTime > $duration) {
+                do {
+                    $cpt = $cpt - $timeOut;
+                    $availableHours[] = date("H:i", strtotime('+' . $add . ' minutes', strtotime($hour)));
+                    $add += $timeOut;
+                } while ($cpt > $duration);
+            }
+        }
+        /*
         //Pour chaque rendez-vous, récupere toutes les heures disponible entre les deux rendez-vous
         foreach ($timesRange as $hour=>$availableTime){
             if($availableTime > $duration){
@@ -49,7 +63,7 @@ class Hairdresser extends User  {
                     }
                 }
             }
-        }
+        }*/
         return $availableHours;
     }
 

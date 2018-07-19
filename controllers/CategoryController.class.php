@@ -21,22 +21,4 @@ class CategoryController{
         
     }
 
-  public function getArticle($params){
-        // $v = new Views( "articleCategory", "header" );
-        // $v->assign("current", 'articleCategory');
-        // $article = new Article();
-        // $cat=$params["GET"]['category'];
-        
-        
-        // if ($cat == " "):
-        //     $u= $article->getAllBy(["status" => "1"] , ["id,name,image, minidescription,dateparution"], 2);
-        // else:
-        //     $u= $article->getAllBy(["status" => "1" , "id_Category" => $cat] , ["id,name,image, minidescription,dateparution"], 3);
-            
-        // endif;
-
-        
-
-        // $v->assign( "u", $u );
-    }
 }

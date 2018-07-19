@@ -3,12 +3,12 @@ $.ajax({
     url: 'ajaxGetDashboardData',
     datatype: "json",
     success: function(response){
-        data = JSON.parse(response)
 
+        data = JSON.parse(response)
         var rolesLabel = Object.keys(data['roles'])
         var rolesValue = Object.values(data['roles'])
         var labelLine = getLastMonth(Object.keys(data['labelLine']).length > 6 ? 6 : Object.keys(data['labelLine']).length)
-        var signinValue = Object.values(data['signin'])
+        var signinValue = typeof data['signin'] == 'undefined'?0:Object.values(data['signin'])
         var appointmentValue = Object.values(data['appointment'])
 
         new Chart(document.getElementById("pie-chart"), {

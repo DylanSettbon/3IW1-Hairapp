@@ -322,7 +322,6 @@ input[type="checkbox"][id^="coiffeur"] + label::before {
   display: inline-block;
   width: 80px;
   height: 80px;
-  background-image: url("../img/hommecoiffure.jpg");
   background-size: cover;
   border-radius: 12px;
   opacity: 0.5; }
@@ -474,39 +473,6 @@ section {
   margin: 0 0 15px 0;
   width: 100%; }
 
-input[type="checkbox"][id^="art"] {
-  display: none; }
-
-input[type="checkbox"][id^="art"] + label::before {
-  content: "";
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  background-image: url("../img/journal.jpeg");
-  background-size: cover;
-  border-radius: 12px; }
-
-#artTous + label::before {
-  background-image: linear-gradient(to top, #696969, rgba(219, 219, 219, 0)); }
-
-label[for="artTous"] {
-  white-space: nowrap;
-  /* interdiction de passer à la ligne */ }
-
-label[for="artTous"] span {
-  font-size: 20px; }
-
-input[type="checkbox"][id^="art"] + label::before {
-  opacity: 0.5; }
-
-input[type="checkbox"][id^="art"]:checked + label::before {
-  border: solid black 2px;
-  font-size: 10px;
-  opacity: 1; }
-
-label[for^="art"] {
-  position: relative; }
-
 section {
   display: inline;
   margin-bottom: 15px;
@@ -538,9 +504,6 @@ section {
   width: 97%;
   height: 137%;
   border-radius: 0 0 12px 12px; }
-
-#choix-art li, #selection-date li {
-  margin: 0 8px 5px 8px; }
 
 .liste-art li {
   display: inline-block; }
@@ -1518,6 +1481,36 @@ input[type="checkbox"][id="template4"] + label::before {
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
   margin: 25px; }
+
+.row > .column-articles {
+  padding: 8px; }
+
+.column-articles {
+  display: none; }
+
+.content-articles {
+  background-color: white;
+  padding: 10px; }
+
+.show {
+  display: block; }
+
+.btn-articles {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: white;
+  cursor: pointer; }
+
+.btnbtn-articles:hover {
+  background-color: #ddd; }
+
+.btn-articles {
+  background-color: #666;
+  color: white; }
+
+#body-errors {
+  background-image: url("../img/erreur.png"); }
 
 /* When the input field gets focus, change its width to 100% */
 #search:focus {

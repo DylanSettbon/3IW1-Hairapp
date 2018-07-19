@@ -174,7 +174,7 @@ class Article extends BaseSql {
                     "class"=>"input input_sign-in",
                     'id' => 'picture',
                     "placeholder"=>"Votre image",
-                    "required"=>true
+                    
                 ]
 
             ],
@@ -182,7 +182,7 @@ class Article extends BaseSql {
             "textarea" =>[
                 "description" =>[
                     "placeholder" => 'description',
-                    "class"=>"input input_sign-in",
+                    "class"=>"input input_sign-in ckeditor",
                     "rows" => "4",
                     "cols" => "40",
                     "maxString" => 2000,
@@ -243,7 +243,7 @@ class Article extends BaseSql {
                 "description" =>[
                     "type"=>"textarea",
                     "placeholder" => 'description',
-                    "class"=>"input input_sign-in",
+                    "class"=>"input input_sign-in ckeditor",
                     "rows" => "4",
                     "cols" => "40",
                     "maxString" => 2000,

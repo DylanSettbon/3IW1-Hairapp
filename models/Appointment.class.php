@@ -200,7 +200,6 @@ class Appointment extends BaseSql{
         }while(strtotime('+'.$timeOut. 'minutes',strtotime($timeRange[$i])) <  strtotime('-' . $timeOut . ' minutes', strtotime($closing)));
 
         return $timeRange;
-
     }
 
     public function getAssociativeHaidresserAppointmentPackage($appointments){
