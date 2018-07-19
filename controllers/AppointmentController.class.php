@@ -54,7 +54,8 @@ class AppointmentController{
                 "hourAppointment" => $appointment->getHourAppointment(),
                 "id_user" => $appointment->getIdUser(),
                 "id_Hairdresser" => $appointment->getIdHairdresser(),
-                "id_Package" => $appointment->getIdPackage()
+                "id_Package" => $appointment->getIdPackage(),
+                "took" => date('Ymd')
             ]);
 
             $success = ['success' => 'Votre rendez-vous a bien été pris'];

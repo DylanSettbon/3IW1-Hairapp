@@ -9,6 +9,7 @@ class Appointment extends BaseSql{
     private $planned;
     private $firstname;
     private $lastname;
+    private $took;
 
     /**
      * @return null
@@ -128,6 +129,23 @@ class Appointment extends BaseSql{
         $date=date_create($this->dateAppointment);
         return date_format($date,"d/m/Y");
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTook()
+    {
+        return $this->took;
+    }
+
+    /**
+     * @param mixed $took
+     */
+    public function setTook($took)
+    {
+        $this->took = $took;
+    }
+
 
     public function sortOnDate($appointments){
         usort($appointments, function($a, $b) {

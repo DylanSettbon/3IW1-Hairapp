@@ -27,13 +27,13 @@ INSERT INTO package (description, price, duration, id_User, id_Category, status)
   ('Shampooing + soin + coupe + brushing', 40, 90, 1, 6, 1);
 
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package) VALUES ('DAY_RDV','HOUR_RDV',1,3,1);
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',1,3,1, 'DATE');
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package) VALUES ('DAY_RDV','HOUR_RDV',2,5,1);
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',2,5,1, 'DATE');
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package) VALUES ('DAY_RDV','HOUR_RDV',1,3,1);
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',1,3,1, 'DATE');
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package) VALUES ('DAY_RDV','HOUR_RDV',4,5,1);
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',4,5,1, 'DATE');
 
 INSERT INTO article ( name, description, dateparution, minidescription, image, status, id_Category) VALUES
   ('Gel', 'Promotion du 15Juillet', 'DATE', ' Promotion du 15Jui', NULL, 1, 2),

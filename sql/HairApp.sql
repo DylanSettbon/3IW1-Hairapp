@@ -18,6 +18,7 @@ CREATE TABLE appointment(
         id_Hairdresser  Int ,
         id_Package      Int ,
         planned         TINYINT(1) DEFAULT 1,
+        took            Date NOT NULL,
         PRIMARY KEY (idAppointment)
 )ENGINE=InnoDB;
 

@@ -74,6 +74,7 @@
             </select>
         </section>
 
+        <?php if(!empty($users)):?>
         <section id="choix-coiffeur" class="row">
             <select name="user" id="user" class="appointmentAttr col-s-12 liste_deroulante">
                 <option selected disabled>Choisir un utilisateur</option>
@@ -82,6 +83,7 @@
                 <?php endforeach;?>
             </select>
         </section>
+        <?php endif; ?>
 
         <section id="selection-date" class="row">
             <div class="container date">
