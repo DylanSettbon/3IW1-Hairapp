@@ -3,7 +3,15 @@ INSERT INTO color(name,code)
 VALUES ('current','#637484'),
        ('standard','#637484'),
        ('currentBtn','#009CDF'),
-       ('standardBtn','#009CDF');
+       ('standardBtn','#009CDF'),
+       ('barber1.jpg','first'),
+       ('barber1.jpg','nFirst'),
+       ('barber2.jpg','second'),
+       ('barber2.jpg','nSecond'),
+       ('barber3.jpg','third'),
+       ('barber3.jpg','nThird'),
+       ('salon coiffure.jpeg','fond'),
+       ('salon coiffure.jpeg','nFond');
 
 INSERT INTO user(firstname,lastname,email,pwd,token,status)
 VALUES ('test1','test1','test1@hotmail.fr','123','123',2),

@@ -13,8 +13,13 @@ class ArticleController  extends BaseSql {
         $v = new Views( "article", "header" );
         $v->assign("current", 'articleCategory');
         $article = new Article();
-
+        $comment = new Comment();
+        $user=new User();
         $cat=$params['URL'][0];
+        $comment->setIdUser($_SESSION['id']);
+        $comment->setIdArticle($cat);
+        $form = $comment->configFormAdd();
+
         $u= $article->getAllBy(["id" => $cat] , ["id,name,image, description,dateparution"], 2);
 
 #Voir sur internet pour recuperer hauter et largeur de l'image
@@ -25,17 +30,7 @@ class ArticleController  extends BaseSql {
         # tu dois te retrouver avce ratio = 75%
         # $v->assign( "ratio", $ratio );
 
-        $v->assign( "article", $u[0] );
-    }
-
-    public function addComment($params){
-        $v = new Views( "article", "header" );
-        $comment = new Comment();
-        $user=new User();
-        $cat=$_GET['id'];
-        $comment->setIdUser($_SESSION['id']);
-        $comment->setIdArticle($cat);
-        $form = $comment->configFormAdd();
+   
 
         if(!empty($params["POST"])){
             $errors = Validator::validate($form, $params["POST"]);
@@ -52,6 +47,7 @@ class ArticleController  extends BaseSql {
         $v->assign("errors",$errors);
         $v->assign("comments",$comments);
         $v->assign("users", $users);
+        $v->assign( "article", $u[0] );
 
     }
     

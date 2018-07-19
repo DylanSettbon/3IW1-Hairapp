@@ -1285,15 +1285,23 @@ class AdminController{
     // COMMENTAIRES
 
         public function getCommentAdmin(){
-                $v = new Views( "commentAdmin", "admin_header" );
-                $v->assign("current", 'content');
-                $v->assign("current_sidebar", 'comments');
-                $comment = new Comment();
-                $user = new User();
+            $v = new Views( "commentAdmin", "admin_header" );
+            $v->assign("current", 'content');
+            $v->assign("current_sidebar", 'comments');
+            $comment = new Comment();
+            $user = new User();
+            $article = new Article();
+            $articles = $article->select("article ORDER BY dateparution DESC");
+            $idArticle = $_GET['article'];
+            if($idArticle){
+                $comments = $comment->select("comment WHERE id_Article = '". $idArticle ."'ORDER BY date DESC");
+            }else{
                 $comments = $comment->select("comment ORDER BY date DESC");
-                $u = $user->select("user");
-                $v->assign("comments", $comments);
-                $v->assign("u", $u);
+            }
+            $u = $user->select("user");
+            $v->assign("comments", $comments);
+            $v->assign("u", $u);
+            $v->assign("articles", $articles);
                 //$u= $comment->getAllBy(["status" => "1"] , ["id, na , lastname , email , status , tel"], 4);
             }
         public function declineComment(){
