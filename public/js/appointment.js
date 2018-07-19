@@ -1,24 +1,4 @@
 $(document).ready(function() {
-
-    //Decoche les autres coiffeur des qu'un coiffeur est selectionné et les met en gris
-    $("input[id^='coiffeur']").click( function(){
-        if( $(this).is(':checked') ) {
-            $( "input[id^='coiffeur']" ).prop( "checked", false );
-
-            $( this ).prop( "checked", true );
-            console.log("")
-        }
-    });
-
-    //Decoche les autres heures
-    $("input[id^='heure']").click( function(){
-        if( $(this).is(':checked') ) {
-            $( "input[id^='heure']" ).prop( "checked", false );
-
-            $( this ).prop( "checked", true );
-        }
-    });
-
     //Initialisation au chargement de la page
     const date=new Date()
     var cptMonth = date.getFullYear()?date.getMonth()+1 : 1
@@ -40,7 +20,15 @@ $(document).ready(function() {
         var lastMonthDay = daysInMonth(event.target.value,year)
         refreshDay(lastMonthDay)
     });
-});
+
+    //Decoche les autres coiffeur des qu'un coiffeur est selectionné et les met en gris
+    $("input[id^='coiffeur']").click( function(){
+        if( $(this).is(':checked') ) {
+            $( "input[id^='coiffeur']" ).prop( "checked", false );
+            $( this ).prop( "checked", true );
+        }
+    });
+})
 
 function refreshDay(lastMonthDay){
     var date=new Date()
@@ -76,7 +64,9 @@ $('.appointmentAttr,:checkbox').change(function(){
     month = $('#mois').find(":selected").text();
     day = $('#jour').find(":selected").text();
     hairdresser = $("input[id^='coiffeur']:checked").val();
-    getAvailableHours(day, month, year, package, hairdresser)
+    if(package != 'Choisir un forfait' && typeof hairdresser != undefined) {
+        getAvailableHours(day, month, year, package, hairdresser)
+    }
 });
 
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
@@ -103,18 +93,20 @@ function showAllHour(schedule)
     if (schedule['errors']){
         $("#hour").replaceWith('<p>'+schedule['errors']+'</p>');
         $("#appointmentHour").append('<p>'+schedule['errors']+'</p>');
+        $('#heure').append('<option value="errors">' + schedule['errors'] + '</option>');
     }
     else {
         for (var i = 0; i < schedule.length; i++) {
-            addHour(schedule[i])
+            addHour(schedule[i],i)
             $('#heure').append('<option value=' + schedule[i] + '>' + schedule[i] + '</option>');
         }
     }
 }
 
-function addHour(hour){
+function addHour(hour,i){
+    checked = i == 0? 'checked':''
     hourHtml = '<li>' +
-        '<input value="'+hour+'" name="cbHeure" id="heure'+hour.replace(':','-')+'" type="checkbox">' +
+        '<input value="'+hour+'" name="cbHeure" id="heure'+hour.replace(':','-')+'" type="checkbox" onchange="uncheckedHour(this)">' +
         '<label for="heure'+hour.replace(':','-')+'">' +
         '<span class="heure">'+hour+'</span>'+
         '</label>'+
@@ -122,4 +114,12 @@ function addHour(hour){
 
     $( "#appointmentHour" ).append(hourHtml);
 }
+
+function uncheckedHour(elmt){
+    //Decoche les autres heures
+    $( "input[id^='heure']" ).prop( "checked", false );
+    $(elmt).prop( "checked", true );
+}
+
+
 

@@ -6,21 +6,22 @@ class AdminController{
         $user = new User();
         $package = new Package();
         $appointment = new Appointment();
-        $max = ['max_to' => date('Y-m-d')];
-        $min = ['min_to' => (new DateTime('-1 day'))->format('Y-m-d')];
-
-        //echo '<pre>'; print_r($user->getAllBy(['id' => ['1','2','3']],null,8)); echo '</pre>'; ;
 
         $countUser = $user->countTable();
         $avgPackage= $package->getAllBy(null,['AVG(price) as price','AVG(duration) as duration'],3)[0];
         $avgPrice = round($avgPackage->getPrice(),2);
         $avgDuration = round($avgPackage->getDuration(),2);
-        $futurAppointment = count($appointment->getAllBy($max,['dateAppointment','planned' => 1],7));
-        $pastAppointment = count($appointment->getAllBy($min,['dateAppointment','planned' => 1],6));
-        $nowAppointment = $appointment->countTable(null,['dateAppointment' => date('Y-m-d'),'planned' => 1]);
+
+        $appointments = $appointment->getAllBy(['planned' => 1],['dateAppointment'],3);
+        $futurAppointment = 0;
+        $pastAppointment = 0;
+        foreach ($appointments as $appointment){
+            $futurAppointment = $appointment->getDateAppointment() >= date('Y-m-d')? $futurAppointment +1 : $futurAppointment;
+            $pastAppointment = $appointment->getDateAppointment() < date('Y-m-d')? $pastAppointment +1 : $pastAppointment;;
+        }
 
         $v = new Views( "dashboard", "admin_header" );
-        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'nowAppointment' => $nowAppointment,'futurAppointment' => $futurAppointment]);
+        $v->assign('countAppointment',['pastAppointment' => $pastAppointment,'futurAppointment' => $futurAppointment]);
         $v->assign('countUser',$countUser);
         $v->assign('avgPackagePrice',$avgPrice);
         $v->assign('avgPackageDuration',$avgDuration);
@@ -61,20 +62,22 @@ class AdminController{
                     }
                 }
             }
+            if(!empty($data['signin'])) {
+                ksort($data['signin']);
+                $firstMonth = array_keys($data['signin'])[0];
+                $keys = array_keys($data['signin']);
+                $lastMonth = $keys[count(array_keys($data['signin'])) - 1];
 
-            ksort($data['signin']);
-            $firstMonth = array_keys($data['signin'])[0];
-            $keys = array_keys($data['signin']);
-            $lastMonth = $keys[count(array_keys($data['signin'])) - 1];
 
-            for ($i = $firstMonth; $i <= $lastMonth; $i++) {
-                array_key_exists($i, $data['signin']) ? '' : $data['signin'][$i] = 0;
+                for ($i = $firstMonth; $i <= $lastMonth; $i++) {
+                    array_key_exists($i, $data['signin']) ? '' : $data['signin'][$i] = 0;
+                }
+                ksort($data['signin']);
             }
-            ksort($data['signin']);
         }
         else{
-            $data['signin'][0] = 0;
-            $data['roles'][0] = 0;
+            $data['signin'] = 0;
+            $data['roles'] = 0;
         }
 
         if (!empty($appointments)) {
@@ -88,7 +91,13 @@ class AdminController{
             }
 
             ksort($data['appointment']);
-            $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']), array_keys($data['appointment'])));
+
+
+            if (is_array($data['signin'])) {
+                $data['labelLine'] = array_unique(array_merge(array_keys($data['signin']), array_keys($data['appointment'])));
+            }
+            else
+                $data['labelLine'] = array_unique(array_keys($data['appointment']));
             foreach ($data['labelLine'] as $label) {
                 if (!array_key_exists($label, $data['appointment'])) {
                     $data['appointment'][$label] = 0;
@@ -100,7 +109,7 @@ class AdminController{
             ksort($data['appointment']);
         }
         else{
-            $data['appointment'][0] = 0;
+            $data['appointment'] = 0;
             $data['labelLine'] = 0;
 
         }
@@ -251,6 +260,8 @@ class AdminController{
         $v->assign("current", 'content');
         $v->assign("current_sidebar", 'appointment');
         $v->assign("filter",isset($params['URL'][0])?$params['URL'][0]:'');
+        $hour = date('H:i');
+        $date = date('Y-m-d');
 
         $max = ['max_to' => date('Y-m-d')];
         $min = ['min_to' => date('Y-m-d')];
@@ -271,7 +282,8 @@ class AdminController{
             $tab = 7;
         }
 
-        $where = [$filter => date('Y-m-d')];
+        $where = [$filter => $date];
+
 
         $appointment = new Appointment();
         $inner = ['inner_table' => ['user u1','user u2','package p'],
@@ -283,14 +295,28 @@ class AdminController{
                                                             'dateAppointment',
                                                             'idAppointment',
                                                             'hourAppointment',
-                                                            'CONCAT(u1.firstname," ",u1.lastname) as id_user',
-                                                            'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                                                            'CONCAT(u1.lastname," ", u1.firstname) as id_user',
+                                                            'CONCAT(u2.lastname," ",u2.firstname) as id_Hairdresser',
                                                             'p.description as id_Package',
                                                             'planned'],$tab,$inner,null);
 
-        foreach ($appointments as $key => $appointment){
-            if($appointment->getPlanned()!= 1){
+
+        foreach ($appointments as $key => $appointment) {
+            if ($appointment->getPlanned() != 1) {
                 unset($appointments[$key]);
+            }
+
+            if (isset($params['URL'][0])){
+                if($params['URL'][0] == 'past'){
+                    if ($appointment->getDateAppointment() == $date && $appointment->getHourAppointment() >= $hour){
+                        unset($appointments[$key]);
+                    }
+                }
+                else{
+                    if ($appointment->getDateAppointment() == $date && $appointment->getHourAppointment() < $hour){
+                        unset($appointments[$key]);
+                    }
+                }
             }
         }
         $appointments = array_values($appointments);
@@ -370,7 +396,7 @@ class AdminController{
                     $this->updateAppointment($params,$errors);
                 }
                 else {
-                    $appointment->setHourAppointment($_POST['appointmentHour']);
+                    $appointment->setHourAppointment($_POST['selectHour']);
                     $appointment->setDateAppointment($date);
                     $appointment->setIdHairdresser($_POST['hairdresser']);
                     $appointment->setIdPackage($_POST['package']);
@@ -445,8 +471,8 @@ class AdminController{
                 'idAppointment',
                 'dateAppointment',
                 'hourAppointment',
-                'CONCAT(u1.firstname," ",u1.lastname) as id_user',
-                'CONCAT(u2.firstname," ",u2.lastname) as id_Hairdresser',
+                'CONCAT(u1.lastname," ", u1.firstname) as id_user',
+                'CONCAT(u2.lastname," ",u2.firstname) as id_Hairdresser',
                 'p.description as id_Package'],3,$inner);
 
             if(!empty($currentAppointment)){

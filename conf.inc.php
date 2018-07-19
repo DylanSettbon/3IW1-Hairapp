@@ -27,3 +27,7 @@ define("DIRNAME", $scriptName.DS);
 define("PICTURES_DIR", DIRNAME."public/img/" );
 
 $list_of_extensions = ['.png', '.gif', '.jpg', '.jpeg'];
+
+define("OPENING_HOUR", '09:00');
+define("CLOSING_HOUR", '20:00' );
+define("DURATION",15);

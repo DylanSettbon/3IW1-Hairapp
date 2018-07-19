@@ -30,7 +30,6 @@
     <?php endif; ?>
 
     <form method='post' action='saveAppointment'>
-
         <section id="choix-coiffeur" class="row">
             <h2 class="title-section-rdv">Designez votre coiffeur</h2>
             <div class="container liste-coiffeur">
@@ -44,10 +43,11 @@
                     <li>
                         <input value="<?php echo $hairdresser->getId() ?>" name="hairdresser" id="coiffeur<?php echo $hairdresser->getId(); ?>" type="checkbox">
                         <label for="coiffeur<?php echo $hairdresser->getId(); ?>">
-
                             <span class="nom-coiffeur"><?php echo $hairdresser->getFirstname();?></span>
                         </label>
                     </li>
+
+                    <style>input[type="checkbox"][id^="coiffeur<?php echo $hairdresser->getId(); ?>"] + label::before {background-image: url("<?php echo $hairdresser->getPicture(); ?>");}</style>
                 <?php endforeach; ?>
             </div>
         </section>
@@ -88,7 +88,7 @@
             <ul id="appointmentHour" class="container checkbox-heure-rdv">
             </ul>
 
-            <select name="appointmentHour" id="heure" class="col-s-3 liste_deroulante">
+            <select name="selectHour" id="heure" class="col-s-3 liste_deroulante">
                 <option selected disabled>Heure</option>
             </select>
         </section>
@@ -99,6 +99,7 @@
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 <script type="text/javascript" src="../public/js/appointment.js"></script>
 </html>
+
 
 
 
