@@ -97,7 +97,7 @@ CREATE TABLE color(
 
 CREATE TABLE comment(
         id         int (11) Auto_increment  NOT NULL ,
-        content    Varchar (250) NOT NULL ,
+        content    Varchar (500) NOT NULL ,
         id_user    Int ,
         id_Article Int ,
         statut Int (11) NULL DEFAULT '1' COMMENT '1:en attente 0:refuse 2:accepté' ,
