@@ -2,8 +2,8 @@
 class AppointmentController{
     public function getAppointment($data){
         $v = new Views( "appointment", "header" );
-        $category = new Category();
-        $categories = $category->getAllBy(['id_CategoryType' => '3', 'status' => '1'],null,3);
+        $category = new Category(3);
+        $categories = $category->getAllBy(['id_CategoryType' => $category->getIdCategoryType(), 'status_category' => '1'],null,3);
         $categories = $category->getCategoriesWithPackage($categories);
 
         $package =  new Package();
@@ -22,6 +22,7 @@ class AppointmentController{
     public function saveAppointment(){
         if (Security::isConnected()){
         $errors = ['errors' => Validator::checkAvailableAppointment()];
+
         if (!empty($errors['errors'])){
             return $this->getAppointment($errors);
         }
@@ -32,7 +33,6 @@ class AppointmentController{
             $month = $_POST['mois'] < 10 ? '0' . $_POST['mois'] : $_POST['mois'];
             $day = $_POST['jour'] < 10 ? '0' . $_POST['jour'] : $_POST['jour'];
             $date = $_POST['annee'] . $month . $day;
-            //s'occuper de la gestion de coiffeur = all
             if($_POST['hairdresser'] == 'all'){
 
                 $hairdresser = new Hairdresser();
@@ -54,18 +54,13 @@ class AppointmentController{
                 "hourAppointment" => $appointment->getHourAppointment(),
                 "id_user" => $appointment->getIdUser(),
                 "id_Hairdresser" => $appointment->getIdHairdresser(),
-                "id_Package" => $appointment->getIdPackage()
+                "id_Package" => $appointment->getIdPackage(),
+                "took" => date('Ymd')
             ]);
 
             $success = ['success' => 'Votre rendez-vous a bien été pris'];
-            $object = 'Confirmation de votre rendez-vous le '.$appointment->getFormatedDateAppointment();
-            $body = 'Bonjour, !<br>
-                 Nous vous confirmons votre rendez-vous le '.$appointment->getFormatedDateAppointment().' a '.$appointment->getHourAppointment().'.<br>
-                 Ce rendez-vous durera approximativement :'.$package->getTextDuration().'
-                 <br><br>Merci';
+            $appointment->sendAddAppointmentMail([$_SESSION['email']]);
 
-            $mail = new Mail([$_SESSION['email']],'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
-            $mail->send();
             return $this->getAppointment($success);
             }
         }

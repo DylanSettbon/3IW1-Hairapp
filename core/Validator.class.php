@@ -225,6 +225,19 @@ class Validator
         }
     }
 
+    public static function checkAvailableCategoryOrderForPackageAdmin($displayOrder){
+        return ctype_digit($displayOrder)? true : $errors['errors'][] = 'L\'ordre de la catégorie doit être un nombre';;
+    }
+
+    public static function checkAvailableCategoryForPackageAdmin($category){
+        if ($category->checkIfCategoryDescriptionExists(1)) {
+            $errors['errors'][] = 'Cette catégorie est déja existante';
+        }
+        return isset($errors)?$errors:0;
+    }
+
+
+
     public static function checkAvailableAppointment(){
 
         $appointment = new Appointment();
@@ -248,7 +261,7 @@ class Validator
             $day = $_POST['jour']<10?'0'.$_POST['jour']:$_POST['jour'];
             $date = $_POST['annee'].$month.$day;
             if($now->format('Ymd') > $date){
-                $errors[] = ['La date est inférieure à la date du jour'];
+                $errors[] = 'La date est inférieure à la date du jour';
             }
         }
 

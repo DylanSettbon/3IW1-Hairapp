@@ -289,7 +289,11 @@ $button_color: #009CDF;
   }
 }
 
-
+#titre-article{
+  margin:0;
+  width:100%;
+  text-align:center;
+}
 
 
 
@@ -350,8 +354,6 @@ $button_color: #009CDF;
 
 @mixin rendezvous {
   /* RENDEZ VOUS*/
-  $imgCoiffeur1 : "../img/hommecoiffure.jpg";
-
 
   #body-rdv {
     //background-color: #FFFFFF;
@@ -393,9 +395,10 @@ $button_color: #009CDF;
     display: inline-block;
     width: 80px;
     height: 80px;
-    background-image: url($imgCoiffeur1);
+    background-image: url("../img/hommecoiffure.jpg");
     background-size: cover;
     border-radius: 12px;
+    opacity: 0.5;
   }
 
   #coiffeurTous + label::before {
@@ -410,10 +413,6 @@ $button_color: #009CDF;
     font-size:20px;
   }
 
-
-  input[type="checkbox"][id^="coiffeur"] + label::before {
-    opacity: 0.5;
-  }
 
   input[type="checkbox"][id^="coiffeur"]:checked + label::before {
     border: solid black 2px;
@@ -687,7 +686,7 @@ $button_color: #009CDF;
 
     .container.checkbox-heure-rdv {
     display: block;
-    width:40%;
+    width:48%;
     }
 
     input[type="checkbox"][id^="coiffeur"] + label::before {
@@ -1181,7 +1180,6 @@ $button_color: #009CDF;
   }
 }
 
-
 @mixin title{
   font-family: "Roboto";
   font-style: italic;
@@ -1191,5 +1189,62 @@ $button_color: #009CDF;
   margin-bottom: 25px;
   color: #000000;
   text-align:center;
+}
+
+@mixin dashboard{
+  .stat{
+    height: 50%;
+  }
+
+  .statValue
+  {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .statCard{
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    text-align: center;
+    background-color: #f2f2f2;
+    height: 95px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    text-align: center;
+    background-color: #f2f2f2;
+    height: 475px;
+    margin-top: 35px;
+    margin-bottom: 50px;
+  }
+
+  .card:last-child{
+
+  }
+
+  .card:hover,.statCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .titleCard{
+    margin-bottom: 0px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .line,.pie{
+      margin-left: 17%;
+    }
+
+
+    .card {
+      margin: 20px;
+      margin-top: 37px;
+      margin-bottom: 75px;
+    }
+  }
 }
 

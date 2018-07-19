@@ -44,6 +44,7 @@
                     <li>
                         <input value="<?php echo $hairdresser->getId() ?>" name="hairdresser" id="coiffeur<?php echo $hairdresser->getId(); ?>" type="checkbox">
                         <label for="coiffeur<?php echo $hairdresser->getId(); ?>">
+
                             <span class="nom-coiffeur"><?php echo $hairdresser->getFirstname();?></span>
                         </label>
                     </li>
@@ -67,7 +68,7 @@
         </section>
 
         <section id="selection-date" class="row">
-            <h2 class="title-section-rdv">Selectionnez une date</h2>
+            <h2 class="title-section-rdv">Selectionnez une date et une horaire</h2>
             <div class="container date">
 
                 <select name="jour" id="jour" class="appointmentAttr liste_deroulante">

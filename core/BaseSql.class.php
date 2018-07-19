@@ -48,7 +48,7 @@ class BaseSql{
 
         $query = $this->db->prepare( $statement );
 
-        $query->execute( $params );
+        $query->execute( $params);
     }
 
     public function generateToken( $email ){
@@ -73,6 +73,7 @@ class BaseSql{
             $tmp1[] = ':'.$key;
             $tmp2[] = $key.'=:'.$key;
             $tmp4[] = $key.' <> :'.$key;
+            $tmp5[] = $key.' IN (:'.$key.')';
             if(!in_array($key, $params_remove)) {
                 $tmp3[] = $key.'=:'.$key;
             }
@@ -104,6 +105,9 @@ class BaseSql{
         $result['bind_onduplicate'] = implode(',', $tmp3);
         $result['bind_primary_key'] = implode(' AND ', $tmp3);
         $result['not_in'] = implode(' AND ', $tmp4);
+        $result['in'] = implode(' AND ', $tmp5);
+
+        //echo '<pre>'; print_r($result); echo '</pre>';
         return $result;
     }
 
@@ -178,10 +182,10 @@ class BaseSql{
 
 
     /**
-     * @param $table
      * @param $fields
      * @param $fields_primary_key
      * @param array $options
+     * @internal param $table
      */
     public function updateTable($fields, $fields_primary_key = null , $options=array()) {
         $res = null;
@@ -205,13 +209,11 @@ class BaseSql{
         if( $found == 0 ){
             $bind['fields'] = ltrim( $bind['fields'], ',' );
             $sql_upd = 'INSERT INTO '.$table.' ('.$bind['fields'].') VALUES ('.$bind['bind_insert'].')';
-
         }
         else{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
-
         $this->update($sql_upd, $sql_params);
     }
 
@@ -227,11 +229,18 @@ class BaseSql{
      * @param $fields_primary_key
      * @return array|bool|mixed
      */
-    public function countTable($table, $fields_primary_key) {
+    public function countTable($table = null, $fields_primary_key = null) {
+        $table = $table == null ? $this->table : $table;
         $table = basename($table);
-        $bind_pk = $this->bindParams($fields_primary_key);
-        $sql_count = 'SELECT COUNT(*) FROM '.$table.' WHERE '.$bind_pk['bind_primary_key'];
-        $found = $this->fetchOne($sql_count, $fields_primary_key);
+        if(!empty($fields_primary_key)) {
+            $bind_pk = $this->bindParams($fields_primary_key);
+            $sql_count = 'SELECT COUNT(*) FROM ' . $table . ' WHERE ' . $bind_pk['bind_primary_key'];
+            $found = $this->fetchOne($sql_count, $fields_primary_key);
+        }
+        else{
+            $sql_count = 'SELECT COUNT(*) FROM ' . $table . ';';
+            $found = $this->fetchOne($sql_count);
+        }
         return $found;
     }
 
@@ -302,7 +311,8 @@ class BaseSql{
 
              if( isset( $inner['inner_table']) ){
                  $bind_inner = $this->bindParams($inner);
-                 $from = $this->table . $bind_inner['inner'];
+                 $firstTable = substr( $this->table, 0, 1);
+                 $from = $this->table.' '.$firstTable . $bind_inner['inner'];
              }
              else{
                  $from = $this->table;
@@ -325,19 +335,25 @@ class BaseSql{
              elseif ( $tab == 7 ){
                  $where_type = $columns[0] . $bind['max_to'];
              }
+             elseif ($tab = 8){
+                 $field =  array_keys($sql_params)[0];
+                 $sql_params[$field] = implode(',',$sql_params[$field]);
+                 $where_type = $bind['in'];
+             }
+
             if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
+                 ' FROM '.$from.' WHERE '
                  .$where_type.' '. $options);
+
+
              }else {
              $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$from.' WHERE '
                  .$where_type);
-
             }
 
              $sql->execute($sql_params);
-
          }
          else{
              if( isset( $inner['inner_table']) ){
@@ -349,8 +365,8 @@ class BaseSql{
              }
              if ($options != null){
                 $sql = $this->db->prepare('SELECT ' .$select.
-                 ' FROM '.$this->table.' WHERE '
-                 .$where_type.' '. $options);
+                 ' FROM '.$this->table.' WHERE '.
+                 ' '. $options);
              }else {
                  $sql = $this->db->prepare('SELECT ' .$select.
                  ' FROM '.$this->table

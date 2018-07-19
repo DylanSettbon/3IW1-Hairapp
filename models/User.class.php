@@ -402,18 +402,23 @@ class User extends BaseSql {
     public function ChangePwdForm(){
 
         return [
-            "config"=>["method"=>"POST", "action"=>"saveAccount", "submit"=>"Changer le mot de passe"],
+            "config"=>["method"=>"POST", "action"=>"savePwd", "submit"=>"Enregistrer"],
             "input"=>[
                 "pwd"=>[
                     "type"=>"password",
                     "class"=>"input input_sign-in",
-                    "placeholder"=>"Votre mot de passe"
+                    "placeholder"=>"Votre mot de passe actuel"
+                ],
+                "pwdnew"=>[
+                    "type"=>"password",
+                    "class"=>"input input_sign-in",
+                    "placeholder"=>"Votre nouveau mot de passe"
                 ],
                 "pwdConfirm"=>[
                     "type"=>"password",
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Confirmation",
-                    "confirm"=>"pwd"
+                    "confirm"=>"pwdnew"
                 ],
             ],
         ];
@@ -437,7 +442,9 @@ class User extends BaseSql {
                 ],
                 "referer"=>[
                     "type"=>"text",
-                    "hidden"=>true
+                    "hidden"=>true,
+                    "class" => '',
+                    "placeholder" => '',
                 ],
             ],
         ];
@@ -491,7 +498,7 @@ class User extends BaseSql {
     public function formUpdateUser(){
 
         return [
-            "config"=>["method"=>"POST", "action"=>"modify", "submit"=>"Enregistrer"],
+            "config"=>["method"=>"POST", "action"=>"admin/modify", "submit"=>"Enregistrer"],
             "input"=>[
 
 
