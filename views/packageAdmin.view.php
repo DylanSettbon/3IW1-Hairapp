@@ -10,7 +10,7 @@ include "templates/sidebar.view.php";
 ?>
 <main class='container'>
     <div class="content">
-        <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
+        <div class="col-s-12 col-l-12 col-m-9 packageContent-admin" style="margin-bottom: 65px;">
             <h1 class="packageAdmin-title">Personnaliser la carte du salon</h1>
             <div class="row">
                 <a href='#' method="post" class="buttonUserAdd" type="button" onclick ="createCategoryPackageForm_show()" style="margin-bottom: 0px;">Ajouter une catégorie</a>
