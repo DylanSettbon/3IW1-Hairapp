@@ -1500,6 +1500,24 @@ input[type="checkbox"][id="template4"] + label::before {
 #search:focus {
   width: 60%; }
 
+.comment {
+  position: relative;
+  max-width: 300px;
+  height: auto;
+  margin: 10px 10px;
+  padding: 5px;
+  background-color: #d8e7ff;
+  border: 1px solid #ccc; }
+
+.comment-content {
+  margin: 4px;
+  font-size: 14px;
+  overflow-wrap: break-word; }
+
+.comment-date {
+  font-style: italic;
+  font-size: 10px; }
+
 .updateButton {
   background-color: #009CDF;
   border-radius: 30px;
