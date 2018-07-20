@@ -5,8 +5,8 @@
     <div class="row">
         <h1 id="title-rdv" class="title col-l-10">Prendre rendez-vous</h1>
     </div>
-
-    <?php if (isset($data)):?>
+    <?php //var_dump( $data ); die; ?>
+    <?php if (!empty($data)):?>
         <?php foreach ($data as $d):?>
             <ul class="errors">
             <?php if(array_key_exists('errors',$data)): ?>
@@ -19,11 +19,11 @@
                 <?php endfor; ?>
 
             <?php else: ?>
-                <?php for ($i=0;$i<count($d);$i++):?>
+                <?php if(array_key_exists('success',$data)):?>
                     <div class="div-errors success">
                         <p><?php echo $d;?></p>
                     </div>
-                <?php endfor; ?>
+                <?php endif; ?>
             <?php endif; ?>
             </ul>
         <?php endforeach;?>

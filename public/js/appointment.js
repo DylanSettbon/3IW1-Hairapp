@@ -46,7 +46,7 @@ function showMonths(start){
     }
 }
 
-function showDays(end,start=1){
+function showDays(end,start = 1){
     $('#jour').empty()
     for(i = start; i<=end;i++){
         $('#jour').append('<option value='+i+'>'+i+'</option>');
@@ -72,7 +72,7 @@ $('.appointmentAttr,:checkbox').change(function(){
 function getAvailableHours(day,month,year,idPackage,idHairdresser){
     $.ajax({
         type: 'POST',
-        url: '/appointment/ajaxGetAvailableSchedule',
+        url: 'ajaxGetAvailableSchedule',
         datatype: "json",
         data: { day: day,
                 month:month,
@@ -106,8 +106,8 @@ function showAllHour(schedule)
 function addHour(hour,i){
     checked = i == 0? 'checked':''
     hourHtml = '<li>' +
-        '<input value="'+hour+'" name="cbHeure" id="heure'+hour.replace(':','-')+'" type="checkbox" onchange="uncheckedHour(this)">' +
-        '<label for="heure'+hour.replace(':','-')+'">' +
+        '<input value="'+hour+'" name="cbHeure" id="heure'+hour+'" type="checkbox" onchange="uncheckedHour(this)">' +
+        '<label for="heure'+hour+'">' +
         '<span class="heure">'+hour+'</span>'+
         '</label>'+
         '</li>';

@@ -56,6 +56,7 @@ class InstallController{
         if( !empty( $_FILES['logo']['name'] ) ){
             $name = "public/img/logo/";
             $file_name = basename($_FILES['logo']['name']);
+            $favicon = "favicon.ico";
             $size = $_FILES['logo']['size'];
             $extension = strrchr($_FILES['logo']['name'], '.');
 
@@ -65,6 +66,10 @@ class InstallController{
             if(move_uploaded_file($_FILES['logo']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
             {
                 $params['POST']['logo'] = $name.$file_name;
+            }
+            if(move_uploaded_file($_FILES['logo']['tmp_name'], $name.$favicon)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            {
+                //$params['POST']['logo'] = $name.$file_name;
             }
             else //Sinon (la fonction renvoie FALSE).
             {
@@ -217,6 +222,7 @@ class InstallController{
          * Update des valeurs de configuration
          */
         $query = str_replace( "LOGO_TOCHANGE", $params['POST']['logo'], $query );
+        $query = str_replace( "NAME_TOCHANGE", $params['POST']['name'], $query );
         $query = str_replace( "EMAILADDRESS_TOCHANGE", $config->getEmailAddress(), $query );
         $query = str_replace( "EMAILPWD_TO_CHANGE", $config->getEmailPwd(), $query );
         $query = str_replace( "POSTAL_TOCHANGE", $config->getPostalAddress(), $query );

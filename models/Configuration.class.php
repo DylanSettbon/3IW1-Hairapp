@@ -10,6 +10,7 @@ class Configuration extends BaseSql
 
     private $id_config = null;
     private $logo;
+    private $name;
     private $email_address;
     private $email_pwd;
     private $postal_address;
@@ -31,6 +32,24 @@ class Configuration extends BaseSql
     {
         return $this->id_config;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
 
     /**
      * @param null $id_config

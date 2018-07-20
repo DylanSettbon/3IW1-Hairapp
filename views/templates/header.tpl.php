@@ -25,9 +25,14 @@
     <meta name="keywords" content="hairapp, coiffeur, coiffure,salon,prise,rendez-vous,cms,forfaits,cheveux,coupe,homme,femme,enfant,barbe,prix">
     <meta name="robots" content="index, nofollow">
     <meta name="language" content="french">
-  <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
+    <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Hair'App : Le site à votre image.</title>
+    <link rel="icon" href="<?php echo DIRNAME;?>public/img/logo/favicon.ico" />
+    <?php if( !empty( $title ) ): ?>
+        <title><?php echo $title; ?></title>
+    <?php else: ?>
+        <title>Hair'App</title>
+    <?php endif; ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 </head>
@@ -40,13 +45,23 @@
 
   <header class='header'>
       <div class='container2'>
-        <div>
-          <a href='<?php echo DIRNAME;?>home/getHome'>
-              <?php if( !empty( $logo ) ): ?>
-                <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
-              <?php endif; ?>
-          </a>
-        </div>
+
+          <div>
+              <a href='<?php echo DIRNAME;?>home/getHome'>
+                  <?php if( !empty( $logo ) ): ?>
+                      <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+                  <?php endif; ?>
+              </a>
+          </div>
+          <?php if( !empty( $title ) ): ?>
+              <div style="display: inline-block; margin: 18px 10px;">
+                  <a href='<?php echo DIRNAME;?>home/getHome' style="color: #FFF;
+    font-weight: 400;
+    padding: 10px;
+    text-decoration: none;"><?php echo $title; ?></a>
+              </div>
+
+          <?php endif; ?>
 
           <div id="burger" class="toggleAnimated" onclick="toggleAnimated(this)">
               <div class="bar1"></div>

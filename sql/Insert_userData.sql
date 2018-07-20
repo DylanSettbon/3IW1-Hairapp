@@ -6,8 +6,20 @@ VALUES( 'FN_TOCHANGE', 'LN_TOCHANGE', 'MAIL_TOCHANGE',
                        'PWD_TOCHANGE', 'TOKEN_TOCHANGE', 'TEL_TOCHANGE', 0, 0, 'STATUS_TOCHANGE', 'DATE_TOCHANGE',
                        'DATE_TOCHANGE', null, null );
 
-INSERT INTO color(name,code) VALUES ('current','#637484'),('standard','#637484'),('currentBtn','#009CDF'),('standardBtn','#009CDF');
+INSERT INTO color(name,code)
+VALUES ('current','#637484'),
+  ('standard','#637484'),
+  ('currentBtn','#009CDF'),
+  ('standardBtn','#009CDF'),
+  ('barber1.jpg','first'),
+  ('barber1.jpg','nFirst'),
+  ('barber2.jpg','second'),
+  ('barber2.jpg','nSecond'),
+  ('barber3.jpg','third'),
+  ('barber3.jpg','nThird'),
+  ('salon coiffure.jpeg','fond'),
+  ('salon coiffure.jpeg','nFond');
 
-INSERT INTO configuration( logo, email_address, email_pwd, postal_address, status_configuration , facebook_link, twitter_link, instagram_link, pinterest_link )
-VALUES( 'LOGO_TOCHANGE', ' EMAILADDRESS_TOCHANGE', 'EMAILPWD_TO_CHANGE',
+INSERT INTO configuration( logo, name, email_address, email_pwd, postal_address, status_configuration , facebook_link, twitter_link, instagram_link, pinterest_link )
+VALUES( 'LOGO_TOCHANGE', 'NAME_TOCHANGE', ' EMAILADDRESS_TOCHANGE', 'EMAILPWD_TO_CHANGE',
         'POSTAL_TOCHANGE', 'STATUSCONFIG_TOCHANGE' , 'FACEBOOK', 'TWITTER' , 'INSTAGRAM', 'PINTEREST' )

@@ -274,7 +274,7 @@ class AdminController{
                     break;
                 default:
                     $filter = 'max_to';
-                    $tab = 7;
+                    $tab = 9;
             }
         }
         else{
@@ -299,6 +299,7 @@ class AdminController{
                                                             'CONCAT(u2.lastname," ",u2.firstname) as id_Hairdresser',
                                                             'p.description as id_Package',
                                                             'planned'],$tab,$inner,null);
+
 
 
         foreach ($appointments as $key => $appointment) {
@@ -1113,7 +1114,7 @@ class AdminController{
         $params=["name" => $article->getName(),
                 "description" => $article->getDescription(),
                 "dateparution" => DATE('Y-m-d'),
-                "minidescription" => substr($article->getDescription(), 0,19),
+                "minidescription" => substr( strip_tags( $article->getDescription() ), 0,19),
                 "image" => $article->getImage(),
                 "status" => 0,
                 "id_Category" => $article->getCategory()];

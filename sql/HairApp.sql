@@ -138,7 +138,7 @@ CREATE TABLE pages (
 CREATE TABLE article(
         id          int (11) Auto_increment  NOT NULL ,
         name        Varchar (50) NOT NULL ,
-        description Varchar (250) NOT NULL ,
+        description LONGTEXT NOT NULL ,
         dateparution Date NOT NULL,
         minidescription Varchar(40) NOT NULL,
         image Varchar(250) ,
@@ -182,6 +182,7 @@ CREATE TABLE theme(
 CREATE TABLE configuration(
         id_config int(11) NOT NULL AUTO_INCREMENT,
         logo varchar(100) NOT NULL,
+        name VARCHAR(20) NOT NULL,
         email_address varchar(150) DEFAULT NULL,
         email_pwd varchar(60) DEFAULT NULL,
         postal_address varchar(255) DEFAULT NULL,

@@ -109,7 +109,7 @@ class AppointmentController{
             }
             sort($timesRange);
             if(empty($timesRange)){
-                echo(json_encode(['errors' => 'Aucune horaires disponibles']));
+                echo(json_encode(['errors' => 'Aucun horaire disponible']));
                 return true;
             }
             echo(json_encode(array_values(array_unique($timesRange))));
@@ -124,7 +124,7 @@ class AppointmentController{
 
             $timesRange = $hairdresser->getTimeRangeAvailable($appointments,$duration);
             if (empty($timesRange)){
-                echo(json_encode(['errors' => 'Aucune horaires disponibles']));
+                echo(json_encode(['errors' => 'Aucun horaire disponible']));
                 return true;
             }
             echo(json_encode($timesRange));

@@ -17,7 +17,7 @@
                 margin-left: auto;
                 margin-right: auto; min-width: 200px'>
                   <?php else: ?>
-                      <img src='/public/img/barber.jpg' style='width:25%; height:25% ;display: block;
+                      <img src='<?php echo DIRNAME."public/img/barber.jpg";?>' style='width:25%; height:25% ;display: block;
                 margin-left: auto;
                 margin-right: auto; min-width: 200px; margin-top:10px;'>
         <?php endif; ?>

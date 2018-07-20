@@ -347,7 +347,13 @@ class BaseSql{
                  $where_type = $columns[0] . $bind['min_to'];
              }
              elseif ( $tab == 7 ){
-                 $where_type = $columns[0] . $bind['max_to'] . " AND " . $bind['bind_primary_key'] ;
+                 if( $bind['bind_primary_key'] != '' ){
+                     $where_type = $columns[0] . $bind['max_to'] . " AND " . $bind['bind_primary_key'] ;
+
+                 }else{
+                     $where_type = $columns[0] . $bind['max_to'];
+                 }
+
              }
              elseif ($tab = 8){
                  $field =  array_keys($sql_params)[0];
@@ -366,9 +372,6 @@ class BaseSql{
                  ' FROM '.$from.' WHERE '
                  .$where_type);
             }
-             $sql->execute($sql_params);
-
-
              $sql->execute($sql_params);
          }
          else{
