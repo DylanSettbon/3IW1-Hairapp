@@ -5,7 +5,7 @@ include "templates/sidebar.view.php";
 ?>
     <div class="content">
         <article class="arriere_plan">
-
+            <input id="search" class="input col-l-2" placeholder="Recherchez...">
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
 
                 <div class="col-l-4">
@@ -24,6 +24,7 @@ include "templates/sidebar.view.php";
                         
 
                     </tr>
+                    <tbody id="searchList">
                     <?php   
                     
                             foreach ($u as $category):
@@ -40,6 +41,7 @@ include "templates/sidebar.view.php";
                             endforeach;
                     
                     ?>
+                </tbody>
                     
                     <nav aria-label="navigation">
                         <tr class="page">
@@ -57,7 +59,7 @@ include "templates/sidebar.view.php";
     </div>
 
   </main>
-
+ <script type="text/javascript" src="<?php echo DIRNAME . "public/js/searchBar.js" ; ?> "></script>
 <?php
 
 include "templates/footer.tpl.php";

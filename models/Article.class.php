@@ -185,7 +185,6 @@ class Article extends BaseSql {
                     "class"=>"input input_sign-in ckeditor",
                     "rows" => "4",
                     "cols" => "40",
-                    "maxString" => 2000,
                     "required"=>true
                 ]
             ],
@@ -217,7 +216,7 @@ class Article extends BaseSql {
                     "type"=>"text",
                     "class"=>"input input_sign-in",
                     "placeholder"=>"Titre de l'article",
-                    "required"=>true
+                    
 
 
                 ],
@@ -246,7 +245,9 @@ class Article extends BaseSql {
                     "class"=>"input input_sign-in ckeditor",
                     "rows" => "4",
                     "cols" => "40",
-                    "maxString" => 2000,
+
+
+                    
                     
                 ]
             ],
