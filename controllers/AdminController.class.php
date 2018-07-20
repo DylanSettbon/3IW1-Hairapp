@@ -1718,4 +1718,45 @@ class AdminController{
             sleep(1);
             $this->getTemplateAdmin();
         }
+
+        public function colorHomeChange(){
+            if ($_POST['customColor'] == ""){
+                    //Msg d'erreur ou autre
+                }
+        else{
+                $color = new Color();
+
+                $current = $color->getUpdate("name LIKE 'currentColorHome'", 2, "code");
+                $currentColor = $current[0]->getCode();
+                $newColor = ($_POST['customColor']);
+                $change = "textHome: ". $currentColor .";";
+                $to = "textHome: ". $newColor .";";
+                $path = './public/scss/_var.scss';
+                $content = file_get_contents($path);
+                $contentReplace = str_replace($change, $to, $content);
+                file_put_contents($path, $contentReplace);
+                $color->getUpdate("name LIKE 'currentColorHome'", 1, "code = '". $newColor ."'");
+                }
+        sleep(1);
+        $this->getTemplateAdmin();
+    }
+
+    public function colorHomeStandard(){
+            $color = new Color();
+
+            $current = $color->getUpdate("name LIKE 'currentColorHome'", 2, "code");
+            $currentColor = $current[0]->getCode();
+
+            $standard = $color->getUpdate("name LIKE 'standardColorHome'", 2, "code");
+            $standardColor = $standard[0]->getCode();
+            $change = "textHome: ". $currentColor .";";
+            $to = "textHome: ". $standardColor .";";
+            $path = './public/scss/_var.scss';
+            $content = file_get_contents($path);
+            $contentReplace = str_replace($change, $to, $content);
+            file_put_contents($path, $contentReplace);
+            $color->getUpdate("name LIKE 'currentColorHome'", 1, "code = '". $standardColor ."'");
+            sleep(1);
+            $this->getTemplateAdmin();
+        }
 }
