@@ -40,6 +40,7 @@
 
                                 
                     <?php endforeach; ?>
+                    </tbody>
 
                     
                     <nav aria-label="navigation">
@@ -58,7 +59,7 @@
     </div>
 
   </main>
-    <script type="text/javascript" src="/public/js/searchBar.js"></script>
+     <script type="text/javascript" src="<?php echo DIRNAME . "public/js/searchBar.js" ; ?> "></script>
 
 
 <?php

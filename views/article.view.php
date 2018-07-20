@@ -15,11 +15,11 @@
         <?php if( !empty( $article->getImage() ) ): ?>
                      <img class='img-art' src='<?php echo DIRNAME. $article->getImage();?>' style='width:25%; height:25% ;display: block;
                 margin-left: auto;
-                margin-right: auto; min-width: 200px'>
+                margin-right: auto; margin-top:10px;'>
                   <?php else: ?>
                       <img src='/public/img/barber.jpg' style='width:25%; height:25% ;display: block;
                 margin-left: auto;
-                margin-right: auto; min-width: 200px; margin-top:10px;'>
+                margin-right: auto; margin-top:10px;'>
         <?php endif; ?>
         <p><?php echo $article->getDescription();?></p>
             <hr class="col-s-12">
