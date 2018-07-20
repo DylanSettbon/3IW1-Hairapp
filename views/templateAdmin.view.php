@@ -14,7 +14,12 @@ include "templates/sidebar.view.php";
             <h1 class="packageAdmin-title">Gestion du contenu</h1>
             <div class="row">
             </div>
-
+            
+<form method="post" action="<?php echo DIRNAME;?>admin/colorHomeChange"> 
+Changer la couleur de l'écriture du caroussel : <input type="color" name="customColor"/>
+<input type="submit" id="colorChoose" class="btnForfait" value="Valider" href="colorHomeChange" />
+<a type="button" id="colorStandard" class="btnForfait" href="<?php echo DIRNAME;?>admin/colorHomeStandard">Couleur Standard </a>
+</form>
         <div style="display:inline-block;">
         <p>Première photo actuelle du caroussel d'accueil : </p>
     <form method="post" action="<?php echo DIRNAME;?>admin/pictureFirstChange" enctype="multipart/form-data"> 
