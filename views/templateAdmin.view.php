@@ -2,22 +2,28 @@
 /**
  * Created by PhpStorm.
  * User: antoine
-
  * Date: 04/02/2018
  * Time: 11:27
  */
 include "templates/sidebar.view.php";
 ?>
 <main class='container'>
-    <div class="content center">
+    <div class="content">
         <div class="col-s-12 col-l-12 col-m-9 packageContent-admin">
             <h1 class="packageAdmin-title">Gestion du contenu</h1>
+            <div class="row">
+            </div>
 
+            <form method="post" action="<?php echo DIRNAME;?>admin/colorHomeChange">
+                Changer la couleur de l'écriture du caroussel : <input type="color" name="customColor"/>
+                <input type="submit" id="colorChoose" class="btnForfait" value="Valider" href="colorHomeChange" />
+                <a type="button" id="colorStandard" class="btnForfait" href="<?php echo DIRNAME;?>admin/colorHomeStandard">Couleur Standard </a>
+            </form>
             <div style="display:inline-block;">
                 <p>Première photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureFirstChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/fushimi-inari-taisha-shrine-kyoto-japan-temple-161401 (1).jpeg" alt="Image d'accueil 1" width="300" height="200">
+                        <img src="../public/img/pexels-photo-356269.jpeg" alt="Image d'accueil 1" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic1">Première photo d'accueil :</label>
@@ -34,7 +40,7 @@ include "templates/sidebar.view.php";
                 <p>Deuxième photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureSecondChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/pexels-photo-127578.jpeg" alt="Image d'accueil 2" width="300" height="200">
+                        <img src="../public/img/fushimi-inari-taisha-shrine-kyoto-japan-temple-161401 (1).jpeg" alt="Image d'accueil 2" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic2">Deuxième photo d'accueil :</label>
@@ -68,7 +74,7 @@ include "templates/sidebar.view.php";
                 <p>Fond d'écran actuel : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureAccChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/pexels-photo-356269.jpeg" alt="Image de fond" width="300" height="200">
+                        <img src="../public/img/pexels-photo-127578.jpeg" alt="Image de fond" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic2">Deuxième photo d'accueil :</label>

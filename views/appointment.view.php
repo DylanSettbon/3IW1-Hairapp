@@ -19,7 +19,7 @@
                 <?php endfor; ?>
 
             <?php else: ?>
-                <?php if(array_key_exists('success',$data)):?>
+                <?php if(array_key_exists('success',$data) ):?>
                     <div class="div-errors success">
                         <p><?php echo $d;?></p>
                     </div>
