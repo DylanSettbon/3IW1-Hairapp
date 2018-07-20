@@ -82,7 +82,7 @@ CREATE TABLE user(
 
 CREATE TABLE color(
         id      int (11) Auto_increment  NOT NULL ,
-        name    Varchar (50) NOT NULL ,
+        name    Varchar (200) NOT NULL ,
         code    Varchar (7) NOT NULL ,
         id_user Int ,
         PRIMARY KEY (id )

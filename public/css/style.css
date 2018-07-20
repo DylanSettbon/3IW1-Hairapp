@@ -24,7 +24,7 @@
     clear: both; }
 
 .sidenav {
-  background-color: #8B0000;
+  background-color: #637484;
   margin-right: auto;
   margin-left: auto;
   text-align: center; }
@@ -87,7 +87,7 @@ html {
   clear: left;
   left: 0;
   padding: 0.5rem;
-  background-color: #8B0000;
+  background-color: #637484;
   color: white;
   text-align: right; }
 
@@ -136,17 +136,17 @@ html {
   overflow-x: auto; }
 
 .page {
-  color: #8B0000; }
+  color: #637484; }
 
 .userManagerTab tr:nth-child(even) {
   background-color: rgba(189, 189, 189, 0.2); }
 
 th {
-  color: #8B0000; }
+  color: #637484; }
 
 .previous a, .next-admin a {
   text-decoration: none;
-  color: #8B0000; }
+  color: #637484; }
 
 #civilite {
   padding: 10px; }
@@ -173,7 +173,7 @@ hr {
   margin-top: 30px; }
 
 .span {
-  color: #8B0000; }
+  color: #637484; }
 
 .input {
   border-radius: 5px;
@@ -185,7 +185,7 @@ hr {
   font-size: 16px; }
 
 #connecter {
-  background-color: #778899;
+  background-color: #009CDF;
   color: white;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -216,7 +216,7 @@ h3 {
   width: auto; }
 
 #valider {
-  background-color: #778899;
+  background-color: #009CDF;
   color: white;
   margin-top: 30px;
   font-size: 16px;
@@ -270,7 +270,7 @@ h3 {
   background-color: rgba(189, 189, 189, 0.2); }
 
 .planning {
-  border-right: 2px solid #778899; }
+  border-right: 2px solid #009CDF; }
 
 #planning th {
   border: none; }
@@ -279,7 +279,7 @@ h3 {
   background-color: #F2994A; }
 
 .hairdresser2 {
-  background-color: #778899; }
+  background-color: #009CDF; }
 
 .hairdresser3 {
   background-color: #27AE60; }
@@ -298,7 +298,7 @@ h3 {
 
 /* RENDEZ VOUS*/
 #body-rdv {
-  background-image: url("../img/pexels-photo-127578.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg"); }
 
 #main-rdv {
   background-color: white;
@@ -360,7 +360,7 @@ section {
   margin: 0 auto; }
 
 .btn-Valider {
-  background: #778899;
+  background: #009CDF;
   color: white;
   height: 35px;
   margin-top: 15px;
@@ -438,7 +438,7 @@ section {
     display: inline-block;
     width: 70px;
     height: 35px;
-    background-color: #778899;
+    background-color: #009CDF;
     border-radius: 16px;
     opacity: 0.5; }
   input[type="checkbox"][id^="heure"]:checked + label::before {
@@ -457,7 +457,7 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/pexels-photo-127578.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg"); }
 
 #main-art {
   background-color: white;
@@ -489,7 +489,7 @@ section {
   margin: 0 auto; }
 
 .btn-Valider {
-  background: #778899;
+  background: #009CDF;
   color: white;
   height: 35px;
   margin-top: 15px;
@@ -512,7 +512,7 @@ section {
   margin-top: 35px; }
 
 .header {
-  background: #8B0000;
+  background: #637484;
   padding: 0px 16px; }
 
 .header:after {
@@ -589,7 +589,7 @@ section {
   display: block !important; }
 
 .active {
-  background-color: #778899;
+  background-color: #009CDF;
   border-radius: 5px; }
 
 .logo {
@@ -597,7 +597,7 @@ section {
 
 .container2 {
   float: right;
-  background-color: #8B0000;
+  background-color: #637484;
   width: 100%; }
 
 .icon {
@@ -626,7 +626,7 @@ section {
     text-align: center; }
   .sidebar {
     float: left;
-    background-color: #8B0000;
+    background-color: #637484;
     border-top: 2px solid #333333;
     border-bottom: 2px solid #333333;
     height: 70px;
@@ -715,7 +715,7 @@ section {
   .tab-planning {
     margin-top: 60px; }
   #planning td, #planning th {
-    border-right: 2px solid #778899;
+    border-right: 2px solid #009CDF;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 6px;
@@ -723,14 +723,14 @@ section {
   .coiffeur-1 {
     background-color: #F2994A; }
   .coiffeur-2 {
-    background-color: #778899; }
+    background-color: #009CDF; }
   .coiffeur-3 {
     background-color: #27AE60; }
   .background_login {
     background-color: #E5E5E5;
     height: 100%; }
   .valider {
-    background-color: #778899;
+    background-color: #009CDF;
     color: white;
     margin-top: 30px;
     font-size: 16px;
@@ -751,7 +751,7 @@ section {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    background-color: #8B0000;
+    background-color: #637484;
     margin-top: 0; }
   .sidenav li {
     display: block;
@@ -803,14 +803,14 @@ section {
     background-color: #E5E5E5;
     height: 100%; }
   #connecter {
-    background-color: #778899;
+    background-color: #009CDF;
     color: white;
     margin-top: 30px;
     margin-bottom: 20px;
     font-size: 16px;
     width: 35%; }
   #valider {
-    background-color: #778899;
+    background-color: #009CDF;
     color: white;
     margin-top: 30px;
     font-size: 16px;
@@ -835,7 +835,7 @@ section {
     left: 0;
     margin-top: 0;
     overflow-x: hidden;
-    background-color: #8B0000; }
+    background-color: #637484; }
   .content {
     margin-left: 160px; } }
 
@@ -1025,7 +1025,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #778899;
+  background-color: #009CDF;
   text-align: center;
   cursor: pointer; }
 
@@ -1051,7 +1051,7 @@ img {
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: #778899;
+  background-color: #009CDF;
   text-align: center;
   cursor: pointer;
   margin: 25px; }
@@ -1068,7 +1068,7 @@ img {
   margin-left: 35px; }
 
 .buttonUser {
-  background-color: #778899;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1104,7 +1104,7 @@ img {
   cursor: pointer; }
 
 .buttonUserModify {
-  background-color: #778899;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1166,7 +1166,7 @@ img {
   width: 100%; }
 
 .btnCreatePackage {
-  background-color: #778899;
+  background-color: #009CDF;
   color: white;
   height: 45px;
   width: 100%; }
@@ -1193,7 +1193,7 @@ img {
 
 [class^="createPackage"] {
   border-radius: 5px;
-  background-color: #778899;
+  background-color: #009CDF;
   text-decoration: none;
   color: white;
   width: 100%;
@@ -1259,7 +1259,7 @@ input[type=submit].btnFormCategory {
   text-decoration: none;
   width: 100%;
   text-align: center;
-  background-color: #778899;
+  background-color: #009CDF;
   color: #fff;
   padding: 5px 0;
   font-size: 20px;
@@ -1313,10 +1313,10 @@ input[type=submit].btnFormCategory {
   transition: .4s; }
 
 input:checked + .slider {
-  background-color: #778899; }
+  background-color: #009CDF; }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #778899; }
+  box-shadow: 0 0 1px #009CDF; }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
@@ -1326,7 +1326,7 @@ input:checked + .slider:before {
 @media only screen and (min-width: 1024px) {
   [class^="createPackage"] {
     padding: 5px 150px;
-    background-color: #778899;
+    background-color: #009CDF;
     color: white; }
   .createCategoryPackage {
     width: 100%; }
@@ -1534,7 +1534,7 @@ input[type="checkbox"][id="template4"] + label::before {
   font-size: 10px; }
 
 .updateButton {
-  background-color: #778899;
+  background-color: #009CDF;
   border-radius: 30px;
   color: white;
   text-align: center;
@@ -1569,7 +1569,7 @@ input.invalid {
   display: none; }
 
 button {
-  background-color: #778899;
+  background-color: #009CDF;
   border-radius: 5px;
   color: #ffffff;
   border: none;
@@ -1600,7 +1600,7 @@ button:hover {
 
 /* Mark the steps that are finished and valid: */
 .step.finish {
-  background-color: #778899; }
+  background-color: #009CDF; }
 
 .content-on-image {
   background: rgba(0, 0, 0, 0.5);

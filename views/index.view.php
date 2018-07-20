@@ -3,7 +3,7 @@
     <div class="row slideshow-container">
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Hairapp" src="<?php echo DIRNAME . "public/img/pexels-photo-356269.jpeg"; ?>" style="width:100%">
+            <img class="contain-img" alt="Hairapp" src="../public/img/fushimi.jpeg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Voir les forfaits" src="<?php echo DIRNAME . "public/img/pexels-photo-356269.jpeg"; ?>" style="width:100%">
+            <img class="contain-img" alt="Voir les forfaits" src="../public/img/cerisiers.jpeg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Prendre rendez-vous" src="<?php echo DIRNAME . "public/img/pexels-photo-356269.jpeg"; ?>" style="width:100%">
+            <img class="contain-img" alt="Prendre rendez-vous" src="../public/img/temple.jpeg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -95,7 +95,7 @@
                 <span>
                     <h3 class="carte">Notre carte</h3>
                     <p class="content-carte">Decouvrez nos forfaits Homme Femme sur notre carte</p>
-                    <img alt="barber" class="contain-img" src="<?php echo DIRNAME . "public/img/pexels-photo-127578.jpeg";?>" style="width:100%; padding:10px">
+                    <img alt="barber" class="contain-img" src="<?php echo DIRNAME . "public/img/barber3.jpg";?>" style="width:100%; padding:10px">
                 </span>
            
         <a href="<?php echo DIRNAME ."package/getPackage";?>" class="btnForfait col-l-10">Cliquez ici</a>

@@ -23,7 +23,7 @@ include "templates/sidebar.view.php";
                 <p>Première photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureFirstChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/pexels-photo-356269.jpeg" alt="Image d'accueil 1" width="300" height="200">
+                        <img src="../public/img/fushimi.jpeg" alt="Image d'accueil 1" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic1">Première photo d'accueil :</label>
@@ -40,7 +40,7 @@ include "templates/sidebar.view.php";
                 <p>Deuxième photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureSecondChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/fushimi-inari-taisha-shrine-kyoto-japan-temple-161401 (1).jpeg" alt="Image d'accueil 2" width="300" height="200">
+                        <img src="../public/img/cerisiers.jpeg" alt="Image d'accueil 2" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic2">Deuxième photo d'accueil :</label>
@@ -57,7 +57,7 @@ include "templates/sidebar.view.php";
                 <p>Troisième photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureThirdChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/pexels-photo-96931.jpeg" alt="Image d'accueil 3" width="300" height="200">
+                        <img src="../public/img/temple.jpeg" alt="Image d'accueil 3" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic3">Troisième photo d'accueil :</label>
@@ -74,7 +74,7 @@ include "templates/sidebar.view.php";
                 <p>Fond d'écran actuel : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureAccChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/pexels-photo-127578.jpeg" alt="Image de fond" width="300" height="200">
+                        <img src="../public/img/salon%20coiffure.jpeg" alt="Image de fond" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic2">Deuxième photo d'accueil :</label>
