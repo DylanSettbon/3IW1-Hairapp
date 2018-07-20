@@ -75,14 +75,14 @@ class Validator
         return $errorsMsg;
     }
 
-    public static function isUnique($form, $params)
+    public static function isUnique($form, $params, $userid)
     {
         $errorsMsg = [];
 
         foreach ($form["input"] as $name => $config) {
 
             if( $config["type"] == "email" ){
-                if( !self::isUniqueEmail( $params[$name] ) ){
+                if( !self::isUniqueEmail( $params[$name], $userid) ){
                     $errorsMsg[] = "Email deja existant";
                 }
             }
@@ -94,7 +94,7 @@ class Validator
             } 
 
             if( $config["type"] == "tel" ){
-                if( !self::isUniqueTel( $params[$name] ) ){
+                if( !self::isUniqueTel( $params[$name], $userid ) ){
                     $errorsMsg[] = "Telephone deja existant";
                 }
             } 
@@ -113,29 +113,31 @@ class Validator
         return false;
     }
 
-    public static function isUniqueEmail( $email ){
+    public static function isUniqueEmail( $email, $iduser ){
         $users = new User();
         $users = $users->getAllBy(["email" => $email], ["id, email, status"], 2);
         foreach ($users as $user) {
-        if ($user->getStatus() != '-1')
+        if ($user->getStatus() != '-1' && $user->getId() != $iduser )
             return false;
         }
         return true;
     }
 
-    public static function isUniqueTel( $tel ){
+    public static function isUniqueTel( $tel, $iduser ){
         $users = new User();
         $users = $users->getAllBy(["tel" => $tel], ["id, tel, status"], 2);
+
         foreach ($users as $user) {
-        if ( $user->getStatus() != '-1')
-            return false;
+            if ( $user->getStatus() != '-1' && $user->getId() != $iduser ){
+                return false;
+            }
         }
         return true;
     }
 
     public static function isUniqueCategory( $categorie ){
         $cat = new Category();
-        $cat = $cat->getAllBy(["description" => $categorie], ["id, description, status, id_CategoryType"], 2);
+        $cat = $cat->getAllBy(["description_category" => $categorie], ["id_category, description_category, status_category, id_CategoryType"], 2);
         foreach ($cat as $category) {
         if ( $category->getStatus() != '-1' && $category->getIdCategoryType()==1)
             return false;
@@ -252,7 +254,7 @@ class Validator
         if(!isset($_POST['package'])){
             $errors[] = 'Aucun forfait selectioné';
         }
-        if(!isset($_POST['cbHeure']) && !isset($_POST['appointmentHour'])){
+        if(!isset($_POST['selectHour']) && !isset($_POST['cbHeure'])){
             $errors[] = 'Aucune horaires selectionée';
         }
         else{
@@ -266,11 +268,11 @@ class Validator
         }
 
         if(empty($errors)){
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['selectHour'], 'id_Hairdresser' => $_POST['hairdresser'],'planned' => 1]) > 0) {
                 $errors[] = 'Ce creneau horaire n\'est pas disponible';
             }
 
-            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' => isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['appointmentHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
+            if ($appointment->countTable('Appointment', ['dateAppointment' => $date, 'hourAppointment' =>isset($_POST['cbHeure'])?$_POST['cbHeure']:$_POST['selectHour'], 'id_User' => $_SESSION['id'],'planned' => 1]) > 0) {
                 $errors[] = 'Vous avez déja un rendez-vous pour cette date et ce créneau horaire';
             }
 

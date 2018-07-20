@@ -47,7 +47,6 @@ function deletePackage(description){
             for(var i=0; i< allIdToDelete.length;i++){
                 $("[class=tdPackage][id="+allIdToDelete[i]+"]").remove()
             }
-            console.log(response)
         }});
 }
 

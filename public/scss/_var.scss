@@ -396,7 +396,6 @@ $textHome: #ffffff;
     display: inline-block;
     width: 80px;
     height: 80px;
-    background-image: url("../img/hommecoiffure.jpg");
     background-size: cover;
     border-radius: 12px;
     opacity: 0.5;
@@ -511,6 +510,7 @@ $textHome: #ffffff;
   #body-art {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
+  
     //object-fit: cover;
     //background-repeat: no-repeat;
   }
@@ -537,47 +537,6 @@ $textHome: #ffffff;
     padding: 0;
     margin: 0 0 15px 0;
     width:100%;
-  }
-
-  input[type="checkbox"][id^="art"] {
-    display: none;
-  }
-
-  input[type="checkbox"][id^="art"] + label::before {
-    content: "";
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    background-image: url($imgArt1);
-    background-size: cover;
-    border-radius: 12px;
-  }
-
-  #artTous + label::before {
-    background-image:linear-gradient(to top, #696969, rgba(219, 219, 219, 0));
-  }
-
-  label[for="artTous"]{
-    white-space: nowrap; /* interdiction de passer à la ligne */
-  }
-
-  label[for="artTous"] span{
-    font-size:20px;
-  }
-
-
-  input[type="checkbox"][id^="art"] + label::before {
-    opacity: 0.5;
-  }
-
-  input[type="checkbox"][id^="art"]:checked + label::before {
-    border: solid black 2px;
-    font-size: 10px;
-    opacity: 1;
-  }
-
-  label[for^="art"] {
-    position: relative;
   }
 
   section {
@@ -616,9 +575,7 @@ $textHome: #ffffff;
     border-radius: 0 0 12px 12px;
   }
 
-  #choix-art li, #selection-date li {
-    margin: 0 8px 5px 8px;
-  }
+  
 
    .liste-art li {
     display: inline-block;

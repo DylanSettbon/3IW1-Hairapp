@@ -36,6 +36,30 @@
     </main>
 </body>
 
+<script src='<?php echo DIRNAME ."public/ckeditor/ckeditor.js"; ?> '></script>
+<script type="text/javascript">
+    CKEDITOR.replaceAll( 'ckeditor', {
+            language: 'fr',
+            bodyId: "contentPage",
+            contentsCss: 'public/css/style.css',
+            toolbarGroups: [
+                { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+                { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+                { name: 'links' },
+                { name: 'insert' },
+                { name: 'forms' },
+                { name: 'tools' },
+                { name: 'document',       groups: [ 'mode', 'document', 'doctools' ] },
+                { name: 'others' },
+                '/',
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+                { name: 'styles' },
+                { name: 'colors' },
+                { name: 'about' }
+            ]
+        });
+</script>
 
 <?php
     include "templates/footer.tpl.php";

@@ -96,6 +96,7 @@
             >
                 <?php echo $vars['article'][$name]; ?>
             </textarea>
+            &nbsp
             <?php if( isset( $_POST[$name] ) ): ?>
                 <?php echo "value=".$_POST[$name]; ?>
             <?php endif; ?>

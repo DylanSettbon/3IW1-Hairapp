@@ -13,8 +13,9 @@
                            <?php
 
                             $this->addModal( "addUserForm", $config, [], $options ); ?>
-                            <ul class="errors">
+                            
                     <?php if( isset( $errors ) ): ?>
+                        <ul class="errors">
                         <?php foreach ( $errors as $error ): ?>
                             <li>
                                 <div class="div-errors danger">
@@ -23,20 +24,10 @@
 
                             </li>
                         <?php endforeach; ?>
+                        </ul>
                     <?php endif; ?>
-                </ul>
-                <ul class="errors">
-                    <?php if( isset( $errorsUnique) ): ?>
-                        <?php foreach ( $errorsUnique as $error ): ?>
-                            <li>
-                                <div class="div-errors danger">
-                                    <p><strong> Warning ! </strong><?php echo $error;?></p>
-                                </div>
-
-                            </li>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </ul>
+                
+                
                         </div>
                     </div>
                 </div>

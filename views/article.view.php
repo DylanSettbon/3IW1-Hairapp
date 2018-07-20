@@ -2,7 +2,9 @@
   <main id="main-forfait" class="col-s-11 col-l-8">
         <div class="row">
             <div>
-                <h2 style='margin: 0;'><?php echo $article->getDateParution();?> </h2>
+                <h4 style='margin: 0;'>
+                  Publié le <?php echo substr($article->getDateParution(), 8).' '.$month[substr($article->getDateParution(), 5, 2)].' '.substr($article->getDateParution(), 0,4); ?>  
+                </h4>
             </div>
             <div style="width: 100%;">
                 <h1 id="titre-article" class="col-l-4"><?php echo $article->getName();?></h1>
@@ -10,10 +12,14 @@
         </div>
     <div class="col-s-12 col-l-12 partie-droite">
       <div class="categorie1 container">
-        <?php if($article->getImage()!=null): ?>
-              <img class='img-art' src='<?php echo DIRNAME. $article->getImage();?>' style='width:25%; height:25% ;display: block;
+        <?php if( !empty( $article->getImage() ) ): ?>
+                     <img class='img-art' src='<?php echo DIRNAME. $article->getImage();?>' style='width:25%; height:25% ;display: block;
                 margin-left: auto;
                 margin-right: auto; min-width: 200px'>
+                  <?php else: ?>
+                      <img src='/public/img/barber.jpg' style='width:25%; height:25% ;display: block;
+                margin-left: auto;
+                margin-right: auto; min-width: 200px; margin-top:10px;'>
         <?php endif; ?>
         <p><?php echo $article->getDescription();?></p>
             <hr class="col-s-12">

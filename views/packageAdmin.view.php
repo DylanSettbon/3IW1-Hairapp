@@ -126,6 +126,7 @@ include "templates/sidebar.view.php";
 
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <script type="text/javascript" src="<?php echo DIRNAME."public/js/packageAdmin.js" ?> "></script>
+    <script type="text/javascript" src="<?php echo DIRNAME."public/js/searchBar.js" ?> "></script>
 
 
     </main>

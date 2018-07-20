@@ -145,7 +145,7 @@ class Message extends BaseSql {
                 "message" =>[
                     "type"=>"textarea",
                     "placeholder" => 'Message',
-                    "class"=>"input input_sign-in",
+                    "class"=>"input input_sign-in ckeditor",
                     "rows" => "4",
                     "cols" => "40",
                     "maxString" => 2000,
