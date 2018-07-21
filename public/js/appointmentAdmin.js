@@ -5,7 +5,8 @@ $(document).ready(function() {
     showMonths(cptMonth)
     year = $('#annee').find(":selected").val();
     month = $('#mois').find(":selected").val()
-    showDays(daysInMonth(month,year),date.getDate())
+    console.log(date.getMonth() +1)
+    showDays(daysInMonth(month,year),date.getMonth() +1 == month ?date.getDate():1)
 
 
     $("#annee").change(function(event){

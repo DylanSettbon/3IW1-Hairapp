@@ -49,8 +49,10 @@ include "templates/sidebar.view.php";
                         <td><?php echo Security::setHtmlEntitiesForData($appointment->getIdUser()); ?></td>
                         <td><?php echo Security::setHtmlEntitiesForData($appointment->getIdHairdresser()); ?></td>
                         <td><?php echo Security::setHtmlEntitiesForData($appointment->getIdPackage()); ?></td>
-                        <td><a id='modify' href="/admin/updateAppointment/<?php echo $appointment->getId() ?>" class='buttonUserModify'>Modifier</a></td>
-                        <td><a id='delete' href="/admin/deleteAppointment/<?php echo $appointment->getId() ?>" class='buttonUserDelete'>Supprimer</a></td>
+                        <?php if($filter != 'past'): ?>
+                            <td><a id='modify' href="/admin/updateAppointment/<?php echo $appointment->getId() ?>" class='buttonUserModify'>Modifier</a></td>
+                            <td><a id='delete' href="/admin/deleteAppointment/<?php echo $appointment->getId() ?>" class='buttonUserDelete'>Supprimer</a></td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

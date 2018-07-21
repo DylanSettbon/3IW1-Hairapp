@@ -318,6 +318,11 @@ class AdminController{
                     }
                 }
             }
+            else{
+                if ($appointment->getDateAppointment() == $date && $appointment->getHourAppointment() < $hour){
+                    unset($appointments[$key]);
+                }
+            }
         }
         $appointments = array_values($appointments);
 
