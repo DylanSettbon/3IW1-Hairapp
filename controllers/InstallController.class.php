@@ -29,7 +29,12 @@ class InstallController{
 
     public function save( $params ){
 
+        $install = new Install();
+
         $view = new Views( 'install', 'install_header');
+        $form = $install->configForm();
+
+        $view->assign( "config", $form);
         $view->assign("current", 'install' );
         if( !empty( $params['POST'] ) ){
             $view->assign("loading", true );
@@ -45,7 +50,7 @@ class InstallController{
          * 6) modifier le conf.inc.php et ajouter les globales pour les horaires du salon si elles n'existent pas ✓
          */
 
-        $install = new Install();
+
 
 
         $form = $install->configForm();
@@ -67,16 +72,21 @@ class InstallController{
             {
                 $params['POST']['logo'] = $name.$file_name;
             }
-            if(move_uploaded_file($_FILES['logo']['tmp_name'], $name.$favicon)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            else //Sinon (la fonction renvoie FALSE).
+            {
+
+                $errors[] = Validator::file_upload_error_message($_FILES['logo']['error']);
+            }
+
+            if(move_uploaded_file($_FILES['favicon']['tmp_name'], $name.$favicon)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
             {
                 //$params['POST']['logo'] = $name.$file_name;
             }
             else //Sinon (la fonction renvoie FALSE).
             {
-                //echo "An error occured: no file uploaded";
-                //echo self::file_upload_error_message($_FILES['picture']['error']);
-                //echo 'Echec de l\'upload !';
-                //print_r($_FILES);
+
+                $errors[] = Validator::file_upload_error_message($_FILES['favicon']['error']);
+
             }
         }
 

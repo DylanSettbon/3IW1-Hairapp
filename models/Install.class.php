@@ -219,6 +219,12 @@ class Install extends BaseSql {
                             'id' => 'logo',
                             "placeholder" => "Logo du site"
                         ],
+                        "favicon" => [
+                            "type" => 'file',
+                            "class"=>"input input_sign-in",
+                            'id' => 'favicon',
+                            "placeholder" => "Favicon ( utilisé dans les onglets )"
+                        ],
 
                         "facebook" => [
                             "type" => "text",
