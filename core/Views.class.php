@@ -57,18 +57,11 @@ class Views
             [
                 "status_configuration" => 1
             ],
-            [
-                "logo, name, facebook_link, twitter_link, instagram_link, pinterest_link"
-            ], 3
+            null, 3
         );
 
         if( !empty( $logo ) ){
-            $this->assign("logo", $logo[0]->getLogo() );
-            $this->assign("facebook", $logo[0]->getFacebookLink() );
-            $this->assign("twitter", $logo[0]->getTwitterLink() );
-            $this->assign("instagram", $logo[0]->getInstagramLink() );
-            $this->assign("pinterest", $logo[0]->getPinterestLink() );
-            $this->assign("title", $logo[0]->getName() );
+            $this->assign("configuration", $logo[0] );
         }
 
         foreach ( $vues as $vue ) {

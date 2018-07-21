@@ -28,8 +28,8 @@
     <link rel='stylesheet' type='text/css' href="<?php echo DIRNAME;?>public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="<?php echo DIRNAME;?>public/img/logo/favicon.ico" />
-    <?php if( !empty( $title ) ): ?>
-        <title><?php echo $title; ?></title>
+    <?php if( !empty( $configuration->getName() ) ): ?>
+        <title><?php echo $configuration->getName(); ?></title>
     <?php else: ?>
         <title>Hair'App</title>
     <?php endif; ?>
@@ -48,17 +48,17 @@
 
           <div>
               <a href='<?php echo DIRNAME;?>home/getHome'>
-                  <?php if( !empty( $logo ) ): ?>
-                      <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+                  <?php if( !empty( $configuration->getLogo() ) ): ?>
+                      <img src="<?php echo DIRNAME.$configuration->getLogo();?>" alt="logo" class="logo">
                   <?php endif; ?>
               </a>
           </div>
-          <?php if( !empty( $title ) ): ?>
+          <?php if( !empty( $configuration->getName() ) ): ?>
               <div style="display: inline-block; margin: 18px 10px;">
                   <a href='<?php echo DIRNAME;?>home/getHome' style="color: #FFF;
     font-weight: 400;
     padding: 10px;
-    text-decoration: none;"><?php echo $title; ?></a>
+    text-decoration: none;"><?php echo $configuration->getName(); ?></a>
               </div>
 
           <?php endif; ?>

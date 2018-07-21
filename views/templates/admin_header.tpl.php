@@ -9,8 +9,8 @@
     <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <script type="text/javascript" src="<?php echo DIRNAME."public/js/index.js";?>"></script>
     <link rel="icon" href="<?php echo DIRNAME;?>public/img/logo/favicon.ico" />
-    <?php if( !empty( $title ) ): ?>
-        <title><?php echo $title; ?></title>
+    <?php if( !empty( $configuration->getName() ) ): ?>
+        <title><?php echo $configuration->getName(); ?></title>
     <?php else: ?>
         <title>Hair'App</title>
     <?php endif; ?>
@@ -32,18 +32,18 @@
               <div class='logo'>
 
                   <a href='<?php echo DIRNAME;?>admin/getAdmin' style="padding: 0;">
-                      <?php if( isset( $logo ) ): ?>
-                          <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+                      <?php if( !empty( $configuration->getLogo() ) ): ?>
+                          <img src="<?php echo DIRNAME.$configuration->getLogo();?>" alt="logo" class="logo">
                       <?php endif; ?>
                   </a>
 
               </div>
-              <?php if( !empty( $title ) ): ?>
+              <?php if( !empty( $configuration->getName() ) ): ?>
                   <div style="display: inline-block; margin: 10px 10px;">
                       <a href='<?php echo DIRNAME;?>admin/getAdmin' style="color: #FFF;
     font-weight: 400;
     padding: 10px;
-    text-decoration: none;"><?php echo $title; ?></a>
+    text-decoration: none;"><?php echo $configuration->getName(); ?></a>
                   </div>
 
               <?php endif; ?>

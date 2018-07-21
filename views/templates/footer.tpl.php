@@ -13,21 +13,23 @@
             <p>©Hair'App</p>
         </div>
         <div class="col-l-6 social">
-            <?php if( isset( $facebook ) ): ?>
-                <a href="<?php echo $facebook;?>" target="_blank" class="fa fa-facebook"></a>
+            <?php if( isset( $configuration ) ): ?>
+                <?php if( !empty( $configuration->getFacebookLink() ) ): ?>
+                    <a href="<?php echo $configuration->getFacebookLink();?>" target="_blank" class="fa fa-facebook"></a>
 
-            <?php endif; ?>
-            <?php if( isset( $twitter ) ): ?>
-                <a href="<?php echo $twitter;?>" target="_blank" class="fa fa-twitter"></a>
+                <?php endif; ?>
+                <?php if( !empty( $configuration->getTwitterLink() ) ): ?>
+                    <a href="<?php echo $configuration->getTwitterLink() ;?>" target="_blank" class="fa fa-twitter"></a>
 
-            <?php endif; ?>
-            <?php if( isset( $instagram ) ): ?>
-                <a href="<?php echo $instagram;?>" target="_blank" class="fa fa-instagram"></a>
+                <?php endif; ?>
+                <?php if( !empty( $configuration->getInstagramLink() ) ): ?>
+                    <a href="<?php echo $configuration->getInstagramLink() ;?>" target="_blank" class="fa fa-instagram"></a>
 
-            <?php endif; ?>
-            <?php if( isset( $pinterest ) ): ?>
-                <a href="<?php echo $pinterest;?>" target="_blank" class="fa fa-pinterest"></a>
+                <?php endif; ?>
+                <?php if( !empty( $configuration->getPinterestLink() ) ): ?>
+                    <a href="<?php echo $configuration->getPinterestLink();?>" target="_blank" class="fa fa-pinterest"></a>
 
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>

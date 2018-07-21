@@ -242,7 +242,7 @@ function chooseTemplate( template ) {
     CKEDITOR.replaceAll( 'ckeditor', {
         language: 'fr',
         bodyId: "contentPage",
-        contentsCss: '../public/css/style.css',
+        contentsCss: '../css/style.css',
         toolbarGroups: [
             { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
             { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },

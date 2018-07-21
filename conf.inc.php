@@ -9,7 +9,7 @@
 
 define("DBUSER","root");
 define("DBHOST","localhost");
-define('DBNAME','belhair');
+define('DBNAME','La_Bottega_Del_Coiffeur');
 define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
@@ -22,6 +22,6 @@ define("PICTURES_DIR", DIRNAME."public/img/" );
 $list_of_extensions = ['.png', '.gif', '.jpg', '.jpeg'];
 
 define('OPENING_HOUR','09:30');
-define('CLOSING_HOUR','17:30');
+define('CLOSING_HOUR','18:30');
 define('DURATION','00:30');
 

@@ -78,7 +78,4 @@ include "templates/sidebar.view.php";
 
   </main>
  <script type="text/javascript" src="<?php echo DIRNAME . "public/js/searchBar.js" ; ?> "></script>
-<?php
 
-include "templates/footer.tpl.php";
-?>

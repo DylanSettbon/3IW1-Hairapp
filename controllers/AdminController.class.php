@@ -785,7 +785,7 @@ class AdminController{
         if( !Security::checkTelExist( $_POST['tel'] ) ){
             $errors[] = "Ce numéro est déjà utilisé.";
         }
-
+//var_dump( $user ); die;
         for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')-1; $i != 10; $x = rand(0,$z), $s .= $a{$x}, $i++);
 
         if (empty($errors) ){
@@ -1078,20 +1078,12 @@ class AdminController{
         // le $_FILES['picture'] il faut remplacer le picture par ton name de ton input
 
         if( !empty( $_FILES['picture']['name'] ) ){
+
             $name = "public/img/a_p/"; // changer le répertoire
             $file_name = basename($_FILES['picture']['name']);
             $size = $_FILES['picture']['size'];
             $extension = strrchr($_FILES['picture']['name'], '.');
 
-        
-                }
-//
-//            if( is_uploaded_file( $_FILES['picture']['tmp_name'] )){
-//                //echo "Upload OK<br>";
-//            }
-//            if( !is_dir( $name ) ){
-//                echo "Naaaah : " . $name;
-//            }
 
             $file_name = strtr($file_name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
             if(move_uploaded_file($_FILES['picture']['tmp_name'], $name.$file_name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
@@ -1107,6 +1099,8 @@ class AdminController{
                 //echo 'Echec de l\'upload !';
                 //print_r($_FILES);
             }
+
+        }
         
         //$article->setImage($_POST['picture']);
         $form = $article->formArticle();
@@ -1327,9 +1321,12 @@ class AdminController{
             $article = new Article();
             $articles = $article->select("article ORDER BY dateparution DESC");
 
-            $idArticle = $_GET['article'];
+            if( isset( $_GET['article'] ) ){
+                $idArticle = $_GET['article'];
+            }
 
-            if($idArticle){
+
+            if( isset ( $idArticle ) ){
                 $comments = $comment->select("comment WHERE id_Article = '". $idArticle ."'ORDER BY date DESC");
             }else{
                $comments = $comment->select("comment ORDER BY date DESC");

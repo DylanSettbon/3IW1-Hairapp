@@ -3,7 +3,7 @@
     <div class="row slideshow-container">
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Hairapp" src="../public/img/fushimi.jpeg" style="width:100%">
+            <img class="contain-img" alt="Hairapp" src="../public/img/barber1.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Voir les forfaits" src="../public/img/cerisiers.jpeg" style="width:100%">
+            <img class="contain-img" alt="Voir les forfaits" src="../public/img/barber2.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Prendre rendez-vous" src="../public/img/temple.jpeg" style="width:100%">
+            <img class="contain-img" alt="Prendre rendez-vous" src="../public/img/barber3.jpg" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>

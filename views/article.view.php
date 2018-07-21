@@ -1,5 +1,5 @@
 <body id="body-rdv">
-  <main id="main-forfait" class="col-s-11 col-l-8">
+  <main id="main-forfait" class="col-s-11 col-l-8" style="margin-bottom: 80px;">
         <div class="row">
             <div>
                 <h4 style='margin: 0;'>
@@ -60,8 +60,7 @@
 
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
 <script src="<?php echo DIRNAME ."public/js/index.js"; ?>"></script>
-<?php include "templates/footer.tpl.php"; ?>
-</html>
+
 
 
 

@@ -13,8 +13,8 @@
     <header class='header'>
         <div class='logo'>
             <a href='<?php echo DIRNAME;?>admin/getAdmin'>
-                <?php if( isset( $logo ) ): ?>
-                    <img src="<?php echo DIRNAME.$logo;?>" alt="logo" class="logo">
+                <?php if( !empty( $configuration->getLogo() ) ): ?>
+                    <img src="<?php echo DIRNAME.$configuration->getLogo();?>" alt="logo" class="logo">
                 <?php endif; ?>
             </a>
         </div>

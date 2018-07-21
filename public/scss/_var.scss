@@ -391,8 +391,9 @@ $textHome: #ffffff;
   #body-rdv {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
-    //object-fit: cover;
-    //background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
   #main-rdv {
@@ -542,9 +543,9 @@ $textHome: #ffffff;
   #body-art {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
-  
-    //object-fit: cover;
-    //background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
   #main-art {

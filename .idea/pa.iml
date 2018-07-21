@@ -27,5 +27,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Chart" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
   </component>
 </module>

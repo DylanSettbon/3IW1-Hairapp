@@ -298,7 +298,10 @@ h3 {
 
 /* RENDEZ VOUS*/
 #body-rdv {
-  background-image: url("../img/salon coiffure.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; }
 
 #main-rdv {
   background-color: white;
@@ -457,7 +460,10 @@ section {
     width: 52%; } }
 
 #body-art {
-  background-image: url("../img/salon coiffure.jpeg"); }
+  background-image: url("../img/salon coiffure.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; }
 
 #main-art {
   background-color: white;

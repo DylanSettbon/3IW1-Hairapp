@@ -29,9 +29,9 @@ INSERT INTO package (description, price, duration, id_User, id_Category, status)
 
 INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',1,3,1, 'DATE');
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',2,5,1, 'DATE');
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',6,2,1, 'DATE');
 
-INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',1,3,1, 'DATE');
+INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',6,3,1, 'DATE');
 
 INSERT INTO appointment(dateAppointment,hourAppointment,id_user,id_Hairdresser,id_Package, took) VALUES ('DAY_RDV','HOUR_RDV',4,5,1, 'DATE');
 
