@@ -228,6 +228,7 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
+        //var_dump( $sql_params ); die;
         $this->update($sql_upd, $sql_params);
     }
 

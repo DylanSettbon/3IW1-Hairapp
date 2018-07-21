@@ -73,7 +73,7 @@ class InstallController{
             }
             else //Sinon (la fonction renvoie FALSE).
             {
-                echo "An error occured: no file uploaded";
+                //echo "An error occured: no file uploaded";
                 //echo self::file_upload_error_message($_FILES['picture']['error']);
                 //echo 'Echec de l\'upload !';
                 //print_r($_FILES);

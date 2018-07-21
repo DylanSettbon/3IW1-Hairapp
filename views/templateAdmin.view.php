@@ -23,7 +23,7 @@ include "templates/sidebar.view.php";
                 <p>Première photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureFirstChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/barber1.jpg" alt="Image d'accueil 1" width="300" height="200">
+                        <img src="<?php echo DIRNAME . $pic_slideshow['nFirst']; ?>" alt="Image d'accueil 1" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic1">Première photo d'accueil :</label>
@@ -40,7 +40,7 @@ include "templates/sidebar.view.php";
                 <p>Deuxième photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureSecondChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/barber2.jpg" alt="Image d'accueil 2" width="300" height="200">
+                        <img src="<?php echo DIRNAME . $pic_slideshow['nSecond']; ?>" alt="Image d'accueil 2" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic2">Deuxième photo d'accueil :</label>
@@ -57,7 +57,7 @@ include "templates/sidebar.view.php";
                 <p>Troisième photo actuelle du caroussel d'accueil : </p>
                 <form method="post" action="<?php echo DIRNAME;?>admin/pictureThirdChange" enctype="multipart/form-data">
                     <div>
-                        <img src="../public/img/barber3.jpg" alt="Image d'accueil 3" width="300" height="200">
+                        <img src="<?php echo DIRNAME . $pic_slideshow['nThird']; ?>" alt="Image d'accueil 3" width="300" height="200">
                     </div><br>
                     <div>
                         <label for="homePic3">Troisième photo d'accueil :</label>

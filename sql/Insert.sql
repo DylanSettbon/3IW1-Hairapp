@@ -8,6 +8,10 @@ INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, rece
 
 INSERT INTO user( firstname, lastname, email, pwd, token, tel, changetopwd, receivePromOffer, status, dateInserted, dateUpdated, lastConnection, picture )VALUES ('Guillaume','Delamare','sm@hotmail.fr','GENERATE_PWD','pffd177e9d',null, 0, 0, 1, 'DATE', 'DATE', null, null );
 
+INSERT INTO categorytype(type)
+VALUES  ('Article'),
+  ('Produits'),
+  ('Forfaits');
 
 INSERT INTO category (description_category, id_user, id_CategoryType, status_category) VALUES
   ('News', 1, 1, 1),('Promotion', 1, 1, 1),('Produits', 1, 1, 1);

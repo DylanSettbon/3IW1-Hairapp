@@ -182,7 +182,7 @@ CREATE TABLE theme(
 CREATE TABLE configuration(
         id_config int(11) NOT NULL AUTO_INCREMENT,
         logo varchar(100) NOT NULL,
-        name VARCHAR(20) NOT NULL,
+        name VARCHAR(50) NOT NULL,
         email_address varchar(150) DEFAULT NULL,
         email_pwd varchar(60) DEFAULT NULL,
         postal_address varchar(255) DEFAULT NULL,

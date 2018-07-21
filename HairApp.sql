@@ -212,7 +212,4 @@ ALTER TABLE package ADD CONSTRAINT FK_Package_id_user FOREIGN KEY (id_user) REFE
 ALTER TABLE package ADD CONSTRAINT FK_Package_id_Category FOREIGN KEY (id_Category) REFERENCES category(id_category);
 ALTER TABLE theme ADD CONSTRAINT FK_Theme_id_user FOREIGN KEY (id_user) REFERENCES user(id);
 
-INSERT INTO categoryType(type)
-VALUES  ('Article'),
-		    ('Produits'),
-		    ('Forfaits');
+

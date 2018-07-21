@@ -1465,6 +1465,19 @@ class AdminController{
         //templating
         public function getTemplateAdmin(){
             $v = new Views( 'templateAdmin', "admin_header" );
+
+            $picture = new Color();
+
+            $pictures = $picture->getAllBy( null, ["name, code"], 3 );
+
+            foreach ( $pictures as $pictureHome ){
+                if( $pictureHome->getCode() == "nFirst" || $pictureHome->getCode() == "nSecond" || $pictureHome->getCode() == "nThird" ){
+                    $pictureToSendHome[$pictureHome->getCode()] = $pictureHome->getName();
+                }
+            }
+
+            $v->assign("pic_slideshow", $pictureToSendHome );
+
             $v->assign("current", 'content');
             $v->assign("current_sidebar", 'template');
         }
@@ -1484,24 +1497,11 @@ class AdminController{
                 if(move_uploaded_file($_FILES['newFirstPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
                 {
                     $picture = new Color();
-                    $current = $picture->getUpdate("code LIKE 'nFirst'", 2, "name");
-                    $currentPicture = $current[0]->getName();
-                    $newPicture = $fileName;
-                    $change = "../public/img/". $currentPicture;
-                    $to = "../public/img/". $newPicture;
+                    $current = $picture->getAllBy(["code" => "nFirst"], ["id, name"], 3);
+                    $change = "public/img/". $fileName;
 
 
-                    $path = './views/templateAdmin.view.php';
-                    $content = file_get_contents($path);
-                    $contentReplace = str_replace($change, $to, $content);
-                    file_put_contents($path, $contentReplace);
-
-                    $secondPath = './views/index.view.php';
-                    $secondContent = file_get_contents($secondPath);
-                    $secondContentReplace = str_replace($change, $to, $secondContent);
-                    file_put_contents($secondPath, $secondContentReplace);
-
-                    $picture->getUpdate("code LIKE 'nFirst'", 1, "name = '". $newPicture ."'");
+                    $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
                 }
             }
             $this->getTemplateAdmin();
@@ -1509,25 +1509,15 @@ class AdminController{
         public function pictureFirstStandard(){
             
             $picture = new Color();
-            $current = $picture->getUpdate("code LIKE 'nFirst'", 2, "name");
-            $currentPicture = $current[0]->getName();
+            $current = $picture->getAllBy(["code" => "nFirst"], ["id, name"], 3);
+
             
             $standard = $picture->getUpdate("code LIKE 'first'", 2, "name");
             $standardPicture = $standard[0]->getName();
-            $change = "../public/img/". $currentPicture;
-            $to = "../public/img/". $standardPicture;
+            $change = "public/img/". $standardPicture;
 
-            $path = './views/templateAdmin.view.php';
-            $content = file_get_contents($path);
-            $contentReplace = str_replace($change, $to, $content);
-            file_put_contents($path, $contentReplace);
+            $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
 
-            $secondPath = './views/index.view.php';
-            $secondContent = file_get_contents($secondPath);
-            $secondContentReplace = str_replace($change, $to, $secondContent);
-            file_put_contents($secondPath, $secondContentReplace);
-
-            $picture->getUpdate("code LIKE 'nFirst'", 1, "name = '". $standardPicture ."'");
             $this->getTemplateAdmin();
         }
 
@@ -1545,53 +1535,37 @@ class AdminController{
                 
                 if(move_uploaded_file($_FILES['newSecondPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
                 {
+
                     $picture = new Color();
-                    $current = $picture->getUpdate("code LIKE 'nSecond'", 2, "name");
-                    $currentPicture = $current[0]->getName();
-                    $newPicture = $fileName;
-                    $change = "../public/img/". $currentPicture;
-                    $to = "../public/img/". $newPicture;
+                    $current = $picture->getAllBy(["code" => "nSecond"], ["id, name"], 3);
+                    $change = "public/img/". $fileName;
 
+                    $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
 
-                    $path = './views/templateAdmin.view.php';
-                    $content = file_get_contents($path);
-                    $contentReplace = str_replace($change, $to, $content);
-                    file_put_contents($path, $contentReplace);
-
-                    $secondPath = './views/index.view.php';
-                    $secondContent = file_get_contents($secondPath);
-                    $secondContentReplace = str_replace($change, $to, $secondContent);
-                    file_put_contents($secondPath, $secondContentReplace);
-
-                    $picture->getUpdate("code LIKE 'nSecond'", 1, "name = '". $newPicture ."'");
                 }
             }
             $this->getTemplateAdmin();
         }
         public function pictureSecondStandard(){
-            
+
+            $picture = new Color();
+            $current = $picture->getAllBy(["code" => "nSecond"], ["id, name"], 3);
+
+
+            $standard = $picture->getUpdate("code LIKE 'second'", 2, "name");
+            $standardPicture = $standard[0]->getName();
+            $change = "public/img/". $standardPicture;
+
+            $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
+
+
             $picture = new Color();
             $current = $picture->getUpdate("code LIKE 'nSecond'", 2, "name");
             $currentPicture = $current[0]->getName();
-            
-            $standard = $picture->getUpdate("code LIKE 'second'", 2, "name");
-            $standardPicture = $standard[0]->getName();
-            $change = "../public/img/". $currentPicture;
-            $to = "../public/img/". $standardPicture;
 
-            $path = './views/templateAdmin.view.php';
-            $content = file_get_contents($path);
-            $contentReplace = str_replace($change, $to, $content);
-            file_put_contents($path, $contentReplace);
-
-            $secondPath = './views/index.view.php';
-            $secondContent = file_get_contents($secondPath);
-            $secondContentReplace = str_replace($change, $to, $secondContent);
-            file_put_contents($secondPath, $secondContentReplace);
-
-            $picture->getUpdate("code LIKE 'nSecond'", 1, "name = '". $standardPicture ."'");
             $this->getTemplateAdmin();
         }
+
         public function pictureThirdChange(){
             if (empty($_FILES['newThirdPicture']['name'])){
                 //Msg d'erreur ou autre
@@ -1607,50 +1581,26 @@ class AdminController{
                 if(move_uploaded_file($_FILES['newThirdPicture']['tmp_name'], $targetDir.$fileName)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
                 {
                     $picture = new Color();
-                    $current = $picture->getUpdate("code LIKE 'nThird'", 2, "name");
-                    $currentPicture = $current[0]->getName();
-                    $newPicture = $fileName;
-                    $change = "../public/img/". $currentPicture;
-                    $to = "../public/img/". $newPicture;
+                    $current = $picture->getAllBy(["code" => "nThird"], ["id, name"], 3);
+                    $change = "public/img/". $fileName;
 
-
-                    $path = './views/templateAdmin.view.php';
-                    $content = file_get_contents($path);
-                    $contentReplace = str_replace($change, $to, $content);
-                    file_put_contents($path, $contentReplace);
-
-                    $secondPath = './views/index.view.php';
-                    $secondContent = file_get_contents($secondPath);
-                    $secondContentReplace = str_replace($change, $to, $secondContent);
-                    file_put_contents($secondPath, $secondContentReplace);
-
-                    $picture->getUpdate("code LIKE 'nThird'", 1, "name = '". $newPicture ."'");
+                    $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
                 }
             }
             $this->getTemplateAdmin();
         }
         public function pictureThirdStandard(){
-            
+
             $picture = new Color();
-            $current = $picture->getUpdate("code LIKE 'nThird'", 2, "name");
-            $currentPicture = $current[0]->getName();
-            
+            $current = $picture->getAllBy(["code" => "nThird"], ["id, name"], 3);
+
+
             $standard = $picture->getUpdate("code LIKE 'third'", 2, "name");
             $standardPicture = $standard[0]->getName();
-            $change = "../public/img/". $currentPicture;
-            $to = "../public/img/". $standardPicture;
+            $change = "public/img/". $standardPicture;
 
-            $path = './views/templateAdmin.view.php';
-            $content = file_get_contents($path);
-            $contentReplace = str_replace($change, $to, $content);
-            file_put_contents($path, $contentReplace);
+            $picture->updateTable( ["name" => $change ], ['id' => $current[0]->getId() ] );
 
-            $secondPath = './views/index.view.php';
-            $secondContent = file_get_contents($secondPath);
-            $secondContentReplace = str_replace($change, $to, $secondContent);
-            file_put_contents($secondPath, $secondContentReplace);
-
-            $picture->getUpdate("code LIKE 'nThird'", 1, "name = '". $standardPicture ."'");
             $this->getTemplateAdmin();
         }
 
