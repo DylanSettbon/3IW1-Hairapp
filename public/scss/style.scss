@@ -159,7 +159,7 @@ div [class *= "col-"] {
   }
 
   .valider{
-    background-color:#2F80ED;
+    background-color:$button_color;
     color:white;
     margin-top: 30px;
     font-size: 16px;
@@ -191,7 +191,7 @@ div [class *= "col-"] {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 20px;
+    //padding-top: 20px;
     background-color: $main_color;
     margin-top: 0;
   }
@@ -254,7 +254,7 @@ div [class *= "col-"] {
   }
 
   #valider{
-    background-color:#2F80ED;
+    background-color:$button_color;
     color:white;
     margin-top: 30px;
     font-size: 16px;
@@ -288,7 +288,7 @@ div [class *= "col-"] {
     left: 0;
     margin-top: 0;
     overflow-x: hidden;
-    padding-top: 20px;
+    //padding-top: 20px;
     background-color: $main_color;
   }
 
@@ -468,7 +468,7 @@ text-align:center;}
   border-radius: 5px;
   padding: 10px 25px;
   color: white;
-  background-color: rgba(0, 156, 223,1);
+  background-color: $button_color;
   text-align: center;
   cursor: pointer;
 }
@@ -845,4 +845,7 @@ input[type="checkbox"][id="template4"] + label::before{
 }
 
 @include genericClass;
+
+@include install;
+
 @include dashboard;

@@ -18,7 +18,9 @@
     <header class='header'>
         <div class='container2'>
             <div class='logo'>
-                <a href='<?php echo DIRNAME;?>install/getInstall'>LOGO</a>
+                <a href='<?php echo DIRNAME;?>install/getInstall'>
+                    <img src="<?php echo DIRNAME."public/img/logo-last.png"; ?> " class="logo" alt="logo hairapp">
+                </a>
             </div>
 
             <div id="burger" class="toggleAnimated" onclick="toggleAnimated(this)">

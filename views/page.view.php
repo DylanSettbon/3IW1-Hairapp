@@ -17,6 +17,7 @@ foreach ( $navbar as $content ){
                 " . $content->getContent() . "
             
         </main>
+       
         ";
     }
 

@@ -71,7 +71,7 @@ $textHome: #ffffff;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-    margin-top: 20px;
+
   }
   .sidebar_buttons{
     text-align: center;
@@ -101,7 +101,7 @@ $textHome: #ffffff;
     border-radius:5px;
   }
 
-  .sidenav a{
+  .sidenav ul a{
     color: #FFF;
     display: inline-block;
     font-weight: 400;
@@ -128,7 +128,7 @@ $textHome: #ffffff;
   .header .logo {
     float: left;
     line-height: 1.9;
-    padding: 10px 0px;
+    max-height: 60px;
   }
   .header .logo a {
     color: #FFF;
@@ -154,7 +154,7 @@ $textHome: #ffffff;
 
   .nav-left {
     float: left;
-    margin-left: 100px;
+    //margin-left: 100px;
     padding: 0;
   }
 
@@ -263,7 +263,7 @@ $textHome: #ffffff;
       bottom: 0;
       position: relative;
       display: table-cell;
-      margin-top: 15px;
+      //margin-top: 15px;
       text-align: center;
     }
 
@@ -282,11 +282,43 @@ $textHome: #ffffff;
     bottom: 0;
     clear: left;
     left: 0;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: $main_color;
     color:white;
-    text-align: center;
+    text-align: right;
+  }
 
+  .social > .fa {
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 50px;
+    margin-left: 15px;
+  }
+
+  .social > .fa:hover {
+    opacity: 0.7;
+  }
+
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+
+  .fa-instagram {
+    background: #125688;
+    color: white;
+  }
+
+  .fa-pinterest {
+    background: #cb2027;
+    color: white;
+  }
+
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
   }
 }
 
@@ -329,7 +361,7 @@ $textHome: #ffffff;
   }
 
   .hairdresser2{
-    background-color: #2D9CDB;
+    background-color: $button_color;
   }
 
   .hairdresser3{
@@ -359,8 +391,9 @@ $textHome: #ffffff;
   #body-rdv {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
-    //object-fit: cover;
-    //background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
   #main-rdv {
@@ -510,9 +543,9 @@ $textHome: #ffffff;
   #body-art {
     //background-color: #FFFFFF;
     background-image: url("../img/salon coiffure.jpeg");
-  
-    //object-fit: cover;
-    //background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
   #main-art {
@@ -882,7 +915,7 @@ $textHome: #ffffff;
 
 
   #valider{
-    background-color:#2F80ED;
+    background-color:$button_color;
     color:white;
     margin-top: 30px;
     font-size: 16px;
@@ -1147,6 +1180,81 @@ $textHome: #ffffff;
   margin-bottom: 25px;
   color: #000000;
   text-align:center;
+}
+
+@mixin install{
+  #configForm {
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+  }
+
+  //input {
+  //  padding: 10px;
+  //  width: 100%;
+  //  border: 1px solid #aaaaaa;
+  //}
+
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+
+  button {
+    background-color: $button_color;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+    font-family: "Roboto";
+    font-size: 16px;
+    padding: 10px 25px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  #prevBtn {
+    background-color: #bbbbbb;
+  }
+
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: $button_color;
+  }
+
+
+  .content-on-image {
+
+    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 50px; /* Some padding */
+  }
 }
 
 @mixin dashboard{

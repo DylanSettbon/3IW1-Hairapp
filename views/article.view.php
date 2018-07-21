@@ -1,5 +1,5 @@
 <body id="body-rdv">
-  <main id="main-forfait" class="col-s-11 col-l-8">
+  <main id="main-forfait" class="col-s-11 col-l-8" style="margin-bottom: 80px;">
         <div class="row">
             <div>
                 <h4 style='margin: 0;'>
@@ -17,7 +17,7 @@
                 margin-left: auto;
                 margin-right: auto; margin-top:10px;'>
                   <?php else: ?>
-                      <img src='/public/img/barber.jpg' style='width:25%; height:25% ;display: block;
+                      <img src='<?php echo DIRNAME."public/img/barber.jpg";?>' style='width:25%; height:25% ;display: block;
                 margin-left: auto;
                 margin-right: auto; margin-top:10px;'>
         <?php endif; ?>
@@ -45,8 +45,9 @@
                 <?php endforeach;?>
               <?php endforeach;?>
 
-            <?php if(Security::isConnected()){
-             $this->addModal("com", $config, $errors, $comments);} ?>
+            <?php if(Security::isConnected()):
+             $this->addModal("com", $config, $errors, $comments);
+            endif;?>
 
           </div>
         <hr>
@@ -58,9 +59,8 @@
 </body>
 
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-<script src="../public/js/index.js"></script>
-<?php include "templates/footer.tpl.php"; ?>
-</html>
+<script src="<?php echo DIRNAME ."public/js/index.js"; ?>"></script>
+
 
 
 

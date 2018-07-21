@@ -13,10 +13,17 @@ class ArticleController  extends BaseSql {
         $v = new Views( "article", "header" );
         $v->assign("current", 'articleCategory');
         $article = new Article();
-        $comment = new Comment();
+
+        $comment =new Comment();
         $user=new User();
+        $errors = [];
+
         $cat=$params['URL'][0];
-        $comment->setIdUser($_SESSION['id']);
+
+        if( !empty( $_SESSION['id'] ) ){
+            $comment->setIdUser($_SESSION['id']);
+        }
+
         $comment->setIdArticle($cat);
         $form = $comment->configFormAdd();
 
@@ -36,6 +43,22 @@ class ArticleController  extends BaseSql {
                     "12" => 'Décembre'
                 );
 
+        if(!empty($params["POST"])){
+            $errors = Validator::validate($form, $params["POST"]);
+            if(empty($errors)){
+                $comment->setContent($params["POST"]["content"]);
+            }
+            $comment->save();
+        }
+
+        $comments =$comment->select("comment WHERE id_Article = '". $cat ."'");
+        $users=$user->select("user");
+        $v->assign("config",$form);
+        $v->assign("errors",$errors);
+        $v->assign("comments",$comments);
+        $v->assign("users", $users);
+
+#Voir sur internet pour recuperer hauter et largeur de l'image
 
         $v->assign( "article", $u[0] );
         $v->assign("month", $month);

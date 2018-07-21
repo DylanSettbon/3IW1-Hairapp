@@ -13,10 +13,10 @@ include "templates/sidebar.view.php";
     <article class="arriere_plan">
         <h1 class="packageAdmin-title">Gestion des rendez-vous</h1>
         <div class="row">
-            <a id='add' href="/admin/updateAppointment" class='buttonUserAdd' style="margin-bottom: 0px;">Ajouter un rendez-vous</a>
+            <a id='add' href="<?php echo DIRNAME . "admin/updateAppointment"; ?>" class='buttonUserAdd' style="margin-bottom: 0px;">Ajouter un rendez-vous</a>
         </div>
         <input id="search" class="input col-l-2" placeholder="Recherchez...">
-        <a id='getPastAppointment' href="/admin/getAppointmentAdmin/<?php echo $filter == 'past'? 'futur':'past'?>" class='buttonUserModify buttonSecondary row'>Afficher les rendez-vous <?php echo $filter == 'past'? 'à venir':'passé(s)'?></a>
+        <a id='getPastAppointment' href="<?php echo DIRNAME . "admin/getAppointmentAdmin/".$filter == 'past'? 'futur':'past'?>" class='buttonUserModify buttonSecondary row'>Afficher les rendez-vous <?php echo $filter == 'past'? 'à venir':'passé(s)'?></a>
         <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
             <div class="col-l-4">
                 <h2 class="center title">Gestion des rendez-vous</h2>
@@ -64,5 +64,5 @@ include "templates/sidebar.view.php";
 </div>
 </main>
 
-<script type="text/javascript" src="/public/js/searchBar.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME."public/js/searchBar.js" ;?>"></script>
 

@@ -11,9 +11,12 @@ class ContactController{
         $v->assign("config", $form);
         //var_dump($options);
         //option vide = 3 donc si different de 3 pas vide
-        if (count($options) != 3){
-            $v->assign("success", $options);
-        } 
+        if( $options != null ){
+            if (count($options) != 3){
+                $v->assign("success", $options['success']);
+            }
+        }
+
 
     }
 
@@ -30,6 +33,7 @@ class ContactController{
         $users = new User();
         $users = $users->getAllBy(["status" => 3], ["id, email, status"], 2);
         $i=0;
+        $params['success'] = "Votre message a bien été envoyé";
         foreach ($users as $user):
             $to[$i] = $user->getEmail();
             $i++;
@@ -44,7 +48,7 @@ class ContactController{
                 if(!$mail->Send()) {
 
                 } else {
-                    $this->getContact("Votre message a bien été envoyé");
+                    $this->getContact( $params );
                 }
 }
 }

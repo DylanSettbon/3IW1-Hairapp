@@ -10,7 +10,6 @@ session_start();
 
 require "conf.inc.php";
 
-require "core/BaseSql.class.php";
 
 function myAutoloader($class){
     if(file_exists("core/".$class.".class.php")){
@@ -43,17 +42,6 @@ if( $uri === 'home' ){
 
     $uriExploded = explode("/", $uri[0]);
 
-    $page = new Pages();
-
-    $createdPages = $page->getAllBy();
-
-    $urlCreated = [];
-
-    foreach ( $createdPages as $pages ){
-    $urlCreated[] = $pages->getUrl();
-
-    }
-
     $c = (empty($uriExploded[0]))?"index":$uriExploded[0];
     $a = (empty($uriExploded[1]))?"index":$uriExploded[1];
 
@@ -73,31 +61,106 @@ if( $uri === 'home' ){
         "GET"=>$_GET,
         "URL"=>$uriExploded
     );
-
     //echo $c; die;
+    if( INSTALLED == false ){
+        $c = "InstallController";
+        if( !empty( $params["POST"] ) ){
+            $a = "save";
+        }
+        else{
+            $a = "getInstall";
+        }
 
-    if( $c == 'AdminController' ) {
 
-        if (!Security::isConnected()) {
+        if (file_exists("controllers/" . $c . ".class.php")) {
+            include "controllers/" . $c . ".class.php";
+            if (class_exists($c)) {
 
-            //include "controllers/LoginController.class.php";
+                $objC = new $c();
 
-            //$objC = new LoginController();
-            //$objC->getLogin();
+                if (method_exists($objC, $a)) {
+                    $objC->$a($params);
+                } else {
+                    die("L'action " . $a . " n'existe pas");
+                }
+            } else {
+                die("Le controller " . $c . " n'existe pas");
+            }
+        }
+    }
+    else{
 
-            include "controllers/ErrorsController.class.php";
+        require "core/BaseSql.class.php";
+        $page = new Pages();
 
-            $objC = new ErrorsController();
-            $objC->get401();
+        $createdPages = $page->getAllBy();
 
-        } else {
-            if (!Security::isAdmin()) {
+        $urlCreated = [];
+
+        foreach ( $createdPages as $pages ){
+            $urlCreated[] = $pages->getUrl();
+
+        }
+
+        if( $c == 'AdminController' ) {
+
+            if (!Security::isConnected()) {
+
+                //include "controllers/LoginController.class.php";
+
+                //$objC = new LoginController();
+                //$objC->getLogin();
 
                 include "controllers/ErrorsController.class.php";
 
                 $objC = new ErrorsController();
-                $objC->get403();
-            } elseif (file_exists("controllers/" . $c . ".class.php")) {
+                $objC->get401();
+
+            } else {
+                if (!Security::isAdmin()) {
+
+                    include "controllers/ErrorsController.class.php";
+
+                    $objC = new ErrorsController();
+                    $objC->get403();
+                } elseif (file_exists("controllers/" . $c . ".class.php")) {
+                    include "controllers/" . $c . ".class.php";
+                    if (class_exists($c)) {
+
+                        $objC = new $c();
+
+                        if (method_exists($objC, $a)) {
+                            $objC->$a($params);
+                        } else {
+                            die("L'action " . $a . " n'existe pas");
+                        }
+                    } else {
+                        die("Le controller " . $c . " n'existe pas");
+                    }
+                } elseif (in_array($urlBase, $urlCreated)) {
+
+                    include "controllers/PageController.class.php";
+
+                    $params['URL'] = $urlBase;
+                    $objC = new Page();
+                    $objC->getPage($params);
+
+                } else {
+                    //die("Le fichier ".$c." n'existe pas");
+                    //header("HTTP/1.0 404 Not Found", true, 404);
+                    include "controllers/ErrorsController.class.php";
+
+                    $objC = new ErrorsController();
+                    $objC->get404();
+
+                    //$v = new Views( "errors/404", "header");
+                    //var_dump( $v);
+
+                }
+            }
+        }
+        else{
+            if (file_exists("controllers/" . $c . ".class.php")) {
                 include "controllers/" . $c . ".class.php";
                 if (class_exists($c)) {
 
@@ -133,39 +196,4 @@ if( $uri === 'home' ){
             }
         }
     }
-    else{
-        if (file_exists("controllers/" . $c . ".class.php")) {
-            include "controllers/" . $c . ".class.php";
-            if (class_exists($c)) {
 
-                $objC = new $c();
-
-                if (method_exists($objC, $a)) {
-                    $objC->$a($params);
-                } else {
-                    die("L'action " . $a . " n'existe pas");
-                }
-            } else {
-                die("Le controller " . $c . " n'existe pas");
-            }
-        } elseif (in_array($urlBase, $urlCreated)) {
-
-            include "controllers/PageController.class.php";
-
-            $params['URL'] = $urlBase;
-            $objC = new Page();
-            $objC->getPage($params);
-
-        } else {
-            //die("Le fichier ".$c." n'existe pas");
-            //header("HTTP/1.0 404 Not Found", true, 404);
-            include "controllers/ErrorsController.class.php";
-
-            $objC = new ErrorsController();
-            $objC->get404();
-
-            //$v = new Views( "errors/404", "header");
-            //var_dump( $v);
-
-        }
-}

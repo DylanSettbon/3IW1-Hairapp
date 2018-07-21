@@ -9,25 +9,19 @@
 
 define("DBUSER","root");
 define("DBHOST","localhost");
-define("DBNAME","HairApp");
+define('DBNAME','');
 define("DBPWD","root");
 define("DBPORT","3306");
 define("DBDRIVER","mysql");
-
-
-
-$initialisation = true;
-
-
+define('INSTALLED', false );
 define("DS", "/");
 $scriptName = (dirname($_SERVER["SCRIPT_NAME"]) == "/")?"":dirname($_SERVER["SCRIPT_NAME"]);
-
 define("DIRNAME", $scriptName.DS);
-
 define("PICTURES_DIR", DIRNAME."public/img/" );
 
 $list_of_extensions = ['.png', '.gif', '.jpg', '.jpeg'];
 
-define("OPENING_HOUR", '09:00');
-define("CLOSING_HOUR", '20:00' );
-define("DURATION",15);
+define('OPENING_HOUR','');
+define('CLOSING_HOUR','');
+define('DURATION','');
+

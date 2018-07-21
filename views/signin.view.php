@@ -13,22 +13,25 @@
 
                             <?php $this->addModal("form", $config ); ?>
 
-                            <?php if( isset( $errors ) ): ?>
-                                <ul class="errors">
-                                    <?php foreach ( $errors as $error ): ?>
-                                        <li>
-                                            <div class="div-errors danger">
-                                                <p><strong> Warning ! </strong><?php echo $error;?></p>
-                                            </div>
+                           <?php if( isset( $errors ) ): ?>
+                            <ul class="errors">
 
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
+                                <?php foreach ( $errors as $error ): ?>
+                                    <li>
+                                        <div class="div-errors danger">
+                                            <p><strong> Warning ! </strong><?php echo $error;?></p>
+                                        </div>
+
+                                    </li>
+                                <?php endforeach; ?>
+
+                            </ul>
                             <?php endif; ?>
+
                             <?php if( isset( $success ) ): ?>
-                                <ul class="errors col-l-12">
-                                   <li>
-                                        <div class="div-errors success col-l-12">
+                                <ul class="errors">
+                                    <li>
+                                        <div class="div-errors success">
                                             <p><strong> Success ! </strong><?php echo $success;?></p>
                                         </div>
 

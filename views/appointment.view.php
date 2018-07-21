@@ -5,8 +5,8 @@
     <div class="row">
         <h1 id="title-rdv" class="title col-l-10">Prendre rendez-vous</h1>
     </div>
-
-    <?php if (isset($data)):?>
+    <?php //var_dump( $data ); die; ?>
+    <?php if (!empty($data)):?>
         <?php foreach ($data as $d):?>
             <ul class="errors">
             <?php if(array_key_exists('errors',$data)): ?>
@@ -19,11 +19,11 @@
                 <?php endfor; ?>
 
             <?php else: ?>
-                <?php for ($i=0;$i<count($d);$i++):?>
+                <?php if(array_key_exists('success',$data) ):?>
                     <div class="div-errors success">
                         <p><?php echo $d;?></p>
                     </div>
-                <?php endfor; ?>
+                <?php endif; ?>
             <?php endif; ?>
             </ul>
         <?php endforeach;?>
@@ -97,7 +97,7 @@
 </main>
 </body>
 <script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<script type="text/javascript" src="../public/js/appointment.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME . "public/js/appointment.js"; ?>"></script>
 </html>
 
 

@@ -7,6 +7,8 @@ class Appointment extends BaseSql{
     private $id_Package;
     private $id_Hairdresser;
     private $planned;
+    private $firstname;
+    private $lastname;
     private $took;
 
     /**
@@ -182,14 +184,33 @@ class Appointment extends BaseSql{
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
          */
         //TO DO : ouverture salon
-        $opening = OPENING_HOUR;
-        $closing = CLOSING_HOUR;
+        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', OPENING_HOUR ) ){
+
+            $opening = str_replace( ':00', '', OPENING_HOUR);
+
+        }
+        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', OPENING_HOUR )  ){
+            $opening = str_replace( ':30', ':30', OPENING_HOUR);
+        }
+
+        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', CLOSING_HOUR ) ){
+
+            $closing = str_replace( ':00', '', CLOSING_HOUR);
+
+        }
+        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', CLOSING_HOUR )  ){
+            $closing = str_replace( ':30', ':30', CLOSING_HOUR);
+        }
         $timeRange = [];
         array_unshift($timeRange,$opening);
         $i = -1;
         $add = 0;
         //timeOut = temps proposé minimum pour un rendez-vous
-        $timeOut = DURATION;
+
+        //$timeOut = DURATION;
+        if ( preg_match( '#[0]{2}[:][1-5]{1}[5,0]{1}#', DURATION )  ){
+            $timeOut = (int)str_replace( '00:', '', DURATION);
+        }
         do {
             $add += $timeOut;
             //Remplacer par un temps moyen de rendez-vous
@@ -281,4 +302,54 @@ class Appointment extends BaseSql{
         $mail = new Mail($customerMail,'notifications.hairapp@gmail.com','Salon',$object,$body,null,null,true);
         $mail->send();
     }
+
+    /**
+     * @return null
+     */
+    public function getIdAppointment()
+    {
+        return $this->idAppointment;
+    }
+
+    /**
+     * @param null $idAppointment
+     */
+    public function setIdAppointment($idAppointment)
+    {
+        $this->idAppointment = $idAppointment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+
 }

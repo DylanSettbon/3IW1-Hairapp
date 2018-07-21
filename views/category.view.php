@@ -27,6 +27,7 @@
                         <?php if( !empty( $article->getImage() ) ): ?>
                            <img style="height: 250px; width: 100%;" src="<?php echo DIRNAME.$article->getImage();?>">
 
+
                         <?php else: ?>
                           <img style="height: 250px; width: 100%;" src="<?php echo DIRNAME . "public/img/barber.jpg";?>">
                       
@@ -37,9 +38,10 @@
                           <span>
                               <h3 class='titre-article'><?php echo $article->getName(); ?></h3>
                               <p class='content-art'>
-                                <img class='' src='/public/img/quote.svg'/><?php echo $article->getMiniDescription(); ?> </p>
+                                <img class='' src='<?php echo DIRNAME . "public/img/quote.svg";?>'/><?php echo $article->getMiniDescription(); ?> </p>
                           </span>
                           <a class='button-title' href="<?php echo DIRNAME; ?>article/getArticle/<?php echo $article->getId(); ?>">Voir plus...</a>
+
 
                       </div>
                      </div>   
@@ -60,5 +62,3 @@
     
   </main>
 </body>
-<?php include "templates/footer.tpl.php"; ?>
-</html>

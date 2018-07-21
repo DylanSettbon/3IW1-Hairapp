@@ -1,20 +1,24 @@
 {
   "name": "3iw1-coiffeur",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aide pour la rédaction des étapes du cahier des charges",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
     "node-sass": "^4.7.2"
   },
   "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "node-sass --watch public/scss -o public/css"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jeromebueno/3IW1-coiffeur.git"
   },
   "author": "",
-  "scripts": {
-    "watch": "node-sass --watch public/scss -o public/css"
-  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jeromebueno/3IW1-coiffeur/issues"

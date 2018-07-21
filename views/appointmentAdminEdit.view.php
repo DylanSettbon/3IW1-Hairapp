@@ -33,7 +33,7 @@
                 <div class="div-errors information">
                     <p><strong>Aucun utilisateur enregistrès</strong>
                         <br><br>Pour pouvoir enregistrer un rendez-vous, il vous faut avoir des utilisateurs enregistrés.
-                        <br>Vous pouvez en enregistrer depuis <a href="/admin/getUserAdmin">ici</a></p>
+                        <br>Vous pouvez en enregistrer depuis <a href="<?php echo DIRNAME ."admin/getUserAdmin";?>">ici</a></p>
                 </div>
             </li>
         </ul>
@@ -113,5 +113,5 @@
 </main>
 </body>
 
-<script type="text/javascript" src="/public/js/appointmentAdmin.js"></script>
+<script type="text/javascript" src="<?php echo DIRNAME ."public/js/appointmentAdmin.js"; ?>" ></script>
 </html>

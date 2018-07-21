@@ -8,7 +8,7 @@
 
 class AccountController{
 
-    public function getAccount($errors = null){
+    public function getAccount($errors = null, $isFromForm = null){
 
         $user = new User();
         $form = $user->AccountForm();
@@ -30,7 +30,7 @@ class AccountController{
         $appointment = new Appointment();
 
         $where = [
-            "id_User" => $_SESSION['id'],
+            "id_user" => $_SESSION['id'],
             "max_to" => date("Y-m-d"),
             'planned'=> 1
         ];
@@ -43,7 +43,7 @@ class AccountController{
 
         $appointments = $appointment->getAllBy(
             $where,
-            ['dateAppointment', 'hourAppointment', 'id_User', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
+            ['dateAppointment', 'hourAppointment', 'id_user', 'id_Hairdresser', 'id_Package', 'u.firstname' , 'u.lastname'], 7, $inner);
 
         $v->assign("account", $infos);
 
@@ -69,9 +69,16 @@ class AccountController{
         $v->assign("config",$form);
         $v->assign("config_pwd", $form_pwd );
         $v->assign("current", 'account');
-        if (count($errors)!=3){
-              $v->assign("errors_account",$errors); 
+
+        if( $errors != null ){
+            if (count($errors)!=3 && $isFromForm == 1 ){
+                $v->assign("errors",$errors);
+            }
+            elseif ( count($errors)!=3 && $isFromForm == 2 ){
+                $v->assign("errors_account",$errors);
+            }
         }
+
     }
     
     public function getChangeToPwd(){
@@ -121,11 +128,11 @@ class AccountController{
 
             } else{
                 
-             $this->getAccount($errors);
+             $this->getAccount($errors, 2);
             }
         }
             else{
-             $this->getAccount($errors);
+             $this->getAccount($errors, 2);
             }
 
         }
@@ -209,11 +216,14 @@ class AccountController{
             self::getAccount();
 
         }else{
-            $v = new Views( "account", "header" );
-            $v->assign( "current", "account" );
-            $v->assign( "account", $_POST );
-            $v->assign("config",$form);
-            $v->assign("errors",$errors);
+
+            self::getAccount( $errors, 1 );
+            //$v = new Views( "account", "header" );
+            //$v->assign( "current", "account" );
+            //$v->assign( "account", $_POST );
+            //$v->assign("config",$form);
+
+            //$v->assign("errors",$errors);
         }
 
 

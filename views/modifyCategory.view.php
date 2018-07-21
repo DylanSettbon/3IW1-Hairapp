@@ -49,7 +49,3 @@
     </main>
 </body>
 
-
-<?php
-    include "templates/footer.tpl.php";
-?>

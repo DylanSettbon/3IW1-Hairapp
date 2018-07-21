@@ -9,16 +9,22 @@ include "templates/sidebar.view.php";
             <div class="col-s-12 col-m-8 col-l-12 form_register_admin">
 
                 <div class="col-l-4">
-                    <h2 class="center title"> Gestion des Pages</h2>
+                    <h2 class="center title"> Gestion des Commentaires</h2>
                 </div>
                 
-		 <form method="post" id="listArticle" name="listArticle" action="<?php echo DIRNAME;?>admin/getCommentAdmin?article="<?php echo $article["id"]?> >
+		 <form method="post" id="listArticle" name="listArticle"
+               <?php if( isset( $article['id'] ) ): ?>
+                    action="<?php echo DIRNAME.'admin/getCommentAdmin?article='.$article['id'] ?> ">
+                <?php else: ?>
+
+                    action="<?php echo DIRNAME.'admin/getCommentAdmin?article='; ?>">
+             <?php endif; ?>
 			<section id="choix-art">
 				<div class="container-artcat liste-art">
-					<select name='article' class='input input_sign-in' >
+					<select name='article' class='input input_sign-in' id="selectArticle" >
                         <option value=" ">Tous</option>
                           <?php foreach($articles as $article):?>
-                            <option value=<?php echo $article["id"]?>><?php echo $article["name"]?></option>
+                            <option value="<?php echo $article["id"]?>"><?php echo $article["name"]?></option>
                           <?php endforeach;?>
                     </select>
 				</div>
@@ -78,5 +84,8 @@ include "templates/sidebar.view.php";
     </div>
 
   </main>
-<script src="../public/js/comment.js"></script>
+
+<script src="<?php echo DIRNAME . "public/js/comment.js"; ?> "></script>
+
 <script type="text/javascript" src="<?php echo DIRNAME . "public/js/searchBar.js" ; ?> "></script>
+

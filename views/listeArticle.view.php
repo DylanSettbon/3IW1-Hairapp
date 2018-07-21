@@ -56,8 +56,3 @@
     </div>
 
   </main>
-
-<?php
-
-include "templates/footer.tpl.php";
-?>

@@ -3,7 +3,7 @@
     <div class="row slideshow-container">
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Hairapp" src="../public/img/barber1.jpg" style="width:100%">
+            <img class="contain-img" alt="Hairapp" src="<?php echo DIRNAME . $pic_slideshow['nFirst']; ?>" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Voir les forfaits" src="../public/img/barber2.jpg" style="width:100%">
+            <img class="contain-img" alt="Voir les forfaits" src="<?php echo DIRNAME . $pic_slideshow['nSecond']; ?>" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="contain-img" alt="Prendre rendez-vous" src="../public/img/barber3.jpg" style="width:100%">
+            <img class="contain-img" alt="Prendre rendez-vous" src="<?php echo DIRNAME . $pic_slideshow['nThird']; ?>" style="width:100%">
             <diV class="text-image">
                 <h1 class="text-image-h1">Prendre rendez-vous</h1>
                 <h2 class="text-image-h2">Prenez directement rendez-vous avec votre salon en ligne</h2>
@@ -73,7 +73,7 @@
                 <?php foreach( $articles as $article) : ?>
                      <div class="col-s-12 col-m-12 col-l-12">
                         <div class="article-accueil">
-                            <img class="img-art" src="../public/img/quote.svg"/>
+                            <img class="img-art" src="<?php echo DIRNAME . "public/img/quote.svg";?>" />
                             <span>
                                 <h3 class="titre-article"><?php echo $article->getName(); ?></h3>
                                 <p class="content-art"><?php echo $article->getMiniDescription(); ?></p>
@@ -95,10 +95,10 @@
                 <span>
                     <h3 class="carte">Notre carte</h3>
                     <p class="content-carte">Decouvrez nos forfaits Homme Femme sur notre carte</p>
-                    <img alt="barber" class="contain-img" src="../public/img/barber2.jpg" style="width:100%; padding:10px">
+                    <img alt="barber" class="contain-img" src="<?php echo DIRNAME . "public/img/barber3.jpg";?>" style="width:100%; padding:10px">
                 </span>
            
-        <a href="forfait" class="btnForfait col-l-10">Cliquez ici</a>
+        <a href="<?php echo DIRNAME ."package/getPackage";?>" class="btnForfait col-l-10">Cliquez ici</a>
     </section>
 
     
@@ -117,4 +117,4 @@
 </main>
 </body>
 
-<script src="../public/js/home.js"></script>
+<script src="<?php echo DIRNAME . "public/js/home.js";?> "></script>

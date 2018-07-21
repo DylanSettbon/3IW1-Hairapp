@@ -18,14 +18,17 @@ class BaseSql{
      */
 
     public function __construct(){
-        try{;
-            $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
-        }catch(Exception $e){
-            die("Erreur SQL :".$e->getMessage());
-        }
-        //$this->db = new Database();
 
-        $this->table = strtolower(get_called_class()) == "hairdresser" ? "user" : strtolower(get_called_class());
+        //if( INSTALLED == true ){
+            try{
+                $this->db = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME , DBUSER, DBPWD);
+            }catch(Exception $e){
+                die("Erreur SQL :".$e->getMessage());
+            }
+
+            $this->table = strtolower(get_called_class()) == "hairdresser" ? "user" : strtolower(get_called_class());
+        //}
+
     }
 
     public static function getInstance() {
@@ -42,6 +45,12 @@ class BaseSql{
             get_object_vars( $this ),
             get_class_vars( get_class() )
         );
+    }
+
+    public function createDatabase( $query ){
+
+        $sql = $this->db->prepare( $query );
+        $sql->execute();
     }
 
     public function update( $statement, $params ){
@@ -70,13 +79,18 @@ class BaseSql{
         $tmp5 = array();
 
         foreach($params as $key => $value) {
-            $tmp1[] = ':'.$key;
-            $tmp2[] = $key.'=:'.$key;
-            $tmp4[] = $key.' <> :'.$key;
-            $tmp5[] = $key.' IN (:'.$key.')';
-            if(!in_array($key, $params_remove)) {
-                $tmp3[] = $key.'=:'.$key;
+
+            if( $key != 'max_to' ){
+                $tmp1[] = ':'.$key;
+                $tmp2[] = $key.'=:'.$key;
+                $tmp4[] = $key.' <> :'.$key;
+                $tmp5[] = $key.' IN :'.$key;
+                if(!in_array($key, $params_remove)) {
+                    $tmp3[] = $key.'=:'.$key;
+                }
+
             }
+
         }
 
         if( isset( $params['min'] ) && isset( $params['max'] )  ){
@@ -87,7 +101,7 @@ class BaseSql{
             $result['min_to'] = " <= '" . $params['min_to'] . "'";
         }
         if( isset( $params['max_to'] )   ){
-            $result['max_to'] = " >= '" . $params['max_to']. "'";
+            $result['max_to'] = " >= :max_to";
         }
 
         if( isset( $params['inner_table']) && isset( $params['inner_table']) && isset($params['inner_column']) ){
@@ -214,6 +228,7 @@ class BaseSql{
             $sql_upd = 'UPDATE '.$this->table.' SET '.$bind['bind_update'].' WHERE '.$bind_pk['bind_primary_key'];
 
         }
+        //var_dump( $sql_params ); die;
         $this->update($sql_upd, $sql_params);
     }
 
@@ -333,7 +348,13 @@ class BaseSql{
                  $where_type = $columns[0] . $bind['min_to'];
              }
              elseif ( $tab == 7 ){
-                 $where_type = $columns[0] . $bind['max_to'];
+                 if( $bind['bind_primary_key'] != '' ){
+                     $where_type = $columns[0] . $bind['max_to'] . " AND " . $bind['bind_primary_key'] ;
+
+                 }else{
+                     $where_type = $columns[0] . $bind['max_to'];
+                 }
+
              }
              elseif ($tab = 8){
                  $field =  array_keys($sql_params)[0];
@@ -352,7 +373,6 @@ class BaseSql{
                  ' FROM '.$from.' WHERE '
                  .$where_type);
             }
-
              $sql->execute($sql_params);
          }
          else{
@@ -372,6 +392,7 @@ class BaseSql{
                  ' FROM '.$this->table
              );
              }
+
              $sql->execute();
          }
 
@@ -387,6 +408,19 @@ class BaseSql{
     public function populate($where = []){
 
         $sql = $this->db->prepare( "SELECT * FROM user WHERE email = :email" );
+        //->fetchObject('User');
+        $sql->execute( $where );
+        $result = $sql->fetchObject('User');
+
+
+        //return objet
+        return $result;
+
+    }
+
+    public function populateconf($where = []){
+
+        $sql = $this->db->prepare( "SELECT * FROM configuration WHERE email = :email" );
         //->fetchObject('User');
         $sql->execute( $where );
         $result = $sql->fetchObject('User');
