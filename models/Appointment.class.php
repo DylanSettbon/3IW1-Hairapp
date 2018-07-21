@@ -184,23 +184,8 @@ class Appointment extends BaseSql{
          * Tableau d'id avec chaque heure disponible pour chaque coiffeur
          */
         //TO DO : ouverture salon
-        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', OPENING_HOUR ) ){
-
-            $opening = str_replace( ':00', '', OPENING_HOUR);
-
-        }
-        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', OPENING_HOUR )  ){
-            $opening = str_replace( ':30', ':30', OPENING_HOUR);
-        }
-
-        if( preg_match( '#[0-9]{1,2}[:][0]{1,2}#', CLOSING_HOUR ) ){
-
-            $closing = str_replace( ':00', '', CLOSING_HOUR);
-
-        }
-        elseif ( preg_match( '#[0-9]{1,2}[:][30]{1}#', CLOSING_HOUR )  ){
-            $closing = str_replace( ':30', ':30', CLOSING_HOUR);
-        }
+        $opening = OPENING_HOUR;
+        $closing = CLOSING_HOUR;
         $timeRange = [];
         array_unshift($timeRange,$opening);
         $i = -1;
@@ -209,8 +194,12 @@ class Appointment extends BaseSql{
 
         //$timeOut = DURATION;
         if ( preg_match( '#[0]{2}[:][1-5]{1}[5,0]{1}#', DURATION )  ){
-            $timeOut = (int)str_replace( '00:', '', DURATION);
+            $timeOut = (date('i', strtotime(DURATION)));
         }
+        else{
+            $timeOut = 30;
+        }
+
         do {
             $add += $timeOut;
             //Remplacer par un temps moyen de rendez-vous

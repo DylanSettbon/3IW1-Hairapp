@@ -5,9 +5,9 @@ function createCategoryPackageForm_show(){
 function createPackageForm_show(category) {
     document.getElementById('pCategoryId').setAttribute("value",category[0]);
     document.getElementsByClassName('categoryTitleForm')[0].id = category[0];
-    var titleForm = document.getElementById(category[0]);
-    titleForm.textContent += category[1];
 
+    var titleForm = document.getElementsByClassName('categoryTitleForm')[0];
+    titleForm.textContent += category[1];
     document.getElementById('packageForm').style.display = "block";
 }
 

@@ -274,7 +274,7 @@ class AdminController{
                     break;
                 default:
                     $filter = 'max_to';
-                    $tab = 9;
+                    $tab = 7;
             }
         }
         else{
@@ -326,7 +326,6 @@ class AdminController{
             }
         }
         $appointments = array_values($appointments);
-
         $v->assign("appointments", $appointment->sortOnDate($appointments));
     }
 

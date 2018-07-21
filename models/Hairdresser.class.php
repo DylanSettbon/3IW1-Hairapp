@@ -41,7 +41,13 @@ class Hairdresser extends User  {
 
         $timesRange = $appointment->getAvailableTimeBetweenAppointment($appointmentHours);
 
-        $timeOut = DURATION > $duration ? $duration : DURATION;
+        if ( preg_match( '#[0]{2}[:][1-5]{1}[5,0]{1}#', DURATION )  ){
+            $timeOut = (date('i', strtotime(DURATION)));
+        }
+        else{
+            $timeOut = 30;
+        }
+
         foreach ($timesRange as $hour=>$availableTime){
             $cpt = $availableTime;
             $add = 0;
