@@ -4,6 +4,10 @@
 
         <?php if($params["type"] == "text" || $params["type"] == "email" || $params["type"] == "password" || $params["type"] == "tel"):?>
 
+                    <?php if ($params["name"] == "captcha"): ?>
+                        <!-- <?php echo  "<img src=\"./captcha/captcha.php\">"; ?> -->
+                        <?php echo "<img src=\"captcha.php\" >" ;?>
+                    <?php endif; ?>
             <input
                     type="<?php echo $params["type"];?>"
                     name="<?php echo $name;?>"

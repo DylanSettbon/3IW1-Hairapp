@@ -304,6 +304,13 @@ class User extends BaseSql {
                     "placeholder" => "Téléphone",
                     "required" => true
                 ],
+                "captcha" => [
+                    "type" => "text",
+                    "class"=>"input input_sign-in",
+                    "name" => "captcha",
+                    "placeholder" => "Captcha",
+                    "required" => true
+                ],
                 "offers" => [
                     "type" => "checkbox",
                     "id" => "checkBox",

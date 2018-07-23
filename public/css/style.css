@@ -1448,6 +1448,16 @@ input[type="checkbox"][id="template4"] + label::before {
   width: 1px;
   height: 300px; }
 
+#search {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  width: 175px;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  margin: 25px; }
 
 .row > .column-articles {
   padding: 8px; }
@@ -1479,17 +1489,6 @@ input[type="checkbox"][id="template4"] + label::before {
 #body-errors {
   background-image: url("../img/erreur.png"); }
 
-#search {
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  width: 175px;
-  padding: 12px 20px 12px 40px;
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
-  margin: 25px; }
-
 /* When the input field gets focus, change its width to 100% */
 #search:focus {
   width: 60%; }
@@ -1511,7 +1510,6 @@ input[type="checkbox"][id="template4"] + label::before {
 .comment-date {
   font-style: italic;
   font-size: 10px; }
-
 
 .updateButton {
   background-color: #009CDF;
